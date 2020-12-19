@@ -29,6 +29,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const Settings = Me.imports.settings.Settings;
+const Menus = Me.imports.menus;
 
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
@@ -51,11 +52,15 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
         this.add_child(box);
 
-        let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
-        item.connect('activate', () => {
-            Main.notify(_('Whatʼs up, folks?'));
-        });
-        this.menu.addMenuItem(item);
+        this._pmbuilder = new Menus.PanelMenuBuilder(this.menu);
+        this._pmbuilder.build();
+
+
+        // let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
+        // item.connect('activate', () => {
+        //     Main.notify(_('Whatʼs up, folks?'));
+        // });
+        // this.menu.addMenuItem(item);
     }
 });
 
