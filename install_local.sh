@@ -3,8 +3,11 @@
 ME=$(basename $0)
 MD=$(dirname $0)
 ED=kitchentimer@blackjackshellac.ca
-ICONS_SCALABLE_APPS=~/.local/share/icons/hicolor/scalable/apps
-ICONS_SYMBOLIC_APPS=~/.local/share/icons/hicolor/symbolic/apps
+LOCAL=~/.local/share
+ICONS=$LOCAL/icons/hicolor
+ICONS_SCALABLE_APPS=$ICONS/scalable/apps
+ICONS_SYMBOLIC_APPS=$ICONS/symbolic/apps
+EXTENSIONS=$LOCAL/gnome-shell/extensions/
 
 puts() {
 	echo -e $*
@@ -32,16 +35,16 @@ run() {
 run cd $MD
 run cd $ED
 
+run glib-compile-schemas schemas/
 run mkdir -p $ICONS_SCALABLE_APPS
 run cp -puv *-full.svg ${ICONS_SCALABLE_APPS}/
 
 run mkdir -p "$ICONS_SYMBOLIC_APPS"
 run cp -puv *-symbolic.svg ${ICONS_SYMBOLIC_APPS}/
 
-
 ldir="$(pwd)"
 
-run cd ~/.local/share/gnome-shell/extensions
+run cd $EXTENSIONS
 info "Creating symlink to $ldir"
 run ln -sf $ldir .
 run cd $ED

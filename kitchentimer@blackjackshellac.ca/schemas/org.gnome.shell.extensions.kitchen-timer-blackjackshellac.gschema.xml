@@ -1,34 +1,20 @@
 <!--
-Copyright 2018 Bartosz Jaroszewski
-SPDX-License-Identifier: GPL-2.0-or-later
-(see extension.js for details)
+  Copyright 2020 Blackjackshellac
 -->
-<schemalist gettext-domain="bluetooth-quick-connect">
-  <schema id="org.gnome.shell.extensions.bluetooth-quick-connect"
-          path="/org/gnome/shell/extensions/bluetooth-quick-connect/">
-    <key name="bluetooth-auto-power-on" type="b">
-      <default>false</default>
-      <summary>Automatically powers on bluetooth when open menu</summary>
+<schemalist gettext-domain="kitchen-timer-blackjackshellac">
+  <schema id="org.gnome.shell.extensions.kitchen-timer-blackjackshellac"
+          path="/org/gnome/shell/extensions/kitchen-timer-blackjackshellac/">
+    <key name="play-sound-loop" type="i">
+      <default>20</default>
+      <summary>Number of times to ring alarm sound, 0 is no sound, -1 is infinite</summary>
     </key>
-    <key name="bluetooth-auto-power-off" type="b">
-      <default>false</default>
-      <summary>Automatically powers off bluetooth if idle</summary>
+    <key name="sound-file" type="s">
+      <default>"kitchen_timer.ogg"</default>
+      <summary>Path to sound file</summary>
     </key>
-    <key name="bluetooth-auto-power-off-interval" type="i">
-      <default>60</default>
-      <summary>Checking interval for power off idling bluetooth</summary>
-    </key>
-    <key name="keep-menu-on-toggle" type="b">
-      <default>false</default>
-      <summary>Keep the menu open after toggling the connection</summary>
-    </key>
-    <key name="refresh-button-on" type="b">
-      <default>false</default>
-      <summary>Show reconnect button</summary>
-    </key>
-    <key name="debug-mode-on" type="b">
-      <default>false</default>
-      <summary>Debug mode</summary>
+    <key name="debug" type="b">
+      <default>true</default>
+      <summary>Turn on debugging</summary>
     </key>
   </schema>
 </schemalist>

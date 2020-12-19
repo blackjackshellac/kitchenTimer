@@ -26,18 +26,26 @@ const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
 const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+const Utils = Me.imports.utils;
+const Settings = Me.imports.settings.Settings;
+
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
-const Indicator = GObject.registerClass(
-class Indicator extends PanelMenu.Button {
+const KitchenTimerIndicator = GObject.registerClass(
+class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
-        super._init(0.0, _('My Shiny Indicator'));
+        this._settings = new Settings();
+        this._logger = new Utils.Logger(this._settings);
+        this._logger.info('Initializing extension');
+
+        super._init(0.0, _('Kitchen Timer'));
 
         let box = new St.BoxLayout({ style_class: 'panel-status-menu-box' });
         box.add_child(new St.Icon({
-            icon_name: 'face-smile-symbolic',
+            icon_name: 'kitchen-timer-blackjackshellac-symbolic',
             style_class: 'system-status-icon',
         }));
         box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
@@ -53,13 +61,13 @@ class Indicator extends PanelMenu.Button {
 
 class Extension {
     constructor(uuid) {
-        this._uuid = uuid;
+      this._uuid = uuid;
 
-        ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
+      ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
     }
 
     enable() {
-        this._indicator = new Indicator();
+        this._indicator = new KitchenTimerIndicator();
         Main.panel.addToStatusArea(this._uuid, this._indicator);
     }
 
@@ -70,5 +78,5 @@ class Extension {
 }
 
 function init(meta) {
-    return new Extension(meta.uuid);
+  return new Extension(meta.uuid);
 }
