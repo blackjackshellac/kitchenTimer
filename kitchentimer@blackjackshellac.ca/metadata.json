@@ -1,0 +1,12 @@
+{
+  "name": "Kitchen Timer",
+  "description": "Gnome Shell Kitchen Timer Extension",
+  "uuid": "kitchentimer@blackjackshellac.ca",
+  "shell-version": [
+    "3.38"
+  ],
+  "gettext-domain": "kitchen-timer-blackjackshellac",
+  "settings-schema": "org.gnome.shell.extensions.kitchen-timer-blackjackshellac",
+  "url": "https://github.com/blackjackshellac/kitchenTimer",
+  "version": 0.1
+}
