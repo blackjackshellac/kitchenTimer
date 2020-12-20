@@ -3,11 +3,12 @@
 ME=$(basename $0)
 MD=$(dirname $0)
 ED=kitchentimer@blackjackshellac.ca
-LOCAL=~/.local/share
-ICONS=$LOCAL/icons/hicolor
+USR_SHARE=~/.local/share
+ICONS=$USR_SHARE/icons/hicolor
 ICONS_SCALABLE_APPS=$ICONS/scalable/apps
 ICONS_SYMBOLIC_APPS=$ICONS/symbolic/apps
-EXTENSIONS=$LOCAL/gnome-shell/extensions
+EXTENSIONS=$USR_SHARE/gnome-shell/extensions
+SCHEMAS=$USR_SHARE/glib-2.0/schemas
 
 declare -i DEBUG=1
 
@@ -43,7 +44,10 @@ run() {
 run cd $MD
 run cd $ED
 
-run glib-compile-schemas schemas/
+run mkdir -p $SCHEMAS
+run cp -puv schemas/*.xml $SCHEMAS/
+run glib-compile-schemas $SCHEMAS
+
 run mkdir -p $ICONS_SCALABLE_APPS
 run cp -puv *-full.svg ${ICONS_SCALABLE_APPS}/
 

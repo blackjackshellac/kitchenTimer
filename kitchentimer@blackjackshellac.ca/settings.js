@@ -1,19 +1,20 @@
-// Copyright 2020 Blackjackshellac
-// Copyright 2018 Bartosz Jaroszewski
-// SPDX-License-Identifier: GPL-2.0-or-later
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 2 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+/*
+ * Kitchen Timer: Gnome Shell Kitchen Timer Extension
+ * Copyright (C) 2021 Steeve McCauley
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Gio = imports.gi.Gio;
@@ -49,6 +50,8 @@ class Settings {
         let extension = ExtensionUtils.getCurrentExtension();
         let schema = extension.metadata['settings-schema'];
 
+        return new Gio.Settings({schema: schema});
+        /*
         let schemaSource = GioSSS.new_from_directory(
             extension.dir.get_child('schemas').get_path(),
             GioSSS.get_default(),
@@ -60,5 +63,6 @@ class Settings {
         log("schema loaded");
 
         return new Gio.Settings({settings_schema: schemaObj});
+        */
     }
 }
