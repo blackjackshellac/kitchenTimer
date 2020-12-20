@@ -7,7 +7,9 @@ LOCAL=~/.local/share
 ICONS=$LOCAL/icons/hicolor
 ICONS_SCALABLE_APPS=$ICONS/scalable/apps
 ICONS_SYMBOLIC_APPS=$ICONS/symbolic/apps
-EXTENSIONS=$LOCAL/gnome-shell/extensions/
+EXTENSIONS=$LOCAL/gnome-shell/extensions
+
+declare -i DEBUG=1
 
 puts() {
 	echo -e $*
@@ -21,6 +23,10 @@ info() {
 	log "INFO" $*
 }
 
+warn() {
+	log "WARN" $*
+}
+
 die() {
 	log "FATAL" $*
 	exit 1
@@ -31,6 +37,8 @@ run() {
 	$*
 	[ $? -ne 0 ] && die "Run command failed: $*"
 }
+
+[ $DEBUG -ne 0 ] && warn "DEBUG is enabled"
 
 run cd $MD
 run cd $ED
@@ -44,9 +52,17 @@ run cp -puv *-symbolic.svg ${ICONS_SYMBOLIC_APPS}/
 
 ldir="$(pwd)"
 
-run cd $EXTENSIONS
-info "Creating symlink to $ldir"
-run ln -sf $ldir .
-run cd $ED
+if [ $DEBUG -ne 0 ]; then
+  warn "DEBUG is enabled"
+  info "Creating symlink to $ldir"
+  run cd $EXTENSIONS
+  [ ! -L "$ED" ] && run rm -rfv $ED
+  run ln -sf $ldir .
+else
+  info "Installing extension in $EXTENSIONS/$ED"
+  [ -L "$EXTENSIONS/$ED" ] && rm -v $EXTENSIONS/$ED
+  run rsync -av . $EXTENSIONS/$ED
+fi
+run cd $EXTENSIONS/$ED
 pwd
 
