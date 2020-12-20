@@ -32,6 +32,13 @@ class PanelMenuBuilder {
   }
 
   build() {
+    this._addSwitch(_("Run Timer")).connect("toggled", () => {
+      // this._stopTimer = !(this._stopTimer);
+      // this.remove_actor(this._logo);
+      // this.add_actor(this._box);
+      this._refresh_timer();
+    });
+
     this._additem(_('Show Notification')).connect('activate', () => {
       Main.notify(_('Notification test'))
     });
@@ -48,8 +55,18 @@ class PanelMenuBuilder {
     return item;
   }
 
+  _addSwitch(text, on=false) {
+    let item = new PopupMenu.PopupSwitchMenuItem(text, on);
+    this._menu.addMenuItem(item);
+    return item;
+  }
+
   _reset_timer() {
     log("_reset_timer");
+  }
+
+  _run_timer() {
+    log("_run_timer");
   }
 
 }
