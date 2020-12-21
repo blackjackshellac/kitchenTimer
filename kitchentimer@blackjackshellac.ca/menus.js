@@ -20,9 +20,10 @@ const PopupMenu = imports.ui.popupMenu;
 const Main = imports.ui.main;
 
 class PanelMenuBuilder {
-  constructor(menu) {
+  constructor(menu, settings, timers=null) {
     log("");
     this._menu = menu;
+    this._settings = settings;
 
     // let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
     // item.connect('activate', () => {
@@ -39,16 +40,24 @@ class PanelMenuBuilder {
       this._refresh_timer();
     });
 
-    this._additem(_('Show Notification')).connect('activate', () => {
+    this._presets = this._addSubMenu(_("Presets"), this._menu);
+
+    this._addItem(_('Show Notification')).connect('activate', () => {
       Main.notify(_('Notification test'))
     });
 
-    this._additem(_('Reset timer …')).connect('activate', () => {
+    this._addItem(_('Reset timer …')).connect('activate', () => {
       this._reset_timer();
     });
   }
 
-  _additem(text) {
+  _addSubMenu(text, parent) {
+    let popup = new PopupMenu.PopupSubMenuMenuItem(text);
+    parent.addMenuItem(popup);
+    return popup;
+  }
+
+  _addItem(text) {
     log("adding text="+text);
     let item = new PopupMenu.PopupMenuItem(text)
     this._menu.addMenuItem(item);

@@ -30,6 +30,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const Settings = Me.imports.settings.Settings;
 const Menus = Me.imports.menus;
+const Timers = Me.imports.timers;
 
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
@@ -38,6 +39,7 @@ const PopupMenu = imports.ui.popupMenu;
 const KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
+        this._timers = new Timers();
         this._settings = new Settings();
         this._logger = new Utils.Logger(this._settings);
         this._logger.info('Initializing extension');
@@ -52,7 +54,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
         this.add_child(box);
 
-        this._pmbuilder = new Menus.PanelMenuBuilder(this.menu);
+        this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this._settings);
         this._pmbuilder.build();
 
 

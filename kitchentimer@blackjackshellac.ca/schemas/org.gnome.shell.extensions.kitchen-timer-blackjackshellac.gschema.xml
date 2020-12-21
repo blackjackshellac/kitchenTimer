@@ -28,6 +28,11 @@
       <default>"kitchen_timer.ogg"</default>
       <summary>Path to sound file</summary>
     </key>
+        <key name="presets" type="a{si}">
+      <default>{'3min': 180, '5min': 300, '1h': 3600}</default>
+      <summary>Timer presets</summary>
+      <description>Key-Value pairs of commonly used timer settings: key is the name of the preset, value the duration in seconds</description>
+    </key>
     <key name="debug" type="b">
       <default>true</default>
       <summary>Turn on debugging</summary>
