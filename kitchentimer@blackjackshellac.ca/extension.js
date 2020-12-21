@@ -30,7 +30,8 @@ const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const Settings = Me.imports.settings.Settings;
 const Menus = Me.imports.menus;
-const Timers = Me.imports.timers;
+const Timers = Me.imports.timers.Timers;
+const Timer = Me.imports.timers.Timer;
 
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;

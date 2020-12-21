@@ -17,18 +17,24 @@
 */
 
 class Timers extends Array {
-  constructor() {
-
+  constructor(...args) {
+    super(...args);
   }
-
 
 }
 
+const TimerState = {
+  STOPPED: 0,
+  STARTED: 1,
+  ENDED: 2
+}
+
 class Timer {
+
   constructor(name, duration) {
     this._name = name;
     this._duration = duration;
-    this._running = false;
+    this._state = TimerState.STOPPED;
   }
 
   isEmpty() {

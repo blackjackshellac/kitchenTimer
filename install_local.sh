@@ -46,7 +46,7 @@ run cd $ED
 
 run mkdir -p $SCHEMAS
 run cp -puv schemas/*.xml $SCHEMAS/
-run glib-compile-schemas $SCHEMAS
+run glib-compile-schemas --strict $SCHEMAS
 
 run mkdir -p $ICONS_SCALABLE_APPS
 run cp -puv *-full.svg ${ICONS_SCALABLE_APPS}/

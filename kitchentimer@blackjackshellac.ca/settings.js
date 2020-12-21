@@ -24,6 +24,29 @@ const GioSSS = Gio.SettingsSchemaSource;
 class Settings {
     constructor() {
         this.settings = this._loadSettings();
+
+        var timers = this.settings.get_value('timers').deep_unpack();
+        log("timers");
+        timers.forEach(function (timer) {
+          log("timer="+timer);
+          for (const [key, value] of Object.entries(timer)) {
+            var val=value.unpack();
+            var type=value.get_type();
+            switch(key) {
+              case 'id':
+                //val=value.get_string();
+                break;
+              case 'name':
+                //val=value.get_string();
+                break;
+              case 'duration':
+                //val=value.get_int16();
+                break;
+            }
+
+            log(`${key}: value=${val}`);
+          }
+        });
     }
 
     get play_sound_loops() {
@@ -42,13 +65,17 @@ class Settings {
       this.settings.set_string('sound-file', path);
     }
 
+    get timers() {
+      this.settings.get_value('timers').deep_unpack();
+    }
+
     get debug() {
       return this.settings.get_boolean('debug');
     }
 
     _loadSettings() {
-        let extension = ExtensionUtils.getCurrentExtension();
-        let schema = extension.metadata['settings-schema'];
+        var extension = ExtensionUtils.getCurrentExtension();
+        var schema = extension.metadata['settings-schema'];
 
         return new Gio.Settings({schema: schema});
         /*

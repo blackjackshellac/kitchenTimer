@@ -16,6 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
+aa{sv}
+[
+  {
+    'name': <'alarm'>,
+    'id': <'844d9bc6138c2e532d3306925fe0dd0d'>,
+    'active': <true>,
+    'hour': <12>,
+    'minute': <34>,
+    'days': <[1]>,
+    'snooze_minutes': <10>,
+    'ring_minutes': <1>
+  }
+]
+
+https://developer.gnome.org/glib/stable/gvariant-text.html
 -->
 <schemalist gettext-domain="kitchen-timer-blackjackshellac">
   <schema id="org.gnome.shell.extensions.kitchen-timer-blackjackshellac"
@@ -28,10 +44,15 @@
       <default>"kitchen_timer.ogg"</default>
       <summary>Path to sound file</summary>
     </key>
-        <key name="presets" type="a{si}">
+    <key name="presets" type="a{si}">
       <default>{'3min': 180, '5min': 300, '1h': 3600}</default>
       <summary>Timer presets</summary>
       <description>Key-Value pairs of commonly used timer settings: key is the name of the preset, value the duration in seconds</description>
+    </key>
+    <key name="timers" type="aa{sv}">
+      <default>[ {'name': &lt;'bread step 1'&gt;, 'duration': &lt;1800&gt;, 'id': &lt;'844d9bc6138c2e532d3306925fe0dd0d'&gt;} ]</default>
+      <summary>Timers</summary>
+      <description>Array of timer configurations</description>
     </key>
     <key name="debug" type="b">
       <default>true</default>
