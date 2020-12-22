@@ -28,6 +28,12 @@ Author: Steeve McCauley
   <!-- interface-description Gnome Shell Kitchen Timer Extension -->
   <!-- interface-copyright 2021 Steeve McCauley -->
   <!-- interface-authors Steeve McCauley -->
+  <object class="GtkFileFilter" id="audio_files_filter">
+    <mime-types>
+      <mime-type>audio/*</mime-type>
+      <mime-type>*</mime-type>
+    </mime-types>
+  </object>
   <object class="GtkAdjustment" id="sound_loops_adjustment">
     <property name="upper">1000</property>
     <property name="value">1</property>
@@ -57,28 +63,27 @@ Author: Steeve McCauley
         </child>
         <child>
           <object class="GtkStack" id="stack">
-            <property name="width-request">260</property>
-            <property name="height-request">284</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-start">10</property>
+            <property name="margin-end">10</property>
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
             <child>
-              <!-- n-columns=2 n-rows=4 -->
+              <!-- n-columns=1 n-rows=4 -->
               <object class="GtkGrid" id="stack_options">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
-                <property name="margin-top">20</property>
-                <property name="margin-bottom">20</property>
                 <property name="row-spacing">7</property>
                 <property name="column-spacing">20</property>
                 <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
+                  <object class="GtkCheckButton" id="notification">
+                    <property name="label" translatable="yes" context="notification_text">Notification</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_notification_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -86,25 +91,13 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
+                  <object class="GtkCheckButton" id="show_time">
+                    <property name="label" translatable="yes" context="show_time_text">Show time</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_show_time_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -112,12 +105,13 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
+                  <object class="GtkCheckButton" id="show_pie">
+                    <property name="label" translatable="yes" context="show_pie_text">Show pie</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_show_pie_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -125,55 +119,16 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
+                  <object class="GtkCheckButton" id="modal_notification">
+                    <property name="label" translatable="yes" context="modal_notification_text">Modal notification</property>
+                    <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_modal_notification_toggled" swapped="no"/>
                   </object>
                   <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
+                    <property name="left-attach">0</property>
                     <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton">
-                    <property name="label" translatable="yes">checkbutton</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">3</property>
                   </packing>
                 </child>
               </object>
@@ -183,42 +138,24 @@ Author: Steeve McCauley
               </packing>
             </child>
             <child>
-              <!-- n-columns=1 n-rows=4 -->
+              <!-- n-columns=1 n-rows=3 -->
               <object class="GtkGrid" id="stack_sound">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
-                <property name="margin-top">20</property>
-                <property name="margin-bottom">20</property>
                 <property name="row-spacing">10</property>
-                <child>
-                  <object class="GtkCheckButton" id="enable_sound">
-                    <property name="label" translatable="yes">Enable sound</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Sound loops, 0 is off</property>
-                        <property name="width-chars">43</property>
+                        <property name="margin-start">5</property>
+                        <property name="margin-end">5</property>
+                        <property name="label" translatable="yes">Sound loops</property>
                         <property name="single-line-mode">True</property>
-                        <property name="xalign">0.05999999865889549</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -227,10 +164,10 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSpinButton" id="sound_loops_spin">
-                        <property name="width-request">100</property>
+                      <object class="GtkSpinButton" id="sound_loops">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="tooltip-text" translatable="yes" context="sound_loops_tooltip">Loops to play timer notification sound, 0 is no sound</property>
                         <property name="halign">start</property>
                         <property name="margin-start">20</property>
                         <property name="placeholder-text" translatable="yes">Sound loops, 0 is off</property>
@@ -246,23 +183,35 @@ Author: Steeve McCauley
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
+                    <property name="top-attach">0</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkFileChooserButton" id="sound_path">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes" context="sound_file_tooltip">Timer notification sound file</property>
+                    <property name="filter">audio_files_filter</property>
                     <property name="title" translatable="yes" context="sound_file">Sound file</property>
                     <signal name="file-set" handler="on_sound_path_file_set" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
+                    <property name="top-attach">2</property>
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-start">5</property>
+                    <property name="label" translatable="yes" context="path_to_sound_file">Sound file</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -276,10 +225,6 @@ Author: Steeve McCauley
               <object class="GtkGrid" id="stack_timers">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
-                <property name="margin-top">20</property>
-                <property name="margin-bottom">20</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -314,9 +259,6 @@ Author: Steeve McCauley
                 <property name="position">2</property>
               </packing>
             </child>
-            <child>
-              <placeholder/>
-            </child>
           </object>
           <packing>
             <property name="expand">True</property>
@@ -329,33 +271,6 @@ Author: Steeve McCauley
         <property name="expand">False</property>
         <property name="fill">True</property>
         <property name="position">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <child>
-          <object class="GtkButton" id="close">
-            <property name="label" translatable="yes">Close</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <signal name="clicked" handler="on_close_clicked" swapped="no"/>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack-type">end</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="pack-type">end</property>
-        <property name="position">1</property>
       </packing>
     </child>
   </object>

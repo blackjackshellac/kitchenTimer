@@ -36,8 +36,16 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
 <schemalist gettext-domain="kitchen-timer-blackjackshellac">
   <schema id="org.gnome.shell.extensions.kitchen-timer-blackjackshellac"
           path="/org/gnome/shell/extensions/kitchen-timer-blackjackshellac/">
-    <key name="play-sound-loop" type="i">
-      <default>20</default>
+    <key name="notification" type="b">
+      <default>true</default>
+      <summary>Show a notification when a timer ends</summary>
+    </key>
+    <key name="modal-notification" type="b">
+      <default>false</default>
+      <summary>Make the notification system modal</summary>
+    </key>
+    <key name="sound-loops" type="i">
+      <default>5</default>
       <summary>Number of times to ring alarm sound, 0 is no sound, -1 is infinite</summary>
     </key>
     <key name="sound-file" type="s">

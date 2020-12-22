@@ -16,8 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const Gio = imports.gi.Gio;
-const Gtk = imports.gi.Gtk;
+const { Gio, Gtk, GLib } = imports.gi;
 
 const Gettext = imports.gettext.domain('gnome-shell-extensions');
 const _ = Gettext.gettext;
@@ -29,7 +28,7 @@ const Settings = Me.imports.settings.Settings;
 
 class PreferencesBuilder {
     constructor() {
-        this._settings = new Settings().settings;
+        this._settings = new Settings();
         this._builder = new Gtk.Builder();
     }
 
@@ -42,6 +41,19 @@ class PreferencesBuilder {
         this._widget = new Gtk.ScrolledWindow();
         this._widget.add(this._viewport);
 
+        let file_chooser = this._bo('sound_path');
+        let sound_file = this._settings.sound_file;
+        if (GLib.basename(sound_file) == sound_file) {
+          sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
+        }
+        log("sound_file="+sound_file);
+        file_chooser.set_filename(sound_file);
+
+        file_chooser.connect('file-set', (user_data) => {
+          log("file-set happened: "+user_data.get_filename());
+          log(Object.getOwnPropertyNames(user_data));
+          this._settings.sound_file = user_data.get_filename();
+        });
 
         // this._builder.get_object('auto_power_off_settings_button').connect('clicked', () => {
         //     let dialog = new Gtk.Dialog({
@@ -69,24 +81,41 @@ class PreferencesBuilder {
         return this._widget;
     }
 
+    _bo(id) {
+      return this._builder.get_object(id);
+    }
+
+    _ssb(key, object, property, flags) {
+      this._settings.settings.bind(key, object, property, flags);
+    }
+
     _bind() {
+      let notification = this._bo('notification');
+      this._ssb('notification', notification, 'active', Gio.SettingsBindFlags.DEFAULT);
+
+      let sound_loops = this._bo('sound_loops');
+      this._ssb('sound-loops', sound_loops, 'value', Gio.SettingsBindFlags.DEFAULT);
+
+      let sound_path = this._bo('sound_path');
+      this._ssb('sound-file', sound_path, 'value', Gio.SettingsBindFlags.DEFAULT);
+
         // let autoPowerOnSwitch = this._builder.get_object('auto_power_on_switch');
-        // this._settings.bind('bluetooth-auto-power-on', autoPowerOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        // this._settings.settings.bind('bluetooth-auto-power-on', autoPowerOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
 
         // let autoPowerOffSwitch = this._builder.get_object('auto_power_off_switch');
-        // this._settings.bind('bluetooth-auto-power-off', autoPowerOffSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        // this._settings.settings.bind('bluetooth-auto-power-off', autoPowerOffSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
 
         // let autoPowerOffInterval = this._builder.get_object('auto_power_off_interval');
-        // this._settings.bind('bluetooth-auto-power-off-interval', autoPowerOffInterval, 'value', Gio.SettingsBindFlags.DEFAULT);
+        // this._settings.settings.bind('bluetooth-auto-power-off-interval', autoPowerOffInterval, 'value', Gio.SettingsBindFlags.DEFAULT);
 
         // let keepMenuOnToggleSwitch = this._builder.get_object('keep_menu_on_toggle');
-        // this._settings.bind('keep-menu-on-toggle', keepMenuOnToggleSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        // this._settings.settings.bind('keep-menu-on-toggle', keepMenuOnToggleSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
 
         // let refreshButtonOnSwitch = this._builder.get_object('refresh_button_on');
-        // this._settings.bind('refresh-button-on', refreshButtonOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        // this._settings.settings.bind('refresh-button-on', refreshButtonOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
 
         // let debugModeOnSwitch = this._builder.get_object('debug_mode_on');
-        // this._settings.bind('debug-mode-on', debugModeOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
+        // this._settings.settings.bind('debug-mode-on', debugModeOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
     }
 
 }
@@ -95,9 +124,10 @@ function init() {
 }
 
 function buildPrefsWidget() {
-    let settings = new PreferencesBuilder();
-    let widget = settings.build();
-    widget.show_all();
+  log("Create preferences widget and show it");
+  let preferencesBuilder = new PreferencesBuilder();
+  let widget = preferencesBuilder.build();
+  widget.show_all();
 
-    return widget;
+  return widget;
 }

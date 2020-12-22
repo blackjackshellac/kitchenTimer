@@ -49,12 +49,28 @@ class Settings {
         });
     }
 
-    get play_sound_loops() {
-      return this.settings.get_int('play-sound-loop');
+    get notification() {
+      return this.setttings.get_boolean('notification');
     }
 
-    set play_sound_loops(loops) {
-      this.settings.set_int('play-sound-loop', loops);
+    set notification(bool) {
+      this.settings.set_boolean(bool);
+    }
+
+    get modal_notification() {
+      return this.settings.get_boolean('modal-notification');
+    }
+
+    set modal_notification(bool) {
+      this.settings.set_boolean(bool);
+    }
+
+    get sound_loops() {
+      return this.settings.get_int('sound-loops');
+    }
+
+    set sound_loops(loops) {
+      this.settings.set_int('sound-loops', loops);
     }
 
     get sound_file() {

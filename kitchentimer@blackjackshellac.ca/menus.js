@@ -19,11 +19,15 @@
 const PopupMenu = imports.ui.popupMenu;
 const Main = imports.ui.main;
 
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+
 class PanelMenuBuilder {
   constructor(menu, settings, timers=null) {
     log("");
     this._menu = menu;
     this._settings = settings;
+    this._timers = timers;
 
     // let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
     // item.connect('activate', () => {
