@@ -42,6 +42,11 @@ class PreferencesBuilder {
         this._widget.add(this._viewport);
 
         let file_chooser = this._bo('sound_path');
+
+        if (file_chooser.current_folder == undefined) {
+          file_chooser.current_folder = Me.path;
+        }
+        log("file chooser dir="+file_chooser.current_folder);
         let sound_file = this._settings.sound_file;
         if (GLib.basename(sound_file) == sound_file) {
           sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
@@ -81,10 +86,16 @@ class PreferencesBuilder {
         return this._widget;
     }
 
+    /**
+     * Get Gtk Builder object by id
+     */
     _bo(id) {
       return this._builder.get_object(id);
     }
 
+    /**
+     * Bind setting to builder object
+     */
     _ssb(key, object, property, flags) {
       this._settings.settings.bind(key, object, property, flags);
     }
