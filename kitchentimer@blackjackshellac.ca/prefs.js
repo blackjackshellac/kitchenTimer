@@ -110,6 +110,12 @@ class PreferencesBuilder {
       let sound_path = this._bo('sound_path');
       this._ssb('sound-file', sound_path, 'value', Gio.SettingsBindFlags.DEFAULT);
 
+      let sort_by_duration = this._bo('sort_by_duration');
+      this._ssb('sort-by-duration', sort_by_duration, 'active', Gio.SettingsBindFlags.DEFAULT);
+
+      let sort_descending = this._bo('sort_descending');
+      this._ssb('sort-descending', sort_descending, 'active', Gio.SettingsBindFlags.DEFAULT);
+
         // let autoPowerOnSwitch = this._builder.get_object('auto_power_on_switch');
         // this._settings.settings.bind('bluetooth-auto-power-on', autoPowerOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
 
