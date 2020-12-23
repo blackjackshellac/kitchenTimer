@@ -25,7 +25,6 @@ class Timers extends Array {
   constructor(...args) {
     super(...args);
 
-    this._interval_ms = 1000;
     this._sort_by_duration = true;
     this._sort_descending = false;
   }
@@ -82,17 +81,18 @@ class Timers extends Array {
 }
 
 const TimerState = {
-  STOPPED: 0,
-  STARTED: 1,
-  ENDED: 2
+  RESET: 0,
+  RUNNING: 1,
+  EXPIRED: 2
 }
 
 class Timer {
 
   constructor(name, duration_secs, id=undefined) {
+    this._interval_ms = 1000;
     this._name = name;
     this._duration_ms = duration_secs * 1000;
-    this._state = TimerState.STOPPED;
+    this._state = TimerState.RESET;
     this._id = id == undefined ? name+duration_secs : id;
   }
 
@@ -108,32 +108,45 @@ class Timer {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  try_end(timer) {
+  timer_callback(timer) {
     var now = Date.now();
     var end = timer._end;
     var delta = end-now;
     log(`test end=${end} at ${now}`);
-    if (now > end) {
-      timer._state = TimerState.ENDED;
-      log(`Timer ${timer._name} has ended`);
-      Timeout.clearInterval(timer._interval_id);
-      return false;
-    } else {
-      log(`Timer ${timer._name} has not ended: ${delta}`);
-      return true;
+    if (now > end || !timer.is_running()) {
+      return timer.stop_callback();
     }
+    log(`Timer ${timer._name} has not ended: ${delta}`);
+    return true;
+  }
+
+  is_running() {
+    return (this._state == TimerState.RUNNING);
+  }
+
+  stop_callback() {
+    this._state = TimerState.EXPIRED;
+    log(`Timer ${this._name} has ended`);
+    Timeout.clearInterval(this._interval_id);
+    this._interval_id = undefined;
+    // return with false to stop interval callback loop
+    return false;
   }
 
   expired() {
-    return (this._state == TimerState.ENDED);
+    return (this._state == TimerState.EXPIRED);
+  }
+
+  reset() {
+    this._state = Timer.RESET;
   }
 
   start() {
-    this._state = TimerState.STARTED;
+    this._state = TimerState.RUNNING;
     this._start = Date.now();
     this._end = this._start + this._duration_ms;
 
     log(`Starting timer ${this._name} at ${this._start}`);
-    this._interval_id = Timeout.setInterval(this.try_end, this._interval_ms, this);
+    this._interval_id = Timeout.setInterval(this.timer_callback, this._interval_ms, this);
   }
 }
