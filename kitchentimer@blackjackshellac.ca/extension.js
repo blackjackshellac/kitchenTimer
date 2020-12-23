@@ -58,6 +58,15 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this._settings);
         this._pmbuilder.build();
 
+        var test_timer = new Timer("test 5 seconds", 5);
+        test_timer.start();
+        var test_timers = new Timers();
+
+        test_timers.add(test_timer);
+        test_timer = test_timers.pop();
+        test_timer.start();
+
+
 
         // let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
         // item.connect('activate', () => {

@@ -59,8 +59,15 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     </key>
     <key name="timers" type="aa{sv}">
       <default>[ {'name': &lt;'bread step 1'&gt;, 'duration': &lt;1800&gt;, 'id': &lt;'844d9bc6138c2e532d3306925fe0dd0d'&gt;} ]</default>
-      <summary>Timers</summary>
-      <description>Array of timer configurations</description>
+      <summary>Array of Timer object descriptions</summary>
+    </key>
+    <key name="sort-by-duration" type="b">
+      <default>true</default>
+      <summary>Sort list of timers by duration</summary>
+    </key>
+    <key name="sort-descending" type="b">
+      <default>false</default>
+      <summary>Sort from longest to shortest</summary>
     </key>
     <key name="debug" type="b">
       <default>true</default>
