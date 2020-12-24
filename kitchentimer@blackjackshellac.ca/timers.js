@@ -20,6 +20,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Timeout = Me.imports.timeout;
 const {GLib} = imports.gi;
+const Main = imports.ui.main;
 
 class Timers extends Array {
   constructor(settings, ...args) {
@@ -66,6 +67,7 @@ class Timers extends Array {
   }
 
   add(timer) {
+    timer._settings = this._settings;
     log(`Adding timer ${timer.name} of duration ${timer.duration} seconds`);
     this.push(timer);
   }
@@ -137,6 +139,10 @@ class Timer {
     log(`Timer [${this._name}] has ended`);
     Timeout.clearInterval(this._interval_id);
     this._interval_id = undefined;
+
+    // TODO Notifications and play sounds
+    Main.notify(_(`Timer [${this._name}] completed`));
+
     // return with false to stop interval callback loop
     return false;
   }
