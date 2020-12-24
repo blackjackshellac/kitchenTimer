@@ -26,6 +26,30 @@ class Timers extends Array {
     super(...args);
 
     this._settings = settings;
+
+    this._settings.settings.get_value('timers').deep_unpack().forEach( (timer_settings) => {
+      var id;
+      var name;
+      var duration;
+
+      for (const [key, value] of Object.entries(timer_settings)) {
+        var val=value.unpack();
+        var type=value.get_type();
+        switch(key) {
+        case 'id':
+          id=val;
+          break;
+        case 'name':
+          name=val;
+          break;
+        case 'duration':
+          duration=val;
+          break;
+        }
+      }
+      var timer = new Timer(name,duration,id);
+      this.add(timer);
+    });
   }
 
   isEmpty() {
@@ -59,6 +83,7 @@ class Timers extends Array {
   }
 
   add(timer) {
+    log(`Adding timer ${timer.name} of duration ${timer.duration} seconds`);
     this.push(timer);
   }
 }
@@ -72,10 +97,12 @@ const TimerState = {
 class Timer {
 
   constructor(name, duration_secs, id=undefined) {
+    log(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._interval_ms = 100;
     this._name = name;
     this._duration_ms = duration_secs * 1000;
+    this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
     this._id = id == undefined ? GLib.uuid_string_random : id;
   }
@@ -99,7 +126,7 @@ class Timer {
 
   // Timer.new('foo', 50).duration is 50000
   get duration() {
-    return this._duration_ms / 1000;
+    return this._duration_secs;
   }
 
   sleep(ms) {

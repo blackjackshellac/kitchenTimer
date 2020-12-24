@@ -55,15 +55,15 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
         this.add_child(box);
 
-        var test_timer = new Timer("test 5 seconds", 5);
-        var id = test_timer.id
-        test_timer.start();
+        // var test_timer = new Timer("test 5 seconds", 5);
+        // var id = test_timer.id
+        // test_timer.start();
 
-        this._timers.add(test_timer);
-        test_timer = this._timers.timer_by_id(id);
-        if (test_timer.start()) {
-          log(`Timer ${test_timer.name} running`);
-        }
+        // this._timers.add(test_timer);
+        // test_timer = this._timers.timer_by_id(id);
+        // if (test_timer.start()) {
+        //   log(`Timer ${test_timer.name} running`);
+        // }
 
         this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this._settings, this._timers);
         this._pmbuilder.build();

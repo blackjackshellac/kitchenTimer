@@ -25,15 +25,25 @@ const Slider = imports.ui.slider;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
+const Timer = Me.imports.timers.Timer;
+
 class PanelMenuBuilder {
   constructor(menu, settings, timers) {
     log("");
     this._menu = menu;
+    this._create_timer_menu = undefined;
     this._settings = settings;
     this._timers = timers;
+
+    this._menu.connect('open-state-changed', (self,open) => {
+      if (open) { this.build(); }
+    });
   }
 
   build() {
+    log("Building the popup menu");
+
+    this._menu.removeAll();
 
     // this._addSwitch(_("Run Timer")).connect("toggled", () => {
       // this._stopTimer = !(this._stopTimer);
@@ -48,12 +58,23 @@ class PanelMenuBuilder {
     this._addSeparator();
 
     this._timers.sorted().forEach(timer => {
-      var timer_item = this._addItem(`${timer.name} (${timer.duration} secs)`);
+      var time = this._formatHMS(timer.duration);
+      var timer_item = this._addItem(`${timer.name} - (${time}))`);
       timer_item._timer = timer;
       timer_item.connect('activate', (ti) => {
         ti._timer.start();
       });
     });
+  }
+
+  _formatHMS(secs) {
+    var time="";
+    var hms=this._secondsToHMS(secs);
+    if (hms.hours) {
+      time=`${hms.hours}h`;
+    }
+    time=`${time}${hms.minutes}m${hms.seconds}s`;
+    return time;
   }
 
   _secondsToHMS(secs) {
@@ -148,7 +169,10 @@ class PanelMenuBuilder {
 		this._create_timer_menu.menu.addMenuItem(item);
 
 		this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
-		  Main.notify(_('Run or stop timer'));
+		  var name = this._name_entry.get_text();
+		  this._time = this._hms.hours*3600 + this._hms.minutes*60 + this._hms.seconds;
+		  var timer = new Timer(name, this._time);
+		  this._timers.add(timer);
 		});
 	}
 
