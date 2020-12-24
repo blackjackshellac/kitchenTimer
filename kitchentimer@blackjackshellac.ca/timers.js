@@ -27,29 +27,12 @@ class Timers extends Array {
 
     this._settings = settings;
 
-    this._settings.settings.get_value('timers').deep_unpack().forEach( (timer_settings) => {
-      var id;
-      var name;
-      var duration;
-
-      for (const [key, value] of Object.entries(timer_settings)) {
-        var val=value.unpack();
-        var type=value.get_type();
-        switch(key) {
-        case 'id':
-          id=val;
-          break;
-        case 'name':
-          name=val;
-          break;
-        case 'duration':
-          duration=val;
-          break;
-        }
-      }
-      var timer = new Timer(name,duration,id);
+    var timers = this._settings.unpack_timers();
+    timers.forEach( (h) => {
+      var timer = new Timer(h.name, h.duration, h.id);
       this.add(timer);
     });
+
   }
 
   isEmpty() {

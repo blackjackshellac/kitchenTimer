@@ -59,7 +59,7 @@ class PanelMenuBuilder {
 
     this._timers.sorted().forEach(timer => {
       var time = this._formatHMS(timer.duration);
-      var timer_item = this._addItem(`${timer.name} - (${time}))`);
+      var timer_item = this._addItem(`${timer.name} - (${time})`);
       timer_item._timer = timer;
       timer_item.connect('activate', (ti) => {
         ti._timer.start();

@@ -25,28 +25,45 @@ class Settings {
     constructor() {
         this.settings = this._loadSettings();
 
-        var timers = this.settings.get_value('timers').deep_unpack();
-        log("timers");
-        timers.forEach(function (timer) {
-          log("timer="+timer);
-          for (const [key, value] of Object.entries(timer)) {
-            var val=value.unpack();
-            var type=value.get_type();
-            switch(key) {
-              case 'id':
+        // var timers = this.settings.get_value('timers').deep_unpack();
+        // log("timers");
+        // timers.forEach(function (timer) {
+        //   log("timer="+timer);
+        //   for (const [key, value] of Object.entries(timer)) {
+        //     var val=value.unpack();
+        //     var type=value.get_type();
+        //     switch(key) {
+        //       case 'id':
                 //val=value.get_string();
-                break;
-              case 'name':
+        //         break;
+        //       case 'name':
                 //val=value.get_string();
-                break;
-              case 'duration':
+        //         break;
+        //       case 'duration':
                 //val=value.get_int16();
-                break;
-            }
+        //         break;
+        //     }
 
-            log(`${key}: value=${val}`);
-          }
-        });
+        //     log(`${key}: value=${val}`);
+        //   }
+        // });
+    }
+
+    unpack_timers() {
+      var timers_settings = [];
+      var timers = this.settings.get_value('timers').deep_unpack();
+      timers.forEach( (timer) => {
+        timers_settings.push(this.to_h(timer));
+      });
+      return timers_settings;
+    }
+
+    to_h(timer_settings) {
+      var h={};
+      for (const [key, value] of Object.entries(timer_settings)) {
+        h[key]=value.unpack();
+      }
+      return h;
     }
 
     get notification() {
