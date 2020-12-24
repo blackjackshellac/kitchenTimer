@@ -22,11 +22,10 @@ const Timeout = Me.imports.timeout;
 const {GLib} = imports.gi;
 
 class Timers extends Array {
-  constructor(...args) {
+  constructor(settings, ...args) {
     super(...args);
 
-    this._sort_by_duration = true;
-    this._sort_descending = false;
+    this._settings = settings;
   }
 
   isEmpty() {
@@ -34,11 +33,15 @@ class Timers extends Array {
   }
 
   get sort_by_duration() {
-    return this._sort_by_duration;
+    return this._settings.sort_by_duration;
+  }
+
+  get sort_descending() {
+    return this._settings.sort_descending;
   }
 
   // list of enabled timers sorted according to the sort properties
-  get timers() {
+  sorted() {
     // const cloneSheepsES6 = [...sheeps];
     var timers_array = [...this];
     if (this.sort_by_duration) {

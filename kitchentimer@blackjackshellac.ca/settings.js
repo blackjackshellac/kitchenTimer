@@ -85,6 +85,14 @@ class Settings {
       this.settings.get_value('timers').deep_unpack();
     }
 
+    get default_timer() {
+      return this.settings.get_int('default-timer');
+    }
+
+    set default_timer(val) {
+      this.settings.set_int('default_timer', val);
+    }
+
     get debug() {
       return this.settings.get_boolean('debug');
     }

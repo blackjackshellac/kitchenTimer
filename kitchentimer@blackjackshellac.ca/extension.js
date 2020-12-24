@@ -40,8 +40,8 @@ const PopupMenu = imports.ui.popupMenu;
 const KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
-        this._timers = new Timers();
         this._settings = new Settings();
+        this._timers = new Timers(this._settings);
         this._logger = new Utils.Logger(this._settings);
         this._logger.info('Initializing extension');
 
