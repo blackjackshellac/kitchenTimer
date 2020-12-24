@@ -23,20 +23,19 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
 class PanelMenuBuilder {
-  constructor(menu, settings, timers=null) {
+  constructor(menu, settings, timers) {
     log("");
     this._menu = menu;
     this._settings = settings;
     this._timers = timers;
-
-    // let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
-    // item.connect('activate', () => {
-    //   Main.notify(_('Whatʼs up, folks?'));
-    // });
-    // this._menu.addMenuItem(item);
   }
 
   build() {
+
+    this._addItem(_('Test Timer')).connect('activate', () => {
+      this._timers[0].start();
+    });
+
     this._addSwitch(_("Run Timer")).connect("toggled", () => {
       // this._stopTimer = !(this._stopTimer);
       // this.remove_actor(this._logo);
@@ -44,7 +43,18 @@ class PanelMenuBuilder {
       this._refresh_timer();
     });
 
-    this._presets = this._addSubMenu(_("Presets"), this._menu);
+    this._timers_menu = this._addSubMenu(_("Timers"), this._menu);
+    //this._timers.forEach(timer => {
+    this._timer = this._timers[0];
+    var timer_item = this._addItem(this._timer.name);
+    timer_item._timer = this._timers[0];
+    timer_item.connect('activate', (ti) => {
+      ti._timer.start();
+    });
+    //   this._addItem(timer.name, this._timers_menu).connect("activate", (timer) => {
+    //     timer.start();
+    //   })
+    //});
 
     this._addItem(_('Show Notification')).connect('activate', () => {
       Main.notify(_('Notification test'))
@@ -61,16 +71,22 @@ class PanelMenuBuilder {
     return popup;
   }
 
-  _addItem(text) {
+  _addItem(text, menu=undefined) {
+    if (menu === undefined) {
+      menu = this._menu;
+    }
     log("adding text="+text);
     let item = new PopupMenu.PopupMenuItem(text)
-    this._menu.addMenuItem(item);
+    menu.addMenuItem(item);
     return item;
   }
 
-  _addSwitch(text, on=false) {
+  _addSwitch(text, on=false, menu=undefined) {
+    if (menu === undefined) {
+      menu = this._menu;
+    }
     let item = new PopupMenu.PopupSwitchMenuItem(text, on);
-    this._menu.addMenuItem(item);
+    menu.addMenuItem(item);
     return item;
   }
 
