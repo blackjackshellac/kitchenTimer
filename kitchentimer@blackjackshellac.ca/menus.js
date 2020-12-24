@@ -44,13 +44,19 @@ class PanelMenuBuilder {
     });
 
     this._timers_menu = this._addSubMenu(_("Timers"), this._menu);
-    //this._timers.forEach(timer => {
-    this._timer = this._timers[0];
-    var timer_item = this._addItem(this._timer.name);
-    timer_item._timer = this._timers[0];
-    timer_item.connect('activate', (ti) => {
-      ti._timer.start();
+    this._timers.forEach(timer => {
+      var timer_item = this._addItem(`${timer.name} (${timer.duration} secs)`, this._timers_menu.menu);
+      timer_item._timer = timer;
+      timer_item.connect('activate', (ti) => {
+        ti._timer.start();
+      });
     });
+    // this._timer = this._timers[0];
+    // var timer_item = this._addItem(this._timer.name, this._timers_menu.menu);
+    // timer_item._timer = this._timers[0];
+    // timer_item.connect('activate', (ti) => {
+    //   ti._timer.start();
+    // });
     //   this._addItem(timer.name, this._timers_menu).connect("activate", (timer) => {
     //     timer.start();
     //   })
@@ -65,16 +71,19 @@ class PanelMenuBuilder {
     });
   }
 
-  _addSubMenu(text, parent) {
+  _getMenu(menu) {
+    return menu === undefined ? this._menu : menu;
+  }
+
+  _addSubMenu(text, menu=undefined) {
+    menu=this._getMenu(menu);
     let popup = new PopupMenu.PopupSubMenuMenuItem(text);
-    parent.addMenuItem(popup);
+    menu.addMenuItem(popup);
     return popup;
   }
 
   _addItem(text, menu=undefined) {
-    if (menu === undefined) {
-      menu = this._menu;
-    }
+    menu=this._getMenu(menu);
     log("adding text="+text);
     let item = new PopupMenu.PopupMenuItem(text)
     menu.addMenuItem(item);
@@ -82,9 +91,7 @@ class PanelMenuBuilder {
   }
 
   _addSwitch(text, on=false, menu=undefined) {
-    if (menu === undefined) {
-      menu = this._menu;
-    }
+    menu=this._getMenu(menu);
     let item = new PopupMenu.PopupSwitchMenuItem(text, on);
     menu.addMenuItem(item);
     return item;

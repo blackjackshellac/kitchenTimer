@@ -70,7 +70,7 @@ class Timer {
 
   constructor(name, duration_secs, id=undefined) {
     this._enabled = true;
-    this._interval_ms = 1000;
+    this._interval_ms = 100;
     this._name = name;
     this._duration_ms = duration_secs * 1000;
     this._state = TimerState.RESET;
@@ -96,7 +96,7 @@ class Timer {
 
   // Timer.new('foo', 50).duration is 50000
   get duration() {
-    return this._duration_ms;
+    return this._duration_ms / 1000;
   }
 
   sleep(ms) {
@@ -107,11 +107,11 @@ class Timer {
     var now = Date.now();
     var end = timer._end;
     var delta = end-now;
-    log(`test end=${end} at ${now}`);
+    //log(`test end=${end} at ${now}`);
     if (now > end || !timer.is_running()) {
       return timer.stop_callback();
     }
-    log(`Timer [${timer._name}] has not ended: ${delta}`);
+    //log(`Timer [${timer._name}] has not ended: ${delta}`);
     return true;
   }
 
