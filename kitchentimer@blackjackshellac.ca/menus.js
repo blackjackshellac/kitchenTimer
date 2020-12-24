@@ -32,10 +32,6 @@ class PanelMenuBuilder {
 
   build() {
 
-    this._addItem(_('Test Timer')).connect('activate', () => {
-      this._timers[0].start();
-    });
-
     this._addSwitch(_("Run Timer")).connect("toggled", () => {
       // this._stopTimer = !(this._stopTimer);
       // this.remove_actor(this._logo);
