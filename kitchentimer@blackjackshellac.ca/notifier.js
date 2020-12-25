@@ -50,10 +50,13 @@ class Annoyer {
 		  log('sound not enabled');
 		  return;
 		}
-	  // this._notifyUser("Playing uri="+uri);
-	  log(`Playing ${this.sound_file}`);
-	  this._player.set_property('uri', "file://"+this.sound_file);
-	  this._player.set_state(Gst.State.PLAYING);
+
+    var uri="file://"+this.sound_file;
+	  log(`Playing ${uri}`);
+	  for (var i=0; i < this.sound_loops; i++) {
+	    this._player.set_property('uri', uri);
+	    this._player.set_state(Gst.State.PLAYING);
+	  }
 	}
 
   get notification() {

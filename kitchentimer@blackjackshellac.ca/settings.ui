@@ -120,7 +120,7 @@ Author: Steeve McCauley
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="modal_notification">
-                    <property name="label" translatable="yes" context="modal_notification_text">Modal notification</property>
+                    <property name="label" translatable="yes" context="modal_notification_text">Annoy</property>
                     <property name="can-focus">False</property>
                     <property name="receives-default">False</property>
                     <property name="draw-indicator">True</property>
