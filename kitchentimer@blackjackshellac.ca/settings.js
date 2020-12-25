@@ -107,7 +107,23 @@ class Settings {
     }
 
     set default_timer(val) {
-      this.settings.set_int('default_timer', val);
+      this.settings.set_int('default-timer', val);
+    }
+
+    get sort_by_duration() {
+      return this.settings.get_boolean('sort-by-duration');
+    }
+
+    set sort_by_duration(bool) {
+      this.settings.set_boolean('sort-by-duration', bool);
+    }
+
+    get sort_descending() {
+      return this.settings.get_boolean('sort-descending');
+    }
+
+    set sort_descending(bool) {
+      this.settings.set_boolean('sort-descending', bool);
     }
 
     get debug() {
