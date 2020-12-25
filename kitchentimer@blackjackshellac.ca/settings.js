@@ -67,7 +67,7 @@ class Settings {
     }
 
     get notification() {
-      return this.setttings.get_boolean('notification');
+      return this.settings.get_boolean('notification');
     }
 
     set notification(bool) {

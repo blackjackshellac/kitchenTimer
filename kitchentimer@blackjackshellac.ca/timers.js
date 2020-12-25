@@ -72,6 +72,8 @@ class Timers extends Array {
 
   add(timer) {
     timer._settings = this._settings;
+    timer._notifier = this._notifier;
+
     log(`Adding timer ${timer.name} of duration ${timer.duration} seconds`);
     this.push(timer);
   }
@@ -145,7 +147,7 @@ class Timer {
     this._interval_id = undefined;
 
     // TODO Notifications and play sounds
-    Main.notify(_(`Timer [${this._name}] completed`));
+    this._notifier.annoy(_(`Timer [${this._name}] completed`));
 
     // return with false to stop interval callback loop
     return false;

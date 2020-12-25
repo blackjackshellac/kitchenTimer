@@ -16,6 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+// TODO get rid
+const Lang = imports.lang;
+
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
@@ -27,13 +30,31 @@ imports.gi.versions.Gst = '1.0';
 const Gst = imports.gi.Gst;
 
 // for setInterval()
-const Utils = Me.imports.Utils;
+const Utils = Me.imports.utils;
 
 class Annoyer {
   constructor(settings) {
     this._settings = settings;
-    initPlayer();
+    this._initPlayer();
   }
+
+  annoy(msg) {
+    if (this.notification) {
+      Main.notify(msg);
+    }
+    this._playSound();
+  }
+
+	_playSound() {
+		if (!this.sound_enabled) {
+		  log('sound not enabled');
+		  return;
+		}
+	  // this._notifyUser("Playing uri="+uri);
+	  log(`Playing ${this.sound_file}`);
+	  this._player.set_property('uri', "file://"+this.sound_file);
+	  this._player.set_state(Gst.State.PLAYING);
+	}
 
   get notification() {
     return this._settings.notification;
@@ -51,7 +72,7 @@ class Annoyer {
     return this._settings.sound_file
   }
 
-  initPlayer() {
+  _initPlayer() {
     if (this._player !== undefined) {
       return;
     }
@@ -77,14 +98,4 @@ class Annoyer {
     }));
 
   }
-
-	playSound() {
-		if (!this.sound_enabled) {
-		  log()
-		  return;
-		}
-	  // this._notifyUser("Playing uri="+uri);
-	  this._player.set_property('uri', this.sound_file);
-	  this._player.set_state(Gst.State.PLAYING);
-	}
 }
