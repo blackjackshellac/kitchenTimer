@@ -18,15 +18,19 @@
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const Timeout = Me.imports.timeout;
+
 const {GLib} = imports.gi;
 const Main = imports.ui.main;
+
+const Utils = Me.imports.utils;
+const Notifier = Me.imports.notifier;
 
 class Timers extends Array {
   constructor(settings, ...args) {
     super(...args);
 
     this._settings = settings;
+    this._notifier = new Notifier.Annoyer(settings);
 
     var timers = this._settings.unpack_timers();
     timers.forEach( (h) => {
@@ -137,7 +141,7 @@ class Timer {
   stop_callback() {
     this._state = TimerState.EXPIRED;
     log(`Timer [${this._name}] has ended`);
-    Timeout.clearInterval(this._interval_id);
+    Utils.clearInterval(this._interval_id);
     this._interval_id = undefined;
 
     // TODO Notifications and play sounds
@@ -169,7 +173,7 @@ class Timer {
     this._end = this._start + this._duration_ms;
 
     log(`Starting timer [${this._name}] at ${this._start}`);
-    this._interval_id = Timeout.setInterval(this.timer_callback, this._interval_ms, this);
+    this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
   }
 }

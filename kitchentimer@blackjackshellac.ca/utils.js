@@ -17,6 +17,22 @@
 */
 
 const GLib = imports.gi.GLib;
+var clearTimeout, clearInterval;
+clearTimeout = clearInterval = GLib.Source.remove;
+
+function setTimeout(func, delay, ...args) {
+    const wrappedFunc = () => {
+        return func.apply(this, args);
+    };
+    return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
+}
+
+function setInterval(func, delay, ...args) {
+    const wrappedFunc = () => {
+        return func.apply(this, args);
+    };
+    return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
+}
 
 function spawn(command, callback) {
     let [status, pid] = GLib.spawn_async(
@@ -36,15 +52,24 @@ function isDebugModeEnabled() {
     return new Settings().debug();
 }
 
+const LOGID = 'kitchen-timer';
+
 class Logger {
     constructor(settings) {
-        this._enabled = settings.debug;
+        this._debug_enabled = settings.debug;
+    }
+
+    _log(level,message) {
+      global.log(`[${LOGID}] ${level}: ${message}`);
+    }
+
+    debug(message) {
+      if (!this._debug_enabled) return;
+      this._log("DEBUG", message);
     }
 
     info(message) {
-        if (!this._enabled) return;
-
-        global.log(`[kitchen-timer] ${message}`);
+      this._log("INFO", message);
     }
 }
 
