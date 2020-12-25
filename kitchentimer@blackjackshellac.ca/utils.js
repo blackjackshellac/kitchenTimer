@@ -93,3 +93,45 @@ function addSignalsHelperMethods(prototype) {
         this._signals = [];
     };
 }
+
+class HMS {
+  constructor(secs) {
+    this._secs = Number(secs);
+    this._hours = Math.floor(secs / 3600);
+    this._minutes = Math.floor(secs % 3600 / 60);
+    this._seconds = Math.floor(secs % 3600 % 60);
+  }
+
+  get hours() {
+    return this._hours;
+  }
+
+  set hours(hours) {
+    this._hours = hours;
+  }
+
+  get minutes() {
+    return this._minutes;
+  }
+
+  set minutes(minutes) {
+    this._minutes = minutes;
+  }
+
+  get seconds() {
+    return this._seconds;
+  }
+
+  set seconds(seconds) {
+    this._seconds = seconds;
+  }
+
+  toSeconds() {
+    return this._hours*3600 + this._minutes*60 + this._seconds;
+  }
+
+  toString() {
+    return `${this._hours}h ${this._minutes}m ${this._seconds}s`;
+  }
+}
+

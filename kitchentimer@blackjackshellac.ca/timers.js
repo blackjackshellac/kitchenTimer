@@ -121,6 +121,15 @@ class Timer {
     return this._duration_secs;
   }
 
+  get label() {
+    return this._label;
+  }
+
+  set label(label) {
+    log(`Timer label set to ${label}`);
+    this._label = label;
+  }
+
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -128,12 +137,15 @@ class Timer {
   timer_callback(timer) {
     var now = Date.now();
     var end = timer._end;
-    var delta = end-now;
+
     //log(`test end=${end} at ${now}`);
     if (now > end || !timer.is_running()) {
       return timer.stop_callback();
     }
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
+    var delta = Math.ceil((end-now) / 1000);
+    var hms = new Utils.HMS(delta);
+    timer._label.set_text(hms.toString());
     return true;
   }
 
@@ -149,6 +161,8 @@ class Timer {
 
     // TODO Notifications and play sounds
     this._notifier.annoy(_(`Timer [${this._name}] completed`));
+    var hms = new Utils.HMS(this.duration);
+    this._label.set_text(hms.toString());
 
     // return with false to stop interval callback loop
     return false;

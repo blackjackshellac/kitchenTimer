@@ -26,6 +26,8 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
 const Timer = Me.imports.timers.Timer;
+const Utils = Me.imports.utils;
+
 
 class PanelMenuBuilder {
   constructor(menu, settings, timers) {
@@ -58,9 +60,15 @@ class PanelMenuBuilder {
     this._addSeparator();
 
     this._timers.sorted().forEach(timer => {
-      var time = this._formatHMS(timer.duration);
-      var timer_item = this._addItem(`${timer.name} - (${time})`);
+      var hms = new Utils.HMS(timer.duration);
+      var time = hms.toString();
+      var timer_item = this._addItem(timer.name);
       timer_item._timer = timer;
+      timer.label = new St.Label({ text: time });
+      let bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
+		  bin.child = timer.label;
+		  timer_item.add(bin);
+
       timer_item.connect('activate', (ti) => {
         ti._timer.start();
       });
@@ -91,11 +99,11 @@ class PanelMenuBuilder {
 	// Add sliders SubMenu to manually set the timer
 	_buildCreateTimerMenu() {
 
-    this._hms = this._secondsToHMS(this._settings.default_timer);
+    var hms = new Utils.HMS(this._settings.default_timer);
 
-		this._hoursLabel = new St.Label({ text: this._hms.hours.toString() + "h" });
-		this._minutesLabel = new St.Label({ text: this._hms.minutes.toString() + "m" });
-		this._secondsLabel = new St.Label({ text: this._hms.seconds.toString() + "s" });
+		this._hoursLabel = new St.Label({ text: hms.hours.toString() + "h" });
+		this._minutesLabel = new St.Label({ text: hms.minutes.toString() + "m" });
+		this._secondsLabel = new St.Label({ text: hms.seconds.toString() + "s" });
 
 		// Hours
 		let item = new PopupMenu.PopupMenuItem(_("Hours"), { reactive: false });
@@ -108,11 +116,11 @@ class PanelMenuBuilder {
 
 		item = new PopupMenu.PopupBaseMenuItem({ activate: false });
 		this._hoursSlider = new Slider.Slider(0, {x_expand: true, y_expand:true});
-		this._hoursSlider._value = this._hms.hours / 23;
+		this._hoursSlider._value = hms.hours / 23;
 		this._hoursSlider.connect('notify::value', () => {
-			this._hms.hours = Math.ceil(this._hoursSlider._value*23);
-			this._hoursLabel.set_text(this._hms.hours.toString() + "h");
-			this._time = this._hms.hours*3600 + this._hms.minutes*60 + this._hms.seconds;
+			hms.hours = Math.ceil(this._hoursSlider._value*23);
+			this._hoursLabel.set_text(hms.hours.toString() + "h");
+			this._time = hms.toSeconds();
 		});
 
 		item.add(this._hoursSlider);
@@ -129,11 +137,11 @@ class PanelMenuBuilder {
 
 		item = new PopupMenu.PopupBaseMenuItem({ activate: false });
 		this._minutesSlider = new Slider.Slider(0, { x_expand: true });
-		this._minutesSlider._value = this._hms.minutes / 59;
+		this._minutesSlider._value = hms.minutes / 59;
 		this._minutesSlider.connect('notify::value', () => {
-			this._hms.minutes = Math.ceil(this._minutesSlider._value*59);
-			this._minutesLabel.set_text(this._hms.minutes.toString() + "m");
-			this._time = this._hms.hours*3600 + this._hms.minutes*60 + this._hms.seconds;
+			hms.minutes = Math.ceil(this._minutesSlider._value*59);
+			this._minutesLabel.set_text(hms.minutes.toString() + "m");
+			this._time = hms.toSeconds();
 		});
 		item.add(this._minutesSlider);
 		this._create_timer_menu.menu.addMenuItem(item);
@@ -149,11 +157,11 @@ class PanelMenuBuilder {
 
 		item = new PopupMenu.PopupBaseMenuItem({ activate: false });
 		this._secondsSlider = new Slider.Slider(0, { expand: true });
-		this._secondsSlider._value = this._hms.seconds / 59;
+		this._secondsSlider._value = hms.seconds / 59;
 		this._secondsSlider.connect('notify::value', () => {
-			this._hms.seconds = Math.ceil(this._secondsSlider._value*59);
-			this._secondsLabel.set_text(this._hms.seconds.toString() + "s");
-			this._time = this._hms.hours*3600 + this._hms.minutes*60 + this._hms.seconds;
+			hms.seconds = Math.ceil(this._secondsSlider._value*59);
+			this._secondsLabel.set_text(hms.seconds.toString() + "s");
+			this._time = hms.toSeconds();
 		});
 		item.add(this._secondsSlider);
 		this._create_timer_menu.menu.addMenuItem(item);
@@ -170,7 +178,7 @@ class PanelMenuBuilder {
 
 		this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
 		  var name = this._name_entry.get_text();
-		  this._time = this._hms.hours*3600 + this._hms.minutes*60 + this._hms.seconds;
+		  this._time = hms.hours*3600 + hms.minutes*60 + hms.seconds;
 		  var timer = new Timer(name, this._time);
 		  this._timers.add(timer);
 		});
