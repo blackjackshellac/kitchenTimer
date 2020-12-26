@@ -10,7 +10,7 @@ ICONS_SYMBOLIC_APPS=$ICONS/symbolic/apps
 EXTENSIONS=$USR_SHARE/gnome-shell/extensions
 SCHEMAS=$USR_SHARE/glib-2.0/schemas
 
-declare -i DEBUG=1
+declare -i DEBUG=${KITCHENTIMER_DEBUG:=0}
 
 puts() {
 	echo -e $*
