@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-26 11:46-0500\n"
+"POT-Creation-Date: 2020-12-26 12:29-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,78 +49,99 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: settings.ui:81
+#: settings.ui:52
+msgid "Test"
+msgstr ""
+
+#: settings.ui:53
+msgid "abcdef"
+msgstr ""
+
+#: settings.ui:95
 msgctxt "notification_text"
 msgid "Notification"
 msgstr ""
 
-#: settings.ui:95
+#: settings.ui:109
 msgctxt "show_time_text"
 msgid "Show time"
 msgstr ""
 
-#: settings.ui:109
+#: settings.ui:123
 msgctxt "show_pie_text"
 msgid "Show pie"
 msgstr ""
 
-#: settings.ui:123
+#: settings.ui:137
 msgctxt "modal_notification_text"
 msgid "Annoy"
 msgstr ""
 
-#: settings.ui:137
+#: settings.ui:151
 msgid "Options"
 msgstr ""
 
-#: settings.ui:157
+#: settings.ui:171
 msgid "Sound loops"
 msgstr ""
 
-#: settings.ui:170
+#: settings.ui:184
 msgctxt "sound_loops_tooltip"
 msgid "Loops to play timer notification sound, 0 is no sound"
 msgstr ""
 
-#: settings.ui:173
+#: settings.ui:187
 msgid "Sound loops, 0 is off"
 msgstr ""
 
-#: settings.ui:193
+#: settings.ui:207
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
 
-#: settings.ui:195
+#: settings.ui:209
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:209
+#: settings.ui:223
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:219
+#: settings.ui:233
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:237
+#: settings.ui:251
 msgctxt "sort_by_duration"
 msgid "Sort by duration"
 msgstr ""
 
-#: settings.ui:252
+#: settings.ui:266
 msgctxt "sort_descending"
 msgid "Sort descending"
 msgstr ""
 
-#: settings.ui:371
+#: settings.ui:296
+msgctxt "kitchen-timer-blackjackshellac"
 msgid "Timers"
 msgstr ""
 
-#: settings.ui:399
-msgid "Test"
+#: settings.ui:366
+msgid " h "
+msgstr ""
+
+#: settings.ui:389
+msgid " m "
+msgstr ""
+
+#: settings.ui:412
+msgid " s "
+msgstr ""
+
+#: settings.ui:457
+msgid "Timers"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41

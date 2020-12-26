@@ -24,7 +24,7 @@ const _ = Gettext.gettext;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Settings = Me.imports.settings.Settings;
-
+const Utils = Me.imports.utils;
 
 class PreferencesBuilder {
     constructor() {
@@ -58,6 +58,31 @@ class PreferencesBuilder {
           log("file-set happened: "+user_data.get_filename());
           log(Object.getOwnPropertyNames(user_data));
           this._settings.sound_file = user_data.get_filename();
+        });
+
+        let timers_liststore = this._bo('timers_liststore');
+        let timers_combo_entry = this._bo('timers_combo_entry');
+        let entry_name = this._bo('entry_name');
+        let spin_hours = this._bo('spin_hours');
+        let spin_mins = this._bo('spin_mins');
+        let spin_secs = this._bo('spin_secs');
+
+        // TODO update with initial value
+        this._hms = new Utils.HMS(0);
+
+        spin_hours.connect('value-changed', (spin) => {
+          this._hms.hours = spin.get_value_as_int();
+          log(`duration=${this._hms.toSeconds()}`)
+        });
+
+        spin_mins.connect('value-changed', (spin) => {
+          this._hms.minutes = spin.get_value_as_int();
+          log(`duration=${this._hms.toSeconds()}`)
+        });
+
+        spin_secs.connect('value-changed', (spin) => {
+          this._hms.seconds = spin.get_value_as_int();
+          log(`duration=${this._hms.toSeconds()}`)
         });
 
         // this._builder.get_object('auto_power_off_settings_button').connect('clicked', () => {
@@ -116,25 +141,7 @@ class PreferencesBuilder {
       let sort_descending = this._bo('sort_descending');
       this._ssb('sort-descending', sort_descending, 'active', Gio.SettingsBindFlags.DEFAULT);
 
-        // let autoPowerOnSwitch = this._builder.get_object('auto_power_on_switch');
-        // this._settings.settings.bind('bluetooth-auto-power-on', autoPowerOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-
-        // let autoPowerOffSwitch = this._builder.get_object('auto_power_off_switch');
-        // this._settings.settings.bind('bluetooth-auto-power-off', autoPowerOffSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-
-        // let autoPowerOffInterval = this._builder.get_object('auto_power_off_interval');
-        // this._settings.settings.bind('bluetooth-auto-power-off-interval', autoPowerOffInterval, 'value', Gio.SettingsBindFlags.DEFAULT);
-
-        // let keepMenuOnToggleSwitch = this._builder.get_object('keep_menu_on_toggle');
-        // this._settings.settings.bind('keep-menu-on-toggle', keepMenuOnToggleSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-
-        // let refreshButtonOnSwitch = this._builder.get_object('refresh_button_on');
-        // this._settings.settings.bind('refresh-button-on', refreshButtonOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-
-        // let debugModeOnSwitch = this._builder.get_object('debug_mode_on');
-        // this._settings.settings.bind('debug-mode-on', debugModeOnSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
     }
-
 }
 
 function init() {
