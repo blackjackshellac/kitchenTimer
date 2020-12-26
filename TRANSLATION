@@ -1,0 +1,33 @@
+
+$ ls
+extension.js  locale  metadata.json  po  prefs.js  schemas  stylesheet.css
+$ xgettext --from-code=UTF-8 --output=po/example.pot *.js
+
+$ mkdir ~/.local/share/gnome-shell/extensions/example@wiki.gnome.org/po/
+$ mkdir ~/.local/share/gnome-shell/extensions/example@wiki.gnome.org/locale/
+
+$ msginit --no-translator \
+          --input=po/example.pot \
+          --output-file=po/fr.po --locale=fr
+$ ls po/
+example.pot  fr.po
+
+$ mkdir -p locale/fr/LC_MESSAGES/
+$ msgfmt po/fr.po -o locale/fr/LC_MESSAGES/example.mo
+$ ls locale/fr/LC_MESSAGES/
+example.mo
+
+// If you're using GJS in a standalone application, you should do this yourself
+String.prototype.format = imports.format.format;
+
+// Two examples that both output: A string with a digit "5" and and string "test"
+let num = 5;
+let str = 'test';
+
+// With String.prototype.format()
+'A string with a digit "%d" and string "%s"'.format(num, str);
+
+// With native template literals, doesn't work with xgettext
+'A string with a digit "${num}" and string "${str}"';
+
+

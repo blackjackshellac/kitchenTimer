@@ -77,6 +77,8 @@ class Timers extends Array {
 
     log(`Adding timer ${timer.name} of duration ${timer.duration} seconds`);
     this.push(timer);
+
+    this._settings.pack_timers(this);
   }
 }
 
@@ -96,7 +98,7 @@ class Timer {
     this._duration_ms = duration_secs * 1000;
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
-    this._id = id == undefined ? GLib.uuid_string_random : id;
+    this._id = id == undefined ? GLib.uuid_string_random() : id;
   }
 
   get id() {
@@ -182,7 +184,9 @@ class Timer {
       return false;
     }
     if (this._state == TimerState.RUNNING) {
-      log(`Timer [${this._name}] is already running`);
+      log(`Timer [${this._name}] is already running, resetting`);
+      // TODO prompt to reset
+      this.reset();
       return false;
     }
     this._state = TimerState.RUNNING;

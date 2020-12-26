@@ -48,6 +48,8 @@ run mkdir -p $SCHEMAS
 run cp -puv schemas/*.xml $SCHEMAS/
 run glib-compile-schemas --strict $SCHEMAS
 
+run xgettext --from-code=UTF-8 --output=po/kitchen-timer-blackjackshellac.pot *.js *.ui schemas/*.xml
+
 run mkdir -p $ICONS_SCALABLE_APPS
 run cp -puv *-full.svg ${ICONS_SCALABLE_APPS}/
 

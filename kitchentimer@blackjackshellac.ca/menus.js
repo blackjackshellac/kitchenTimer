@@ -42,6 +42,15 @@ class PanelMenuBuilder {
     });
   }
 
+  create_icon() {
+    var icon = new St.Icon({
+            icon_name: 'kitchen-timer-blackjackshellac-symbolic',
+            style_class: 'system-status-icon',
+        });
+    icon.set_icon_size(16);
+    return icon;
+  }
+
   build() {
     log("Building the popup menu");
 
@@ -68,7 +77,22 @@ class PanelMenuBuilder {
       let bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
 		  bin.child = timer.label;
 		  timer_item.add(bin);
-
+		  var icon_name = 'document-open-recent-symbolic';
+		  if (timer.is_running()) {
+		    icon_name = 'appointment-missed-symbolic';
+		  }
+		  let icon = new St.Icon({
+		    icon_name: icon_name,
+		    style_class: 'system-status-icon'
+		  });
+		  icon.set_icon_size(16);
+		  if (timer.is_running()) {
+		    // https://developer.gnome.org/clutter/stable/ClutterActor.html#ClutterActor.signals
+		    icon.connect('button-press-event', (timer) => {
+		      timer.reset();
+		    });
+		  }
+		  timer_item.add(icon);
       timer_item.connect('activate', (ti) => {
         ti._timer.start();
       });
@@ -170,6 +194,8 @@ class PanelMenuBuilder {
 		this._create_timer_menu.menu.addMenuItem(item);
 
     this._name_entry = new St.Entry();
+    this._name_entry.hint_text = _('Name for timer');
+    this._name_entry.set_primary_icon(this.create_icon());
     item = new PopupMenu.PopupMenuItem("", { reactive: false } );
     bin = new St.Bin({ x_expand: true, x_align: St.Align.START });
     bin.child = this._name_entry;

@@ -19,6 +19,7 @@
 const ExtensionUtils = imports.misc.extensionUtils;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
+const GLib = imports.gi.GLib;
 
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
 class Settings {
@@ -56,6 +57,29 @@ class Settings {
         timers_settings.push(this.to_h(timer));
       });
       return timers_settings;
+    }
+
+    // aa{sv}
+    pack_timers(timers) {
+      var atimers = [];
+      timers.forEach( (timer) => {
+        if (timer.enabled) {
+          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
+          atimers.push(atimer);
+        }
+      });
+      // TODO what if it's empty?
+      var glvtype = atimers.length == 0 ? undefined : atimers[0].get_type();
+      var pack = GLib.Variant.new_array(glvtype, atimers);
+      this.settings.set_value('timers', pack);
+    }
+
+    pack_timer(timer) {
+      var dict = {};
+      dict.id = GLib.Variant.new_string(timer.id);
+      dict.name = GLib.Variant.new_string(timer.name);
+      dict.duration = GLib.Variant.new_int64(timer.duration);
+      return dict;
     }
 
     to_h(timer_settings) {

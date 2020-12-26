@@ -67,12 +67,6 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
         this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this._settings, this._timers);
         this._pmbuilder.build();
-
-        // let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
-        // item.connect('activate', () => {
-        //     Main.notify(_('Whatʼs up, folks?'));
-        // });
-        // this.menu.addMenuItem(item);
     }
 });
 
