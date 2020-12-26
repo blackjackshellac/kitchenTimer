@@ -62,7 +62,7 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <description>Key-Value pairs of commonly used timer settings: key is the name of the preset, value the duration in seconds</description>
     </key>
     <key name="timers" type="aa{sv}">
-      <default>[ {'name': &lt;'bread step 1'&gt;, 'duration': &lt;1800&gt;, 'id': &lt;'844d9bc6138c2e532d3306925fe0dd0d'&gt;} ]</default>
+      <default>[ {'name': &lt;'30 minutes'&gt;, 'duration': &lt;1800&gt;} ]</default>
       <summary>Array of Timer object descriptions</summary>
     </key>
     <key name="sort-by-duration" type="b">
