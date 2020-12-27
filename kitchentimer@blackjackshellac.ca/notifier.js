@@ -64,7 +64,7 @@ class Annoyer {
   }
 
   get sound_enabled() {
-    return this._settings.sound_loops > 0;
+    return this._settings.play_sound;
   }
 
   get sound_loops() {

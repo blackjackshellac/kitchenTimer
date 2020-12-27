@@ -77,6 +77,14 @@ class Settings {
       this.settings.set_boolean(bool);
     }
 
+    get play_sound() {
+      return this.settings.get_boolean('play-sound');
+    }
+
+    set play_sound(bool) {
+      this.settings.set_boolean('play-sound', bool);
+    }
+
     get modal_notification() {
       return this.settings.get_boolean('modal-notification');
     }

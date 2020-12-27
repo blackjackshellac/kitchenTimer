@@ -44,6 +44,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>false</default>
       <summary>Make the notification system modal</summary>
     </key>
+    <key name="play-sound" type="b">
+      <default>true</default>
+      <summary>Play sound notifications</summary>
+    </key>
     <key name="sound-loops" type="i">
       <default>5</default>
       <summary>Number of times to ring alarm sound, 0 is no sound, -1 is infinite</summary>

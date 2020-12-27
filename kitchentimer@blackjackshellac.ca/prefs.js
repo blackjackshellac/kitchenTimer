@@ -61,54 +61,76 @@ class PreferencesBuilder {
         });
 
         let timers_liststore = this._bo('timers_liststore');
+        let timers_combo = this._bo('timers_combo');
         let timers_combo_entry = this._bo('timers_combo_entry');
         let entry_name = this._bo('entry_name');
-        let spin_hours = this._bo('spin_hours');
-        let spin_mins = this._bo('spin_mins');
-        let spin_secs = this._bo('spin_secs');
+        this.spin_hours = this._bo('spin_hours');
+        this.spin_mins = this._bo('spin_mins');
+        this.spin_secs = this._bo('spin_secs');
 
         // TODO update with initial value
         this._hms = new Utils.HMS(0);
 
-        spin_hours.connect('value-changed', (spin) => {
+        var timer_settings = this._settings.unpack_timers();
+        timer_settings.forEach( (timer) => {
+          var iter = timers_liststore.append();
+          //log(`Timer ${Object.keys(timer)}`);
+          timers_liststore.set_value(iter, 0, timer.name);
+          timers_liststore.set_value(iter, 1, timer.id);
+          timers_liststore.set_value(iter, 2, timer.duration);
+        });
+
+        timers_combo.set_active(0);
+        timers_combo.connect('changed', (combo) => {
+          var model = combo.get_model();
+          var iter = combo.get_active_iter();
+          if (iter[0]) {
+            iter = iter[1];
+            var name = model.get_value(iter, 0);
+            var id = model.get_value(iter, 1);
+            var duration = model.get_value(iter, 2);
+            var hms = new Utils.HMS(duration);
+            this._update_time(hms);
+          }
+        });
+
+        // TODO fix this duplication
+           var model = timers_combo.get_model();
+           var iter = timers_combo.get_active_iter();
+          if (iter[0]) {
+            iter = iter[1];
+            var name = model.get_value(iter, 0);
+            var id = model.get_value(iter, 1);
+            var duration = model.get_value(iter, 2);
+            var hms = new Utils.HMS(duration);
+            this._update_time(hms);
+          }
+
+        this.spin_hours.connect('value-changed', (spin) => {
           this._hms.hours = spin.get_value_as_int();
           log(`duration=${this._hms.toSeconds()}`)
         });
 
-        spin_mins.connect('value-changed', (spin) => {
+        this.spin_mins.connect('value-changed', (spin) => {
           this._hms.minutes = spin.get_value_as_int();
           log(`duration=${this._hms.toSeconds()}`)
         });
 
-        spin_secs.connect('value-changed', (spin) => {
+        this.spin_secs.connect('value-changed', (spin) => {
           this._hms.seconds = spin.get_value_as_int();
           log(`duration=${this._hms.toSeconds()}`)
         });
 
-        // this._builder.get_object('auto_power_off_settings_button').connect('clicked', () => {
-        //     let dialog = new Gtk.Dialog({
-        //         title: 'Auto power off settings',
-        //         transient_for: this._widget.get_toplevel(),
-        //         use_header_bar: true,
-        //         modal: true
-        //     });
-
-
-        //     let box = this._builder.get_object('auto_power_off_settings');
-        //     dialog.get_content_area().add(box);
-
-        //     dialog.connect('response', (dialog) => {
-        //         dialog.get_content_area().remove(box);
-        //         dialog.destroy();
-        //     });
-
-        //     dialog.show_all();
-        // });
-
-
         this._bind();
 
         return this._widget;
+    }
+
+    _update_time(hms) {
+      this.spin_hours.set_value(hms.hours);
+      this.spin_mins.set_value(hms.minutes);
+      this.spin_secs.set_value(hms.seconds);
+
     }
 
     /**
@@ -128,6 +150,9 @@ class PreferencesBuilder {
     _bind() {
       let notification = this._bo('notification');
       this._ssb('notification', notification, 'active', Gio.SettingsBindFlags.DEFAULT);
+
+      let play_sound = this._bo('play_sound');
+      this._ssb('play-sound', play_sound, 'active', Gio.SettingsBindFlags.DEFAULT);
 
       let sound_loops = this._bo('sound_loops');
       this._ssb('sound-loops', sound_loops, 'value', Gio.SettingsBindFlags.DEFAULT);

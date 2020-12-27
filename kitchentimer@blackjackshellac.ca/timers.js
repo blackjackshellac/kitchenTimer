@@ -58,7 +58,7 @@ class Timers extends Array {
     var timers_array = [...this];
     if (this.sort_by_duration) {
       log('sort by duration');
-      var direction= this.sort_descending ? 1 : -1;
+      var direction= this.sort_descending ? -1 : 1;
       timers_array.sort( (a,b) => {
         return (a.duration-b.duration)*direction;
       });
