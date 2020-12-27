@@ -67,6 +67,7 @@ class PreferencesBuilder {
         this.spin_hours = this._bo('spin_hours');
         this.spin_mins = this._bo('spin_mins');
         this.spin_secs = this._bo('spin_secs');
+
         this.timers_apply = this._bo('timers_apply');
         this.timers_remove = this._bo('timers_remove');
 
@@ -82,12 +83,12 @@ class PreferencesBuilder {
           this.timers_liststore.set_value(iter, 2, timer.duration);
         });
 
-        timers_combo.set_active(0);
-        timers_combo.connect('changed', (combo) => {
+        this.timers_combo.set_active(0);
+        this.timers_combo.connect('changed', (combo) => {
           this._update_from_combo(combo);
         });
 
-        this._update_from_combo(timers_combo);
+        this._update_from_combo(this.timers_combo);
 
         this.spin_hours.connect('value-changed', (spin) => {
           this._hms.hours = spin.get_value_as_int();
@@ -101,12 +102,12 @@ class PreferencesBuilder {
           this._hms.seconds = spin.get_value_as_int();
         });
 
-        this.timers_apply.connected('clicked', () => {
+        this.timers_apply.connect('clicked', () => {
           log('Apply changes to selected timer');
           log(this._hms.toString());
         });
 
-        this.timers_remove.connected('clicked', () => {
+        this.timers_remove.connect('clicked', () => {
           log('Remove selected timer');
         });
 
