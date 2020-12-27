@@ -69,7 +69,7 @@ class PanelMenuBuilder {
 
     this._addSeparator();
 
-    this._timers.sorted().forEach(timer => {
+    this._timers.sorted().forEach( (timer) => {
       var hms = new Utils.HMS(timer.duration);
       var time = hms.toString();
       var timer_item = this._addItem(timer.name);

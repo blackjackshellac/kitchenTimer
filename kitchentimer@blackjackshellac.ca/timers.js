@@ -37,11 +37,22 @@ class Timers extends Array {
   }
 
   refresh() {
-    this.length = 0;
-    var timers = this._settings.unpack_timers();
-    timers.forEach( (h) => {
-      var timer = new Timer(h.name, h.duration, h.id);
-      this.add(timer);
+    var settings_timers = this._settings.unpack_timers();
+    settings_timers.forEach( (settings_timer) => {
+      var found = false;
+      for (var i = 0; i < this.length; i++) {
+        timer=this[i];
+        found = timer.refresh_with(settings_timer);
+        if (found) {
+          log(`Found timer ${timer.name} with ${timer._end}`);
+          break;
+        }
+      }
+      if (!found) {
+        log(`Timer ${settings_timer.name} not found`);
+        var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
+        this.add(timer);
+      }
     });
   }
 
@@ -100,7 +111,6 @@ class Timer {
     this._enabled = true;
     this._interval_ms = 100;
     this._name = name;
-    this._duration_ms = duration_secs * 1000;
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
     this._id = id == undefined ? GLib.uuid_string_random() : id;
@@ -123,9 +133,21 @@ class Timer {
     return this._name;
   }
 
+  set name(name) {
+    this._name = name;
+  }
+
   // Timer.new('foo', 50).duration is 50000
   get duration() {
     return this._duration_secs;
+  }
+
+  set duration(duration) {
+    this._duration_secs = duration;
+  }
+
+  duration_ms() {
+    return this.duration * 1000;
   }
 
   get label() {
@@ -149,8 +171,9 @@ class Timer {
     if (now > end || !timer.is_running()) {
       return timer.stop_callback();
     }
-    //log(`Timer [${timer._name}] has not ended: ${delta}`);
+
     var delta = Math.ceil((end-now) / 1000);
+    //log(`Timer [${timer._name}] has not ended: ${delta}`);
     var hms = new Utils.HMS(delta);
     timer._label.set_text(hms.toString());
     return true;
@@ -196,10 +219,20 @@ class Timer {
     }
     this._state = TimerState.RUNNING;
     this._start = Date.now();
-    this._end = this._start + this._duration_ms;
+    this._end = this._start + this.duration_ms();
 
     log(`Starting timer [${this._name}] at ${this._start}`);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
+  }
+
+  refresh_with(timer_settings) {
+    if (timer_settings.id == this.id) {
+      this._name = timer_settings.name;
+      this._duration_secs = timer_settings.duration;
+      this._enabled = timer_settings.enabled;
+      return true;
+    }
+    return false;
   }
 }
