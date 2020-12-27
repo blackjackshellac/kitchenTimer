@@ -60,65 +60,54 @@ class PreferencesBuilder {
           this._settings.sound_file = user_data.get_filename();
         });
 
-        let timers_liststore = this._bo('timers_liststore');
-        let timers_combo = this._bo('timers_combo');
-        let timers_combo_entry = this._bo('timers_combo_entry');
-        let entry_name = this._bo('entry_name');
+        this.timers_liststore = this._bo('timers_liststore');
+        this.timers_combo = this._bo('timers_combo');
+        this.timers_combo_entry = this._bo('timers_combo_entry');
+        //let entry_name = this._bo('entry_name');
         this.spin_hours = this._bo('spin_hours');
         this.spin_mins = this._bo('spin_mins');
         this.spin_secs = this._bo('spin_secs');
+        this.timers_apply = this._bo('timers_apply');
+        this.timers_remove = this._bo('timers_remove');
 
         // TODO update with initial value
         this._hms = new Utils.HMS(0);
 
-        var timer_settings = this._settings.unpack_timers();
-        timer_settings.forEach( (timer) => {
-          var iter = timers_liststore.append();
+        this._timer_settings = this._settings.unpack_timers();
+        this._timer_settings.forEach( (timer) => {
+          var iter = this.timers_liststore.append();
           //log(`Timer ${Object.keys(timer)}`);
-          timers_liststore.set_value(iter, 0, timer.name);
-          timers_liststore.set_value(iter, 1, timer.id);
-          timers_liststore.set_value(iter, 2, timer.duration);
+          this.timers_liststore.set_value(iter, 0, timer.name);
+          this.timers_liststore.set_value(iter, 1, timer.id);
+          this.timers_liststore.set_value(iter, 2, timer.duration);
         });
 
         timers_combo.set_active(0);
         timers_combo.connect('changed', (combo) => {
-          var model = combo.get_model();
-          var iter = combo.get_active_iter();
-          if (iter[0]) {
-            iter = iter[1];
-            var name = model.get_value(iter, 0);
-            var id = model.get_value(iter, 1);
-            var duration = model.get_value(iter, 2);
-            var hms = new Utils.HMS(duration);
-            this._update_time(hms);
-          }
+          this._update_from_combo(combo);
         });
 
-        // TODO fix this duplication
-           var model = timers_combo.get_model();
-           var iter = timers_combo.get_active_iter();
-          if (iter[0]) {
-            iter = iter[1];
-            var name = model.get_value(iter, 0);
-            var id = model.get_value(iter, 1);
-            var duration = model.get_value(iter, 2);
-            var hms = new Utils.HMS(duration);
-            this._update_time(hms);
-          }
+        this._update_from_combo(timers_combo);
 
         this.spin_hours.connect('value-changed', (spin) => {
           this._hms.hours = spin.get_value_as_int();
-          log(`duration=${this._hms.toSeconds()}`)
         });
 
         this.spin_mins.connect('value-changed', (spin) => {
           this._hms.minutes = spin.get_value_as_int();
-          log(`duration=${this._hms.toSeconds()}`)
         });
 
         this.spin_secs.connect('value-changed', (spin) => {
           this._hms.seconds = spin.get_value_as_int();
-          log(`duration=${this._hms.toSeconds()}`)
+        });
+
+        this.timers_apply.connected('clicked', () => {
+          log('Apply changes to selected timer');
+          log(this._hms.toString());
+        });
+
+        this.timers_remove.connected('clicked', () => {
+          log('Remove selected timer');
         });
 
         this._bind();
@@ -126,11 +115,26 @@ class PreferencesBuilder {
         return this._widget;
     }
 
-    _update_time(hms) {
+    _update_from_combo(timers_combo) {
+      // TODO fix this duplication
+      var model = timers_combo.get_model();
+      var iter = timers_combo.get_active_iter();
+      if (iter[0]) {
+        iter = iter[1];
+        var name = model.get_value(iter, 0);
+        var id = model.get_value(iter, 1);
+        var duration = model.get_value(iter, 2);
+        var hms = new Utils.HMS(duration);
+        this._update_spinners(hms);
+      } else {
+        log("combo has not active iter");
+      }
+    }
+
+    _update_spinners(hms) {
       this.spin_hours.set_value(hms.hours);
       this.spin_mins.set_value(hms.minutes);
       this.spin_secs.set_value(hms.seconds);
-
     }
 
     /**
@@ -165,7 +169,6 @@ class PreferencesBuilder {
 
       let sort_descending = this._bo('sort_descending');
       this._ssb('sort-descending', sort_descending, 'active', Gio.SettingsBindFlags.DEFAULT);
-
     }
 }
 

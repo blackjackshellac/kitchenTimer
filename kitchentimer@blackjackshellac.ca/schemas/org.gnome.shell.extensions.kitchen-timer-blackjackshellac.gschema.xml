@@ -66,8 +66,13 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <description>Key-Value pairs of commonly used timer settings: key is the name of the preset, value the duration in seconds</description>
     </key>
     <key name="timers" type="aa{sv}">
-      <default>[ {'name': &lt;'30 minutes'&gt;, 'duration': &lt;1800&gt;} ]</default>
+      <default>[ {'name': &lt;'30 minutes'&gt;, 'duration': &lt;1800&gt;, 'enabled': &lt;true&gt;} ]</default>
       <summary>Array of Timer object descriptions</summary>
+    </key>
+    <key name="timers-json" type="s">
+      <default>'[{"name":"5 minutes","duration":300,"enabled":true}]'</default>
+      <summary>timers configuration stored as json</summary>
+      <description>Experimental feature for storing timer data</description>
     </key>
     <key name="sort-by-duration" type="b">
       <default>true</default>

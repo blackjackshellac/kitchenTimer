@@ -58,6 +58,7 @@ class Settings {
       dict.id = GLib.Variant.new_string(timer.id);
       dict.name = GLib.Variant.new_string(timer.name);
       dict.duration = GLib.Variant.new_int64(timer.duration);
+      dict.enabled = GLib.Variant.new_boolean(timer.enabled);
       return dict;
     }
 
@@ -146,18 +147,5 @@ class Settings {
         var schema = extension.metadata['settings-schema'];
 
         return new Gio.Settings({schema: schema});
-        /*
-        let schemaSource = GioSSS.new_from_directory(
-            extension.dir.get_child('schemas').get_path(),
-            GioSSS.get_default(),
-            false
-        );
-
-        let schemaObj = schemaSource.lookup(schema, true);
-
-        log("schema loaded");
-
-        return new Gio.Settings({settings_schema: schemaObj});
-        */
     }
 }

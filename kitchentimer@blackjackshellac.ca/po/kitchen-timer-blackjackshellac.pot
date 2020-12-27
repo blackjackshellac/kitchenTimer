@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-27 08:26-0500\n"
+"POT-Creation-Date: 2020-12-27 11:34-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,106 +59,106 @@ msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
 
-#: settings.ui:110
+#: settings.ui:111
 msgctxt "notification_text"
 msgid "Notification"
 msgstr ""
 
-#: settings.ui:124
+#: settings.ui:125
 msgctxt "show_time_text"
 msgid "Show time"
 msgstr ""
 
-#: settings.ui:138
+#: settings.ui:139
 msgctxt "show_pie_text"
 msgid "Show pie"
 msgstr ""
 
-#: settings.ui:152
+#: settings.ui:153
 msgctxt "sort_by_duration_text"
 msgid "Sort by duration"
 msgstr ""
 
-#: settings.ui:166
+#: settings.ui:167
 msgctxt "sort_descending_text"
 msgid "Sort descending"
 msgstr ""
 
-#: settings.ui:180
+#: settings.ui:181
 msgctxt "annoy_text"
 msgid "Annoy"
 msgstr ""
 
-#: settings.ui:193
+#: settings.ui:194
 msgctxt "play-sound-text"
 msgid "Play sound"
 msgstr ""
 
-#: settings.ui:210
+#: settings.ui:211
 msgid "Options"
 msgstr ""
 
-#: settings.ui:231
+#: settings.ui:232
 msgid "Sound loops"
 msgstr ""
 
-#: settings.ui:244
+#: settings.ui:245
 msgctxt "sound_loops_tooltip"
-msgid "Loops to play timer notification sound, 0 is no sound"
+msgid "Loops to play timer notification sound"
 msgstr ""
 
-#: settings.ui:247
+#: settings.ui:248
 msgid "Sound loops, 0 is off"
 msgstr ""
 
-#: settings.ui:267
+#: settings.ui:268
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
 
-#: settings.ui:270
+#: settings.ui:271
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:284
+#: settings.ui:285
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:294
+#: settings.ui:295
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:321
+#: settings.ui:322
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
 
-#: settings.ui:402
+#: settings.ui:403
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:429
+#: settings.ui:430
 msgid "1"
 msgstr ""
 
-#: settings.ui:444
+#: settings.ui:445
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:474
+#: settings.ui:475
 msgid "0"
 msgstr ""
 
-#: settings.ui:488
+#: settings.ui:489
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:516
+#: settings.ui:517
 msgid "Timers"
 msgstr ""
 
@@ -201,13 +201,21 @@ msgid "Array of Timer object descriptions"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:74
+msgid "timers configuration stored as json"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:75
+msgid "Experimental feature for storing timer data"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:79
 msgid "Sort list of timers by duration"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:83
 msgid "Sort from longest to shortest"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
 msgid "Turn on debugging"
 msgstr ""
