@@ -32,12 +32,17 @@ class Timers extends Array {
     this._settings = settings;
     this._notifier = new Notifier.Annoyer(settings);
 
+    this.refresh();
+
+  }
+
+  refresh() {
+    this.length = 0;
     var timers = this._settings.unpack_timers();
     timers.forEach( (h) => {
       var timer = new Timer(h.name, h.duration, h.id);
       this.add(timer);
     });
-
   }
 
   isEmpty() {

@@ -76,6 +76,8 @@ Author: Steeve McCauley
       <column type="gchararray"/>
       <!-- column-name duration -->
       <column type="guint64"/>
+      <!-- column-name enabled -->
+      <column type="gboolean"/>
     </columns>
   </object>
   <object class="GtkBox" id="kitchenTimer_settings">

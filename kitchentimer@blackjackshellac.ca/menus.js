@@ -55,6 +55,7 @@ class PanelMenuBuilder {
     log("Building the popup menu");
 
     this._menu.removeAll();
+    this._timers.refresh();
 
     // this._addSwitch(_("Run Timer")).connect("toggled", () => {
       // this._stopTimer = !(this._stopTimer);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-27 11:34-0500\n"
+"POT-Creation-Date: 2020-12-27 15:28-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,31 +21,31 @@ msgstr ""
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menus.js:66
+#: menus.js:67
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:133
+#: menus.js:134
 msgid "Hours"
 msgstr ""
 
-#: menus.js:155
+#: menus.js:156
 msgid "Minutes"
 msgstr ""
 
-#: menus.js:175
+#: menus.js:176
 msgid "Seconds"
 msgstr ""
 
-#: menus.js:193
+#: menus.js:194
 msgid "Name"
 msgstr ""
 
-#: menus.js:197
+#: menus.js:198
 msgid "Name for timer"
 msgstr ""
 
-#: menus.js:205
+#: menus.js:206
 msgid "Create"
 msgstr ""
 
@@ -59,106 +59,106 @@ msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
 
-#: settings.ui:111
+#: settings.ui:123
 msgctxt "notification_text"
 msgid "Notification"
 msgstr ""
 
-#: settings.ui:125
+#: settings.ui:137
 msgctxt "show_time_text"
 msgid "Show time"
 msgstr ""
 
-#: settings.ui:139
+#: settings.ui:151
 msgctxt "show_pie_text"
 msgid "Show pie"
 msgstr ""
 
-#: settings.ui:153
+#: settings.ui:165
 msgctxt "sort_by_duration_text"
 msgid "Sort by duration"
 msgstr ""
 
-#: settings.ui:167
+#: settings.ui:179
 msgctxt "sort_descending_text"
 msgid "Sort descending"
 msgstr ""
 
-#: settings.ui:181
+#: settings.ui:193
 msgctxt "annoy_text"
 msgid "Annoy"
 msgstr ""
 
-#: settings.ui:194
+#: settings.ui:206
 msgctxt "play-sound-text"
 msgid "Play sound"
 msgstr ""
 
-#: settings.ui:211
+#: settings.ui:223
 msgid "Options"
 msgstr ""
 
-#: settings.ui:232
+#: settings.ui:244
 msgid "Sound loops"
 msgstr ""
 
-#: settings.ui:245
+#: settings.ui:257
 msgctxt "sound_loops_tooltip"
 msgid "Loops to play timer notification sound"
 msgstr ""
 
-#: settings.ui:248
+#: settings.ui:260
 msgid "Sound loops, 0 is off"
 msgstr ""
 
-#: settings.ui:268
+#: settings.ui:280
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
 
-#: settings.ui:271
+#: settings.ui:283
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:285
+#: settings.ui:297
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:295
+#: settings.ui:307
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:322
+#: settings.ui:334
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
 
-#: settings.ui:403
+#: settings.ui:418
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:430
+#: settings.ui:445
 msgid "1"
 msgstr ""
 
-#: settings.ui:445
+#: settings.ui:460
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:475
+#: settings.ui:490
 msgid "0"
 msgstr ""
 
-#: settings.ui:489
+#: settings.ui:504
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:517
+#: settings.ui:529
 msgid "Timers"
 msgstr ""
 

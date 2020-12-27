@@ -81,6 +81,7 @@ class PreferencesBuilder {
           this.timers_liststore.set_value(iter, 0, timer.name);
           this.timers_liststore.set_value(iter, 1, timer.id);
           this.timers_liststore.set_value(iter, 2, timer.duration);
+          this.timers_liststore.set_value(iter, 3, timer.enabled);
         });
 
         this.timers_combo.set_active(0);
@@ -105,15 +106,61 @@ class PreferencesBuilder {
         this.timers_apply.connect('clicked', () => {
           log('Apply changes to selected timer');
           log(this._hms.toString());
+          var timer = this._get_active_liststore_entry();
+          if (timer.id != undefined) {
+            timer.enabled = true;
+            timer.duration = this._hms.toSeconds();
+            timer = this._replace_timer_settings(timer, true);
+            this._update_from_combo(this.timers_combo);
+          }
         });
 
         this.timers_remove.connect('clicked', () => {
           log('Remove selected timer');
+          var timer = this._get_active_liststore_entry();
+          if (timer.id !== undefined) {
+            timer.enabled = false;
+            timer = this._replace_timer_settings(timer, true);
+            this._update_from_combo(this.timers_combo);
+          }
         });
 
         this._bind();
 
         return this._widget;
+    }
+
+    _replace_timer_settings(updated_timer, pack) {
+      this._timer_settings.forEach((timer) => {
+        if (timer.id == updated_timer.id) {
+          log(`Updating timer ${timer.name}`);
+          timer.id = updated_timer.id;
+          timer.name = updated_timer.name;
+          timer.duration = updated_timer.duration;
+          timer.enabled = updated_timer.enabled;
+          if (pack) {
+            this._settings.pack_timers(this._timer_settings);
+          }
+          return timer;
+        }
+      });
+      return undefined;
+    }
+
+    _get_active_liststore_entry() {
+      var model = this.timers_combo.get_model();
+      var iter = this.timers_combo.get_active_iter();
+      var timer = {}
+      if (iter[0]) {
+        iter = iter[1];
+        timer.name = model.get_value(iter, 0);
+        timer.id = model.get_value(iter, 1);
+        timer.duration = model.get_value(iter, 2);
+        timer.enabled = model.get_value(iter, 3);
+      } else {
+        timer.id = undefined;
+      }
+      return timer;
     }
 
     _update_from_combo(timers_combo) {
@@ -125,6 +172,7 @@ class PreferencesBuilder {
         var name = model.get_value(iter, 0);
         var id = model.get_value(iter, 1);
         var duration = model.get_value(iter, 2);
+        var enabled = model.get_value(iter, 3);
         var hms = new Utils.HMS(duration);
         this._update_spinners(hms);
       } else {
