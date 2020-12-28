@@ -72,3 +72,5 @@ fi
 run cd $EXTENSIONS/$ED
 pwd
 
+info "Alt-F2 'r' to restart gnome shell"
+
