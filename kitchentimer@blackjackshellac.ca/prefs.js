@@ -69,6 +69,7 @@ class PreferencesBuilder {
         this.spin_secs = this._bo('spin_secs');
 
         this.timers_apply = this._bo('timers_apply');
+        this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
 
         // TODO update with initial value
@@ -123,6 +124,17 @@ class PreferencesBuilder {
             timer = this._replace_timer_settings(timer, true);
             this._update_from_combo(this.timers_combo);
           }
+        });
+
+        this.timers_add.connect('clicked', () => {
+          log('Add new timer');
+          var iter = this.timers_liststore.append();
+          //log(`Timer ${Object.keys(timer)}`);
+          this.timers_liststore.set_value(iter, 0, "New timer"); // name
+          this.timers_liststore.set_value(iter, 1, null);   // id
+          this.timers_liststore.set_value(iter, 2, 0);           // duration
+          this.timers_liststore.set_value(iter, 3, true);        // enabled
+          this._update_from_combo(this.timers_combo);
         });
 
         this._bind();

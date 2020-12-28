@@ -49,11 +49,17 @@ Author: Steeve McCauley
       <mime-type>*</mime-type>
     </mime-types>
   </object>
+  <object class="GtkImage" id="img_add">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
+    <property name="icon-name">list-add</property>
+  </object>
   <object class="GtkImage" id="img_apply">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="tooltip-text" translatable="yes" context="apply-timer">Add or update selected timer</property>
-    <property name="icon-name">list-add</property>
+    <property name="tooltip-text" translatable="yes" context="apply-timer">Update selected timer</property>
+    <property name="icon-name">view-refresh</property>
   </object>
   <object class="GtkImage" id="img_remove">
     <property name="visible">True</property>
@@ -355,6 +361,7 @@ Author: Steeve McCauley
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
+                            <property name="tooltip-text" translatable="yes" context="apply-timer">Update selected timer</property>
                             <property name="image">img_apply</property>
                             <property name="always-show-image">True</property>
                             <signal name="clicked" handler="on_timers_apply_clicked" swapped="no"/>
@@ -366,13 +373,13 @@ Author: Steeve McCauley
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="timers_remove">
+                          <object class="GtkButton" id="timers_add">
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
-                            <property name="image">img_remove</property>
+                            <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
+                            <property name="image">img_add</property>
                             <property name="always-show-image">True</property>
-                            <signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -381,7 +388,20 @@ Author: Steeve McCauley
                           </packing>
                         </child>
                         <child>
-                          <placeholder/>
+                          <object class="GtkButton" id="timers_remove">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">True</property>
+                            <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
+                            <property name="image">img_remove</property>
+                            <property name="always-show-image">True</property>
+                            <signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">3</property>
+                          </packing>
                         </child>
                       </object>
                       <packing>
