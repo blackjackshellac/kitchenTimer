@@ -19,7 +19,7 @@
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const {GLib, St} = imports.gi;
+const {GLib, St, Clutter} = imports.gi;
 const Main = imports.ui.main;
 
 const Utils = Me.imports.utils;
@@ -33,6 +33,14 @@ class Timers extends Array {
     this._notifier = new Notifier.Annoyer(settings);
 
     this._panel_label=new St.Label({ text: "" });
+		this._pie = new St.DrawingArea({
+			y_align: Clutter.ActorAlign.CENTER,
+			y_expand: true
+		});
+
+	 	this._pie.set_width(30);
+		this._pie.set_height(25);
+		//this._pie.connect('repaint', Lang.bind(this, this._draw));
 
     this.refresh();
 
@@ -40,6 +48,10 @@ class Timers extends Array {
 
   get panel_label() {
     return this._panel_label;
+  }
+
+  get pie() {
+    return this._pie;
   }
 
   refresh() {
@@ -56,7 +68,7 @@ class Timers extends Array {
       }
       if (!found) {
         log(`Timer ${settings_timer.name} not found`);
-        var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
+        var timer = new Timer(this, settings_timer.name, settings_timer.duration, settings_timer.id);
         this.add(timer);
       }
     });
@@ -88,15 +100,22 @@ class Timers extends Array {
     return timers_array.filter(timer => timer.enabled);
   }
 
+  sort_by_remaining() {
+    var running_timers = [...this].filter(timer => timer.is_running());
+
+    log(`running timers length=${running_timers.length}`);
+    var now=Date.now();
+    return running_timers.sort( (a,b) => {
+      (a._end-now)-(b._end-now);
+    });
+  }
+
   timer_by_id(id) {
     var tbid = this.filter(timer => timer.id == id);
     return tbid.length == 0 ? null : tbid[0];
   }
 
   add(timer) {
-    timer._settings = this._settings;
-    timer._notifier = this._notifier;
-    timer._panel_label = this.panel_label;
 
     log(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
     this.push(timer);
@@ -113,7 +132,7 @@ const TimerState = {
 
 class Timer {
 
-  constructor(name, duration_secs, id=undefined) {
+  constructor(timers, name, duration_secs, id=undefined) {
     log(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._interval_ms = 100;
@@ -121,6 +140,13 @@ class Timer {
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
     this._id = Utils.uuid(id);
+
+    // point back to timers
+    this._timers = timers;
+
+    this._notifier = timers._notifier;
+    this._panel_label = timers.panel_label;
+
   }
 
   get id() {
@@ -182,8 +208,12 @@ class Timer {
     var delta = Math.ceil((end-now) / 1000);
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
     var hms = new Utils.HMS(delta);
+
     timer._label.set_text(hms.toString());
-    timer._panel_label.set_text(hms.toString(true));
+    var running_timers = timer._timers.sort_by_remaining();
+    if (running_timers.length > 0 && running_timers[0] == timer) {
+      timer._panel_label.set_text(hms.toString(true));
+    }
     return true;
   }
 

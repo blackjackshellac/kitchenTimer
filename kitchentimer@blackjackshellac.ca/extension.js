@@ -55,6 +55,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
 
         box.add(this._timers.panel_label);
+        box.add(this._timers.pie);
 
         this.add_child(box);
 
