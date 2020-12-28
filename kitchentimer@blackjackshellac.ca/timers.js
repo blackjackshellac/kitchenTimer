@@ -19,7 +19,7 @@
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const {GLib} = imports.gi;
+const {GLib, St} = imports.gi;
 const Main = imports.ui.main;
 
 const Utils = Me.imports.utils;
@@ -32,8 +32,14 @@ class Timers extends Array {
     this._settings = settings;
     this._notifier = new Notifier.Annoyer(settings);
 
+    this._panel_label=new St.Label({ text: "" });
+
     this.refresh();
 
+  }
+
+  get panel_label() {
+    return this._panel_label;
   }
 
   refresh() {
@@ -90,8 +96,9 @@ class Timers extends Array {
   add(timer) {
     timer._settings = this._settings;
     timer._notifier = this._notifier;
+    timer._panel_label = this.panel_label;
 
-    log(`Adding timer ${timer.name} of duration ${timer.duration} seconds`);
+    log(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
     this.push(timer);
 
     this._settings.pack_timers(this);
@@ -176,6 +183,7 @@ class Timer {
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
     var hms = new Utils.HMS(delta);
     timer._label.set_text(hms.toString());
+    timer._panel_label.set_text(hms.toString(true));
     return true;
   }
 
@@ -193,6 +201,7 @@ class Timer {
     this._notifier.annoy(_(`Timer [${this._name}] completed`));
     var hms = new Utils.HMS(this.duration);
     this._label.set_text(hms.toString());
+    this._panel_label.set_text("");
 
     // return with false to stop interval callback loop
     return false;

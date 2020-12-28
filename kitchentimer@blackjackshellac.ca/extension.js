@@ -53,6 +53,9 @@ class KitchenTimerIndicator extends PanelMenu.Button {
             style_class: 'system-status-icon',
         }));
         box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
+
+        box.add(this._timers.panel_label);
+
         this.add_child(box);
 
         // var test_timer = new Timer("test 5 seconds", 5);

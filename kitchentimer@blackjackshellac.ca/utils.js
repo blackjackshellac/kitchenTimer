@@ -133,8 +133,18 @@ class HMS {
     return this._hours*3600 + this._minutes*60 + this._seconds;
   }
 
-  toString() {
-    return `${this._hours}h ${this._minutes}m ${this._seconds}s`;
+  toString(compact) {
+    var ws=" ";
+    if (compact) {
+      var time="";
+      if (this._hours == 0 && this._minutes == 0) {
+        return `${this._seconds}s`;
+      } else if (this._hours == 0) {
+        return `${this._minutes}m${this._seconds}s`;
+      }
+      ws="";
+    }
+    return `${this._hours}h${ws}${this._minutes}m${ws}${this._seconds}s`;
   }
 }
 
