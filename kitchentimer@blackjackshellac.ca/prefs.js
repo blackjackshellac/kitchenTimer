@@ -87,32 +87,56 @@ class PreferencesBuilder {
 
         this.timers_combo.set_active(0);
         this.timers_combo.connect('changed', (combo) => {
-          this._update_from_combo(combo);
+          this._update_combo_from_model(combo);
         });
 
-        this._update_from_combo(this.timers_combo);
+        this._update_combo_from_model(this.timers_combo);
 
         this.spin_hours.connect('value-changed', (spin) => {
           this._hms.hours = spin.get_value_as_int();
+          this.timers_liststore.set_value(this._iter, 2, this._hms.toSeconds());
         });
 
         this.spin_mins.connect('value-changed', (spin) => {
           this._hms.minutes = spin.get_value_as_int();
+          this.timers_liststore.set_value(this._iter, 2, this._hms.toSeconds());
         });
 
         this.spin_secs.connect('value-changed', (spin) => {
           this._hms.seconds = spin.get_value_as_int();
+          this.timers_liststore.set_value(this._iter, 2, this._hms.toSeconds());
+        });
+
+        this.timers_combo.connect('set-focus-child', (combo) => {
+          var iter = combo.get_active_iter();
+          var child = combo.get_focus_child();
+          log(`current child focus=${child}`);
+          if (child == null) {
+            //combo.set_active_iter(this._iter);
+            this.timers_liststore.set_value(this._iter, 0, this.timers_combo_entry.get_text());
+          } else if (iter[0]) {
+            log('combox box iter saved');
+            this._iter = iter[1];
+          } else {
+            log('combo box does not have an active iter: current='+this._iter);
+          }
+
         });
 
         this.timers_apply.connect('clicked', () => {
           log('Apply changes to selected timer');
           log(this._hms.toString());
           var timer = this._get_active_liststore_entry();
+          timer.id = Utils.uuid(timer.id);
           if (timer.id != undefined) {
             timer.enabled = true;
             timer.duration = this._hms.toSeconds();
+            timer.name = this.timers_combo_entry.get_text(); // this.timers_combo_entry.get_text();
             timer = this._replace_timer_settings(timer, true);
-            this._update_from_combo(this.timers_combo);
+            if (timer !== undefined) {
+              _update_active_listore_entry(timer);
+            }
+            this._update_combo_from_model(this.timers_combo);
           }
         });
 
@@ -122,19 +146,32 @@ class PreferencesBuilder {
           if (timer.id !== undefined) {
             timer.enabled = false;
             timer = this._replace_timer_settings(timer, true);
-            this._update_from_combo(this.timers_combo);
+            if (timer !== undefined) {
+              _update_active_listore_entry(timer);
+            }
+            this._update_combo_from_model(this.timers_combo);
           }
         });
 
         this.timers_add.connect('clicked', () => {
           log('Add new timer');
           var iter = this.timers_liststore.append();
+
           //log(`Timer ${Object.keys(timer)}`);
-          this.timers_liststore.set_value(iter, 0, "New timer"); // name
-          this.timers_liststore.set_value(iter, 1, null);   // id
+          this.timers_liststore.set_value(iter, 0, ""); // name
+          this.timers_liststore.set_value(iter, 1, Utils.uuid());   // id
           this.timers_liststore.set_value(iter, 2, 0);           // duration
           this.timers_liststore.set_value(iter, 3, true);        // enabled
-          this._update_from_combo(this.timers_combo);
+
+          var index = this.timers_liststore.iter_n_children(null);
+
+          //iter = this.timers_liststore.iter_nth_child(null, index-1);
+          var model = this.timers_combo.get_model();
+          iter = model.iter_nth_child(null, index-1);
+          log(`liststore rows=${index} 0=${iter[0]} 1=${iter[1]}`);
+          this._iter = iter[1];
+          this.timers_combo.set_active_iter(this._iter);
+          this._update_combo_from_model(this.timers_combo);
         });
 
         this._bind();
@@ -145,11 +182,11 @@ class PreferencesBuilder {
     _replace_timer_settings(updated_timer, pack) {
       this._timer_settings.forEach((timer) => {
         if (timer.id == updated_timer.id) {
-          log(`Updating timer ${timer.name}`);
-          timer.id = updated_timer.id;
+          timer.id = Utils.uuid(updated_timer.id);
           timer.name = updated_timer.name;
           timer.duration = updated_timer.duration;
           timer.enabled = updated_timer.enabled;
+          log(`Updating timer ${timer.name} ${timer.duration} ${timer.enabled}: ${timer.id}`);
           if (pack) {
             this._settings.pack_timers(this._timer_settings);
           }
@@ -159,28 +196,41 @@ class PreferencesBuilder {
       return undefined;
     }
 
+    _update_active_listore_entry(timer) {
+      var iter = this.timers_combo.get_active_iter();
+      iter = iter[0] ? iter[1] : this._iter;
+      if (iter) {
+          this.timers_liststore.set_value(iter, 0, timer.name);
+          this.timers_liststore.set_value(iter, 1, timer.id);
+          this.timers_liststore.set_value(iter, 2, timer.duration);
+          this.timers_liststore.set_value(iter, 3, timer.enabled);
+      } else {
+        log('cannot update liststore entry, combo has no active iter');
+      }
+    }
+
     _get_active_liststore_entry() {
       var model = this.timers_combo.get_model();
       var iter = this.timers_combo.get_active_iter();
+      iter = iter[0] ? iter[1] : this._iter;
       var timer = {}
-      if (iter[0]) {
-        iter = iter[1];
+      if (iter) {
         timer.name = model.get_value(iter, 0);
         timer.id = model.get_value(iter, 1);
         timer.duration = model.get_value(iter, 2);
         timer.enabled = model.get_value(iter, 3);
       } else {
-        timer.id = undefined;
+        log('cannot get active liststore entry, combo has no active iter');
       }
       return timer;
     }
 
-    _update_from_combo(timers_combo) {
+    _update_combo_from_model(timers_combo) {
       // TODO fix this duplication
       var model = timers_combo.get_model();
       var iter = timers_combo.get_active_iter();
-      if (iter[0]) {
-        iter = iter[1];
+      iter = iter[0] ? iter[1] : this._iter;
+      if (iter) {
         var name = model.get_value(iter, 0);
         var id = model.get_value(iter, 1);
         var duration = model.get_value(iter, 2);
@@ -188,7 +238,7 @@ class PreferencesBuilder {
         var hms = new Utils.HMS(duration);
         this._update_spinners(hms);
       } else {
-        log("combo has not active iter");
+        log("cannot update combo from liststore, combo has non active iter");
       }
     }
 

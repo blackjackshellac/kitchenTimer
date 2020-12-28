@@ -113,7 +113,7 @@ class Timer {
     this._name = name;
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
-    this._id = id == undefined ? GLib.uuid_string_random() : id;
+    this._id = Utils.uuid(id);
   }
 
   get id() {

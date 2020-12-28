@@ -47,6 +47,9 @@ function spawn(command, callback) {
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
 }
 
+function uuid(id=undefined) {
+  return id == undefined ? GLib.uuid_string_random() : id;
+}
 
 function isDebugModeEnabled() {
     return new Settings().debug();

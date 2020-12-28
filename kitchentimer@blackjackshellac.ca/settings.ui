@@ -347,6 +347,7 @@ Author: Steeve McCauley
                             <child internal-child="entry">
                               <object class="GtkEntry" id="timers_combo_entry">
                                 <property name="can-focus">True</property>
+                                <property name="placeholder-text" translatable="yes" context="timers-combo-entry">Timer name</property>
                               </object>
                             </child>
                           </object>
