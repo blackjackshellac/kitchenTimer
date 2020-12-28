@@ -140,6 +140,14 @@ class Settings {
       this.settings.set_boolean('sort-descending', bool);
     }
 
+    get pie_colour_dark() {
+      return this.settings.get_string('pie-colour-dark');
+    }
+
+    get pie_colour_light() {
+      return this.settings.get_string('pie-colour-light')
+    }
+
     get debug() {
       return this.settings.get_boolean('debug');
     }

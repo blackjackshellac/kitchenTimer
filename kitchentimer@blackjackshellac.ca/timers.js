@@ -40,7 +40,11 @@ class Timers extends Array {
 
 	 	this._pie.set_width(30);
 		this._pie.set_height(25);
-		//this._pie.connect('repaint', Lang.bind(this, this._draw));
+		this._pie.connect('repaint', () => {
+		  //log('repaint request');
+		  this.draw();
+		});
+		//Lang.bind(this, this._draw));
 
     this.refresh();
 
@@ -53,6 +57,63 @@ class Timers extends Array {
   get pie() {
     return this._pie;
   }
+
+	arc(r, remaining, duration, angle, lightColor, darkColor) {
+		if(duration == 0) return;
+		var pi = Math.PI;
+		var cairo_context = this._pie.get_context();
+		var ok;
+		var light;
+		var dark;
+
+		[ok, light] = Clutter.Color.from_string(lightColor);
+
+		//log(`ok=${ok} cairo_context=${cairo_context} light=${light}`);
+
+		[ok, dark] = Clutter.Color.from_string(darkColor);
+
+    //log(`ok=${ok} cairo_context=${cairo_context} dark=${dark}`);
+
+
+		Clutter.cairo_set_source_color(cairo_context, light);
+
+	  var [width, height] = this._pie.get_surface_size();
+
+		var xc = width / 2;
+		var yc = height / 2;
+
+		cairo_context.arc(xc, yc, r, 0, 2*pi);
+		cairo_context.fill();
+
+		Clutter.cairo_set_source_color(cairo_context, dark);
+		var new_angle = angle + (remaining * 2 * pi / duration);
+		cairo_context.setLineWidth(1.3);
+		cairo_context.arc(xc, yc, r, angle, new_angle);
+		cairo_context.lineTo(xc,yc);
+		cairo_context.closePath();
+		cairo_context.fill();
+	}
+
+	draw() {
+	  var timer=this._active_timer;
+	  if (timer === undefined) {
+	    return;
+	  }
+	  //log(`ignoring pie draw for ${timer.name}`);
+	  var now = Date.now();
+	  var remaining = Math.ceil((timer.end-now) / 1000);
+		var pi = Math.PI;
+		/*
+		 * let background = new Clutter.Color();
+		 * background.from_string('#0000ffff');
+		 * Clutter.cairo_set_source_color(cairo_context, background); cairo_context.rectangle(0, 0,
+		 * width, height); cairo_context.fill();
+		 */
+
+    return;
+    // TODO this crashes
+		this.arc(8, remaining, timer.duration, -pi/2, this._settings.pie_colour_light, this._settings.pie_colour_dark);
+	}
 
   refresh() {
     var settings_timers = this._settings.unpack_timers();
@@ -103,7 +164,7 @@ class Timers extends Array {
   sort_by_remaining() {
     var running_timers = [...this].filter(timer => timer.is_running());
 
-    log(`running timers length=${running_timers.length}`);
+    //log(`running timers length=${running_timers.length}`);
     var now=Date.now();
     return running_timers.sort( (a,b) => {
       (a._end-now)-(b._end-now);
@@ -213,6 +274,8 @@ class Timer {
     var running_timers = timer._timers.sort_by_remaining();
     if (running_timers.length > 0 && running_timers[0] == timer) {
       timer._panel_label.set_text(hms.toString(true));
+      timer._timers._active_timer = timer;
+      timer._timers.pie.queue_repaint();
     }
     return true;
   }

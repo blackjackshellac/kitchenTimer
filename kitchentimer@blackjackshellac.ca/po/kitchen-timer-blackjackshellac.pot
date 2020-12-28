@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-27 19:59-0500\n"
+"POT-Creation-Date: 2020-12-28 14:03-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,17 +49,17 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: settings.ui:55 settings.ui:380
+#: settings.ui:55 settings.ui:381
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr ""
 
-#: settings.ui:61 settings.ui:364
+#: settings.ui:61 settings.ui:365
 msgctxt "apply-timer"
 msgid "Update selected timer"
 msgstr ""
 
-#: settings.ui:67 settings.ui:395
+#: settings.ui:67 settings.ui:396
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
@@ -140,30 +140,35 @@ msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
 
-#: settings.ui:438
+#: settings.ui:350
+msgctxt "timers-combo-entry"
+msgid "Timer name"
+msgstr ""
+
+#: settings.ui:439
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:465
+#: settings.ui:466
 msgid "1"
 msgstr ""
 
-#: settings.ui:480
+#: settings.ui:481
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:510
+#: settings.ui:511
 msgid "0"
 msgstr ""
 
-#: settings.ui:524
+#: settings.ui:525
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:549
+#: settings.ui:550
 msgid "Timers"
 msgstr ""
 
@@ -222,5 +227,13 @@ msgid "Sort from longest to shortest"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
+msgid "Dark colour of pie"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
+msgid "Light colour of pie"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
 msgid "Turn on debugging"
 msgstr ""
