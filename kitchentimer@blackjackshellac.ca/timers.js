@@ -21,6 +21,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 
 const {GLib, St, Clutter} = imports.gi;
 const Main = imports.ui.main;
+const PopupMenu = imports.ui.popupMenu;
 
 const Utils = Me.imports.utils;
 const Notifier = Me.imports.notifier;
@@ -31,6 +32,15 @@ class Timers extends Array {
 
     this._settings = settings;
     this._notifier = new Notifier.Annoyer(settings);
+
+    this._icon = new St.Icon({
+        icon_name: 'kitchen-timer-blackjackshellac-symbolic',
+        style_class: 'system-status-icon',
+    });
+
+    this._box = new St.BoxLayout({ name: 'panelStatusMenu' });
+    this._box.add_child(this._icon);
+    this._box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
 
     this._panel_label=new St.Label({ text: "" });
 		this._pie = new St.DrawingArea({
@@ -46,8 +56,15 @@ class Timers extends Array {
 		});
 		//Lang.bind(this, this._draw));
 
+    this._box.add(this._pie);
+    this._box.add(this._panel_label);
+
     this.refresh();
 
+  }
+
+  get box() {
+    return this._box;
   }
 
   get panel_label() {
@@ -99,6 +116,7 @@ class Timers extends Array {
 	  if (timer === undefined) {
 	    return;
 	  }
+
 	  //log(`ignoring pie draw for ${timer.name}`);
 	  var now = Date.now();
 	  var remaining = Math.ceil((timer.end-now) / 1000);

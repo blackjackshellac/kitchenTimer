@@ -48,17 +48,12 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         super._init(0.0, _('Kitchen Timer'));
 
         //let box = new St.BoxLayout({ style_class: 'panel-status-menu-box' });
-        this.box = new St.BoxLayout({ name: 'panelStatusMenu' });
-        this.box.add_child(new St.Icon({
-            icon_name: 'kitchen-timer-blackjackshellac-symbolic',
-            style_class: 'system-status-icon',
-        }));
-        this.box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
+        //this.box = this._timers.box;
+        this.add_child(this._timers._box);
+        //this.add_child(this._timers._icon);
 
-        this.box.add(this._timers._pie);
-        this.box.add(this._timers.panel_label);
-
-        this.add_child(this.box);
+        //this.remove_actor(this._timers._icon);
+        //this.add_actor(this.box);
 
         // var test_timer = new Timer("test 5 seconds", 5);
         // var id = test_timer.id
