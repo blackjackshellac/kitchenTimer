@@ -33,32 +33,6 @@ class Timers extends Array {
     this._settings = settings;
     this._notifier = new Notifier.Annoyer(settings);
 
-    this._icon = new St.Icon({
-        icon_name: 'kitchen-timer-blackjackshellac-symbolic',
-        style_class: 'system-status-icon',
-    });
-
-    this._box = new St.BoxLayout({ name: 'panelStatusMenu' });
-    this._box.add_child(this._icon);
-    this._box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
-
-    this._panel_label=new St.Label({ text: "" });
-		this._pie = new St.DrawingArea({
-			y_align: Clutter.ActorAlign.CENTER,
-			y_expand: true
-		});
-
-	 	this._pie.set_width(30);
-		this._pie.set_height(25);
-		this._pie.connect('repaint', () => {
-		  //log('repaint request');
-		  this.draw();
-		});
-		//Lang.bind(this, this._draw));
-
-    this._box.add(this._pie);
-    this._box.add(this._panel_label);
-
     this.refresh();
 
   }
@@ -67,71 +41,25 @@ class Timers extends Array {
     return this._box;
   }
 
+  set box(box) {
+    this._box = box;
+  }
+
   get panel_label() {
     return this._panel_label;
+  }
+
+  set panel_label(panel_label) {
+    this._panel_label = panel_label;
   }
 
   get pie() {
     return this._pie;
   }
 
-	arc(r, remaining, duration, angle, lightColor, darkColor) {
-		if(duration == 0) return;
-		var pi = Math.PI;
-		var cairo_context = this._pie.get_context();
-		var ok;
-		var light;
-		var dark;
-
-		[ok, light] = Clutter.Color.from_string(lightColor);
-
-		//log(`ok=${ok} cairo_context=${cairo_context} light=${light}`);
-
-		[ok, dark] = Clutter.Color.from_string(darkColor);
-
-    //log(`ok=${ok} cairo_context=${cairo_context} dark=${dark}`);
-
-
-		Clutter.cairo_set_source_color(cairo_context, light);
-
-	  var [width, height] = this._pie.get_surface_size();
-
-		var xc = width / 2;
-		var yc = height / 2;
-
-		cairo_context.arc(xc, yc, r, 0, 2*pi);
-		cairo_context.fill();
-
-		Clutter.cairo_set_source_color(cairo_context, dark);
-		var new_angle = angle + (remaining * 2 * pi / duration);
-		cairo_context.setLineWidth(1.3);
-		cairo_context.arc(xc, yc, r, angle, new_angle);
-		cairo_context.lineTo(xc,yc);
-		cairo_context.closePath();
-		cairo_context.fill();
-	}
-
-	draw() {
-	  var timer=this._active_timer;
-	  if (timer === undefined) {
-	    return;
-	  }
-
-	  //log(`ignoring pie draw for ${timer.name}`);
-	  var now = Date.now();
-	  var remaining = Math.ceil((timer.end-now) / 1000);
-		var pi = Math.PI;
-		/*
-		 * let background = new Clutter.Color();
-		 * background.from_string('#0000ffff');
-		 * Clutter.cairo_set_source_color(cairo_context, background); cairo_context.rectangle(0, 0,
-		 * width, height); cairo_context.fill();
-		 */
-
-    return;
-    // TODO this crashes
-		this.arc(8, remaining, timer.duration, -pi/2, this._settings.pie_colour_light, this._settings.pie_colour_dark);
-	}
+  set pie(pie) {
+    this._pin = pie;
+  }
 
   refresh() {
     var settings_timers = this._settings.unpack_timers();
@@ -214,7 +142,7 @@ class Timer {
   constructor(timers, name, duration_secs, id=undefined) {
     log(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
-    this._interval_ms = 100;
+    this._interval_ms = 250;
     this._name = name;
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
@@ -291,9 +219,9 @@ class Timer {
     timer._label.set_text(hms.toString());
     var running_timers = timer._timers.sort_by_remaining();
     if (running_timers.length > 0 && running_timers[0] == timer) {
-      timer._panel_label.set_text(hms.toString(true));
+      timer._timers._panel_label.set_text(hms.toString(true));
       timer._timers._active_timer = timer;
-      timer._timers.pie.queue_repaint();
+      //timer._timers._pie.queue_repaint();
     }
     return true;
   }
@@ -312,7 +240,7 @@ class Timer {
     this._notifier.annoy(_(`Timer [${this._name}] completed`));
     var hms = new Utils.HMS(this.duration);
     this._label.set_text(hms.toString());
-    this._panel_label.set_text("");
+    this._timers.panel_label.set_text("");
 
     // return with false to stop interval callback loop
     return false;
