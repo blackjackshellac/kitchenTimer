@@ -98,7 +98,7 @@ function addSignalsHelperMethods(prototype) {
 }
 
 class HMS {
-  constructor(secs) {
+  constructor(secs=0) {
     this._secs = Number(secs);
     this._hours = Math.floor(secs / 3600);
     this._minutes = Math.floor(secs % 3600 / 60);

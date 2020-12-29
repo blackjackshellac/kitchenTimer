@@ -68,9 +68,10 @@ class PreferencesBuilder {
         this.spin_mins = this._bo('spin_mins');
         this.spin_secs = this._bo('spin_secs');
 
-        this.timers_apply = this._bo('timers_apply');
+        //this.timers_apply = this._bo('timers_apply');
         this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
+        this.timer_enabled = this._bo('timer_enabled');
 
         // TODO update with initial value
         this._hms = new Utils.HMS(0);
@@ -87,15 +88,14 @@ class PreferencesBuilder {
 
         this.timers_combo.set_active(0);
         this.timers_combo.connect('changed', (combo) => {
-          this._update_combo_from_model(combo);
+          this._update_timers_tab_from_model(combo);
         });
 
-        this._update_combo_from_model(this.timers_combo);
+        this._update_timers_tab_from_model(this.timers_combo);
 
         this.spin_hours.connect('value-changed', (spin) => {
-          this._hms.hours = spin.get_value_as_int();
-          this.timers_liststore.set_value(this._iter, 2, this._hms.toSeconds());
-        });
+          this._update_active_liststore_from_tab();
+         });
 
         this.spin_mins.connect('value-changed', (spin) => {
           this._hms.minutes = spin.get_value_as_int();
@@ -123,22 +123,22 @@ class PreferencesBuilder {
 
         });
 
-        this.timers_apply.connect('clicked', () => {
-          log('Apply changes to selected timer');
-          log(this._hms.toString());
-          var timer = this._get_active_liststore_entry();
-          timer.id = Utils.uuid(timer.id);
-          if (timer.id != undefined) {
-            timer.enabled = true;
-            timer.duration = this._hms.toSeconds();
-            timer.name = this.timers_combo_entry.get_text(); // this.timers_combo_entry.get_text();
-            timer = this._replace_timer_settings(timer, true);
-            if (timer !== undefined) {
-              _update_active_listore_entry(timer);
-            }
-            this._update_combo_from_model(this.timers_combo);
-          }
-        });
+        // this.timers_apply.connect('clicked', () => {
+        //   log('Apply changes to selected timer');
+        //   log(this._hms.toString());
+        //   var timer = this._get_active_liststore_entry();
+        //   timer.id = Utils.uuid(timer.id);
+        //   if (timer.id != undefined) {
+        //     timer.enabled = true;
+        //     timer.duration = this._hms.toSeconds();
+        //     timer.name = this.timers_combo_entry.get_text(); // this.timers_combo_entry.get_text();
+        //     timer = this._replace_timer_settings(timer, true);
+        //     if (timer !== undefined) {
+        //       _update_active_listore_entry(timer);
+        //     }
+        //     this._update_timers_tab_from_model(this.timers_combo);
+        //   }
+        // });
 
         this.timers_remove.connect('clicked', () => {
           log('Remove selected timer');
@@ -149,7 +149,7 @@ class PreferencesBuilder {
             if (timer !== undefined) {
               _update_active_listore_entry(timer);
             }
-            this._update_combo_from_model(this.timers_combo);
+            this._update_timers_tab_from_model(this.timers_combo);
           }
         });
 
@@ -171,7 +171,7 @@ class PreferencesBuilder {
           log(`liststore rows=${index} 0=${iter[0]} 1=${iter[1]}`);
           this._iter = iter[1];
           this.timers_combo.set_active_iter(this._iter);
-          this._update_combo_from_model(this.timers_combo);
+          this._update_timers_tab_from_model(this.timers_combo);
         });
 
         this._bind();
@@ -194,6 +194,23 @@ class PreferencesBuilder {
         }
       });
       return undefined;
+    }
+
+    _update_active_liststore_from_tab() {
+      var [ ok, iter ] = this.timers_combo.get_active_iter();
+      if (ok) {
+          var hms = new HMS();
+          hms.hours = this.spin_hours.get_value_as_int();
+          hms.minutes = this.spin_mins.get_value_as_int();
+          hms.seconds = this.spin_secs.get_value_as_int();
+          this.timers_liststore.set_value(iter, 0, this.timers_combo_entry.get_text());
+          //this.timers_liststore.set_value(iter, 1, timer.id);
+          this.timers_liststore.set_value(iter, 2, hms.toSeconds());
+          this.timers_liststore.set_value(iter, 3, this.timer_enabled.get_checked());
+      } else {
+        log('cannot update liststore entry, combo has no active iter');
+      }
+      return ok;
     }
 
     _update_active_listore_entry(timer) {
@@ -225,7 +242,7 @@ class PreferencesBuilder {
       return timer;
     }
 
-    _update_combo_from_model(timers_combo) {
+    _update_timers_tab_from_model(timers_combo) {
       // TODO fix this duplication
       var model = timers_combo.get_model();
       var iter = timers_combo.get_active_iter();

@@ -334,6 +334,39 @@ Author: Steeve McCauley
                         <property name="margin-end">20</property>
                         <property name="margin-top">5</property>
                         <child>
+                          <object class="GtkImage" id="img_timer">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="pixbuf">kitchen-timer-blackjackshellac-full.svg</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkCheckButton" id="timer_enabled">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">False</property>
+                            <property name="tooltip-text" translatable="yes" context="timer-enabled">Timer is enabled if checked</property>
+                            <property name="margin-end">5</property>
+                            <property name="image-position">right</property>
+                            <property name="always-show-image">True</property>
+                            <property name="active">True</property>
+                            <property name="draw-indicator">True</property>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkComboBox" id="timers_combo">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
@@ -354,13 +387,13 @@ Author: Steeve McCauley
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">0</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkButton" id="timers_apply">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
+                            <property name="sensitive">False</property>
+                            <property name="can-focus">False</property>
                             <property name="receives-default">True</property>
                             <property name="tooltip-text" translatable="yes" context="apply-timer">Update selected timer</property>
                             <property name="image">img_apply</property>
@@ -370,7 +403,7 @@ Author: Steeve McCauley
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                         <child>
@@ -385,7 +418,7 @@ Author: Steeve McCauley
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">2</property>
+                            <property name="position">4</property>
                           </packing>
                         </child>
                         <child>
@@ -401,7 +434,7 @@ Author: Steeve McCauley
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">3</property>
+                            <property name="position">5</property>
                           </packing>
                         </child>
                       </object>

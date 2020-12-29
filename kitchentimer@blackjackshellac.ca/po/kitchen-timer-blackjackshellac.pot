@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-28 14:03-0500\n"
+"POT-Creation-Date: 2020-12-29 08:54-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,17 +49,17 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: settings.ui:55 settings.ui:381
+#: settings.ui:55 settings.ui:414
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr ""
 
-#: settings.ui:61 settings.ui:365
+#: settings.ui:61 settings.ui:398
 msgctxt "apply-timer"
 msgid "Update selected timer"
 msgstr ""
 
-#: settings.ui:67 settings.ui:396
+#: settings.ui:67 settings.ui:429
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
@@ -135,40 +135,45 @@ msgstr ""
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:340
+#: settings.ui:353
+msgctxt "timer-enabled"
+msgid "Timer is enabled if checked"
+msgstr ""
+
+#: settings.ui:373
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
 
-#: settings.ui:350
+#: settings.ui:383
 msgctxt "timers-combo-entry"
 msgid "Timer name"
 msgstr ""
 
-#: settings.ui:439
+#: settings.ui:472
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:466
+#: settings.ui:499
 msgid "1"
 msgstr ""
 
-#: settings.ui:481
+#: settings.ui:514
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:511
+#: settings.ui:544
 msgid "0"
 msgstr ""
 
-#: settings.ui:525
+#: settings.ui:558
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:550
+#: settings.ui:583
 msgid "Timers"
 msgstr ""
 
