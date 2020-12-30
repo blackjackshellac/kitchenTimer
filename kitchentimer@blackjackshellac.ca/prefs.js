@@ -89,34 +89,50 @@ class PreferencesBuilder {
         this.timers_combo.set_active(0);
         this.timers_combo.connect('changed', (combo) => {
           this._update_timers_tab_from_model(combo);
+          log('timers combo changed');
         });
 
         this._update_timers_tab_from_model(this.timers_combo);
 
         this.spin_hours.connect('value-changed', (spin) => {
-          this._update_active_liststore_from_tab();
+          if (this._update_active_liststore_from_tab()) {
+            this._save_liststore();
+          }
          });
 
         this.spin_mins.connect('value-changed', (spin) => {
-          this._hms.minutes = spin.get_value_as_int();
-          this.timers_liststore.set_value(this._iter, 2, this._hms.toSeconds());
+          if (this._update_active_liststore_from_tab()) {
+            this._save_liststore();
+          }
         });
 
         this.spin_secs.connect('value-changed', (spin) => {
-          this._hms.seconds = spin.get_value_as_int();
-          this.timers_liststore.set_value(this._iter, 2, this._hms.toSeconds());
+          if (this._update_active_liststore_from_tab()) {
+            this._save_liststore();
+          }
+        });
+
+        this.timer_enabled.connect('toggled', () => {
+          if (this._update_active_liststore_from_tab()) {
+            this._save_liststore();
+          }
         });
 
         this.timers_combo.connect('set-focus-child', (combo) => {
-          var iter = combo.get_active_iter();
+          var [ ok, iter ] = combo.get_active_iter();
           var child = combo.get_focus_child();
           log(`current child focus=${child}`);
           if (child == null) {
-            //combo.set_active_iter(this._iter);
+            log('child lost focus?');
+            combo.set_active_iter(this._iter);
             this.timers_liststore.set_value(this._iter, 0, this.timers_combo_entry.get_text());
-          } else if (iter[0]) {
+            if (this._update_active_liststore_from_tab()) {
+              this._save_liststore();
+            }
+
+          } else if (ok) {
             log('combox box iter saved');
-            this._iter = iter[1];
+            this._iter = iter;
           } else {
             log('combo box does not have an active iter: current='+this._iter);
           }
@@ -199,18 +215,45 @@ class PreferencesBuilder {
     _update_active_liststore_from_tab() {
       var [ ok, iter ] = this.timers_combo.get_active_iter();
       if (ok) {
-          var hms = new HMS();
+          log(`Updating liststore for current entry`);
+          var hms = new Utils.HMS();
           hms.hours = this.spin_hours.get_value_as_int();
           hms.minutes = this.spin_mins.get_value_as_int();
           hms.seconds = this.spin_secs.get_value_as_int();
           this.timers_liststore.set_value(iter, 0, this.timers_combo_entry.get_text());
-          //this.timers_liststore.set_value(iter, 1, timer.id);
+          var id = this.timers_liststore.get_value(iter, 1);
+          this.timers_liststore.set_value(iter, 1, Utils.uuid(id));
           this.timers_liststore.set_value(iter, 2, hms.toSeconds());
-          this.timers_liststore.set_value(iter, 3, this.timer_enabled.get_checked());
+          this.timers_liststore.set_value(iter, 3, this.timer_enabled.get_active());
       } else {
         log('cannot update liststore entry, combo has no active iter');
       }
       return ok;
+    }
+
+    _save_liststore(pack=true) {
+      var model = this.timers_combo.get_model();
+      var [ok, iter] = model.get_iter_first();
+
+      var timers = [];
+      while (ok) {
+
+        var timer={};
+        timer.name = model.get_value(iter, 0);
+        timer.id = model.get_value(iter, 1);
+        timer.duration = model.get_value(iter, 2);
+        timer.enabled = model.get_value(iter, 3);
+
+        log(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
+
+        timers.push(timer);
+
+        ok = model.iter_next(iter);
+      }
+
+      if (pack) {
+        this._settings.pack_timers(timers);
+      }
     }
 
     _update_active_listore_entry(timer) {
@@ -245,8 +288,8 @@ class PreferencesBuilder {
     _update_timers_tab_from_model(timers_combo) {
       // TODO fix this duplication
       var model = timers_combo.get_model();
-      var iter = timers_combo.get_active_iter();
-      iter = iter[0] ? iter[1] : this._iter;
+      var [ ok, iter ] = timers_combo.get_active_iter();
+      iter = ok ? iter : this._iter;
       if (iter) {
         var name = model.get_value(iter, 0);
         var id = model.get_value(iter, 1);

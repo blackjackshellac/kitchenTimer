@@ -41,13 +41,9 @@ class Settings {
       // create and array of GLib.Variant dicts with string key and GVariant values
       var atimers = [];
       timers.forEach( (timer) => {
-        if (timer.enabled) {
-          // don't save it's been disabled
-          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
-          atimers.push(atimer);
-        } else {
-          log(`Skip saving ${timer.name}`);
-        }
+        // don't save it's been disabled
+        var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
+        atimers.push(atimer);
       });
       // TODO what if it's empty?
       var glvtype = atimers.length == 0 ? undefined : atimers[0].get_type();
