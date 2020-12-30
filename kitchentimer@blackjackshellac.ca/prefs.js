@@ -78,8 +78,8 @@ class PreferencesBuilder {
         // TODO update with initial value
         this._hms = new Utils.HMS(0);
 
-        this._timer_settings = this._settings.unpack_timers();
-        this._timer_settings.forEach( (timer) => {
+        var timer_settings = this._settings.unpack_timers();
+        timer_settings.forEach( (timer) => {
           var iter = this.timers_liststore.append();
           //log(`Timer ${Object.keys(timer)}`);
           this.timers_liststore.set_value(iter, 0, timer.name);
@@ -151,33 +151,22 @@ class PreferencesBuilder {
 
         });
 
-        // this.timers_apply.connect('clicked', () => {
-        //   log('Apply changes to selected timer');
-        //   log(this._hms.toString());
-        //   var timer = this._get_active_liststore_entry();
-        //   timer.id = Utils.uuid(timer.id);
-        //   if (timer.id != undefined) {
-        //     timer.enabled = true;
-        //     timer.duration = this._hms.toSeconds();
-        //     timer.name = this.timers_combo_entry.get_text(); // this.timers_combo_entry.get_text();
-        //     timer = this._replace_timer_settings(timer, true);
-        //     if (timer !== undefined) {
-        //       _update_active_listore_entry(timer);
-        //     }
-        //     this._update_timers_tab_from_model(this.timers_combo);
-        //   }
-        // });
-
         this.timers_remove.connect('clicked', () => {
-          this.logger.debug('Remove selected timer');
-          var timer = this._get_active_liststore_entry();
-          if (timer.id !== undefined) {
-            timer.enabled = false;
-            timer = this._replace_timer_settings(timer, true);
-            if (timer !== undefined) {
-              _update_active_listore_entry(timer);
+          var [ ok, iter ] = this.timers_combo.get_active_iter();
+          if (ok) {
+            var model = this.timers_combo.get_model();
+            this.logger.debug('Removing active entry');
+            this._iter = null;
+            if (!model.remove(iter)) {
+              var [ok, iter] = model.get_iter_first();
+              if (ok) {
+                this.logger.debug('Set combo to first item');
+                this.timers_combo.set_active(0);
+              }
             }
-            this._update_timers_tab_from_model(this.timers_combo);
+            if (this._update_active_liststore_from_tab()) {
+              this._save_liststore();
+            }
           }
         });
 
@@ -205,23 +194,6 @@ class PreferencesBuilder {
         this._bind();
 
         return this._widget;
-    }
-
-    _replace_timer_settings(updated_timer, pack) {
-      this._timer_settings.forEach((timer) => {
-        if (timer.id == updated_timer.id) {
-          timer.id = Utils.uuid(updated_timer.id);
-          timer.name = updated_timer.name;
-          timer.duration = updated_timer.duration;
-          timer.enabled = updated_timer.enabled;
-          this.logger.debug(`Updating timer ${timer.name} ${timer.duration} ${timer.enabled}: ${timer.id}`);
-          if (pack) {
-            this._settings.pack_timers(this._timer_settings);
-          }
-          return timer;
-        }
-      });
-      return undefined;
     }
 
     _update_combo_entry(combo, iter, entry) {
@@ -372,7 +344,11 @@ class PreferencesBuilder {
      * Bind setting to builder object
      */
     _ssb(key, object, property, flags=Gio.SettingsBindFlags.DEFAULT) {
-      this._settings.settings.bind(key, object, property, flags);
+      if (object) {
+        this._settings.settings.bind(key, object, property, flags);
+      } else {
+        this.logger.error(`object is null for key=${key}`);
+      }
     }
 
     _bind() {
