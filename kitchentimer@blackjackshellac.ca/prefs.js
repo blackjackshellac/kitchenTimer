@@ -371,28 +371,34 @@ class PreferencesBuilder {
     /**
      * Bind setting to builder object
      */
-    _ssb(key, object, property, flags) {
+    _ssb(key, object, property, flags=Gio.SettingsBindFlags.DEFAULT) {
       this._settings.settings.bind(key, object, property, flags);
     }
 
     _bind() {
       let notification = this._bo('notification');
-      this._ssb('notification', notification, 'active', Gio.SettingsBindFlags.DEFAULT);
+      this._ssb('notification', notification, 'active');
+
+      let show_time = this._bo('show_time');
+      this._ssb('show-time', show_time, 'active');
+
+      let show_pie = this._bo('show-pie');
+      this._ssb('show-pie', show_pie, 'active');
 
       let play_sound = this._bo('play_sound');
-      this._ssb('play-sound', play_sound, 'active', Gio.SettingsBindFlags.DEFAULT);
+      this._ssb('play-sound', play_sound, 'active');
 
       let sound_loops = this._bo('sound_loops');
-      this._ssb('sound-loops', sound_loops, 'value', Gio.SettingsBindFlags.DEFAULT);
+      this._ssb('sound-loops', sound_loops, 'value');
 
       let sound_path = this._bo('sound_path');
-      this._ssb('sound-file', sound_path, 'value', Gio.SettingsBindFlags.DEFAULT);
+      this._ssb('sound-file', sound_path, 'value');
 
       let sort_by_duration = this._bo('sort_by_duration');
-      this._ssb('sort-by-duration', sort_by_duration, 'active', Gio.SettingsBindFlags.DEFAULT);
+      this._ssb('sort-by-duration', sort_by_duration, 'active');
 
       let sort_descending = this._bo('sort_descending');
-      this._ssb('sort-descending', sort_descending, 'active', Gio.SettingsBindFlags.DEFAULT);
+      this._ssb('sort-descending', sort_descending, 'active');
     }
 }
 

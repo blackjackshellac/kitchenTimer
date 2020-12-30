@@ -76,6 +76,22 @@ class Settings {
       this.settings.set_boolean(bool);
     }
 
+    get show_time() {
+      return this.settings.get_boolean('show-time');
+    }
+
+    set show_time(bool) {
+      this.settings.set_boolean('show-time', bool);
+    }
+
+    get show_pie() {
+      return this.settings.get_boolean('show-pie');
+    }
+
+    set show_pie(bool) {
+      this.settings.set_boolean('show-pie', bool);
+    }
+
     get play_sound() {
       return this.settings.get_boolean('play-sound');
     }

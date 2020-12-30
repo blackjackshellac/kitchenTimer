@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-29 08:54-0500\n"
+"POT-Creation-Date: 2020-12-30 11:52-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,44 +49,64 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: settings.ui:55 settings.ui:414
+#: settings.ui:55 settings.ui:404
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr ""
 
-#: settings.ui:61 settings.ui:398
-msgctxt "apply-timer"
-msgid "Update selected timer"
-msgstr ""
-
-#: settings.ui:67 settings.ui:429
+#: settings.ui:61 settings.ui:419
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
 
-#: settings.ui:129
+#: settings.ui:123
 msgctxt "notification_text"
 msgid "Notification"
 msgstr ""
 
-#: settings.ui:143
+#: settings.ui:127
+msgctxt "notification"
+msgid "Show a notification when the timer is done"
+msgstr ""
+
+#: settings.ui:138
 msgctxt "show_time_text"
 msgid "Show time"
 msgstr ""
 
-#: settings.ui:157
+#: settings.ui:142
+msgctxt "show-time"
+msgid "Show remaining time for running timers in the panel"
+msgstr ""
+
+#: settings.ui:153
 msgctxt "show_pie_text"
 msgid "Show pie"
 msgstr ""
 
-#: settings.ui:171
+#: settings.ui:158
+msgctxt "show-pie"
+msgid "Show progress in the panl menu"
+msgstr ""
+
+#: settings.ui:169
 msgctxt "sort_by_duration_text"
 msgid "Sort by duration"
 msgstr ""
 
-#: settings.ui:185
+#: settings.ui:173
+msgctxt "sort-by-duration"
+msgid "Sort timers by duration"
+msgstr ""
+
+#: settings.ui:184
 msgctxt "sort_descending_text"
 msgid "Sort descending"
+msgstr ""
+
+#: settings.ui:188
+msgctxt "sort-descending"
+msgid "Sort timers by duration from longest to shortest"
 msgstr ""
 
 #: settings.ui:199
@@ -94,86 +114,96 @@ msgctxt "annoy_text"
 msgid "Annoy"
 msgstr ""
 
-#: settings.ui:212
+#: settings.ui:203
+msgctxt "model-notifiation"
+msgid "System model notificaiton"
+msgstr ""
+
+#: settings.ui:214
 msgctxt "play-sound-text"
 msgid "Play sound"
 msgstr ""
 
-#: settings.ui:229
+#: settings.ui:218
+msgctxt "play-sound"
+msgid "Play the sound when the timer is done"
+msgstr ""
+
+#: settings.ui:232
 msgid "Options"
 msgstr ""
 
-#: settings.ui:250
+#: settings.ui:253
 msgid "Sound loops"
 msgstr ""
 
-#: settings.ui:263
+#: settings.ui:266
 msgctxt "sound_loops_tooltip"
 msgid "Loops to play timer notification sound"
 msgstr ""
 
-#: settings.ui:266
+#: settings.ui:269
 msgid "Sound loops, 0 is off"
 msgstr ""
 
-#: settings.ui:286
+#: settings.ui:289
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
 
-#: settings.ui:289
+#: settings.ui:292
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:303
+#: settings.ui:306
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:313
+#: settings.ui:316
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:353
+#: settings.ui:356
 msgctxt "timer-enabled"
-msgid "Timer is enabled if checked"
+msgid "Enable timer if checked"
 msgstr ""
 
-#: settings.ui:373
+#: settings.ui:376
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
 
-#: settings.ui:383
+#: settings.ui:386
 msgctxt "timers-combo-entry"
 msgid "Timer name"
 msgstr ""
 
-#: settings.ui:472
+#: settings.ui:462
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:499
+#: settings.ui:489
 msgid "1"
 msgstr ""
 
-#: settings.ui:514
+#: settings.ui:504
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:544
+#: settings.ui:534
 msgid "0"
 msgstr ""
 
-#: settings.ui:558
+#: settings.ui:548
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:583
+#: settings.ui:573
 msgid "Timers"
 msgstr ""
 
@@ -186,59 +216,67 @@ msgid "Make the notification system modal"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
-msgid "Play sound notifications"
+msgid "Show time remaining in panel menu"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
-msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
+msgid "Show progress meter panel menu"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
-msgid "Path to sound file"
+msgid "Play sound notifications"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
-msgid "Default length of timer in seconds"
+msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
+msgid "Path to sound file"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
+msgid "Default length of timer in seconds"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
 msgid "Timer presets"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:66
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:74
 msgid ""
 "Key-Value pairs of commonly used timer settings: key is the name of the "
 "preset, value the duration in seconds"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:70
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
 msgid "Array of Timer object descriptions"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:74
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
 msgid "timers configuration stored as json"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:75
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:83
 msgid "Experimental feature for storing timer data"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:79
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
 msgid "Sort list of timers by duration"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:83
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
 msgid "Sort from longest to shortest"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
 msgid "Dark colour of pie"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
 msgid "Light colour of pie"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:103
 msgid "Turn on debugging"
 msgstr ""

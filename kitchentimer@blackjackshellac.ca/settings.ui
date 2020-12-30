@@ -124,6 +124,7 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="notification">Show a notification when the timer is done</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_notification_toggled" swapped="no"/>
                   </object>
@@ -138,6 +139,7 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="show-time">Show remaining time for running timers in the panel</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_show_time_toggled" swapped="no"/>
                   </object>
@@ -150,8 +152,10 @@ Author: Steeve McCauley
                   <object class="GtkCheckButton" id="show_pie">
                     <property name="label" translatable="yes" context="show_pie_text">Show pie</property>
                     <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="show-pie">Show progress in the panl menu</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_show_pie_toggled" swapped="no"/>
                   </object>
@@ -166,6 +170,7 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="sort-by-duration">Sort timers by duration</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_sort_by_duration_toggled" swapped="no"/>
                   </object>
@@ -180,6 +185,7 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="sort-descending">Sort timers by duration from longest to shortest</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_sort_descending_toggled" swapped="no"/>
                   </object>
@@ -191,8 +197,10 @@ Author: Steeve McCauley
                 <child>
                   <object class="GtkCheckButton" id="modal_notification">
                     <property name="label" translatable="yes" context="annoy_text">Annoy</property>
+                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="model-notifiation">System model notificaiton</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_modal_notification_toggled" swapped="no"/>
                   </object>
@@ -207,6 +215,7 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="play-sound">Play the sound when the timer is done</property>
                     <property name="draw-indicator">True</property>
                   </object>
                   <packing>
@@ -344,7 +353,7 @@ Author: Steeve McCauley
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
-                            <property name="tooltip-text" translatable="yes" context="timer-enabled">Timer is enabled if checked</property>
+                            <property name="tooltip-text" translatable="yes" context="timer-enabled">Enable timer if checked</property>
                             <property name="margin-end">5</property>
                             <property name="image-position">right</property>
                             <property name="always-show-image">True</property>

@@ -113,7 +113,8 @@ class Timers extends Array {
     //log(`running timers length=${running_timers.length}`);
     var now=Date.now();
     return running_timers.sort( (a,b) => {
-      (a._end-now)-(b._end-now);
+      //log(`${ben}-${aen}=${diff}`);
+      return a._end-b._end;
     });
   }
 
@@ -219,9 +220,13 @@ class Timer {
     timer._label.set_text(hms.toString());
     var running_timers = timer._timers.sort_by_remaining();
     if (running_timers.length > 0 && running_timers[0] == timer) {
-      timer._timers._panel_label.set_text(hms.toString(true));
+      if (timer._timers._settings.show_time) {
+        timer._timers._panel_label.set_text(hms.toString(true));
+      }
       timer._timers._active_timer = timer;
-      //timer._timers._pie.queue_repaint();
+      if (timer._timers._settings.show_pie) {
+        //timer._timers._pie.queue_repaint();
+      }
     }
     return true;
   }
