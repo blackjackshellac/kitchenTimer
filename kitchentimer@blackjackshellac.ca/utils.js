@@ -75,6 +75,10 @@ class Logger {
     info(message) {
       this._log("INFO", message);
     }
+
+    error(message) {
+      this._log("ERROR", message);
+    }
 }
 
 function addSignalsHelperMethods(prototype) {

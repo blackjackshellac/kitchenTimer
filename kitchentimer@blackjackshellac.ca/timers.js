@@ -25,11 +25,15 @@ const PopupMenu = imports.ui.popupMenu;
 
 const Utils = Me.imports.utils;
 const Notifier = Me.imports.notifier;
+const Logger = Me.imports.utils.Logger;
 
 class Timers extends Array {
-  constructor(settings, ...args) {
+  constructor(indicator, settings, ...args) {
     super(...args);
 
+    this.logger = new Logger('kitchen timers');
+
+    this._indicator = indicator;
     this._settings = settings;
     this._notifier = new Notifier.Annoyer(settings);
 
@@ -38,27 +42,15 @@ class Timers extends Array {
   }
 
   get box() {
-    return this._box;
-  }
-
-  set box(box) {
-    this._box = box;
+    return this._indicator._box;
   }
 
   get panel_label() {
-    return this._panel_label;
-  }
-
-  set panel_label(panel_label) {
-    this._panel_label = panel_label;
+    return this._indicator._panel_label;
   }
 
   get pie() {
-    return this._pie;
-  }
-
-  set pie(pie) {
-    this._pin = pie;
+    return this._indicator._pie;
   }
 
   refresh() {
@@ -69,12 +61,12 @@ class Timers extends Array {
         timer=this[i];
         found = timer.refresh_with(settings_timer);
         if (found) {
-          log(`Found timer ${timer.name} with ${timer._end}`);
+          this.logger.debug(`Found timer ${timer.name} with ${timer._end}`);
           break;
         }
       }
       if (!found) {
-        log(`Timer ${settings_timer.name} not found`);
+        this.logger.debug(`Timer ${settings_timer.name} not found`);
         var timer = new Timer(this, settings_timer.name, settings_timer.duration, settings_timer.id);
         this.add(timer);
       }
@@ -98,7 +90,7 @@ class Timers extends Array {
     // const cloneSheepsES6 = [...sheeps];
     var timers_array = [...this];
     if (this.sort_by_duration) {
-      log('sort by duration');
+      this.logger.debug('sort by duration');
       var direction= this.sort_descending ? -1 : 1;
       timers_array.sort( (a,b) => {
         return (a.duration-b.duration)*direction;
@@ -125,7 +117,7 @@ class Timers extends Array {
 
   add(timer) {
 
-    log(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
+    this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
     this.push(timer);
 
     this._settings.pack_timers(this);
@@ -141,7 +133,8 @@ const TimerState = {
 class Timer {
 
   constructor(timers, name, duration_secs, id=undefined) {
-    log(`Create timer [${name}] duration=[${duration_secs}]`);
+    this.logger = new Logger(`kitchen timer ${name}`);
+    this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._interval_ms = 250;
     this._name = name;
@@ -196,12 +189,8 @@ class Timer {
   }
 
   set label(label) {
-    log(`Timer label set to ${label}`);
+    this.logger.debug(`Timer label set to ${label}`);
     this._label = label;
-  }
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   timer_callback(timer) {
@@ -217,16 +206,21 @@ class Timer {
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
     var hms = new Utils.HMS(delta);
 
-    timer._label.set_text(hms.toString());
-    var running_timers = timer._timers.sort_by_remaining();
-    if (running_timers.length > 0 && running_timers[0] == timer) {
-      if (timer._timers._settings.show_time) {
-        timer._timers._panel_label.set_text(hms.toString(true));
+    try {
+      timer._label.set_text(hms.toString());
+      var running_timers = timer._timers.sort_by_remaining();
+      if (running_timers.length > 0 && running_timers[0] == timer) {
+        if (timer._timers._settings.show_time) {
+          timer._timers.panel_label.set_text(hms.toString(true));
+        }
+        timer._timers._active_timer = timer;
+        if (timer._timers._settings.show_pie) {
+          //timer._timers._pie.queue_repaint();
+        }
       }
-      timer._timers._active_timer = timer;
-      if (timer._timers._settings.show_pie) {
-        //timer._timers._pie.queue_repaint();
-      }
+    } catch(err) {
+      this.logger.error("Error setting label: "+err.toString());
+      this._state = TimerState.EXPIRED;
     }
     return true;
   }
@@ -237,7 +231,7 @@ class Timer {
 
   stop_callback() {
     this._state = TimerState.EXPIRED;
-    log(`Timer [${this._name}] has ended`);
+    this.logger.info(`Timer [${this._name}] has ended`);
     Utils.clearInterval(this._interval_id);
     this._interval_id = undefined;
 
@@ -265,7 +259,7 @@ class Timer {
       return false;
     }
     if (this._state == TimerState.RUNNING) {
-      log(`Timer [${this._name}] is already running, resetting`);
+      this.logger.info(`Timer [${this._name}] is already running, resetting`);
       // TODO prompt to reset
       this.reset();
       return false;
@@ -274,7 +268,7 @@ class Timer {
     this._start = Date.now();
     this._end = this._start + this.duration_ms();
 
-    log(`Starting timer [${this._name}] at ${this._start}`);
+    this.logger.info(`Starting timer [${this._name}] at ${this._start}`);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
   }

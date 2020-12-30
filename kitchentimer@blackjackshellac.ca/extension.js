@@ -41,7 +41,7 @@ const KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
         this._settings = new Settings();
-        this._timers = new Timers(this._settings);
+        this._timers = new Timers(this, this._settings);
         this._logger = new Utils.Logger(this._settings);
         this._logger.info('Initializing extension');
 
@@ -68,7 +68,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this._pie.set_width(30);
         this._pie.set_height(25);
         this._pie.connect('repaint', () => {
-          log('repaint request');
+          //log('repaint request');
           this.draw();
         });
 		    //Lang.bind(this, this._draw));
@@ -77,10 +77,6 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this._box.add(this._panel_label);
 
         this.add_child(this._box);
-
-        this._timers.box = this._box;
-        this._timers.panel_label = this._panel_label;
-        this._timers.pie = this._pie;
 
         this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this._settings, this._timers);
         this._pmbuilder.build();
@@ -141,7 +137,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
       return;
       // TODO this crashes
-		  this.arc(8, remaining, timer.duration, -pi/2, this._settings.pie_colour_light, this._settings.pie_colour_dark);
+		  //this.arc(8, remaining, timer.duration, -pi/2, this._settings.pie_colour_light, this._settings.pie_colour_dark);
 	  }
 
 });
