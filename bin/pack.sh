@@ -6,7 +6,7 @@ cd $ed
 
 #kitchen-timer-blackjackshellac
 extra_source=$(ls -1 *.js | grep -v prefs.js | grep -v extension.js)
-extra_source="$extra_source $(ls *.svg *.ogg)"
+extra_source="$extra_source $(ls *.svg *.ogg *.ui)"
 echo $extra_source
 eso=""
 for es in $extra_source; do

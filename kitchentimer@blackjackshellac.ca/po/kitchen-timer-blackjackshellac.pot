@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-30 15:35-0500\n"
+"POT-Creation-Date: 2020-12-30 17:16-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,12 +49,12 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: settings.ui:55 settings.ui:404
+#: settings.ui:55 settings.ui:405
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr ""
 
-#: settings.ui:61 settings.ui:419
+#: settings.ui:61 settings.ui:420
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
@@ -180,30 +180,30 @@ msgctxt "timers-combo-entry"
 msgid "Timer name"
 msgstr ""
 
-#: settings.ui:462
+#: settings.ui:463
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:489
+#: settings.ui:490
 msgid "1"
 msgstr ""
 
-#: settings.ui:504
+#: settings.ui:505
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:534
+#: settings.ui:535
 msgid "0"
 msgstr ""
 
-#: settings.ui:548
+#: settings.ui:549
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:573
+#: settings.ui:574
 msgid "Timers"
 msgstr ""
 
