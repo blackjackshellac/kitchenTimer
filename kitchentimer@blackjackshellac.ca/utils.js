@@ -58,12 +58,13 @@ function isDebugModeEnabled() {
 const LOGID = 'kitchen-timer';
 
 class Logger {
-    constructor(settings) {
-        this._debug_enabled = settings.debug;
+    constructor(logid=undefined, debug=false) {
+        this._logid = logid === undefined ? LOGID : logid;
+        this._debug_enabled = debug;
     }
 
     _log(level,message) {
-      global.log(`[${LOGID}] ${level}: ${message}`);
+      log(`${level}: [${this._logid}] ${message}`);
     }
 
     debug(message) {
@@ -103,6 +104,10 @@ class HMS {
     this._hours = Math.floor(secs / 3600);
     this._minutes = Math.floor(secs % 3600 / 60);
     this._seconds = Math.floor(secs % 3600 % 60);
+  }
+
+  static create(h,m,s) {
+    return new HMS(h*3600+m*60+s);
   }
 
   get hours() {
