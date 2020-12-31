@@ -232,7 +232,7 @@ class PanelMenuBuilder {
 
   _addItem(text, menu=undefined) {
     menu=this._getMenu(menu);
-    this.logger.info("adding text="+text);
+    this.logger.info("adding "+text);
     let item = new PopupMenu.PopupMenuItem(text)
     menu.addMenuItem(item);
     return item;

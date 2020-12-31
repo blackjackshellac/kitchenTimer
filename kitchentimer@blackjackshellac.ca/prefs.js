@@ -79,6 +79,9 @@ class PreferencesBuilder {
         this._hms = new Utils.HMS(0);
 
         var timer_settings = this._settings.unpack_timers();
+        timer_settings.sort( (a,b) => {
+          return (a.duration-b.duration);
+        });
         timer_settings.forEach( (timer) => {
           var iter = this.timers_liststore.append();
           //log(`Timer ${Object.keys(timer)}`);
@@ -88,14 +91,19 @@ class PreferencesBuilder {
           this.timers_liststore.set_value(iter, 3, timer.enabled);
         });
 
+        this.allow_updates = true;
         this.timers_combo.set_active(0);
         this.timers_combo.connect('changed', (combo) => {
           var [ ok, iter ] = combo.get_active_iter();
-          var entry = this.timers_combo_entry.get_text();
-          this.logger.debug(`combo changed: ${entry} ${ok} ${iter}`);
-
-          this._update_timers_tab_from_model(combo, entry);
-          //log('timers combo changed');
+          if (ok) {
+            var model = combo.get_model();
+            var name = model.get_value(iter, 0);
+            var entry = this.timers_combo_entry.get_text();
+            this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
+            if (this.allow_updates) {
+              this._update_timers_tab_from_model(combo, entry);
+            }
+          }
         });
 
         this._update_timers_tab_from_model(this.timers_combo);
@@ -129,16 +137,17 @@ class PreferencesBuilder {
         //   log(`editing done: ${ok} ${iter}`);
         // });
 
-        this.timers_combo.connect('set-focus-child', (combo) => {
+        this.timers_combo.connect('set-focus-child', (combo, child) => {
           var [ ok, iter ] = combo.get_active_iter();
-          var child = combo.get_focus_child();
           this.logger.debug(`current child focus=${child}, ok=${ok}`);
           if (child == null) {
+            this.allow_updates=false;
             var entry = this.timers_combo_entry.get_text();
             this.logger.debug(`child lost focus, entry=${entry}`);
-            this._update_combo_entry(combo, this._iter, entry);
+            this._update_combo_model_entry(combo, this._iter, entry);
             combo.set_active_iter(this._iter);
-            this.timers_liststore.set_value(this._iter, 0, this.timers_combo_entry.get_text());
+            //this.timers_liststore.set_value(this._iter, 0, this.timers_combo_entry.get_text());
+            this.allow_updates=true;
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
             }
@@ -151,19 +160,49 @@ class PreferencesBuilder {
 
         });
 
+        this.timers_combo_entry.connect('activate', (combo_entry) => {
+          var [ ok, iter ] = this.timers_combo.get_active_iter();
+          this.logger.debug(`Got activate ${ok}`);
+        });
+
+        //this._current_iter = undefined;
+        this.timers_combo_entry.connect('focus-in-event', (combo_entry) => {
+          var [ ok, iter ] = this.timers_combo.get_active_iter();
+          this.logger.debug(`Got focus-in-event ${ok} ${iter}`);
+          if (ok) {
+            this._current_iter = iter;
+          }
+        });
+
+        this.timers_combo_entry.connect('focus-out-event', (combo_entry) => {
+          var [ ok, iter ] = this.timers_combo.get_active_iter();
+          this.logger.debug(`Got focus-out-event ${ok} ${iter} ${this._current_iter}`);
+          if (ok) {
+          } else if (this._current_iter) {
+          }
+          this._current_iter = undefined;
+        });
+
         this.timers_remove.connect('clicked', () => {
           var [ ok, iter ] = this.timers_combo.get_active_iter();
           if (ok) {
             var model = this.timers_combo.get_model();
-            this.logger.debug('Removing active entry');
-            this._iter = null;
-            model.remove(iter);
+            // set disabled
+            model.set_value(iter, 3, false);
+            this.logger.debug('Disabling active entry '+model.get_value(iter, 0));
+            //this.iter = null;
+            this.allow_updates=false;
+            ok = model.remove(iter);
             [ok, iter] = model.get_iter_first();
             if (ok) {
-              this.logger.debug('Set combo to first item');
+              var name = model.get_value(iter,0);
+              this.logger.debug('Set combo to first item '+model.get_value(iter, 0));
+              this.timers_combo_entry.set_text(name);
               this.timers_combo.set_active(0);
               this._iter = iter;
             }
+            this.allow_updates=true;
+
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
             }
@@ -201,17 +240,24 @@ class PreferencesBuilder {
         return this._widget;
     }
 
-    _update_combo_entry(combo, iter, entry) {
+    _update_combo_model_entry(combo, iter, entry) {
       var model = combo.get_model();
       var name = model.get_value(iter, 0);
-      this.logger.debug(`Update model entry from ${name} to ${entry}`);
-      model.set_value(iter, 0, entry);
+      if (name !== entry) {
+        this.logger.debug(`Update model entry from ${name} to ${entry}`);
+        model.set_value(iter, 0, entry);
+        this._save_liststore();
+      }
     }
 
-    // restore true if the liststore was updated
+    // return true if the liststore was updated
     _update_active_liststore_from_tab() {
+      if (!this.allow_updates) {
+        return false;
+      }
       var [ ok, iter ] = this.timers_combo.get_active_iter();
       if (ok) {
+          this.allow_updates = false;
           var model = this.timers_combo.get_model();
 
           var hms = new Utils.HMS();
@@ -236,8 +282,10 @@ class PreferencesBuilder {
             ok = true;
             model.set_value(iter, 1, id);
           }
-          if (model.get_value(iter, 2) !== duration) {
-            this.logger.debug(`duation changed to ${duration}`);
+          var curdur=model.get_value(iter, 2);
+          if (curdur != duration) {
+            this.logger.debug(`${name} duration changed from ${curdur} to ${duration}`);
+            this.logger.debug(hms.pretty());
             ok = true;
             model.set_value(iter, 2, duration);
           }
@@ -247,8 +295,9 @@ class PreferencesBuilder {
             model.set_value(iter, 3, enabled);
           }
           if (ok) {
-            this.logger.debug(`Updating liststore for current entry`);
+            this.logger.debug(`Updating liststore for ${name} entry`);
           }
+          this.allow_updates = true;
       } else {
         this.logger.debug('cannot update liststore entry, combo has no active iter');
       }
@@ -282,9 +331,8 @@ class PreferencesBuilder {
     }
 
     _update_active_listore_entry(timer) {
-      var iter = this.timers_combo.get_active_iter();
-      iter = iter[0] ? iter[1] : this._iter;
-      if (iter) {
+      var [ ok, iter ] = this.timers_combo.get_active_iter();
+      if (ok) {
           this.timers_liststore.set_value(iter, 0, timer.name);
           this.timers_liststore.set_value(iter, 1, timer.id);
           this.timers_liststore.set_value(iter, 2, timer.duration);
@@ -296,10 +344,9 @@ class PreferencesBuilder {
 
     _get_active_liststore_entry() {
       var model = this.timers_combo.get_model();
-      var iter = this.timers_combo.get_active_iter();
-      iter = iter[0] ? iter[1] : this._iter;
+      var [ ok, iter ] = this.timers_combo.get_active_iter();
       var timer = {}
-      if (iter) {
+      if (ok) {
         timer.name = model.get_value(iter, 0);
         timer.id = model.get_value(iter, 1);
         timer.duration = model.get_value(iter, 2);
@@ -311,10 +358,12 @@ class PreferencesBuilder {
     }
 
     _update_timers_tab_from_model(timers_combo, entry=undefined) {
+      if (!this.allow_updates) {
+        return;
+      }
       // TODO fix this duplication
       var model = timers_combo.get_model();
       var [ ok, iter ] = timers_combo.get_active_iter();
-      iter = ok ? iter : this._iter;
       if (iter) {
         var name = model.get_value(iter, 0);
         if (entry !== undefined && entry !== name) {

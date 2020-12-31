@@ -142,6 +142,10 @@ class HMS {
     return this._hours*3600 + this._minutes*60 + this._seconds;
   }
 
+  pretty() {
+    return `${this.toString()} is ${this.toSeconds()}`;
+  }
+
   toString(compact) {
     var ws=" ";
     if (compact) {

@@ -69,7 +69,8 @@ class Timers extends Array {
         timer=this[i];
         found = timer.refresh_with(settings_timer);
         if (found) {
-          this.logger.debug(`Found timer ${timer.name} with ${timer._end}`);
+          var running = timer.is_running() ? "running" : "not running";
+          this.logger.debug(`Found timer ${timer.name} ${running}`);
           break;
         }
       }
@@ -79,6 +80,16 @@ class Timers extends Array {
         this.add(timer);
       }
     });
+    for (var i = 0; i < this.length; i++) {
+      var timer=this[i];
+      if (timer.is_in_settings(settings_timers)) {
+        continue;
+      }
+      this.logger.debug(`timer ${timer.name} has been disabled`);
+      timer.disable();
+      // remove from timers
+      this.splice(i, 1);
+    }
   }
 
   isEmpty() {
@@ -291,6 +302,17 @@ class Timer {
       this._enabled = timer_settings.enabled;
       return true;
     }
+    return false;
+  }
+
+  is_in_settings(settings_timers) {
+    for (var i=0; i < settings_timers.length; i++) {
+      var timer_settings = settings_timers[i];
+      if (this._id == timer_settings.id) {
+        return true;
+      }
+    }
+    this.logger.debug(`Timer ${this.name} is no longer in settings`);
     return false;
   }
 }
