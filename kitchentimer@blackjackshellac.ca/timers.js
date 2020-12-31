@@ -28,17 +28,25 @@ const Notifier = Me.imports.notifier;
 const Logger = Me.imports.utils.Logger;
 
 class Timers extends Array {
-  constructor(indicator, settings, ...args) {
+  constructor(...args) {
     super(...args);
 
-    this.logger = new Logger('kitchen timers');
+    this.logger = new Logger('timers');
+  }
 
-    this._indicator = indicator;
-    this._settings = settings;
-    this._notifier = new Notifier.Annoyer(settings);
+  static attach(indicator) {
+    timersInstance._indicator = indicator;
+    timersInstance._settings = indicator._settings;
+    timersInstance.logger = new Logger('timers', timersInstance.settings.debug);
+    timersInstance._notifier = new Notifier.Annoyer(timersInstance.settings);
 
-    this.refresh();
+    timersInstance.refresh();
 
+    return timersInstance;
+  }
+
+  get settings() {
+    return this._indicator._settings;
   }
 
   get box() {
@@ -123,6 +131,10 @@ class Timers extends Array {
     this._settings.pack_timers(this);
   }
 }
+
+// timers is a singleton class
+const timersInstance = new Timers();
+//Object.freeze(timersInstance);
 
 const TimerState = {
   RESET: 0,

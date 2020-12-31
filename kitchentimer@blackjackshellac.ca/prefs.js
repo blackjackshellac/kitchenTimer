@@ -157,12 +157,12 @@ class PreferencesBuilder {
             var model = this.timers_combo.get_model();
             this.logger.debug('Removing active entry');
             this._iter = null;
-            if (!model.remove(iter)) {
-              var [ok, iter] = model.get_iter_first();
-              if (ok) {
-                this.logger.debug('Set combo to first item');
-                this.timers_combo.set_active(0);
-              }
+            model.remove(iter);
+            [ok, iter] = model.get_iter_first();
+            if (ok) {
+              this.logger.debug('Set combo to first item');
+              this.timers_combo.set_active(0);
+              this._iter = iter;
             }
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
@@ -175,7 +175,7 @@ class PreferencesBuilder {
           var iter = this.timers_liststore.append();
 
           //log(`Timer ${Object.keys(timer)}`);
-          this.timers_liststore.set_value(iter, 0, ""); // name
+          this.timers_liststore.set_value(iter, 0, _('New timer')); // name
           this.timers_liststore.set_value(iter, 1, Utils.uuid());   // id
           this.timers_liststore.set_value(iter, 2, 0);           // duration
           this.timers_liststore.set_value(iter, 3, true);        // enabled

@@ -41,9 +41,9 @@ const KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
         this._settings = new Settings();
-        this._timers = new Timers(this, this._settings);
-        this._logger = new Utils.Logger(this._settings);
-        this._logger.info('Initializing extension');
+        this._timers = Timers.attach(this);
+        this._logger = new Utils.Logger('kitchen_timer', this._settings.debug);
+        this.logger.info('Initializing extension');
 
         super._init(0.0, _('Kitchen Timer'));
 
@@ -138,6 +138,18 @@ class KitchenTimerIndicator extends PanelMenu.Button {
       return;
       // TODO this crashes
 		  //this.arc(8, remaining, timer.duration, -pi/2, this._settings.pie_colour_light, this._settings.pie_colour_dark);
+	  }
+
+	  get settings() {
+	    return this._settings;
+	  }
+
+	  get timers() {
+	    return this._timers;
+	  }
+
+	  get logger() {
+	    return this._logger;
 	  }
 
 });
