@@ -7,8 +7,12 @@ Gnome shell kitchen timer extension
 Clone the repository and then run install_local.sh
 
 ```
+git clone https://github.com/blackjackshellac/kitchenTimer.git
+cd kitchenTimer
 ./install_local.sh
 ```
+
+and then restart gnome shell to enable (Alt-F2 'r') or logout/login.
 
 # References
 
