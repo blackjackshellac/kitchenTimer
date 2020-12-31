@@ -24,7 +24,7 @@ const GLib = imports.gi.GLib;
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
 class Settings {
     constructor() {
-        this.settings = this._loadSettings();
+        this.settings = ExtensionUtils.getSettings();
     }
 
     unpack_timers() {
@@ -164,10 +164,4 @@ class Settings {
       return this.settings.get_boolean('debug');
     }
 
-    _loadSettings() {
-        var extension = ExtensionUtils.getCurrentExtension();
-        var schema = extension.metadata['settings-schema'];
-
-        return new Gio.Settings({schema: schema});
-    }
 }

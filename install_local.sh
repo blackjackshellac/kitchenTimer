@@ -8,7 +8,7 @@ ICONS=$USR_SHARE/icons/hicolor
 ICONS_SCALABLE_APPS=$ICONS/scalable/apps
 ICONS_SYMBOLIC_APPS=$ICONS/symbolic/apps
 EXTENSIONS=$USR_SHARE/gnome-shell/extensions
-SCHEMAS=$USR_SHARE/glib-2.0/schemas
+SCHEMAS=schemas
 
 declare -i DEBUG=${KITCHENTIMER_DEBUG:=0}
 
@@ -44,8 +44,8 @@ run() {
 run cd $MD
 run cd $ED
 
-run mkdir -p $SCHEMAS
-run cp -puv schemas/*.xml $SCHEMAS/
+#run mkdir -p $SCHEMAS
+#run cp -puv schemas/*.xml $SCHEMAS/
 run glib-compile-schemas --strict $SCHEMAS
 
 if [ $DEBUG -ne 0 ]; then
