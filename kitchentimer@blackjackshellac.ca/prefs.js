@@ -184,11 +184,16 @@ class PreferencesBuilder {
 
           //iter = this.timers_liststore.iter_nth_child(null, index-1);
           var model = this.timers_combo.get_model();
-          iter = model.iter_nth_child(null, index-1);
-          this.logger.debug(`liststore rows=${index} 0=${iter[0]} 1=${iter[1]}`);
-          this._iter = iter[1];
-          this.timers_combo.set_active_iter(this._iter);
-          this._update_timers_tab_from_model(this.timers_combo);
+          var [ ok, iter ] = model.iter_nth_child(null, index-1);
+          if (ok) {
+            this.logger.debug(`liststore rows=${index} ${ok} ${iter}`);
+            this._iter = iter;
+            this.timers_combo.set_active_iter(this._iter);
+            //this._update_timers_tab_from_model(this.timers_combo);
+            if (this._update_active_liststore_from_tab()) {
+              this._save_liststore();
+            }
+          }
         });
 
         this._bind();
