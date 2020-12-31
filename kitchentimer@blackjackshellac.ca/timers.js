@@ -75,7 +75,7 @@ class Timers extends Array {
       }
       if (!found) {
         this.logger.debug(`Timer ${settings_timer.name} not found`);
-        var timer = new Timer(this, settings_timer.name, settings_timer.duration, settings_timer.id);
+        var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
         this.add(timer);
       }
     });
@@ -144,8 +144,8 @@ const TimerState = {
 
 class Timer {
 
-  constructor(timers, name, duration_secs, id=undefined) {
-    this.logger = new Logger(`kitchen timer ${name}`);
+  constructor(name, duration_secs, id=undefined) {
+    this.logger = new Logger(`kitchen timer: ${name}`);
     this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._interval_ms = 250;
@@ -155,11 +155,10 @@ class Timer {
     this._id = Utils.uuid(id);
 
     // point back to timers
-    this._timers = timers;
+    this._timers = timersInstance;
 
-    this._notifier = timers._notifier;
-    this._panel_label = timers.panel_label;
-
+    this._notifier = timersInstance._notifier;
+    this._panel_label = timersInstance.panel_label;
   }
 
   get id() {
@@ -243,7 +242,7 @@ class Timer {
 
   stop_callback() {
     this._state = TimerState.EXPIRED;
-    this.logger.info(`Timer [${this._name}] has ended`);
+    this.logger.info('Timer has ended');
     Utils.clearInterval(this._interval_id);
     this._interval_id = undefined;
 
@@ -267,11 +266,11 @@ class Timer {
 
   start() {
     if (!this._enabled) {
-      log(`Timer [${this._name}] is disabled`);
+      log(`Timer is disabled`);
       return false;
     }
     if (this._state == TimerState.RUNNING) {
-      this.logger.info(`Timer [${this._name}] is already running, resetting`);
+      this.logger.info(`Timer is already running, resetting`);
       // TODO prompt to reset
       this.reset();
       return false;
@@ -280,7 +279,7 @@ class Timer {
     this._start = Date.now();
     this._end = this._start + this.duration_ms();
 
-    this.logger.info(`Starting timer [${this._name}] at ${this._start}`);
+    this.logger.info(`Starting timer at ${this._start}`);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
   }

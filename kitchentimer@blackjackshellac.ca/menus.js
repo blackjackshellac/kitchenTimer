@@ -27,15 +27,18 @@ const Me = ExtensionUtils.getCurrentExtension();
 
 const Timer = Me.imports.timers.Timer;
 const Utils = Me.imports.utils;
-
+const Logger = Utils.Logger;
 
 class PanelMenuBuilder {
-  constructor(menu, settings, timers) {
+  constructor(menu, indicator) {
     log("");
     this._menu = menu;
+    this._indicator = indicator;
     this._create_timer_menu = undefined;
-    this._settings = settings;
-    this._timers = timers;
+    this._settings = indicator.settings;
+    this._timers = indicator.timers;
+
+    this.logger = new Logger('kt menu', indicator.settings.debug);
 
     this._menu.connect('open-state-changed', (self,open) => {
       if (open) { this.build(); }
@@ -52,7 +55,7 @@ class PanelMenuBuilder {
   }
 
   build() {
-    log("Building the popup menu");
+    this.logger.info("Building the popup menu");
 
     this._menu.removeAll();
     this._timers.refresh();
@@ -229,7 +232,7 @@ class PanelMenuBuilder {
 
   _addItem(text, menu=undefined) {
     menu=this._getMenu(menu);
-    log("adding text="+text);
+    this.logger.info("adding text="+text);
     let item = new PopupMenu.PopupMenuItem(text)
     menu.addMenuItem(item);
     return item;
@@ -244,11 +247,11 @@ class PanelMenuBuilder {
 
   // TODO figure out how to reset timer
   _reset_timer() {
-    log("_reset_timer");
+    this.logger.info("_reset_timer");
   }
 
   _run_timer() {
-    log("_run_timer");
+    this.logger.info("_run_timer");
   }
 
 }

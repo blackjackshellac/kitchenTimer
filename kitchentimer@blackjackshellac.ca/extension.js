@@ -78,7 +78,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
         this.add_child(this._box);
 
-        this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this._settings, this._timers);
+        this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this);
         this._pmbuilder.build();
     }
 
