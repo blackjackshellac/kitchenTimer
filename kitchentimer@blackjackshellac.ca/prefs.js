@@ -139,14 +139,15 @@ class PreferencesBuilder {
 
         this.timers_combo.connect('set-focus-child', (combo, child) => {
           var [ ok, iter ] = combo.get_active_iter();
-          this.logger.debug(`current child focus=${child}, ok=${ok}`);
+          this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
           if (child == null) {
+            iter = ok ? iter : this._iter;
             this.allow_updates=false;
             var entry = this.timers_combo_entry.get_text();
             this.logger.debug(`child lost focus, entry=${entry}`);
-            this._update_combo_model_entry(combo, this._iter, entry);
-            combo.set_active_iter(this._iter);
-            //this.timers_liststore.set_value(this._iter, 0, this.timers_combo_entry.get_text());
+            this._update_combo_model_entry(combo, iter, entry);
+            combo.set_active_iter(iter);
+            //this.timers_liststore.set_value(iter, 0, this.timers_combo_entry.get_text());
             this.allow_updates=true;
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
@@ -199,7 +200,7 @@ class PreferencesBuilder {
               this.logger.debug('Set combo to first item '+model.get_value(iter, 0));
               this.timers_combo_entry.set_text(name);
               this.timers_combo.set_active(0);
-              this._iter = iter;
+              //this._iter = iter;
             }
             this.allow_updates=true;
 
@@ -226,8 +227,8 @@ class PreferencesBuilder {
           var [ ok, iter ] = model.iter_nth_child(null, index-1);
           if (ok) {
             this.logger.debug(`liststore rows=${index} ${ok} ${iter}`);
-            this._iter = iter;
-            this.timers_combo.set_active_iter(this._iter);
+            //this._iter = iter;
+            this.timers_combo.set_active_iter(iter);
             //this._update_timers_tab_from_model(this.timers_combo);
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
@@ -323,11 +324,11 @@ class PreferencesBuilder {
 
         ok = model.iter_next(iter);
       }
-
       if (pack) {
         this.logger.debug('Saving updated timers to settings');
         this._settings.pack_timers(timers);
       }
+
     }
 
     _update_active_listore_entry(timer) {
@@ -365,6 +366,7 @@ class PreferencesBuilder {
       var model = timers_combo.get_model();
       var [ ok, iter ] = timers_combo.get_active_iter();
       if (iter) {
+        this.allow_updates = false;
         var name = model.get_value(iter, 0);
         if (entry !== undefined && entry !== name) {
           name = entry;
@@ -376,6 +378,7 @@ class PreferencesBuilder {
         var enabled = model.get_value(iter, 3);
         var hms = new Utils.HMS(duration);
         this._update_spinners(hms);
+        this.allow_updates = true;
       } else {
         this.logger.debug("cannot update combo from liststore, combo has non active iter");
       }
