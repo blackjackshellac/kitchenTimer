@@ -201,17 +201,22 @@ class PreferencesBuilder {
             //this.iter = null;
             this.allow_updates=false;
             ok = model.remove(iter);
-            [ok, iter] = model.get_iter_first();
             if (ok) {
-              var name = model.get_value(iter,Model.NAME);
-              this.logger.debug('Set combo to first item '+model.get_value(iter, Model.NAME));
-              this.timers_combo_entry.set_text(name);
-              this.timers_combo.set_active(0);
-              //this._iter = iter;
+              // iter points to the next entry in the model
+              this.timers_combo.set_active_iter(iter);
+            } else {
+              [ok, iter] = model.get_iter_first();
+              if (ok) {
+                //var name = model.get_value(iter,Model.NAME);
+                this.logger.debug('Set combo to first item '+model.get_value(iter, Model.NAME));
+                //this.timers_combo_entry.set_text(name);
+                this.timers_combo.set_active(0);
+                //this._iter = iter;
+              }
             }
             this.allow_updates=true;
 
-            if (this._update_active_liststore_from_tab()) {
+            if (this._update_timers_tab_from_model(this.timers_combo)) {
               this._save_liststore();
             }
           }
@@ -367,7 +372,7 @@ class PreferencesBuilder {
 
     _update_timers_tab_from_model(timers_combo, entry=undefined) {
       if (!this.allow_updates) {
-        return;
+        return false;
       }
       // TODO fix this duplication
       var model = timers_combo.get_model();
@@ -386,9 +391,11 @@ class PreferencesBuilder {
         var hms = new Utils.HMS(duration);
         this._update_spinners(hms);
         this.allow_updates = true;
+        return true;
       } else {
         this.logger.debug("cannot update combo from liststore, combo has non active iter");
       }
+      return false;
     }
 
     _update_spinners(hms) {

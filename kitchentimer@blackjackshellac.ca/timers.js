@@ -208,6 +208,7 @@ class Timer {
 
   get label() {
     return this._label;
+
   }
 
   set label(label) {
