@@ -165,9 +165,6 @@ class Timer {
     this._state = TimerState.RESET;
     this._id = Utils.uuid(id);
 
-    // point back to timers
-    this._timers = timersInstance;
-
     this._notifier = timersInstance._notifier;
     this._panel_label = timersInstance.panel_label;
   }
@@ -231,14 +228,14 @@ class Timer {
 
     try {
       timer._label.set_text(hms.toString());
-      var running_timers = timer._timers.sort_by_remaining();
+      var running_timers = timersInstance.sort_by_remaining();
       if (running_timers.length > 0 && running_timers[0] == timer) {
-        if (timer._timers._settings.show_time) {
-          timer._timers.panel_label.set_text(hms.toString(true));
+        if (timersInstance._settings.show_time) {
+          timersInstance.panel_label.set_text(hms.toString(true));
         }
-        timer._timers._active_timer = timer;
-        if (timer._timers._settings.show_pie) {
-          //timer._timers._pie.queue_repaint();
+        timersInstance._active_timer = timer;
+        if (timersInstance._settings.show_pie) {
+          //timersInstance._pie.queue_repaint();
         }
       }
     } catch(err) {
@@ -262,7 +259,7 @@ class Timer {
     this._notifier.annoy(_(`Timer [${this._name}] completed`));
     var hms = new Utils.HMS(this.duration);
     this._label.set_text(hms.toString());
-    this._timers.panel_label.set_text("");
+    timersInstance.panel_label.set_text("");
 
     // return with false to stop interval callback loop
     return false;
