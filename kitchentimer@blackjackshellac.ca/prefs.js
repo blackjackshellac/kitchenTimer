@@ -27,6 +27,13 @@ const Settings = Me.imports.settings.Settings;
 const Utils = Me.imports.utils;
 const Logger = Me.imports.utils.Logger;
 
+const Model = {
+  NAME: 0,
+  ID: 1,
+  DURATION: 2,
+  ENABLED: 3
+}
+
 class PreferencesBuilder {
     constructor() {
         this._settings = new Settings();
@@ -85,10 +92,10 @@ class PreferencesBuilder {
         timer_settings.forEach( (timer) => {
           var iter = this.timers_liststore.append();
           //log(`Timer ${Object.keys(timer)}`);
-          this.timers_liststore.set_value(iter, 0, timer.name);
-          this.timers_liststore.set_value(iter, 1, timer.id);
-          this.timers_liststore.set_value(iter, 2, timer.duration);
-          this.timers_liststore.set_value(iter, 3, timer.enabled);
+          this.timers_liststore.set_value(iter, Model.NAME, timer.name);
+          this.timers_liststore.set_value(iter, Model.ID, timer.id);
+          this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
+          this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
         });
 
         this.allow_updates = true;
@@ -97,7 +104,7 @@ class PreferencesBuilder {
           var [ ok, iter ] = combo.get_active_iter();
           if (ok) {
             var model = combo.get_model();
-            var name = model.get_value(iter, 0);
+            var name = model.get_value(iter, Model.NAME);
             var entry = this.timers_combo_entry.get_text();
             this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
             if (this.allow_updates) {
@@ -147,7 +154,7 @@ class PreferencesBuilder {
             this.logger.debug(`child lost focus, entry=${entry}`);
             this._update_combo_model_entry(combo, iter, entry);
             combo.set_active_iter(iter);
-            //this.timers_liststore.set_value(iter, 0, this.timers_combo_entry.get_text());
+            //this.timers_liststore.set_value(iter, Model.NAME, this.timers_combo_entry.get_text());
             this.allow_updates=true;
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
@@ -189,15 +196,15 @@ class PreferencesBuilder {
           if (ok) {
             var model = this.timers_combo.get_model();
             // set disabled
-            model.set_value(iter, 3, false);
-            this.logger.debug('Disabling active entry '+model.get_value(iter, 0));
+            model.set_value(iter, Model.ENABLED, false);
+            this.logger.debug('Disabling active entry '+model.get_value(iter, Model.NAME));
             //this.iter = null;
             this.allow_updates=false;
             ok = model.remove(iter);
             [ok, iter] = model.get_iter_first();
             if (ok) {
-              var name = model.get_value(iter,0);
-              this.logger.debug('Set combo to first item '+model.get_value(iter, 0));
+              var name = model.get_value(iter,Model.NAME);
+              this.logger.debug('Set combo to first item '+model.get_value(iter, Model.NAME));
               this.timers_combo_entry.set_text(name);
               this.timers_combo.set_active(0);
               //this._iter = iter;
@@ -215,10 +222,10 @@ class PreferencesBuilder {
           var iter = this.timers_liststore.append();
 
           //log(`Timer ${Object.keys(timer)}`);
-          this.timers_liststore.set_value(iter, 0, _('New timer')); // name
-          this.timers_liststore.set_value(iter, 1, Utils.uuid());   // id
-          this.timers_liststore.set_value(iter, 2, 0);           // duration
-          this.timers_liststore.set_value(iter, 3, true);        // enabled
+          this.timers_liststore.set_value(iter, Model.NAME, _('New timer')); // name
+          this.timers_liststore.set_value(iter, Model.ID, Utils.uuid());   // id
+          this.timers_liststore.set_value(iter, Model.DURATION, 0);           // duration
+          this.timers_liststore.set_value(iter, Model.ENABLED, true);        // enabled
 
           var index = this.timers_liststore.iter_n_children(null);
 
@@ -243,10 +250,10 @@ class PreferencesBuilder {
 
     _update_combo_model_entry(combo, iter, entry) {
       var model = combo.get_model();
-      var name = model.get_value(iter, 0);
+      var name = model.get_value(iter, Model.NAME);
       if (name !== entry) {
         this.logger.debug(`Update model entry from ${name} to ${entry}`);
-        model.set_value(iter, 0, entry);
+        model.set_value(iter, Model.NAME, entry);
         this._save_liststore();
       }
     }
@@ -267,33 +274,33 @@ class PreferencesBuilder {
           hms.seconds = this.spin_secs.get_value_as_int();
 
           var name = this.timers_combo_entry.get_text();
-          var id = model.get_value(iter, 1);
+          var id = model.get_value(iter, Model.ID);
           id = Utils.uuid(id);
           var enabled = this.timer_enabled.get_active();
           var duration = hms.toSeconds();
 
           ok = false;
-          if (model.get_value(iter, 0) !== name) {
+          if (model.get_value(iter, Model.NAME) !== name) {
             this.logger.debug(`name change to ${name}`);
             ok = true;
-            model.set_value(iter, 0, name);
+            model.set_value(iter, Model.NAME, name);
           }
-          if (model.get_value(iter, 1) !== id) {
+          if (model.get_value(iter, Model.ID) !== id) {
             this.logger.debug(`id changed to ${id}`);
             ok = true;
-            model.set_value(iter, 1, id);
+            model.set_value(iter, Model.ID, id);
           }
-          var curdur=model.get_value(iter, 2);
+          var curdur=model.get_value(iter, Model.DURATION);
           if (curdur != duration) {
             this.logger.debug(`${name} duration changed from ${curdur} to ${duration}`);
             this.logger.debug(hms.pretty());
             ok = true;
-            model.set_value(iter, 2, duration);
+            model.set_value(iter, Model.DURATION, duration);
           }
-          if (model.get_value(iter, 3) !== enabled) {
+          if (model.get_value(iter, Model.ENABLED) !== enabled) {
             this.logger.debug(`enabled changed to ${enabled}`);
             ok = true;
-            model.set_value(iter, 3, enabled);
+            model.set_value(iter, Model.ENABLED, enabled);
           }
           if (ok) {
             this.logger.debug(`Updating liststore for ${name} entry`);
@@ -313,10 +320,10 @@ class PreferencesBuilder {
       while (ok) {
 
         var timer={};
-        timer.name = model.get_value(iter, 0);
-        timer.id = model.get_value(iter, 1);
-        timer.duration = model.get_value(iter, 2);
-        timer.enabled = model.get_value(iter, 3);
+        timer.name = model.get_value(iter, Model.NAME);
+        timer.id = model.get_value(iter, Model.ID);
+        timer.duration = model.get_value(iter, Model.DURATION);
+        timer.enabled = model.get_value(iter, Model.ENABLED);
 
         this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
 
@@ -334,10 +341,10 @@ class PreferencesBuilder {
     _update_active_listore_entry(timer) {
       var [ ok, iter ] = this.timers_combo.get_active_iter();
       if (ok) {
-          this.timers_liststore.set_value(iter, 0, timer.name);
-          this.timers_liststore.set_value(iter, 1, timer.id);
-          this.timers_liststore.set_value(iter, 2, timer.duration);
-          this.timers_liststore.set_value(iter, 3, timer.enabled);
+          this.timers_liststore.set_value(iter, Model.NAME, timer.name);
+          this.timers_liststore.set_value(iter, Model.ID, timer.id);
+          this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
+          this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
       } else {
         this.logger.debug('cannot update liststore entry, combo has no active iter');
       }
@@ -348,10 +355,10 @@ class PreferencesBuilder {
       var [ ok, iter ] = this.timers_combo.get_active_iter();
       var timer = {}
       if (ok) {
-        timer.name = model.get_value(iter, 0);
-        timer.id = model.get_value(iter, 1);
-        timer.duration = model.get_value(iter, 2);
-        timer.enabled = model.get_value(iter, 3);
+        timer.name = model.get_value(iter, Model.NAME);
+        timer.id = model.get_value(iter, Model.ID);
+        timer.duration = model.get_value(iter, Model.DURATION);
+        timer.enabled = model.get_value(iter, Model.ENABLED);
       } else {
         this.logger.debug('cannot get active liststore entry, combo has no active iter');
       }
@@ -367,15 +374,15 @@ class PreferencesBuilder {
       var [ ok, iter ] = timers_combo.get_active_iter();
       if (iter) {
         this.allow_updates = false;
-        var name = model.get_value(iter, 0);
+        var name = model.get_value(iter, Model.NAME);
         if (entry !== undefined && entry !== name) {
           name = entry;
-          model.set_value(iter, 0, name);
+          model.set_value(iter, Model.NAME, name);
           this._save_liststore(true);
         }
-        var id = model.get_value(iter, 1);
-        var duration = model.get_value(iter, 2);
-        var enabled = model.get_value(iter, 3);
+        var id = model.get_value(iter, Model.ID);
+        var duration = model.get_value(iter, Model.DURATION);
+        var enabled = model.get_value(iter, Model.ENABLED);
         var hms = new Utils.HMS(duration);
         this._update_spinners(hms);
         this.allow_updates = true;
