@@ -1,6 +1,6 @@
 # Kitchen Timer Extension
 
-Gnome shell kitchen timer extension
+Gnome shell kitchen timer extension with the ability to run multiple simultaneous timers.
 
 # Installation
 
