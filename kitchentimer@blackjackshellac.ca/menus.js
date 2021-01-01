@@ -174,7 +174,6 @@ class PanelMenuBuilder {
 		item.add(this._minutesSlider);
 		this._create_timer_menu.menu.addMenuItem(item);
 
-
 		// Seconds
 		item = new PopupMenu.PopupMenuItem(_("Seconds"), { reactive: false });
 
@@ -208,7 +207,7 @@ class PanelMenuBuilder {
 
 		this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
 		  var name = this._name_entry.get_text();
-		  this._time = hms.hours*3600 + hms.minutes*60 + hms.seconds;
+		  this._time = hms.toSeconds();
 		  var timer = new Timer(name, this._time);
 		  this._timers.add(timer);
 		});

@@ -27,6 +27,8 @@ const Utils = Me.imports.utils;
 const Notifier = Me.imports.notifier;
 const Logger = Me.imports.utils.Logger;
 
+const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+
 class Timers extends Array {
   constructor(...args) {
     super(...args);
@@ -45,20 +47,24 @@ class Timers extends Array {
     return timersInstance;
   }
 
+  get indicator() {
+    return this._indicator;
+  }
+
   get settings() {
-    return this._indicator._settings;
+    return this.indicator._settings;
   }
 
   get box() {
-    return this._indicator._box;
+    return this.indicator._box;
   }
 
   get panel_label() {
-    return this._indicator._panel_label;
+    return this.indicator._panel_label;
   }
 
   get pie() {
-    return this._indicator._pie;
+    return this.indicator._pie;
   }
 
   refresh() {
@@ -164,6 +170,7 @@ class Timer {
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
     this._id = Utils.uuid(id);
+    this._label = null;
 
     this._notifier = timersInstance._notifier;
     this._panel_label = timersInstance.panel_label;
@@ -203,11 +210,12 @@ class Timer {
     return this.duration * 1000;
   }
 
+  // can be null if not initialized or closed
   get label() {
     return this._label;
-
   }
 
+  // menu label or null if closed
   set label(label) {
     this.logger.debug(`Timer label set to ${label}`);
     this._label = label;
@@ -219,7 +227,7 @@ class Timer {
 
     //log(`test end=${end} at ${now}`);
     if (now > end || !timer.is_running()) {
-      return timer.stop_callback();
+      return timer.stop_callback(now);
     }
 
     var delta = Math.ceil((end-now) / 1000);
@@ -227,7 +235,9 @@ class Timer {
     var hms = new Utils.HMS(delta);
 
     try {
-      timer._label.set_text(hms.toString());
+      if (timer.label) {
+        timer.label.set_text(hms.toString());
+      }
       var running_timers = timersInstance.sort_by_remaining();
       if (running_timers.length > 0 && running_timers[0] == timer) {
         if (timersInstance._settings.show_time) {
@@ -249,16 +259,24 @@ class Timer {
     return (this._state == TimerState.RUNNING);
   }
 
-  stop_callback() {
+  stop_callback(now) {
     this._state = TimerState.EXPIRED;
     this.logger.info('Timer has ended');
     Utils.clearInterval(this._interval_id);
     this._interval_id = undefined;
 
     // TODO Notifications and play sounds
-    this._notifier.annoy(_(`Timer [${this._name}] completed`));
+    var reason = now < this._end ? _("stopped early at") : "completed at"
+    var timer_string = _('Timer');
+
+    now = new Date(now);
+    var time=now.toLocaleTimeString();
+
+    this._notifier.annoy(`${timer_string} [${this._name}] ${reason} ${time}`);
     var hms = new Utils.HMS(this.duration);
-    this._label.set_text(hms.toString());
+    if (this.label) {
+      this.label.set_text(hms.toString());
+    }
     timersInstance.panel_label.set_text("");
 
     // return with false to stop interval callback loop
