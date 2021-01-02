@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 08:11-0500\n"
+"POT-Creation-Date: 2021-01-02 13:29-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: indicator.js:46 settings.ui:603
+#: indicator.js:61 settings.ui:612
 msgid "Kitchen Timer"
 msgstr ""
 
@@ -25,31 +25,31 @@ msgstr ""
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:126
+#: menus.js:123
 msgid "Preferences…"
 msgstr ""
 
-#: menus.js:142
+#: menus.js:139
 msgid "Hours"
 msgstr ""
 
-#: menus.js:164
+#: menus.js:161
 msgid "Minutes"
 msgstr ""
 
-#: menus.js:183
+#: menus.js:180
 msgid "Seconds"
 msgstr ""
 
-#: menus.js:201
+#: menus.js:198
 msgid "Name"
 msgstr ""
 
-#: menus.js:205
+#: menus.js:202
 msgid "Name for timer"
 msgstr ""
 
-#: menus.js:213
+#: menus.js:210
 msgid "Create"
 msgstr ""
 
@@ -57,11 +57,11 @@ msgstr ""
 msgid "New timer"
 msgstr ""
 
-#: timers.js:305
+#: timers.js:339
 msgid "stopped early at"
 msgstr ""
 
-#: timers.js:306
+#: timers.js:340
 msgid "Timer"
 msgstr ""
 
@@ -139,99 +139,103 @@ msgstr ""
 
 #: settings.ui:417
 msgctxt "show_pie_text"
-msgid "Show pie"
+msgid "Show progress"
 msgstr ""
 
-#: settings.ui:422
+#: settings.ui:421
 msgctxt "show-pie"
 msgid "Show progress in the panl menu"
 msgstr ""
 
-#: settings.ui:433
+#: settings.ui:432
 msgctxt "sort_by_duration_text"
 msgid "Sort by duration"
 msgstr ""
 
-#: settings.ui:437
+#: settings.ui:436
 msgctxt "sort-by-duration"
 msgid "Sort timers by duration"
 msgstr ""
 
-#: settings.ui:448
+#: settings.ui:447
 msgctxt "sort_descending_text"
 msgid "Sort descending"
 msgstr ""
 
-#: settings.ui:452
+#: settings.ui:451
 msgctxt "sort-descending"
 msgid "Sort timers by duration from longest to shortest"
 msgstr ""
 
-#: settings.ui:463
+#: settings.ui:462
 msgctxt "annoy_text"
 msgid "Annoy"
 msgstr ""
 
-#: settings.ui:467
+#: settings.ui:466
 msgctxt "model-notifiation"
 msgid "System model notificaiton"
 msgstr ""
 
-#: settings.ui:478
+#: settings.ui:477
 msgctxt "play-sound-text"
 msgid "Play sound"
 msgstr ""
 
-#: settings.ui:482
+#: settings.ui:481
 msgctxt "play-sound"
 msgid "Play the sound when the timer is done"
 msgstr ""
 
-#: settings.ui:496
+#: settings.ui:491
+msgid "checkbutton"
+msgstr ""
+
+#: settings.ui:505
 msgid "Options"
 msgstr ""
 
-#: settings.ui:518
+#: settings.ui:527
 msgid "Sound loops"
 msgstr ""
 
-#: settings.ui:531
+#: settings.ui:540
 msgctxt "sound_loops_tooltip"
 msgid "Loops to play timer notification sound"
 msgstr ""
 
-#: settings.ui:534
+#: settings.ui:543
 msgid "Sound loops, 0 is off"
 msgstr ""
 
-#: settings.ui:554
+#: settings.ui:563
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
 
-#: settings.ui:557
+#: settings.ui:566
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:571
+#: settings.ui:580
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr ""
 
-#: settings.ui:581
+#: settings.ui:590
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:637
+#: settings.ui:646
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr ""
 
-#: settings.ui:651
+#: settings.ui:660
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr ""
 
-#: settings.ui:669
+#: settings.ui:678
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -239,7 +243,7 @@ msgid ""
 "License</a> for details.</span>"
 msgstr ""
 
-#: settings.ui:691
+#: settings.ui:700
 msgctxt "about"
 msgid "About"
 msgstr ""
@@ -257,7 +261,7 @@ msgid "Show time remaining in panel menu"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
-msgid "Show progress meter panel menu"
+msgid "Show timer progress in panel menu"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57

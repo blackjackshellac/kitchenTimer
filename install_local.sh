@@ -57,6 +57,7 @@ run cp -puv *-full.svg ${ICONS_SCALABLE_APPS}/
 
 run mkdir -p "$ICONS_SYMBOLIC_APPS"
 run cp -puv *-symbolic.svg ${ICONS_SYMBOLIC_APPS}/
+run cp -puv kitchen-timer-[0-9]*.svg ${ICONS_SYMBOLIC_APPS}/
 
 ldir="$(pwd)"
 

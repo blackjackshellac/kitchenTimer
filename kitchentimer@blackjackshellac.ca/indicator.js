@@ -36,18 +36,18 @@ const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
 const progressIconFiles = [
-  'kitchen-timer-blackjackshellac-full',  // 0, 180
-  'kitchen-timer-blackjackshellac-15',    // 15, 195
-  'kitchen-timer-blackjackshellac-30',    // 30, 210
-  'kitchen-timer-blackjackshellac-45',
-  'kitchen-timer-blackjackshellac-60',
-  'kitchen-timer-blackjackshellac-75',
-  'kitchen-timer-blackjackshellac-90',
-  'kitchen-timer-blackjackshellac-105',
-  'kitchen-timer-blackjackshellac-120',
-  'kitchen-timer-blackjackshellac-135',
-  'kitchen-timer-blackjackshellac-150',
-  'kitchen-timer-blackjackshellac-165'
+  'kitchen-timer-0',  // 0, 180
+  'kitchen-timer-15',    // 15, 195
+  'kitchen-timer-30',    // 30, 210
+  'kitchen-timer-45',
+  'kitchen-timer-60',
+  'kitchen-timer-75',
+  'kitchen-timer-90',
+  'kitchen-timer-105',
+  'kitchen-timer-120',
+  'kitchen-timer-135',
+  'kitchen-timer-150',
+  'kitchen-timer-165'
 ];
 
 const KitchenTimerIndicator = GObject.registerClass(
@@ -65,30 +65,27 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
         var deg = 0;
         progressIconFiles.forEach( (icon_name) => {
-          this.logger.info('Loading progress icon '+icon_name);
-          var icon = new St.Icon({
-            icon_name: icon_name,
-            style_class: 'system-status-icon'
-          });
-          this._progressIcons.push(icon);
-          this._progressIconsDegrees[deg] = icon;
-          this._progressIconsDegrees[deg+180] = icon;
+          this._progressIconsDegrees[deg] = icon_name;
+          this._progressIconsDegrees[deg+180] = icon_name;
+          this.logger.debug(`Loaded progress icon ${icon_name} for ${deg} and ${deg+180} degrees`);
           deg += 15;
         });
 
-        this._icon = new St.Icon({
-            icon_name: 'kitchen-timer-blackjackshellac-symbolic',
-            style_class: 'system-status-icon',
+        var icon = new St.Icon({
+          icon_name: 'kitchen-timer-0',
+          style_class: 'system-status-icon'
         });
 
         this._box = new St.BoxLayout({ name: 'panelStatusMenu' });
-        this._box.add_child(this._icon);
+        this._box.add_child(icon);
         this._box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
 
         this._panel_label=new St.Label({ text: "",
+          x_align: Clutter.ActorAlign.END,
           y_align: Clutter.ActorAlign.CENTER,
           y_expand: false
         });
+
       //   this._pie = new St.DrawingArea({
       //     y_align: Clutter.ActorAlign.CENTER,
       //     y_expand: true
@@ -109,6 +106,15 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
         this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this);
         this._pmbuilder.build();
+    }
+
+    progress_icon_name(degrees) {
+      var icon = this._progressIconsDegrees[degrees];
+      if (icon === undefined) {
+        this.logger.error(`Failed to get icon for degrees=${degrees}`);
+        icon=this._progressIconsDegrees[0];
+      }
+      return icon;
     }
 
 	  arc(r, remaining, duration, angle, lightColor, darkColor) {

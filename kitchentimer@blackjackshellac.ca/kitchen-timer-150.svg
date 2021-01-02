@@ -8,7 +8,7 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg7384"
-   sodipodi:docname="kitchen-timer-blackjackshellac-symbolic.svg"
+   sodipodi:docname="kitchen-timer-150.svg"
    version="1.1"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    height="16"
@@ -116,12 +116,13 @@
        d="m 69.682822,382.89991 c -1.794739,0.0355 -3.476853,0.34716 -4.553882,1.17262 -1.278769,1.03215 -2.130225,9.78838 -2.140325,9.89331 v 0.0114 c -2.6e-5,2.8e-4 0,0.0228 0,0.0228 H 63 l 0.523697,1.25231 c 2.434643,0.36474 4.809396,0.46433 6.853592,0.44401 0.02569,-2.6e-4 0.05411,2.9e-4 0.07969,0 2.044196,0.0203 4.418948,-0.0793 6.853592,-0.44401 L 77.83427,394 h 0.01138 c 0,0 2.7e-5,-0.0225 0,-0.0228 v -0.0114 c -0.0101,-0.10493 -0.861556,-8.86116 -2.140325,-9.89331 -1.077028,-0.82546 -2.759143,-1.13715 -4.553881,-1.17262 -0.228075,-0.005 -0.462612,-0.004 -0.694467,0 -0.02652,-5.5e-4 -0.05309,4.4e-4 -0.07969,0 -0.231855,-0.004 -0.466392,-0.005 -0.694467,0 z m 0.728621,1.4117 c 2.418307,0 4.383111,1.96481 4.383111,4.38311 0,2.41831 -1.964804,4.37173 -4.383111,4.37173 -2.418307,0 -4.371727,-1.95342 -4.371727,-4.37173 0,-2.4183 1.95342,-4.38311 4.371727,-4.38311 z"
        style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.364311;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1" />
     <rect
-       y="386.36722"
-       x="69.651657"
+       y="-374.146"
+       x="132.60129"
        height="4.6460814"
        width="1.5259513"
        id="rect3512"
-       style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.176672;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.176672;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="rotate(150)" />
   </g>
   <g
      inkscape:label="actions"

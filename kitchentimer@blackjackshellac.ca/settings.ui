@@ -414,9 +414,8 @@ Author: Steeve McCauley
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="show_pie">
-                    <property name="label" translatable="yes" context="show_pie_text">Show pie</property>
+                    <property name="label" translatable="yes" context="show_pie_text">Show progress</property>
                     <property name="visible">True</property>
-                    <property name="sensitive">False</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="show-pie">Show progress in the panl menu</property>
@@ -488,7 +487,17 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkCheckButton">
+                    <property name="label" translatable="yes">checkbutton</property>
+                    <property name="sensitive">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
                 </child>
               </object>
               <packing>
