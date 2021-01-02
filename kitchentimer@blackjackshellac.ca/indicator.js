@@ -35,6 +35,21 @@ const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
+const progressIconFiles = [
+  'kitchen-timer-blackjackshellac-full',  // 0, 180
+  'kitchen-timer-blackjackshellac-15',    // 15, 195
+  'kitchen-timer-blackjackshellac-30',    // 30, 210
+  'kitchen-timer-blackjackshellac-45',
+  'kitchen-timer-blackjackshellac-60',
+  'kitchen-timer-blackjackshellac-75',
+  'kitchen-timer-blackjackshellac-90',
+  'kitchen-timer-blackjackshellac-105',
+  'kitchen-timer-blackjackshellac-120',
+  'kitchen-timer-blackjackshellac-135',
+  'kitchen-timer-blackjackshellac-150',
+  'kitchen-timer-blackjackshellac-165'
+];
+
 const KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
@@ -44,6 +59,22 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this.logger.info('Initializing extension');
 
         super._init(0.0, _('Kitchen Timer'));
+
+        this._progressIcons = [];
+        this._progressIconsDegrees = {};
+
+        var deg = 0;
+        progressIconFiles.forEach( (icon_name) => {
+          this.logger.info('Loading progress icon '+icon_name);
+          var icon = new St.Icon({
+            icon_name: icon_name,
+            style_class: 'system-status-icon'
+          });
+          this._progressIcons.push(icon);
+          this._progressIconsDegrees[deg] = icon;
+          this._progressIconsDegrees[deg+180] = icon;
+          deg += 15;
+        });
 
         this._icon = new St.Icon({
             icon_name: 'kitchen-timer-blackjackshellac-symbolic',
@@ -58,20 +89,20 @@ class KitchenTimerIndicator extends PanelMenu.Button {
           y_align: Clutter.ActorAlign.CENTER,
           y_expand: false
         });
-        this._pie = new St.DrawingArea({
-          y_align: Clutter.ActorAlign.CENTER,
-          y_expand: true
-        });
+      //   this._pie = new St.DrawingArea({
+      //     y_align: Clutter.ActorAlign.CENTER,
+      //     y_expand: true
+      //   });
 
-        this._pie.set_width(30);
-        this._pie.set_height(25);
-        this._pie.connect('repaint', () => {
+      //   this._pie.set_width(30);
+      //   this._pie.set_height(25);
+      //   this._pie.connect('repaint', () => {
           //log('repaint request');
-          this.draw();
-        });
+      //     this.draw();
+      //   });
 		    //Lang.bind(this, this._draw));
 
-        this._box.add(this._pie);
+        //this._box.add(this._pie);
         this._box.add(this._panel_label);
 
         this.add_child(this._box);

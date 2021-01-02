@@ -14,7 +14,7 @@
    sodipodi:version="0.32"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
    version="1.0"
-   sodipodi:docname="kitchen-timer-blackjackshellac-full.svg"
+   sodipodi:docname="kitchen-timer-blackjackshellac-60.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    sodipodi:modified="true">
   <defs
@@ -630,7 +630,7 @@
        xlink:href="#linearGradient3629"
        id="linearGradient2299"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.9605798,0,0,0.9793075,0.2197079,-0.3819568)"
+       gradientTransform="matrix(0.9605798,0,0,0.9793075,6.281047,-31.716745)"
        x1="24.513035"
        y1="16.85784"
        x2="24.660349"
@@ -646,9 +646,9 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="24"
-     inkscape:cx="15.511531"
-     inkscape:cy="30.891482"
+     inkscape:zoom="12"
+     inkscape:cx="24"
+     inkscape:cy="24"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      width="48px"
@@ -668,6 +668,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -715,7 +716,8 @@
        id="rect3512"
        width="4.1886005"
        height="12.75308"
-       x="22.011753"
-       y="14.540128" />
+       x="28.073092"
+       y="-16.794661"
+       transform="rotate(60)" />
   </g>
 </svg>

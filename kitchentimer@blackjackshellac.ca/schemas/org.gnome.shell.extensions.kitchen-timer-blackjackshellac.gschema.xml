@@ -99,7 +99,7 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <summary>Light colour of pie</summary>
     </key>
     <key name="debug" type="b">
-      <default>true</default>
+      <default>false</default>
       <summary>Turn on debugging</summary>
     </key>
   </schema>
