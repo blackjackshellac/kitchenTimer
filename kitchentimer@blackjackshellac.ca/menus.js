@@ -94,22 +94,19 @@ class PanelMenuBuilder {
 		  bin.child = timer.label;
 		  timer_item.add(bin);
 
-		  //let box = new St.BoxLayout({ x_expand: true, x_align: St.Align.END });
+		  //var box = new St.BoxLayout({ x_expand: true, x_align: St.Align.END });
 		  //timer.moon = new St.Label( { x_expand: true, x_align: St.Align.END });
 		  //box.add_child(timer.label);
 		  //box.add_child(timer.moon)
 		  //timer_item.add(box);
 
-
-		  var icon_name = 'document-open-recent-symbolic';
-		  if (timer.is_running()) {
-		    icon_name = 'appointment-missed-symbolic';
-		  }
-		  let icon = new St.Icon({
-		    icon_name: icon_name,
-		    style_class: 'system-status-icon'
-		  });
+      var key = timer.degree_progress(15);
+		  var icon = new St.Icon({
+        gicon: this._indicator.progress_gicon(key),
+        style_class: 'system-status-icon'
+      });
 		  icon.set_icon_size(16);
+
 		  if (timer.is_running()) {
 		    //https://developer.gnome.org/clutter/stable/ClutterActor.html#ClutterActor.signals
 		    icon.connect('button-press-event', (timer) => {
@@ -139,9 +136,9 @@ class PanelMenuBuilder {
 		this._secondsLabel = new St.Label({ text: hms.seconds.toString() + "s" });
 
 		// Hours
-		let item = new PopupMenu.PopupMenuItem(_("Hours"), { reactive: false });
+		var item = new PopupMenu.PopupMenuItem(_("Hours"), { reactive: false });
 
-		let bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
+		var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
 		bin.child = this._hoursLabel;
 		item.add(bin);
 
@@ -229,22 +226,22 @@ class PanelMenuBuilder {
 
   _addSubMenu(text, menu=undefined) {
     menu=this._getMenu(menu);
-    let popup = new PopupMenu.PopupSubMenuMenuItem(text);
+    var popup = new PopupMenu.PopupSubMenuMenuItem(text);
     menu.addMenuItem(popup);
     return popup;
   }
 
   _addItem(text, menu=undefined) {
     menu=this._getMenu(menu);
-    this.logger.info("adding "+text);
-    let item = new PopupMenu.PopupMenuItem(text)
+    this.logger.debug("adding "+text);
+    var item = new PopupMenu.PopupMenuItem(text)
     menu.addMenuItem(item);
     return item;
   }
 
   _addSwitch(text, on=false, menu=undefined) {
     menu=this._getMenu(menu);
-    let item = new PopupMenu.PopupSwitchMenuItem(text, on);
+    var item = new PopupMenu.PopupSwitchMenuItem(text, on);
     menu.addMenuItem(item);
     return item;
   }

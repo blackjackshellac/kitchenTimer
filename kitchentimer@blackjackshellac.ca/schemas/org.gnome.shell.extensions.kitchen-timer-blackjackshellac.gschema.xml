@@ -49,8 +49,8 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <summary>Show time remaining in panel menu</summary>
     </key>
     <key name="show-pie" type="b">
-      <default>false</default>
-      <summary>Show progress meter panel menu</summary>
+      <default>true</default>
+      <summary>Show timer progress in panel menu</summary>
     </key>
     <key name="play-sound" type="b">
       <default>true</default>

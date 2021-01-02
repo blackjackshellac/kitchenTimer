@@ -162,7 +162,7 @@ const TimerState = {
 class Timer {
 
   constructor(name, duration_secs, id=undefined) {
-    this.logger = new Logger(`kitchen timer: ${name}`);
+    this.logger = new Logger(`kitchen timer: ${name}`, timersInstance.settings.debug);
     this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._interval_ms = 250;
@@ -171,6 +171,7 @@ class Timer {
     this._state = TimerState.RESET;
     this._id = Utils.uuid(id);
     this._label = null;
+    this._gicon = null;
 
     this._notifier = timersInstance._notifier;
     this._panel_label = timersInstance.panel_label;
@@ -217,7 +218,7 @@ class Timer {
 
   // menu label or null if closed
   set label(label) {
-    this.logger.debug(label ? `Timer label set to ${label}`: 'Timer label set to null');
+    //this.logger.debug(label ? `Timer label set to ${label}`: 'Timer label set to null');
     this._label = label;
   }
 
@@ -258,6 +259,44 @@ class Timer {
     this.label.set_text(hms.toString());
   }
 
+  /*
+    0
+    1 - 15
+    2 - 30
+    3 - 45
+    ...
+    22 - 330
+    23 - 345
+    24 - 360
+  */
+  degree_progress(chunk=15) {
+    if (this.is_running()) {
+      var chunks = Math.floor(360 / chunk);
+      var delta = Date.now() - this._start;
+      //this.logger.info(`chunk=${chunk} chunks=${chunks} delta=${delta} duration=${this.duration_ms()}`);
+      var progress = Math.floor(delta / this.duration_ms() * chunks);
+      return (progress)*chunk;
+    }
+    return 0;
+  }
+
+  icon_progress() {
+    var key = this.degree_progress();
+    var gicon = timersInstance.indicator.progress_gicon(key);
+    if (gicon !== this._gicon) {
+      this._gicon = gicon;
+		  var icon = new St.Icon({
+        gicon: gicon,
+        style_class: 'system-status-icon'
+      });
+		  //icon.set_icon_size(16);
+		  var current = timersInstance.indicator._box.get_child_at_index(0);
+		  if (current !== icon) {
+        timersInstance.indicator._box.replace_child(current, icon);
+      }
+    }
+  }
+
   timer_callback(timer) {
     var now = Date.now();
     var end = timer._end;
@@ -270,12 +309,11 @@ class Timer {
     var delta = Math.ceil((end-now) / 1000);
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
     var hms = new Utils.HMS(delta);
-
-    try {
       timer.label_progress(hms, now);
 
       var running_timers = timersInstance.sort_by_remaining();
       if (running_timers.length > 0 && running_timers[0] == timer) {
+        timer.icon_progress();
         if (timersInstance._settings.show_time) {
           timersInstance.panel_label.set_text(hms.toString(true));
         }
@@ -284,10 +322,6 @@ class Timer {
           //timersInstance._pie.queue_repaint();
         }
       }
-    } catch(err) {
-      timer.logger.error("Error setting label: "+err.toString());
-      this._state = TimerState.EXPIRED;
-    }
     return true;
   }
 
@@ -312,6 +346,7 @@ class Timer {
     var hms = new Utils.HMS(this.duration);
 
     this.label_progress(hms);
+    this.icon_progress();
     timersInstance.panel_label.set_text("");
 
     // return with false to stop interval callback loop

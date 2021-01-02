@@ -5,8 +5,6 @@ MD=$(dirname $0)
 ED=kitchentimer@blackjackshellac.ca
 USR_SHARE=~/.local/share
 ICONS=$USR_SHARE/icons/hicolor
-ICONS_SCALABLE_APPS=$ICONS/scalable/apps
-ICONS_SYMBOLIC_APPS=$ICONS/symbolic/apps
 EXTENSIONS=$USR_SHARE/gnome-shell/extensions
 SCHEMAS=schemas
 
@@ -51,12 +49,6 @@ run glib-compile-schemas --strict $SCHEMAS
 if [ $DEBUG -ne 0 ]; then
 	run xgettext --from-code=UTF-8 --output=po/kitchen-timer-blackjackshellac.pot *.js *.ui schemas/*.xml
 fi
-
-run mkdir -p $ICONS_SCALABLE_APPS
-run cp -puv *-full.svg ${ICONS_SCALABLE_APPS}/
-
-run mkdir -p "$ICONS_SYMBOLIC_APPS"
-run cp -puv *-symbolic.svg ${ICONS_SYMBOLIC_APPS}/
 
 ldir="$(pwd)"
 

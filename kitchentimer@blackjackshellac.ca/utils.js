@@ -35,7 +35,7 @@ function setInterval(func, delay, ...args) {
 }
 
 function spawn(command, callback) {
-    let [status, pid] = GLib.spawn_async(
+    var [status, pid] = GLib.spawn_async(
         null,
         ['/usr/bin/env', 'bash', '-c', command],
         null,
@@ -85,7 +85,7 @@ function addSignalsHelperMethods(prototype) {
     prototype._connectSignal = function (subject, signal_name, method) {
         if (!this._signals) this._signals = [];
 
-        let signal_id = subject.connect(signal_name, method);
+        var signal_id = subject.connect(signal_name, method);
         this._signals.push({
             subject: subject,
             signal_id: signal_id
