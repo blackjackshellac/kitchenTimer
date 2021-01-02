@@ -88,12 +88,12 @@ class Settings {
       this.settings.set_boolean('show-time', bool);
     }
 
-    get show_pie() {
-      return this.settings.get_boolean('show-pie');
+    get show_progress() {
+      return this.settings.get_boolean('show-progress');
     }
 
-    set show_pie(bool) {
-      this.settings.set_boolean('show-pie', bool);
+    set show_progress(bool) {
+      this.settings.set_boolean('show-progress', bool);
     }
 
     get play_sound() {
@@ -154,14 +154,6 @@ class Settings {
 
     set sort_descending(bool) {
       this.settings.set_boolean('sort-descending', bool);
-    }
-
-    get pie_colour_dark() {
-      return this.settings.get_string('pie-colour-dark');
-    }
-
-    get pie_colour_light() {
-      return this.settings.get_string('pie-colour-light')
     }
 
     get debug() {

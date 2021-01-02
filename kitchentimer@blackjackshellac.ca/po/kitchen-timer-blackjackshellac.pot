@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:17-0500\n"
+"POT-Creation-Date: 2021-01-02 14:41-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,31 +25,31 @@ msgstr ""
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:123
+#: menus.js:117
 msgid "Preferences…"
 msgstr ""
 
-#: menus.js:139
+#: menus.js:133
 msgid "Hours"
 msgstr ""
 
-#: menus.js:161
+#: menus.js:155
 msgid "Minutes"
 msgstr ""
 
-#: menus.js:180
+#: menus.js:174
 msgid "Seconds"
 msgstr ""
 
-#: menus.js:198
+#: menus.js:192
 msgid "Name"
 msgstr ""
 
-#: menus.js:202
+#: menus.js:196
 msgid "Name for timer"
 msgstr ""
 
-#: menus.js:210
+#: menus.js:204
 msgid "Create"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgid "Timers"
 msgstr ""
 
 #: settings.ui:387
-msgctxt "notification_text"
+msgctxt "notification"
 msgid "Notification"
 msgstr ""
 
@@ -128,7 +128,7 @@ msgid "Show a notification when the timer is done"
 msgstr ""
 
 #: settings.ui:402
-msgctxt "show_time_text"
+msgctxt "show_time"
 msgid "Show time"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgid "Show remaining time for running timers in the panel"
 msgstr ""
 
 #: settings.ui:417
-msgctxt "show_pie_text"
+msgctxt "show_progress"
 msgid "Show progress"
 msgstr ""
 
@@ -178,7 +178,7 @@ msgid "System model notificaiton"
 msgstr ""
 
 #: settings.ui:477
-msgctxt "play-sound-text"
+msgctxt "play-sound"
 msgid "Play sound"
 msgstr ""
 
@@ -311,13 +311,5 @@ msgid "Sort from longest to shortest"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
-msgid "Dark colour of pie"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
-msgid "Light colour of pie"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:103
 msgid "Turn on debugging"
 msgstr ""

@@ -429,8 +429,8 @@ class PreferencesBuilder {
       let show_time = this._bo('show_time');
       this._ssb('show-time', show_time, 'active');
 
-      let show_pie = this._bo('show-pie');
-      this._ssb('show-pie', show_pie, 'active');
+      let show_progress = this._bo('show-progress');
+      this._ssb('show-progress', show_progress, 'active');
 
       let play_sound = this._bo('play_sound');
       this._ssb('play-sound', play_sound, 'active');

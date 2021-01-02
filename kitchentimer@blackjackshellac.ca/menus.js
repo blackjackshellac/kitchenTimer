@@ -94,13 +94,7 @@ class PanelMenuBuilder {
 		  bin.child = timer.label;
 		  timer_item.add(bin);
 
-		  //var box = new St.BoxLayout({ x_expand: true, x_align: St.Align.END });
-		  //timer.moon = new St.Label( { x_expand: true, x_align: St.Align.END });
-		  //box.add_child(timer.label);
-		  //box.add_child(timer.moon)
-		  //timer_item.add(box);
-
-      var key = timer.degree_progress(15);
+      var key = timer.degree_progress(0);
 		  var icon = new St.Icon({
         gicon: this._indicator.progress_gicon(key),
         style_class: 'system-status-icon'

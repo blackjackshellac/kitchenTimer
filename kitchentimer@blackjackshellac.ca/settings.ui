@@ -384,7 +384,7 @@ Author: Steeve McCauley
                 <property name="column-spacing">20</property>
                 <child>
                   <object class="GtkCheckButton" id="notification">
-                    <property name="label" translatable="yes" context="notification_text">Notification</property>
+                    <property name="label" translatable="yes" context="notification">Notification</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
@@ -399,7 +399,7 @@ Author: Steeve McCauley
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="show_time">
-                    <property name="label" translatable="yes" context="show_time_text">Show time</property>
+                    <property name="label" translatable="yes" context="show_time">Show time</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
@@ -413,8 +413,8 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="show_pie">
-                    <property name="label" translatable="yes" context="show_pie_text">Show progress</property>
+                  <object class="GtkCheckButton" id="show_progress">
+                    <property name="label" translatable="yes" context="show_progress">Show progress</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
@@ -474,7 +474,7 @@ Author: Steeve McCauley
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="play_sound">
-                    <property name="label" translatable="yes" context="play-sound-text">Play sound</property>
+                    <property name="label" translatable="yes" context="play-sound">Play sound</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>

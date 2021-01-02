@@ -90,14 +90,6 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>false</default>
       <summary>Sort from longest to shortest</summary>
     </key>
-    <key name="pie-colour-dark" type="s">
-      <default>'#474747ff'</default>
-      <summary>Dark colour of pie</summary>
-    </key>
-    <key name="pie-colour-light" type="s">
-      <default>'#ccccccff'</default>
-      <summary>Light colour of pie</summary>
-    </key>
     <key name="debug" type="b">
       <default>false</default>
       <summary>Turn on debugging</summary>
