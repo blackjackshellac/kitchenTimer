@@ -63,10 +63,6 @@ class Timers extends Array {
     return this.indicator._panel_label;
   }
 
-  get pie() {
-    return this.indicator._pie;
-  }
-
   refresh() {
     var settings_timers = this._settings.unpack_timers();
     settings_timers.forEach( (settings_timer) => {
@@ -318,9 +314,6 @@ class Timer {
           timersInstance.panel_label.set_text(hms.toString(true));
         }
         timersInstance._active_timer = timer;
-        if (timersInstance._settings.show_pie) {
-          //timersInstance._pie.queue_repaint();
-        }
       }
     return true;
   }

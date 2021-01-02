@@ -418,9 +418,9 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-pie">Show progress in the panl menu</property>
+                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Show progress in the panl menu</property>
                     <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_show_pie_toggled" swapped="no"/>
+                    <signal name="toggled" handler="on_show_progress_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
