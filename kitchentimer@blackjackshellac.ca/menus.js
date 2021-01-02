@@ -41,8 +41,18 @@ class PanelMenuBuilder {
     this.logger = new Logger('kt menu', indicator.settings.debug);
 
     this._menu.connect('open-state-changed', (self,open) => {
-      if (open) { this.build(); }
+      if (open) {
+        this.build();
+      } else {
+        this.timers.forEach( (timer) => {
+          timer.label = null;
+        });
+      }
     });
+  }
+
+  get timers() {
+    return this._indicator.timers;
   }
 
   create_icon() {
@@ -58,7 +68,7 @@ class PanelMenuBuilder {
     this.logger.info("Building the popup menu");
 
     this._menu.removeAll();
-    this._timers.refresh();
+    this.timers.refresh();
 
     // this._addSwitch(_("Run Timer")).connect("toggled", () => {
       // this._stopTimer = !(this._stopTimer);
@@ -72,15 +82,25 @@ class PanelMenuBuilder {
 
     this._addSeparator();
 
-    this._timers.sorted().forEach( (timer) => {
+    this.timers.sorted().forEach( (timer) => {
       var hms = new Utils.HMS(timer.duration);
-      var time = hms.toString();
+
       var timer_item = this._addItem(timer.name);
       timer_item._timer = timer;
-      timer.label = new St.Label({ text: time });
-      let bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
+      timer.label = new St.Label({ x_expand: true, x_align: St.Align.START });
+      timer.label_progress(hms);
+
+      var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
 		  bin.child = timer.label;
 		  timer_item.add(bin);
+
+		  //let box = new St.BoxLayout({ x_expand: true, x_align: St.Align.END });
+		  //timer.moon = new St.Label( { x_expand: true, x_align: St.Align.END });
+		  //box.add_child(timer.label);
+		  //box.add_child(timer.moon)
+		  //timer_item.add(box);
+
+
 		  var icon_name = 'document-open-recent-symbolic';
 		  if (timer.is_running()) {
 		    icon_name = 'appointment-missed-symbolic';
@@ -91,7 +111,7 @@ class PanelMenuBuilder {
 		  });
 		  icon.set_icon_size(16);
 		  if (timer.is_running()) {
-		    // https://developer.gnome.org/clutter/stable/ClutterActor.html#ClutterActor.signals
+		    //https://developer.gnome.org/clutter/stable/ClutterActor.html#ClutterActor.signals
 		    icon.connect('button-press-event', (timer) => {
 		      timer.reset();
 		    });
@@ -101,27 +121,12 @@ class PanelMenuBuilder {
         ti._timer.start();
       });
     });
-  }
 
-  _formatHMS(secs) {
-    var time="";
-    var hms=this._secondsToHMS(secs);
-    if (hms.hours) {
-      time=`${hms.hours}h`;
-    }
-    time=`${time}${hms.minutes}m${hms.seconds}s`;
-    return time;
-  }
-
-  _secondsToHMS(secs) {
-    secs = Number(secs);
-    var shms={
-      secs: secs,
-      hours: Math.floor(secs / 3600),
-      minutes: Math.floor(secs % 3600 / 60),
-      seconds: Math.floor(secs % 3600 % 60)
-    };
-    return shms;
+    this._addSeparator();
+    var prefs = this._addItem(_("Preferences…"));
+    prefs.connect('activate', () => {
+      ExtensionUtils.openPrefs();
+    });
   }
 
 	// Add sliders SubMenu to manually set the timer
@@ -209,7 +214,7 @@ class PanelMenuBuilder {
 		  var name = this._name_entry.get_text();
 		  this._time = hms.toSeconds();
 		  var timer = new Timer(name, this._time);
-		  this._timers.add(timer);
+		  this.timers.add(timer);
 		});
 	}
 

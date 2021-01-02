@@ -31,10 +31,12 @@ const Gst = imports.gi.Gst;
 
 // for setInterval()
 const Utils = Me.imports.utils;
+const Logger = Utils.Logger;
 
 class Annoyer {
   constructor(settings) {
     this._settings = settings;
+    this.logger = new Logger('kt notifier', settings.debug);
     this._initPlayer();
   }
 
@@ -51,8 +53,19 @@ class Annoyer {
 		  return;
 		}
 
-    var uri="file://"+this.sound_file;
-	  log(`Playing ${uri}`);
+    var uri="file://";
+    if (GLib.file_test(this.sound_file, GLib.FileTest.EXISTS)) {
+      uri += this.sound_file;
+    } else {
+      var base = GLib.path_get_basename(this.sound_file);
+      if (base !== this.sound_file) {
+        this.logger.error("Sound file not found, use default");
+        base = this._settings.get_default('sound-file');
+      }
+      uri += GLib.build_filenamev([ Me.path, base ]);
+    }
+
+	  this.logger.info(`Playing ${uri}`);
 	  for (var i=0; i < this.sound_loops; i++) {
 	    this._player.set_property('uri', uri);
 	    this._player.set_state(Gst.State.PLAYING);
@@ -91,7 +104,7 @@ class Annoyer {
 			    this._player.set_state(Gst.State.READY);
 		    }
 
-		    // TODO use setTimeout to loop playSound
+		    // TODO use setTimeout to loop playSound?
 		    // if ( t == Gst.MessageType.EOS && this._sound_loop ) {
 			   //  this._player.set_state(Gst.State.READY);
 			   //  this._player.set_property('uri', this.sound_file);

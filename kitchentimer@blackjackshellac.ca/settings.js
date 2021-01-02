@@ -68,6 +68,10 @@ class Settings {
       return h;
     }
 
+    get_default(key) {
+      return this.settings.get_default_value(key);
+    }
+
     get notification() {
       return this.settings.get_boolean('notification');
     }

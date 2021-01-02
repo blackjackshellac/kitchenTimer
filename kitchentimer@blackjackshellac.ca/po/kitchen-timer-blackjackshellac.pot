@@ -8,207 +8,240 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-31 15:31-0500\n"
+"POT-Creation-Date: 2021-01-02 08:11-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:48
+#: indicator.js:46 settings.ui:603
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menus.js:70
+#: menus.js:80
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:137
+#: menus.js:126
+msgid "Preferences…"
+msgstr ""
+
+#: menus.js:142
 msgid "Hours"
 msgstr ""
 
-#: menus.js:159
+#: menus.js:164
 msgid "Minutes"
 msgstr ""
 
-#: menus.js:179
+#: menus.js:183
 msgid "Seconds"
 msgstr ""
 
-#: menus.js:197
+#: menus.js:201
 msgid "Name"
 msgstr ""
 
-#: menus.js:201
+#: menus.js:205
 msgid "Name for timer"
 msgstr ""
 
-#: menus.js:209
+#: menus.js:213
 msgid "Create"
 msgstr ""
 
-#: prefs.js:217
+#: prefs.js:230
 msgid "New timer"
 msgstr ""
 
-#: settings.ui:55 settings.ui:405
+#: timers.js:305
+msgid "stopped early at"
+msgstr ""
+
+#: timers.js:306
+msgid "Timer"
+msgstr ""
+
+#: settings.ui:55 settings.ui:204
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr ""
 
-#: settings.ui:61 settings.ui:421
+#: settings.ui:66 settings.ui:219
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
 
-#: settings.ui:123
-msgctxt "notification_text"
-msgid "Notification"
-msgstr ""
-
-#: settings.ui:127
-msgctxt "notification"
-msgid "Show a notification when the timer is done"
-msgstr ""
-
-#: settings.ui:138
-msgctxt "show_time_text"
-msgid "Show time"
-msgstr ""
-
-#: settings.ui:142
-msgctxt "show-time"
-msgid "Show remaining time for running timers in the panel"
-msgstr ""
-
-#: settings.ui:153
-msgctxt "show_pie_text"
-msgid "Show pie"
-msgstr ""
-
-#: settings.ui:158
-msgctxt "show-pie"
-msgid "Show progress in the panl menu"
-msgstr ""
-
-#: settings.ui:169
-msgctxt "sort_by_duration_text"
-msgid "Sort by duration"
-msgstr ""
-
-#: settings.ui:173
-msgctxt "sort-by-duration"
-msgid "Sort timers by duration"
-msgstr ""
-
-#: settings.ui:184
-msgctxt "sort_descending_text"
-msgid "Sort descending"
-msgstr ""
-
-#: settings.ui:188
-msgctxt "sort-descending"
-msgid "Sort timers by duration from longest to shortest"
-msgstr ""
-
-#: settings.ui:199
-msgctxt "annoy_text"
-msgid "Annoy"
-msgstr ""
-
-#: settings.ui:203
-msgctxt "model-notifiation"
-msgid "System model notificaiton"
-msgstr ""
-
-#: settings.ui:214
-msgctxt "play-sound-text"
-msgid "Play sound"
-msgstr ""
-
-#: settings.ui:218
-msgctxt "play-sound"
-msgid "Play the sound when the timer is done"
-msgstr ""
-
-#: settings.ui:232
-msgid "Options"
-msgstr ""
-
-#: settings.ui:253
-msgid "Sound loops"
-msgstr ""
-
-#: settings.ui:266
-msgctxt "sound_loops_tooltip"
-msgid "Loops to play timer notification sound"
-msgstr ""
-
-#: settings.ui:269
-msgid "Sound loops, 0 is off"
-msgstr ""
-
-#: settings.ui:289
-msgctxt "sound_file_tooltip"
-msgid "Timer notification sound file"
-msgstr ""
-
-#: settings.ui:292
-msgctxt "sound_file"
-msgid "Sound file"
-msgstr ""
-
-#: settings.ui:306
-msgctxt "path_to_sound_file"
-msgid "Sound file"
-msgstr ""
-
-#: settings.ui:316
-msgid "Sound"
-msgstr ""
-
-#: settings.ui:356
+#: settings.ui:155
 msgctxt "timer-enabled"
 msgid "Enable timer if checked"
 msgstr ""
 
-#: settings.ui:376
+#: settings.ui:175
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
 
-#: settings.ui:386
+#: settings.ui:185
 msgctxt "timers-combo-entry"
 msgid "Timer name"
 msgstr ""
 
-#: settings.ui:464
+#: settings.ui:262
 msgctxt "label-hour"
 msgid " Hours"
 msgstr ""
 
-#: settings.ui:491
+#: settings.ui:289
 msgid "1"
 msgstr ""
 
-#: settings.ui:506
+#: settings.ui:304
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr ""
 
-#: settings.ui:536
+#: settings.ui:334
 msgid "0"
 msgstr ""
 
-#: settings.ui:550
+#: settings.ui:348
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr ""
 
-#: settings.ui:575
+#: settings.ui:373
 msgid "Timers"
+msgstr ""
+
+#: settings.ui:387
+msgctxt "notification_text"
+msgid "Notification"
+msgstr ""
+
+#: settings.ui:391
+msgctxt "notification"
+msgid "Show a notification when the timer is done"
+msgstr ""
+
+#: settings.ui:402
+msgctxt "show_time_text"
+msgid "Show time"
+msgstr ""
+
+#: settings.ui:406
+msgctxt "show-time"
+msgid "Show remaining time for running timers in the panel"
+msgstr ""
+
+#: settings.ui:417
+msgctxt "show_pie_text"
+msgid "Show pie"
+msgstr ""
+
+#: settings.ui:422
+msgctxt "show-pie"
+msgid "Show progress in the panl menu"
+msgstr ""
+
+#: settings.ui:433
+msgctxt "sort_by_duration_text"
+msgid "Sort by duration"
+msgstr ""
+
+#: settings.ui:437
+msgctxt "sort-by-duration"
+msgid "Sort timers by duration"
+msgstr ""
+
+#: settings.ui:448
+msgctxt "sort_descending_text"
+msgid "Sort descending"
+msgstr ""
+
+#: settings.ui:452
+msgctxt "sort-descending"
+msgid "Sort timers by duration from longest to shortest"
+msgstr ""
+
+#: settings.ui:463
+msgctxt "annoy_text"
+msgid "Annoy"
+msgstr ""
+
+#: settings.ui:467
+msgctxt "model-notifiation"
+msgid "System model notificaiton"
+msgstr ""
+
+#: settings.ui:478
+msgctxt "play-sound-text"
+msgid "Play sound"
+msgstr ""
+
+#: settings.ui:482
+msgctxt "play-sound"
+msgid "Play the sound when the timer is done"
+msgstr ""
+
+#: settings.ui:496
+msgid "Options"
+msgstr ""
+
+#: settings.ui:518
+msgid "Sound loops"
+msgstr ""
+
+#: settings.ui:531
+msgctxt "sound_loops_tooltip"
+msgid "Loops to play timer notification sound"
+msgstr ""
+
+#: settings.ui:534
+msgid "Sound loops, 0 is off"
+msgstr ""
+
+#: settings.ui:554
+msgctxt "sound_file_tooltip"
+msgid "Timer notification sound file"
+msgstr ""
+
+#: settings.ui:557
+msgctxt "sound_file"
+msgid "Sound file"
+msgstr ""
+
+#: settings.ui:571
+msgctxt "path_to_sound_file"
+msgid "Sound file"
+msgstr ""
+
+#: settings.ui:581
+msgid "Sound"
+msgstr ""
+
+#: settings.ui:637
+msgid "Copyright © 2021, Steeve McCauley"
+msgstr ""
+
+#: settings.ui:651
+msgid "https://github.com/blackjackshellac/kitchenTimer"
+msgstr ""
+
+#: settings.ui:669
+msgid ""
+"<span size='smaller' style='italic'>This program comes with absolutely no "
+"warranty.\n"
+"See the <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU GPL 3 "
+"License</a> for details.</span>"
+msgstr ""
+
+#: settings.ui:691
+msgctxt "about"
+msgid "About"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41

@@ -217,8 +217,45 @@ class Timer {
 
   // menu label or null if closed
   set label(label) {
-    this.logger.debug(`Timer label set to ${label}`);
+    this.logger.debug(label ? `Timer label set to ${label}`: 'Timer label set to null');
     this._label = label;
+  }
+
+  // get moon() {
+  //   this._moon.set_text('🌑');
+  //   return this._moon;
+  // }
+
+  // set moon(label) {
+  //   this._moon = label;
+  // }
+
+  label_progress(hms, now=0) {
+    if (!this.label) {
+      return;
+    }
+
+    // ⏳⌛⏰
+		// 🌑  🌒  🌓  🌔  🌕  🌖  🌗  🌘
+		// 8/8 1/8 2/8 3/8 4/8 5/8 6/8 7/8
+    // (now-this._start) / this.duration_ms
+
+    // const moons = [ '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '🌕' ];
+    //const moons = [ '⏳', '⌛' ];
+    // const mlen = moons.length;
+
+    // var moon;
+    // if (now === 0) {
+    //   moon = '🌑';
+    // } else {
+    //   var idx = Math.floor((now-this._start) / this.duration_ms() * mlen);
+    //   if (idx > mlen) {
+    //     idx = mlen;
+    //   }
+    //   moon = moons[idx];
+    // }
+    //this.logger.info(`moons index=${idx} now=${now} start=${this._start} duration=${this.duration_ms()}`);
+    this.label.set_text(hms.toString());
   }
 
   timer_callback(timer) {
@@ -235,9 +272,8 @@ class Timer {
     var hms = new Utils.HMS(delta);
 
     try {
-      if (timer.label) {
-        timer.label.set_text(hms.toString());
-      }
+      timer.label_progress(hms, now);
+
       var running_timers = timersInstance.sort_by_remaining();
       if (running_timers.length > 0 && running_timers[0] == timer) {
         if (timersInstance._settings.show_time) {
@@ -249,7 +285,7 @@ class Timer {
         }
       }
     } catch(err) {
-      this.logger.error("Error setting label: "+err.toString());
+      timer.logger.error("Error setting label: "+err.toString());
       this._state = TimerState.EXPIRED;
     }
     return true;
@@ -274,9 +310,8 @@ class Timer {
 
     this._notifier.annoy(`${timer_string} [${this._name}] ${reason} ${time}`);
     var hms = new Utils.HMS(this.duration);
-    if (this.label) {
-      this.label.set_text(hms.toString());
-    }
+
+    this.label_progress(hms);
     timersInstance.panel_label.set_text("");
 
     // return with false to stop interval callback loop
@@ -293,7 +328,7 @@ class Timer {
 
   start() {
     if (!this._enabled) {
-      log(`Timer is disabled`);
+      this.logger.info(`Timer is disabled`);
       return false;
     }
     if (this._state == TimerState.RUNNING) {
