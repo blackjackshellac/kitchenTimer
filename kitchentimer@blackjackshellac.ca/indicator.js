@@ -94,6 +94,11 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
         this._pmbuilder = new Menus.PanelMenuBuilder(this.menu, this);
         this._pmbuilder.build();
+
+        this.connect('destroy', () => {
+          this.logger.debug("Panel indicator button being destroyed");
+          this._panel_label = undefined;
+        });
     }
 
     progress_gicon(degrees) {

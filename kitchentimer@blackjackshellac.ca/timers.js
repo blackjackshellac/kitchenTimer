@@ -37,7 +37,7 @@ class Timers extends Array {
   }
 
   static attach(indicator) {
-    timersInstance._indicator = indicator;
+    timersInstance.indicator = indicator;
     timersInstance._settings = indicator._settings;
     timersInstance.logger = new Logger('timers', timersInstance.settings.debug);
     timersInstance._notifier = new Notifier.Annoyer(timersInstance.settings);
@@ -51,16 +51,20 @@ class Timers extends Array {
     return this._indicator;
   }
 
+  set indicator(indicator) {
+    this._indicator = indicator;
+  }
+
   get settings() {
-    return this.indicator._settings;
+    return this._settings;
   }
 
   get box() {
-    return this.indicator._box;
+    return this.indicator === undefined ? undefined : this.indicator._box;
   }
 
   get panel_label() {
-    return this.indicator._panel_label;
+    return this.indicator === undefined ? undefined : this.indicator._panel_label;
   }
 
   refresh() {
@@ -170,7 +174,6 @@ class Timer {
     this._gicon = null;
 
     this._notifier = timersInstance._notifier;
-    this._panel_label = timersInstance.panel_label;
   }
 
   get id() {
@@ -277,6 +280,9 @@ class Timer {
   }
 
   icon_progress() {
+    if (timersInstance.indicator === undefined) {
+      return;
+    }
     var key = this.degree_progress();
     var gicon = timersInstance.indicator.progress_gicon(key);
     if (gicon !== this._gicon) {
@@ -286,9 +292,9 @@ class Timer {
         style_class: 'system-status-icon'
       });
 		  //icon.set_icon_size(16);
-		  var current = timersInstance.indicator._box.get_child_at_index(0);
+		  var current = timersInstance.box.get_child_at_index(0);
 		  if (current !== icon) {
-        timersInstance.indicator._box.replace_child(current, icon);
+        timersInstance.box.replace_child(current, icon);
       }
     }
   }
@@ -310,8 +316,9 @@ class Timer {
       var running_timers = timersInstance.sort_by_remaining();
       if (running_timers.length > 0 && running_timers[0] == timer) {
         timer.icon_progress();
-        if (timersInstance._settings.show_time) {
-          timersInstance.panel_label.set_text(hms.toString(true));
+        var panel_label = timersInstance.panel_label;
+        if (panel_label && timersInstance._settings.show_time) {
+          panel_label.set_text(hms.toString(true));
         }
         timersInstance._active_timer = timer;
       }
@@ -340,7 +347,11 @@ class Timer {
 
     this.label_progress(hms);
     this.icon_progress();
-    timersInstance.panel_label.set_text("");
+
+    var panel_label = timersInstance.panel_label
+    if (panel_label) {
+      panel_label.set_text("");
+    }
 
     // return with false to stop interval callback loop
     return false;

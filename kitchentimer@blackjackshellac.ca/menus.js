@@ -94,7 +94,7 @@ class PanelMenuBuilder {
 		  bin.child = timer.label;
 		  timer_item.add(bin);
 
-      var key = timer.degree_progress(0);
+      var key = timer.degree_progress(15);
 		  var icon = new St.Icon({
         gicon: this._indicator.progress_gicon(key),
         style_class: 'system-status-icon'
