@@ -26,7 +26,7 @@
     </rdf:RDF>
   </metadata>
   <sodipodi:namedview
-     inkscape:cy="8"
+     inkscape:cy="8.2976727"
      pagecolor="#555753"
      borderopacity="1"
      showborder="false"
@@ -51,8 +51,8 @@
      inkscape:window-height="1019"
      inkscape:snap-to-guides="true"
      inkscape:current-layer="layer11"
-     inkscape:zoom="51.375"
-     inkscape:cx="8"
+     inkscape:zoom="62.430266"
+     inkscape:cx="8.4171325"
      inkscape:snap-grids="true"
      inkscape:pageopacity="1"
      inkscape:document-rotation="0">
@@ -63,10 +63,34 @@
        empspacing="2"
        enabled="true"
        type="xygrid"
-       snapvisiblegridlinesonly="true"
+       snapvisiblegridlinesonly="false"
        visible="true"
        originx="0"
        originy="0" />
+    <sodipodi:guide
+       position="12.741732,10.653914"
+       orientation="0,-1"
+       id="guide1453" />
+    <sodipodi:guide
+       position="7.6516571,5.9866943"
+       orientation="0,-1"
+       id="guide1455" />
+    <sodipodi:guide
+       position="8,11.613577"
+       orientation="1,0"
+       id="guide1457" />
+    <sodipodi:guide
+       position="8.7815383,11.811265"
+       orientation="1,0"
+       id="guide1459" />
+    <sodipodi:guide
+       position="7,8.3915108"
+       orientation="1,0"
+       id="guide1461" />
+    <sodipodi:guide
+       position="9.8031518,13"
+       orientation="1,0"
+       id="guide1463" />
   </sodipodi:namedview>
   <title
      id="title9167">Gnome Symbolic Icon Theme</title>
@@ -115,14 +139,11 @@
        id="rect3335"
        d="m 69.682822,382.89991 c -1.794739,0.0355 -3.476853,0.34716 -4.553882,1.17262 -1.278769,1.03215 -2.130225,9.78838 -2.140325,9.89331 v 0.0114 c -2.6e-5,2.8e-4 0,0.0228 0,0.0228 H 63 l 0.523697,1.25231 c 2.434643,0.36474 4.809396,0.46433 6.853592,0.44401 0.02569,-2.6e-4 0.05411,2.9e-4 0.07969,0 2.044196,0.0203 4.418948,-0.0793 6.853592,-0.44401 L 77.83427,394 h 0.01138 c 0,0 2.7e-5,-0.0225 0,-0.0228 v -0.0114 c -0.0101,-0.10493 -0.861556,-8.86116 -2.140325,-9.89331 -1.077028,-0.82546 -2.759143,-1.13715 -4.553881,-1.17262 -0.228075,-0.005 -0.462612,-0.004 -0.694467,0 -0.02652,-5.5e-4 -0.05309,4.4e-4 -0.07969,0 -0.231855,-0.004 -0.466392,-0.005 -0.694467,0 z m 0.728621,1.4117 c 2.418307,0 4.383111,1.96481 4.383111,4.38311 0,2.41831 -1.964804,4.37173 -4.383111,4.37173 -2.418307,0 -4.371727,-1.95342 -4.371727,-4.37173 0,-2.4183 1.95342,-4.38311 4.371727,-4.38311 z"
        style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.364311;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1" />
-    <rect
-       y="-72.737671"
-       x="387.92728"
-       height="4.6460814"
-       width="1.5259513"
-       id="rect3512"
-       style="fill:#bebebe;fill-opacity:1;stroke:#bebebe;stroke-width:0.176672;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       transform="rotate(90)" />
+    <path
+       style="fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:#bebebe;stroke-width:0.177;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 73.088557,388.63297 -4.653908,-1 -0.01329,2.80315 4.667208,-1.02162 z"
+       id="path1465"
+       sodipodi:nodetypes="ccccc" />
   </g>
   <g
      inkscape:label="actions"
@@ -142,6 +163,6 @@
   <g
      inkscape:label="emblems"
      transform="translate(-62,-381)"
-     inkscape:groupmode="layer"
-     id="layer15" />
+     id="layer15"
+     style="display:inline" />
 </svg>

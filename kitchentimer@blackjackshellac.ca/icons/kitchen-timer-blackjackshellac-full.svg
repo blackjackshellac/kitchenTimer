@@ -628,13 +628,12 @@
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient3629"
-       id="linearGradient2299"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.9605798,0,0,0.9793075,0.2197079,-0.3819568)"
-       x1="24.513035"
-       y1="16.85784"
-       x2="24.660349"
-       y2="25.696674" />
+       id="linearGradient979"
+       x1="20.747715"
+       y1="20.915333"
+       x2="27.239237"
+       y2="20.915333"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -646,9 +645,9 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="24"
-     inkscape:cx="15.511531"
-     inkscape:cy="30.891482"
+     inkscape:zoom="30.633327"
+     inkscape:cx="23.581062"
+     inkscape:cy="19.364217"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      width="48px"
@@ -659,7 +658,42 @@
      inkscape:window-y="32"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="23.008488,38.835482"
+       orientation="1,0"
+       id="guide943" />
+    <sodipodi:guide
+       position="24.984756,41.3236"
+       orientation="1,0"
+       id="guide945" />
+    <sodipodi:guide
+       position="24.011494,41.493508"
+       orientation="1,0"
+       id="guide947" />
+    <sodipodi:guide
+       position="26.200354,33.459872"
+       orientation="0,-1"
+       id="guide957" />
+    <sodipodi:guide
+       position="27.062029,20.709461"
+       orientation="0,-1"
+       id="guide959" />
+    <sodipodi:guide
+       position="26.003287,36.255304"
+       orientation="1,0"
+       id="guide963" />
+    <sodipodi:guide
+       position="20.990211,27.95647"
+       orientation="1,0"
+       id="guide965" />
+    <sodipodi:guide
+       position="26.996741,24.626764"
+       orientation="1,0"
+       id="guide967" />
+  </sodipodi:namedview>
   <metadata
      id="metadata3324">
     <rdf:RDF>
@@ -697,7 +731,7 @@
        id="path3476" />
     <path
        style="fill:#5f5f5f;fill-opacity:1;stroke:none;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1"
-       d="m 43.856735,35.394922 -1.289742,2.785523 c -6.567006,0.892421 -12.972465,1.136077 -18.486311,1.086354 -0.06901,7.18e-4 -0.145662,-6.23e-4 -0.214958,0 C 18.351879,39.31652 11.94642,39.072868 5.379413,38.180445 L 4.1203784,35.450633 c 8.74e-5,0.02704 1.061e-4,0.05471 0,0.05571 v 0.02785 c -7.29e-5,6.91e-4 0,0.05571 0,0.05571 h 0.030708 l 1.4125753,3.064075 c 6.5670071,0.892423 12.9724661,1.136075 18.4863111,1.086354 0.0693,-6.23e-4 0.145949,7.18e-4 0.214958,0 5.513846,0.04972 11.919305,-0.193933 18.486311,-1.086354 l 1.412575,-3.064075 h 0.03071 c -10e-7,2e-6 7.3e-5,-0.05502 0,-0.05571 v -0.02785 c -2.11e-4,-0.002 4.87e-4,-0.106881 0,-0.111422 z"
+       d="m 43.856735,35.394922 -1.289742,2.785523 c -6.567006,0.892421 -12.972465,1.136077 -18.486311,1.086354 -0.06901,7.18e-4 -0.145662,-6.23e-4 -0.214958,0 C 18.351879,39.31652 11.94642,39.072868 5.379413,38.180445 L 4.1203784,35.450633 c 8.74e-5,0.02704 1.061e-4,0.05471 0,0.05571 v 0.02785 c -7.29e-5,6.91e-4 0,0.05571 0,0.05571 h 0.030708 l 1.4125753,3.064075 c 6.5670073,0.892423 12.9724663,1.136075 18.4863113,1.086354 0.0693,-6.23e-4 0.145949,7.18e-4 0.214958,0 5.513846,0.04972 11.919305,-0.193933 18.486311,-1.086354 l 1.412575,-3.064075 h 0.03071 c -10e-7,2e-6 7.3e-5,-0.05502 0,-0.05571 v -0.02785 c -2.11e-4,-0.002 4.87e-4,-0.106881 0,-0.111422 z"
        id="path3483" />
     <path
        style="fill:none;fill-opacity:1;stroke:url(#linearGradient2275);stroke-width:1;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1"
@@ -710,12 +744,9 @@
        cx="24.833334"
        cy="18.833334"
        r="12.5" />
-    <rect
-       style="fill:url(#linearGradient2299);fill-opacity:1;stroke:#535353;stroke-width:0.484949;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3512"
-       width="4.1886005"
-       height="12.75308"
-       x="22.011753"
-       y="14.540128" />
+    <path
+       style="fill:url(#linearGradient979);fill-opacity:1;fill-rule:evenodd;stroke:#535353;stroke-width:0.485;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 23.008488,14.540128 -2.018277,12.750411 h 6.00653 L 24.984756,14.540128 Z"
+       id="path971" />
   </g>
 </svg>

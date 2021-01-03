@@ -47,7 +47,20 @@ const progressIconFiles = [
   'kitchen-timer-120',
   'kitchen-timer-135',
   'kitchen-timer-150',
-  'kitchen-timer-165'
+  'kitchen-timer-165',
+  'kitchen-timer-165',
+  'kitchen-timer-180',
+  'kitchen-timer-195',
+  'kitchen-timer-210',
+  'kitchen-timer-225',
+  'kitchen-timer-240',
+  'kitchen-timer-255',
+  'kitchen-timer-270',
+  'kitchen-timer-285',
+  'kitchen-timer-300',
+  'kitchen-timer-315',
+  'kitchen-timer-330',
+  'kitchen-timer-345'
 ];
 
 const KitchenTimerIndicator = GObject.registerClass(
@@ -68,8 +81,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
           // load icon as a gicon and store in the hash
           var gicon = Gio.icon_new_for_string(Me.path+"/icons/"+icon_name+".svg");
           this._progressIconsDegrees[deg] = gicon;
-          this._progressIconsDegrees[deg+180] = gicon;
-          this.logger.debug(`Loaded progress icon ${icon_name} for ${deg} and ${deg+180} degrees`);
+          this.logger.debug(`Loaded progress icon ${icon_name} for ${deg} degrees`);
           deg += 15;
         });
 
