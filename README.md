@@ -7,6 +7,8 @@ Gnome shell kitchen timer extension with the ability to run multiple simultaneou
 Clone the repository and then run install_local.sh
 
 ```
+mkdir ~/github
+cd ~/github
 git clone https://github.com/blackjackshellac/kitchenTimer.git
 cd kitchenTimer
 ./install_local.sh
