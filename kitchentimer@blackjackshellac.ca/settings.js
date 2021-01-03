@@ -96,6 +96,14 @@ class Settings {
       this.settings.set_boolean('show-time', bool);
     }
 
+    get show_label() {
+      return this.settings.get_boolean('show-label');
+    }
+
+    set show_label(bool) {
+      return this.settings.set_boolean('show-label', bool);
+    }
+
     get show_progress() {
       return this.settings.get_boolean('show-progress');
     }

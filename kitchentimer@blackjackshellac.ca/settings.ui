@@ -374,7 +374,7 @@ Author: Steeve McCauley
               </packing>
             </child>
             <child>
-              <!-- n-columns=2 n-rows=4 -->
+              <!-- n-columns=2 n-rows=5 -->
               <object class="GtkGrid" id="stack_options">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -418,7 +418,7 @@ Author: Steeve McCauley
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Show progress in the panl menu</property>
+                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Show progress in the panel menu</property>
                     <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_show_progress_toggled" swapped="no"/>
                   </object>
@@ -497,6 +497,33 @@ Author: Steeve McCauley
                   <packing>
                     <property name="left-attach">1</property>
                     <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton">
+                    <property name="label" translatable="yes">checkbutton</property>
+                    <property name="sensitive">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="show_label">
+                    <property name="label" translatable="yes" context="show_label">Show label</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="show_timer_name">Show timer name in the panel menu</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
                   </packing>
                 </child>
               </object>
@@ -660,7 +687,7 @@ Author: Steeve McCauley
                         <property name="label" translatable="yes">https://github.com/blackjackshellac/kitchenTimer</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
+                        <property name="receives-default">False</property>
                         <property name="image">img_kitchentimer_symbolic</property>
                         <property name="always-show-image">True</property>
                         <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>

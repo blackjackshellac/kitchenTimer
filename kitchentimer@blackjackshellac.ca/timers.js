@@ -306,6 +306,9 @@ class Timer {
     if (timersInstance.indicator === undefined) {
       return;
     }
+    if (!timersInstance.settings.show_progress) {
+      return;
+    }
     var key = this.degree_progress();
     var gicon = timersInstance.indicator.progress_gicon(key);
     if (gicon !== this._gicon) {
@@ -342,8 +345,15 @@ class Timer {
       if (running_timers.length > 0 && running_timers[0] == timer) {
         timer.icon_progress();
         var panel_label = timersInstance.panel_label;
-        if (panel_label && timersInstance._settings.show_time) {
-          panel_label.set_text(hms.toString(true));
+        if (panel_label && (timersInstance._settings.show_time || timersInstance._settings.show_label)) {
+          var text = "";
+          if (timersInstance._settings.show_label) {
+            text=timer.name+" ";
+          }
+          if (timersInstance._settings.show_time) {
+            text += hms.toString(true);
+          }
+          panel_label.set_text(text);
         }
         timersInstance._active_timer = timer;
       }

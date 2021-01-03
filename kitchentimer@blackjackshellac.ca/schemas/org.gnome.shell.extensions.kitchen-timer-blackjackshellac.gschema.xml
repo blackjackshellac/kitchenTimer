@@ -52,6 +52,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>true</default>
       <summary>Show timer progress in panel menu</summary>
     </key>
+    <key name="show-label" type="b">
+      <default>false</default>
+      <summary>Show timer name in panel menu</summary>
+    </key>
     <key name="play-sound" type="b">
       <default>true</default>
       <summary>Play sound notifications</summary>

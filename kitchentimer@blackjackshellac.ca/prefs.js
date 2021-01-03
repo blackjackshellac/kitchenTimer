@@ -333,6 +333,7 @@ class PreferencesBuilder {
         if (timer.duration <= 0) {
           timer.duration = 1;
           model.set_value(iter, Model.DURATION, 1);
+          this._update_timers_tab_from_model(this.timers_combo);
         }
 
         this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
@@ -433,17 +434,17 @@ class PreferencesBuilder {
       let show_time = this._bo('show_time');
       this._ssb('show-time', show_time, 'active');
 
-      let show_progress = this._bo('show-progress');
+      let show_progress = this._bo('show_progress');
       this._ssb('show-progress', show_progress, 'active');
+
+      let show_label = this._bo('show_label');
+      this._ssb('show-label', show_label, 'active');
 
       let play_sound = this._bo('play_sound');
       this._ssb('play-sound', play_sound, 'active');
 
       let sound_loops = this._bo('sound_loops');
       this._ssb('sound-loops', sound_loops, 'value');
-
-      let sound_path = this._bo('sound_path');
-      this._ssb('sound-file', sound_path, 'value');
 
       let sort_by_duration = this._bo('sort_by_duration');
       this._ssb('sort-by-duration', sort_by_duration, 'active');
