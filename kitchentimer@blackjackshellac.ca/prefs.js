@@ -460,6 +460,9 @@ function init() {
 
 function buildPrefsWidget() {
   log("Create preferences widget and show it");
+
+  ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
+
   var preferencesBuilder = new PreferencesBuilder();
   var widget = preferencesBuilder.build();
   widget.show_all();
