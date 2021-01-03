@@ -460,8 +460,8 @@ function init() {
 
 function buildPrefsWidget() {
   log("Create preferences widget and show it");
-  let preferencesBuilder = new PreferencesBuilder();
-  let widget = preferencesBuilder.build();
+  var preferencesBuilder = new PreferencesBuilder();
+  var widget = preferencesBuilder.build();
   widget.show_all();
 
   return widget;

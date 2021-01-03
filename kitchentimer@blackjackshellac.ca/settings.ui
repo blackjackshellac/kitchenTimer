@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.38.2 
 
-Copyright (C) 2021 Steeve McCauley
+Copyright (C) 2021, Steeve McCauley
 
 This file is part of Kitchen Timer.
 
@@ -26,7 +26,7 @@ Author: Steeve McCauley
   <!-- interface-license-type gplv3 -->
   <!-- interface-name Kitchen Timer -->
   <!-- interface-description Gnome Shell Kitchen Timer Extension -->
-  <!-- interface-copyright 2021 Steeve McCauley -->
+  <!-- interface-copyright 2021, Steeve McCauley -->
   <!-- interface-authors Steeve McCauley -->
   <object class="GtkAdjustment" id="adjust_hours">
     <property name="upper">24</property>
