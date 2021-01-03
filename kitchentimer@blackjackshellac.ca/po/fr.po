@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-03 13:30-0500\n"
+"POT-Creation-Date: 2021-01-03 14:15-0500\n"
 "PO-Revision-Date: 2021-01-03 13:30-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -268,15 +268,15 @@ msgstr "Son"
 msgid "Kitchen Timer"
 msgstr "Kitchen Timer"
 
-#: ../settings.ui:673
+#: ../settings.ui:680
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr "Copyright © 2021, Steeve McCauley"
 
-#: ../settings.ui:687
+#: ../settings.ui:694
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr "https://github.com/blackjackshellac/kitchenTimer"
 
-#: ../settings.ui:705
+#: ../settings.ui:712
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -288,7 +288,7 @@ msgstr ""
 "See the <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU GPL 3 "
 "License</a> for details.</span>"
 
-#: ../settings.ui:727
+#: ../settings.ui:734
 msgctxt "about"
 msgid "About"
 msgstr "À propos"
@@ -333,6 +333,6 @@ msgstr "arrêté tôt à"
 msgid "Timer"
 msgstr "Minuterie"
 
-#: ../prefs.js:231
+#: ../prefs.js:232
 msgid "New timer"
 msgstr "Nouvelle minuterie"

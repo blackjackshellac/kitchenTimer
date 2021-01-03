@@ -82,6 +82,7 @@ class PreferencesBuilder {
         this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
         this.timer_enabled = this._bo('timer_enabled');
+        this.timer_icon = this._bo('timer_icon');
 
         // TODO update with initial value
         this._hms = new Utils.HMS(0);
@@ -246,6 +247,18 @@ class PreferencesBuilder {
             if (this._update_active_liststore_from_tab()) {
               this._save_liststore();
             }
+          }
+        });
+
+        this._timer_icon_count = 0;
+        this.timer_icon.connect('button-press-event', () => {
+          if (this._timer_icon_count == 5) {
+            var cmd = Me.path+"/bin/dconf-editor.sh";
+            this.logger.debug(`cmd=${cmd}`);
+            Utils.spawn(cmd, undefined);
+            this._timer_icon_count = 0;
+          } else {
+            this._timer_icon_count++;
           }
         });
 

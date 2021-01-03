@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-03 11:41-0500\n"
-"PO-Revision-Date: 2021-01-03 11:41-0500\n"
+"POT-Creation-Date: 2021-01-03 14:14-0500\n"
+"PO-Revision-Date: 2021-01-03 14:14-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Create"
 msgstr ""
 
-#: prefs.js:230 prefs.js:231
+#: prefs.js:230 prefs.js:231 prefs.js:232
 msgid "New timer"
 msgstr ""
 
@@ -299,15 +299,15 @@ msgstr ""
 msgid "Sound"
 msgstr ""
 
-#: settings.ui:673
+#: settings.ui:673 settings.ui:680
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr ""
 
-#: settings.ui:687
+#: settings.ui:687 settings.ui:694
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr ""
 
-#: settings.ui:705
+#: settings.ui:705 settings.ui:712
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -315,7 +315,7 @@ msgid ""
 "License</a> for details.</span>"
 msgstr ""
 
-#: settings.ui:727
+#: settings.ui:727 settings.ui:734
 msgctxt "about"
 msgid "About"
 msgstr ""

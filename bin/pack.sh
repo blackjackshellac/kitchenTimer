@@ -15,7 +15,7 @@ for es in $extra_source; do
 	eso="$eso --extra-source=$es"
 done
 
-eso="$eso --extra-source=./icons/"
+eso="$eso --extra-source=./icons/ --extra-source=./bin/"
 
 cmd="gnome-extensions pack --podir=po/ --schema=schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml --gettext-domain=kitchen-timer-blackjackshellac $eso -o ../ --force"
 echo $cmd
