@@ -18,15 +18,16 @@
 
 /* exported init */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 
 const { GObject, St, Clutter } = imports.gi;
 
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+
+const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
 const Settings = Me.imports.settings.Settings;
 const Menus = Me.imports.menus;
