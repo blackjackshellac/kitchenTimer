@@ -16,6 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
+const _ = Gettext.gettext;
+
 const GLib = imports.gi.GLib;
 var clearTimeout, clearInterval;
 clearTimeout = clearInterval = GLib.Source.remove;

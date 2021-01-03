@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Copyright (C) 2021, Steeve McCauley
+# This file is distributed under the same license as the kitchen-timer-blackjackshellac package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-03 07:19-0500\n"
+"POT-Creation-Date: 2021-01-03 10:34-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,47 +21,47 @@ msgstr ""
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menus.js:80
+#: menus.js:80 menus.js:84
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:117
+#: menus.js:117 menus.js:121
 msgid "Preferences…"
 msgstr ""
 
-#: menus.js:133
+#: menus.js:133 menus.js:137
 msgid "Hours"
 msgstr ""
 
-#: menus.js:155
+#: menus.js:155 menus.js:159
 msgid "Minutes"
 msgstr ""
 
-#: menus.js:174
+#: menus.js:174 menus.js:178
 msgid "Seconds"
 msgstr ""
 
-#: menus.js:192
+#: menus.js:192 menus.js:196
 msgid "Name"
 msgstr ""
 
-#: menus.js:196
+#: menus.js:196 menus.js:200
 msgid "Name for timer"
 msgstr ""
 
-#: menus.js:204
+#: menus.js:204 menus.js:208
 msgid "Create"
 msgstr ""
 
-#: prefs.js:230
+#: prefs.js:230 prefs.js:231
 msgid "New timer"
 msgstr ""
 
-#: timers.js:374
+#: timers.js:374 timers.js:378
 msgid "stopped early at"
 msgstr ""
 
-#: timers.js:375
+#: timers.js:375 timers.js:379
 msgid "Timer"
 msgstr ""
 

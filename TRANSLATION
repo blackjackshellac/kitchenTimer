@@ -30,4 +30,9 @@ let str = 'test';
 // With native template literals, doesn't work with xgettext
 'A string with a digit "${num}" and string "${str}"';
 
+******
 
+See Scripts 
+
+bin/pot_create.sh - scan files and update pot file
+bin/po_update.sh  - update po files per language and generate binary locale .mo file

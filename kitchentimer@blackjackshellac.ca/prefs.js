@@ -18,7 +18,8 @@
 
 const { Gio, Gtk, GLib } = imports.gi;
 
-const Gettext = imports.gettext.domain('gnome-shell-extensions');
+const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
 const ExtensionUtils = imports.misc.extensionUtils;

@@ -1,6 +1,6 @@
-# English translations for PACKAGE package.
-# Copyright (C) 2021 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# English translations for Kitchen Timer package.
+# Copyright (C) 2021, Steeve McCauley
+# This file is distributed under the same license as the Kitchen Timer package.
 # Automatically generated, 2021.
 # Steeve McCauley <steeve.mccauley@gmail.com>, 2021.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-03 07:19-0500\n"
+"POT-Creation-Date: 2021-01-03 11:01-0500\n"
 "PO-Revision-Date: 2021-01-03 08:08-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -19,236 +19,264 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Generator: Gtranslator 3.38.0\n"
 
-#: indicator.js:74 settings.ui:639
-msgid "Kitchen Timer"
-msgstr "Minuterie de cuisine"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41
+msgid "Show a notification when a timer ends"
+msgstr "Show a notification when a timer ends"
 
-#: menus.js:80
-msgid "Create Timer"
-msgstr "Créer une minuterie"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
+msgid "Make the notification system modal"
+msgstr "Make the notification system modal"
 
-#: menus.js:117
-msgid "Preferences…"
-msgstr "Préférences…"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
+msgid "Show time remaining in panel menu"
+msgstr "Show time remaining in panel menu"
 
-#: menus.js:133
-msgid "Hours"
-msgstr "Heures"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
+msgid "Show timer progress in panel menu"
+msgstr "Show timer progress in panel menu"
 
-#: menus.js:155
-msgid "Minutes"
-msgstr "Minutes"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
+msgid "Show timer name in panel menu"
+msgstr "Show timer name in panel menu"
 
-#: menus.js:174
-msgid "Seconds"
-msgstr "Secondes"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
+msgid "Play sound notifications"
+msgstr "Play sound notifications"
 
-#: menus.js:192
-msgid "Name"
-msgstr "Name"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
+msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
+msgstr "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
 
-#: menus.js:196
-msgid "Name for timer"
-msgstr "Nom de la minuterie"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
+msgid "Path to sound file"
+msgstr "Path to sound file"
 
-#: menus.js:204
-msgid "Create"
-msgstr "Créer"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
+msgid "Default length of timer in seconds"
+msgstr "Default length of timer in seconds"
 
-#: prefs.js:230
-msgid "New timer"
-msgstr "Nouvelle minuterie"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:77
+msgid "Timer presets"
+msgstr "Timer presets"
 
-#: timers.js:374
-msgid "stopped early at"
-msgstr "arrêté tôt à"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
+msgid ""
+"Key-Value pairs of commonly used timer settings: key is the name of the "
+"preset, value the duration in seconds"
+msgstr ""
+"Key-Value pairs of commonly used timer settings: key is the name of the "
+"preset, value the duration in seconds"
 
-#: timers.js:375
-msgid "Timer"
-msgstr "Minuterie"
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
+msgid "Array of Timer object descriptions"
+msgstr "Tableau de descriptions d'objets Timer"
 
-#: settings.ui:55 settings.ui:204
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:86
+msgid "timers configuration stored as json"
+msgstr "configuration des minuteries stockée en tant que json"
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
+msgid "Experimental feature for storing timer data"
+msgstr "Fonction expérimentale de stockage des données de minuterie"
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
+msgid "Sort list of timers by duration"
+msgstr "Trier la liste des minuteries par durée"
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
+msgid "Sort from longest to shortest"
+msgstr "Trier du plus long au plus court"
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
+msgid "Turn on debugging"
+msgstr "Activer le débogage"
+
+#: ../settings.ui:55 ../settings.ui:204
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr "Ajouter une nouvelle minuterie"
 
-#: settings.ui:66 settings.ui:219
+#: ../settings.ui:66 ../settings.ui:219
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr "Supprimer la minuterie sélectionnée"
 
-#: settings.ui:155
+#: ../settings.ui:155
 msgctxt "timer-enabled"
 msgid "Enable timer if checked"
 msgstr "Activer la minuterie si coché"
 
-#: settings.ui:175
+#: ../settings.ui:175
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr "Sélectionnez le minuteur à modifier"
 
-#: settings.ui:185
+#: ../settings.ui:185
 msgctxt "timers-combo-entry"
 msgid "Timer name"
 msgstr "Nom de la minuterie"
 
-#: settings.ui:262
+#: ../settings.ui:262
 msgctxt "label-hour"
 msgid " Hours"
 msgstr " Heures"
 
-#: settings.ui:289
+#: ../settings.ui:289
 msgid "1"
 msgstr "1"
 
-#: settings.ui:304
+#: ../settings.ui:304
 msgctxt "label-minutes"
 msgid " Minutes\t\t"
 msgstr " Minutes\t\t"
 
-#: settings.ui:334
+#: ../settings.ui:334
 msgid "0"
 msgstr "0"
 
-#: settings.ui:348
+#: ../settings.ui:348
 msgctxt "label-seconds"
 msgid "Seconds\t"
 msgstr "Secondes\t"
 
-#: settings.ui:373
+#: ../settings.ui:373
 msgid "Timers"
 msgstr "Timers"
 
-#: settings.ui:387
+#: ../settings.ui:387
 msgctxt "notification"
 msgid "Notification"
 msgstr "Notification"
 
-#: settings.ui:391
+#: ../settings.ui:391
 msgctxt "notification"
 msgid "Show a notification when the timer is done"
 msgstr "Afficher une notification lorsque la minuterie est terminée"
 
-#: settings.ui:402
+#: ../settings.ui:402
 msgctxt "show_time"
 msgid "Show time"
 msgstr "Afficher l'heure"
 
-#: settings.ui:406
+#: ../settings.ui:406
 msgctxt "show-time"
 msgid "Show remaining time for running timers in the panel"
 msgstr ""
 "Afficher le temps restant pour l'exécution des minuteries dans le panneau"
 
-#: settings.ui:417
+#: ../settings.ui:417
 msgctxt "show_progress"
 msgid "Show progress"
 msgstr "Afficher la progression"
 
-#: settings.ui:421
+#: ../settings.ui:421
 msgctxt "show-progress-tooltip"
 msgid "Show progress in the panel menu"
 msgstr "Afficher la progression dans le panneau"
 
-#: settings.ui:432
+#: ../settings.ui:432
 msgctxt "sort_by_duration_text"
 msgid "Sort by duration"
 msgstr "Trier par durée"
 
-#: settings.ui:436
+#: ../settings.ui:436
 msgctxt "sort-by-duration"
 msgid "Sort timers by duration"
 msgstr "Trier les minuteries par durée"
 
-#: settings.ui:447
+#: ../settings.ui:447
 msgctxt "sort_descending_text"
 msgid "Sort descending"
 msgstr "Trier par ordre décroissant"
 
-#: settings.ui:451
+#: ../settings.ui:451
 msgctxt "sort-descending"
 msgid "Sort timers by duration from longest to shortest"
 msgstr "Trier les minuteries par durée du plus long au plus court"
 
-#: settings.ui:462
+#: ../settings.ui:462
 msgctxt "annoy_text"
 msgid "Annoy"
 msgstr "Ennuyer"
 
-#: settings.ui:466
+#: ../settings.ui:466
 msgctxt "model-notifiation"
 msgid "System model notificaiton"
 msgstr "Notification modale du système"
 
-#: settings.ui:477
+#: ../settings.ui:477
 msgctxt "play-sound"
 msgid "Play sound"
 msgstr "Play sound"
 
-#: settings.ui:481
+#: ../settings.ui:481
 msgctxt "play-sound"
 msgid "Play the sound when the timer is done"
 msgstr "Jouez le son lorsque la minuterie est terminée"
 
-#: settings.ui:491 settings.ui:504
+#: ../settings.ui:491 ../settings.ui:504
 msgid "checkbutton"
 msgstr "checkbutton"
 
-#: settings.ui:517
+#: ../settings.ui:517
 msgctxt "show_label"
 msgid "Show label"
 msgstr "Afficher l'étiquette"
 
-#: settings.ui:521
+#: ../settings.ui:521
 msgctxt "show_timer_name"
 msgid "Show timer name in the panel menu"
 msgstr "Afficher le nom de la minuterie dans le menu du panneau"
 
-#: settings.ui:532
+#: ../settings.ui:532
 msgid "Options"
 msgstr "Options"
 
-#: settings.ui:554
+#: ../settings.ui:554
 msgid "Sound loops"
 msgstr "Boucles sonores"
 
-#: settings.ui:567
+#: ../settings.ui:567
 msgctxt "sound_loops_tooltip"
 msgid "Loops to play timer notification sound"
 msgstr "Boucles pour lire le son de notification du minuteur"
 
-#: settings.ui:570
+#: ../settings.ui:570
 msgid "Sound loops, 0 is off"
 msgstr "Sound loops, 0 is off"
 
-#: settings.ui:590
+#: ../settings.ui:590
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr "Fichier sonore de notification de minuterie"
 
-#: settings.ui:593
+#: ../settings.ui:593
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr "Fichier son"
 
-#: settings.ui:607
+#: ../settings.ui:607
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr "Fichier son"
 
-#: settings.ui:617
+#: ../settings.ui:617
 msgid "Sound"
 msgstr "Son"
 
-#: settings.ui:673
+#: ../settings.ui:639 ../indicator.js:74
+msgid "Kitchen Timer"
+msgstr "Minuterie de cuisine"
+
+#: ../settings.ui:673
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr "Copyright © 2021, Steeve McCauley"
 
-#: settings.ui:687
+#: ../settings.ui:687
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr "https://github.com/blackjackshellac/kitchenTimer"
 
-#: settings.ui:705
+#: ../settings.ui:705
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -260,79 +288,51 @@ msgstr ""
 "See the <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU GPL 3 "
 "License</a> for details.</span>"
 
-#: settings.ui:727
+#: ../settings.ui:727
 msgctxt "about"
 msgid "About"
 msgstr "About"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41
-msgid "Show a notification when a timer ends"
-msgstr "Show a notification when a timer ends"
+#: ../menus.js:84
+msgid "Create Timer"
+msgstr "Créer une minuterie"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
-msgid "Make the notification system modal"
-msgstr "Make the notification system modal"
+#: ../menus.js:121
+msgid "Preferences…"
+msgstr "Préférences…"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
-msgid "Show time remaining in panel menu"
-msgstr "Show time remaining in panel menu"
+#: ../menus.js:137
+msgid "Hours"
+msgstr "Heures"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
-msgid "Show timer progress in panel menu"
-msgstr "Show timer progress in panel menu"
+#: ../menus.js:159
+msgid "Minutes"
+msgstr "Minutes"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
-msgid "Show timer name in panel menu"
-msgstr "Show timer name in panel menu"
+#: ../menus.js:178
+msgid "Seconds"
+msgstr "Secondes"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
-msgid "Play sound notifications"
-msgstr "Play sound notifications"
+#: ../menus.js:196
+msgid "Name"
+msgstr "Name"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
-msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
-msgstr "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
+#: ../menus.js:200
+msgid "Name for timer"
+msgstr "Nom de la minuterie"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
-msgid "Path to sound file"
-msgstr "Path to sound file"
+#: ../menus.js:208
+msgid "Create"
+msgstr "Créer"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
-msgid "Default length of timer in seconds"
-msgstr "Default length of timer in seconds"
+#: ../prefs.js:231
+msgid "New timer"
+msgstr "Nouvelle minuterie"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:77
-msgid "Timer presets"
-msgstr "Timer presets"
+#: ../timers.js:378
+msgid "stopped early at"
+msgstr "arrêté tôt à"
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
-msgid ""
-"Key-Value pairs of commonly used timer settings: key is the name of the "
-"preset, value the duration in seconds"
-msgstr ""
-"Key-Value pairs of commonly used timer settings: key is the name of the "
-"preset, value the duration in seconds"
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
-msgid "Array of Timer object descriptions"
-msgstr "Tableau de descriptions d'objets Timer"
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:86
-msgid "timers configuration stored as json"
-msgstr "configuration des minuteries stockée en tant que json"
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
-msgid "Experimental feature for storing timer data"
-msgstr "Fonction expérimentale de stockage des données de minuterie"
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
-msgid "Sort list of timers by duration"
-msgstr "Trier la liste des minuteries par durée"
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
-msgid "Sort from longest to shortest"
-msgstr "Trier du plus long au plus court"
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
-msgid "Turn on debugging"
-msgstr "Activer le débogage"
+#: ../timers.js:379
+msgid "Timer"
+msgstr "Minuterie"
