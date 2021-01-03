@@ -57,7 +57,7 @@ class PanelMenuBuilder {
 
   create_icon() {
     var icon = new St.Icon({
-            icon_name: 'kitchen-timer-blackjackshellac-symbolic',
+            gicon: this._indicator.progress_gicon(0),
             style_class: 'system-status-icon',
         });
     icon.set_icon_size(16);
@@ -204,8 +204,14 @@ class PanelMenuBuilder {
 		this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
 		  var name = this._name_entry.get_text();
 		  this._time = hms.toSeconds();
-		  var timer = new Timer(name, this._time);
-		  this.timers.add(timer);
+		  if (name.length == 0) {
+		    this.logger.warn(`Refusing to create unnamed timer`);
+		  } else if (this._time <= 0) {
+		    this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
+		  } else {
+		    var timer = new Timer(name, this._time);
+		    this.timers.add(timer);
+		  }
 		});
 	}
 

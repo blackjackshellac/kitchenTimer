@@ -21,10 +21,14 @@ const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
 const GLib = imports.gi.GLib;
 
+const Me = ExtensionUtils.getCurrentExtension();
+const Logger = Me.imports.utils.Logger;
+
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
 class Settings {
     constructor() {
         this.settings = ExtensionUtils.getSettings();
+        this.logger = new Logger('kt settings', this.settings.debug)
     }
 
     unpack_timers() {
@@ -42,8 +46,12 @@ class Settings {
       var atimers = [];
       timers.forEach( (timer) => {
         // don't save it's been disabled
-        var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
-        atimers.push(atimer);
+        if (timer.duration > 0) {
+          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
+          atimers.push(atimer);
+        } else {
+          this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
+        }
       });
       // TODO what if it's empty?
       var glvtype = atimers.length == 0 ? undefined : atimers[0].get_type();

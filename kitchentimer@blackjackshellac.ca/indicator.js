@@ -68,7 +68,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
         this._settings = new Settings();
         this._timers = Timers.attach(this);
-        this._logger = new Utils.Logger('kitchen_timer', this._settings.debug);
+        this._logger = new Utils.Logger('kt indicator', this._settings.debug);
         this.logger.info('Initializing extension');
 
         super._init(0.0, _('Kitchen Timer'));

@@ -33,14 +33,14 @@ class Timers extends Array {
   constructor(...args) {
     super(...args);
 
-    this.logger = new Logger('timers', true);
+    this.logger = new Logger('kt timers', true);
   }
 
   static attach(indicator) {
 
     timersInstance.indicator = indicator;
     timersInstance._settings = indicator._settings;
-    timersInstance.logger = new Logger('timers', timersInstance.settings.debug);
+    timersInstance.logger = new Logger('kt timers', timersInstance.settings.debug);
     timersInstance._notifier = new Notifier.Annoyer(timersInstance.settings);
 
     //timersInstance.logger.info("Attaching indicator "+indicator);
@@ -152,11 +152,16 @@ class Timers extends Array {
   }
 
   add(timer) {
+    if (timer.name.length == 0) {
+      this.logger.warn(`Refusing to create unnamed timer`);
+    } else if (timer.duration <= 0) {
+      this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
+    } else {
+      this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
+      this.push(timer);
 
-    this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
-    this.push(timer);
-
-    this._settings.pack_timers(this);
+      this._settings.pack_timers(this);
+    }
   }
 }
 
@@ -174,7 +179,7 @@ class Timer {
 
   constructor(name, duration_secs, id=undefined) {
     var debug = timersInstance.settings.debug;
-    this.logger = new Logger(`kitchen timer: ${name}`, debug);
+    this.logger = new Logger(`kt timer: ${name}`, debug);
     this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._interval_ms = debug ? 500 : 250;

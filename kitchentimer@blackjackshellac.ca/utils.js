@@ -72,6 +72,10 @@ class Logger {
       this._log("DEBUG", message);
     }
 
+    warn(message) {
+      this._log("WARNING", message);
+    }
+
     info(message) {
       this._log("INFO", message);
     }

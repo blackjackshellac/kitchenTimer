@@ -38,7 +38,7 @@ class PreferencesBuilder {
     constructor() {
         this._settings = new Settings();
         this._builder = new Gtk.Builder();
-        this.logger = new Logger('kitchen-timer-prefs', this._settings.debug);
+        this.logger = new Logger('kt prefs', this._settings.debug);
     }
 
     build() {
@@ -330,8 +330,12 @@ class PreferencesBuilder {
         timer.duration = model.get_value(iter, Model.DURATION);
         timer.enabled = model.get_value(iter, Model.ENABLED);
 
-        this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
+        if (timer.duration <= 0) {
+          timer.duration = 1;
+          model.set_value(iter, Model.DURATION, 1);
+        }
 
+        this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
         timers.push(timer);
 
         ok = model.iter_next(iter);
