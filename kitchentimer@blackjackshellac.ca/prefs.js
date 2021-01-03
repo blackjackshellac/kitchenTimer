@@ -345,13 +345,11 @@ class PreferencesBuilder {
         timer.enabled = model.get_value(iter, Model.ENABLED);
 
         if (timer.duration <= 0) {
-          timer.duration = 1;
-          model.set_value(iter, Model.DURATION, 1);
-          this._update_timers_tab_from_model(this.timers_combo);
+          this.logger.warn(`Refusing to save zero length timer ${timer.name}`);
+        } else {
+          this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
+          timers.push(timer);
         }
-
-        this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
-        timers.push(timer);
 
         ok = model.iter_next(iter);
       }
