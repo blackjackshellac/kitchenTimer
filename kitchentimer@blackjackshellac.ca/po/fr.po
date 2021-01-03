@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-03 11:41-0500\n"
-"PO-Revision-Date: 2021-01-03 08:08-0500\n"
+"POT-Creation-Date: 2021-01-03 13:27-0500\n"
+"PO-Revision-Date: 2021-01-03 13:26-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
 "Language: fr\n"
@@ -21,51 +21,51 @@ msgstr ""
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41
 msgid "Show a notification when a timer ends"
-msgstr "Show a notification when a timer ends"
+msgstr "Afficher une notification à la fin de la minuterie"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
 msgid "Make the notification system modal"
-msgstr "Make the notification system modal"
+msgstr "Utiliser une notification modale système"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
 msgid "Show time remaining in panel menu"
-msgstr "Show time remaining in panel menu"
+msgstr "Afficher le temps restant dans le panneau"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
 msgid "Show timer progress in panel menu"
-msgstr "Show timer progress in panel menu"
+msgstr "Afficher la progression de la minuterie dans le panneau"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
 msgid "Show timer name in panel menu"
-msgstr "Show timer name in panel menu"
+msgstr "Afficher le nom de la minuterie dans le panneau"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
 msgid "Play sound notifications"
-msgstr "Play sound notifications"
+msgstr "Jouer les sons de notification"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
 msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
-msgstr "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
+msgstr "Nombre de sonneries d'alarme"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
 msgid "Path to sound file"
-msgstr "Path to sound file"
+msgstr "Chemin vers le fichier son"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
 msgid "Default length of timer in seconds"
-msgstr "Default length of timer in seconds"
+msgstr "Durée par défaut de la minuterie en secondes"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:77
 msgid "Timer presets"
-msgstr "Timer presets"
+msgstr "Préréglages de la minuterie"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
 msgid ""
 "Key-Value pairs of commonly used timer settings: key is the name of the "
 "preset, value the duration in seconds"
 msgstr ""
-"Key-Value pairs of commonly used timer settings: key is the name of the "
-"preset, value the duration in seconds"
+"Paires clé-valeur de paramètres de minuterie couramment utilisés: la clé est "
+"le nom du préréglage, la valeur de la durée en secondes"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
 msgid "Array of Timer object descriptions"
@@ -141,7 +141,7 @@ msgstr "Secondes\t"
 
 #: ../settings.ui:373
 msgid "Timers"
-msgstr "Timers"
+msgstr "Minuteries"
 
 #: ../settings.ui:387
 msgctxt "notification"
@@ -266,7 +266,7 @@ msgstr "Son"
 
 #: ../settings.ui:639 ../indicator.js:74
 msgid "Kitchen Timer"
-msgstr "Minuterie de cuisine"
+msgstr "Kitchen Timer"
 
 #: ../settings.ui:673
 msgid "Copyright © 2021, Steeve McCauley"
@@ -291,7 +291,7 @@ msgstr ""
 #: ../settings.ui:727
 msgctxt "about"
 msgid "About"
-msgstr "About"
+msgstr "À propos"
 
 #: ../menus.js:84
 msgid "Create Timer"
@@ -315,7 +315,7 @@ msgstr "Secondes"
 
 #: ../menus.js:196
 msgid "Name"
-msgstr "Name"
+msgstr "Nom"
 
 #: ../menus.js:200
 msgid "Name for timer"
@@ -325,10 +325,6 @@ msgstr "Nom de la minuterie"
 msgid "Create"
 msgstr "Créer"
 
-#: ../prefs.js:231
-msgid "New timer"
-msgstr "Nouvelle minuterie"
-
 #: ../timers.js:378
 msgid "stopped early at"
 msgstr "arrêté tôt à"
@@ -336,3 +332,7 @@ msgstr "arrêté tôt à"
 #: ../timers.js:379
 msgid "Timer"
 msgstr "Minuterie"
+
+#: ../prefs.js:231
+msgid "New timer"
+msgstr "Nouvelle minuterie"
