@@ -40,15 +40,16 @@ run() {
 [ $DEBUG -ne 0 ] && warn "DEBUG is enabled"
 
 run cd $MD
+
+if [ $DEBUG -ne 0 ]; then
+	run ./bin/pot_create.sh
+fi
+
 run cd $ED
 
 #run mkdir -p $SCHEMAS
 #run cp -puv schemas/*.xml $SCHEMAS/
 run glib-compile-schemas --strict $SCHEMAS
-
-if [ $DEBUG -ne 0 ]; then
-	run xgettext --from-code=UTF-8 --output=po/kitchen-timer-blackjackshellac.pot *.js *.ui schemas/*.xml
-fi
 
 ldir="$(pwd)"
 

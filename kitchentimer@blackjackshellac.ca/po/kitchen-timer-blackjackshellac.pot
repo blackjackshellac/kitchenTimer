@@ -1,16 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Copyright (C) 2021, Steeve McCauley
+# Kitchen Timer
+# Copyright (C) 2021, Steeve McCauley
 # This file is distributed under the same license as the kitchen-timer-blackjackshellac package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Steeve McCauley <steeve.mccauley@gmail.com>, 2001
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-03 10:34-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2021-01-03 11:41-0500\n"
+"PO-Revision-Date: 2021-01-03 11:41-0500\n"
+"Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -57,12 +57,74 @@ msgstr ""
 msgid "New timer"
 msgstr ""
 
-#: timers.js:374 timers.js:378
-msgid "stopped early at"
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41
+msgid "Show a notification when a timer ends"
 msgstr ""
 
-#: timers.js:375 timers.js:379
-msgid "Timer"
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
+msgid "Make the notification system modal"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
+msgid "Show time remaining in panel menu"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
+msgid "Show timer progress in panel menu"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
+msgid "Show timer name in panel menu"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
+msgid "Play sound notifications"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
+msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
+msgid "Path to sound file"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
+msgid "Default length of timer in seconds"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:77
+msgid "Timer presets"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
+msgid ""
+"Key-Value pairs of commonly used timer settings: key is the name of the "
+"preset, value the duration in seconds"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
+msgid "Array of Timer object descriptions"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:86
+msgid "timers configuration stored as json"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
+msgid "Experimental feature for storing timer data"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
+msgid "Sort list of timers by duration"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
+msgid "Sort from longest to shortest"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
+msgid "Turn on debugging"
 msgstr ""
 
 #: settings.ui:55 settings.ui:204
@@ -258,72 +320,10 @@ msgctxt "about"
 msgid "About"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41
-msgid "Show a notification when a timer ends"
+#: timers.js:374 timers.js:378
+msgid "stopped early at"
 msgstr ""
 
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
-msgid "Make the notification system modal"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
-msgid "Show time remaining in panel menu"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:53
-msgid "Show timer progress in panel menu"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
-msgid "Show timer name in panel menu"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
-msgid "Play sound notifications"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
-msgid "Number of times to ring alarm sound, 0 is no sound, -1 is infinite"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
-msgid "Path to sound file"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
-msgid "Default length of timer in seconds"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:77
-msgid "Timer presets"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
-msgid ""
-"Key-Value pairs of commonly used timer settings: key is the name of the "
-"preset, value the duration in seconds"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
-msgid "Array of Timer object descriptions"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:86
-msgid "timers configuration stored as json"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
-msgid "Experimental feature for storing timer data"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
-msgid "Sort list of timers by duration"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
-msgid "Sort from longest to shortest"
-msgstr ""
-
-#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
-msgid "Turn on debugging"
+#: timers.js:375 timers.js:379
+msgid "Timer"
 msgstr ""
