@@ -33,18 +33,26 @@ class Timers extends Array {
   constructor(...args) {
     super(...args);
 
-    this.logger = new Logger('timers');
+    this.logger = new Logger('timers', true);
   }
 
   static attach(indicator) {
+
     timersInstance.indicator = indicator;
     timersInstance._settings = indicator._settings;
     timersInstance.logger = new Logger('timers', timersInstance.settings.debug);
     timersInstance._notifier = new Notifier.Annoyer(timersInstance.settings);
 
+    //timersInstance.logger.info("Attaching indicator "+indicator);
+
     timersInstance.refresh();
 
     return timersInstance;
+  }
+
+  static detach() {
+    timersInstance.logger.info("Detaching indicator from timers");
+    timersInstance.indicator = undefined;
   }
 
   get indicator() {
@@ -76,7 +84,10 @@ class Timers extends Array {
         found = timer.refresh_with(settings_timer);
         if (found) {
           var running = timer.is_running() ? "running" : "not running";
-          this.logger.debug(`Found timer ${timer.name} ${running}`);
+          this.logger.debug(`Found timer [${timer.name}]: ${running}`);
+          if (timer.is_running()) {
+            this.logger.debug(timer.toString());
+          }
           break;
         }
       }
@@ -162,18 +173,25 @@ const TimerState = {
 class Timer {
 
   constructor(name, duration_secs, id=undefined) {
-    this.logger = new Logger(`kitchen timer: ${name}`, timersInstance.settings.debug);
+    var debug = timersInstance.settings.debug;
+    this.logger = new Logger(`kitchen timer: ${name}`, debug);
     this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
-    this._interval_ms = 250;
+    this._interval_ms = debug ? 500 : 250;
     this._name = name;
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
     this._id = Utils.uuid(id);
     this._label = null;
     this._gicon = null;
+    this._start = 0;
+    this._end = 0;
 
     this._notifier = timersInstance._notifier;
+  }
+
+  toString() {
+    return `name=${this._name} state=${this._state} start=${this._start} end=${this._end} duration=${this._duration_secs} iid=${this._interval_id}`;
   }
 
   get id() {
@@ -292,9 +310,11 @@ class Timer {
         style_class: 'system-status-icon'
       });
 		  //icon.set_icon_size(16);
-		  var current = timersInstance.box.get_child_at_index(0);
-		  if (current !== icon) {
-        timersInstance.box.replace_child(current, icon);
+		  if (timersInstance.box) {
+        var current = timersInstance.box.get_child_at_index(0);
+        if (current !== icon) {
+          timersInstance.box.replace_child(current, icon);
+        }
       }
     }
   }
@@ -303,7 +323,7 @@ class Timer {
     var now = Date.now();
     var end = timer._end;
 
-    //log(`test end=${end} at ${now}`);
+    //timer.logger.debug(`test end=${end} at ${now}`);
     if (now > end || !timer.is_running()) {
       return timer.stop_callback(now);
     }
@@ -376,9 +396,10 @@ class Timer {
       this.reset();
       return false;
     }
-    this._state = TimerState.RUNNING;
+
     this._start = Date.now();
     this._end = this._start + this.duration_ms();
+    this._state = TimerState.RUNNING;
 
     this.logger.info(`Starting timer at ${this._start}`);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
@@ -405,4 +426,5 @@ class Timer {
     this.logger.debug(`Timer ${this.name} is no longer in settings`);
     return false;
   }
+
 }

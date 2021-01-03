@@ -227,7 +227,7 @@ class PanelMenuBuilder {
 
   _addItem(text, menu=undefined) {
     menu=this._getMenu(menu);
-    this.logger.debug("adding "+text);
+    //this.logger.debug("adding "+text);
     var item = new PopupMenu.PopupMenuItem(text)
     menu.addMenuItem(item);
     return item;

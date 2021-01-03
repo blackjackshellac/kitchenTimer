@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 14:52-0500\n"
+"POT-Creation-Date: 2021-01-02 19:38-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,11 +57,11 @@ msgstr ""
 msgid "New timer"
 msgstr ""
 
-#: timers.js:332
+#: timers.js:359
 msgid "stopped early at"
 msgstr ""
 
-#: timers.js:333
+#: timers.js:360
 msgid "Timer"
 msgstr ""
 

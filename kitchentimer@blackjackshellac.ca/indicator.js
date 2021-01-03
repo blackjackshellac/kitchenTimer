@@ -98,6 +98,8 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this.connect('destroy', () => {
           this.logger.debug("Panel indicator button being destroyed");
           this._panel_label = undefined;
+          this._box = undefined;
+          Timers.detach();
         });
     }
 
