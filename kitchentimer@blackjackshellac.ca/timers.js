@@ -136,7 +136,7 @@ class Timers extends Array {
         return (a.duration-b.duration)*direction;
       });
     }
-    return timers_array.filter(timer => timer.enabled);
+    return timers_array.filter(timer => (timer.enabled || timer.quick));
   }
 
   sort_by_remaining() {
@@ -158,14 +158,17 @@ class Timers extends Array {
   add(timer) {
     if (timer.name.length == 0) {
       this.logger.warn(`Refusing to create unnamed timer`);
-    } else if (timer.duration <= 0) {
-      this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
-    } else {
-      this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds label=${this._panel_label}`);
-      this.push(timer);
-
-      this._settings.pack_timers(this);
+      return false;
     }
+    if (timer.duration <= 0) {
+      this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
+      return false;
+    }
+    this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
+    this.push(timer);
+
+    this._settings.pack_timers(this);
+    return true;
   }
 }
 
@@ -186,6 +189,7 @@ class Timer {
     this.logger = new Logger(`kt timer: ${name}`, debug);
     this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
+    this._quick = false;
     this._interval_ms = debug ? 500 : 250;
     this._name = name;
     this._duration_secs = duration_secs;
@@ -211,8 +215,20 @@ class Timer {
     return this._enabled;
   }
 
+  set enabled(bool) {
+    this._enabled = false;
+  }
+
   disable() {
     this._enabled = false;
+  }
+
+  get quick() {
+    return this._quick;
+  }
+
+  set quick(bool) {
+    this._quick = bool;
   }
 
   // Timer.new('foo', 50).name is 'foo'
@@ -224,7 +240,6 @@ class Timer {
     this._name = name;
   }
 
-  // Timer.new('foo', 50).duration is 50000
   get duration() {
     return this._duration_secs;
   }
@@ -405,22 +420,26 @@ class Timer {
   }
 
   start() {
-    if (!this._enabled) {
-      this.logger.info(`Timer is disabled`);
-      return false;
+    if (this._enabled || this._quick) {
+      if (this._state == TimerState.RUNNING) {
+        this.logger.info(`Timer is already running, resetting`);
+        // TODO prompt to reset
+        this.reset();
+        return false;
+      }
+      return this.go();
     }
-    if (this._state == TimerState.RUNNING) {
-      this.logger.info(`Timer is already running, resetting`);
-      // TODO prompt to reset
-      this.reset();
-      return false;
-    }
+    this.logger.info(`Timer is disabled`);
+    return false;
+  }
 
+  go() {
     this._start = Date.now();
     this._end = this._start + this.duration_ms();
     this._state = TimerState.RUNNING;
 
-    this.logger.info(`Starting timer at ${this._start}`);
+    var quick=this._quick ? ' quick ' : ' ';
+    this.logger.info(`Starting${quick}timer at ${this._start}`);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
   }

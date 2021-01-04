@@ -119,11 +119,56 @@ class HMS {
   }
 
   static create(h,m,s) {
-    return new HMS(h*3600+m*60+s);
+    return new HMS(Number(h)*3600+Number(m)*60+Number(s));
   }
 
   get hours() {
     return this._hours;
+  }
+
+  static to_s(v) {
+    if (v == 0) {
+      return "00";
+    }
+    if (v < 10) {
+      return "0"+v;
+    }
+    return ""+v;
+  }
+
+  h2s() {
+    return HMS.to_s(this._hours);
+  }
+
+  m2s() {
+    return HMS.to_s(this._minutes);
+  }
+
+  s2s() {
+    return HMS.to_s(this._seconds);
+  }
+
+  adjust_minutes(mins) {
+    if (mins > 59) {
+      this.adjust_seconds(mins*60);
+    } else {
+      this._minutes = mins;
+    }
+  }
+
+  adjust_seconds(secs) {
+    var hms = new HMS(secs);
+    this._seconds = hms.seconds;
+    this._minutes += hms.minutes;
+    this._hours += hms.hours;
+    this.adjust();
+  }
+
+  adjust() {
+    var hms = new HMS(this.toSeconds());
+    this._seconds = hms.seconds;
+    this._minutes = hms.minutes;
+    this._hours = hms.hours;
   }
 
   set hours(hours) {
