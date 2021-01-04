@@ -244,6 +244,8 @@ class PanelMenuBuilder {
     });
 
     this._quick_timer_menu = this._addSubMenu(_("Quick timers"), this._menu);
+    this._presets = this._addSubMenu(_("Preset timers"), this._menu);
+
     // new create menu
 
     this._addSeparator();
@@ -252,11 +254,15 @@ class PanelMenuBuilder {
       this.logger.debug(`${timer.name} quick=${timer.quick}`);
 
       var timer_item;
-      if (timer.quick) {
-        timer_item = this._addItem(timer.name, this._quick_timer_menu.menu);
+      var menu = this._menu;
+      if (timer.is_running()) {
+        menu = this._menu;
+      } else if (timer.quick) {
+        menu = this._quick_timer_menu.menu;
       } else {
-        timer_item = this._addItem(timer.name);
+        menu = this._presets.menu;
       }
+      timer_item = this._addItem(timer.name, menu);
 
       timer_item._timer = timer;
       timer.label = new St.Label({ x_expand: true, x_align: St.Align.START });
@@ -268,7 +274,7 @@ class PanelMenuBuilder {
       bin.child = timer.label;
       timer_item.add(bin);
 
-      var key = timer.degree_progress(0);
+      var key = timer.degree_progress(15 /* 15 degree increments */);
       var icon = new St.Icon({
         gicon: this._indicator.progress_gicon(key),
         style_class: 'system-status-icon'
