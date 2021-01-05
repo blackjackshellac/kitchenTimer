@@ -92,6 +92,40 @@ class PanelMenuBuilder {
     return text;
   }
 
+  create_timer_item(timer, menu) {
+      var timer_item = new PopupMenu.PopupMenuItem(timer.name);
+      menu.addMenuItem(timer_item);
+      //timer_item = this._addItem(timer.name, menu);
+
+      timer_item._timer = timer;
+      timer.label = new St.Label({ x_expand: true, x_align: St.Align.END });
+
+      var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
+      bin.child = timer.label;
+      timer_item.add(bin);
+
+      var key = timer.degree_progress(15 /* 15 degree increments */);
+      var icon = new St.Icon({
+        gicon: this._indicator.progress_gicon(key),
+        style_class: 'system-status-icon'
+      });
+      icon.set_icon_size(16);
+
+      if (timer.is_running()) {
+        icon.connect('button-press-event', (timer) => {
+          timer.reset();
+        });
+      }
+      timer_item.add(icon);
+      timer_item.connect('activate', (ti) => {
+        ti._timer.start();
+      });
+
+      timer.label_progress(new Utils.HMS(timer.duration));
+
+      return timer_item;
+  }
+
   build() {
     this.logger.info("Building the popup menu");
 
@@ -243,61 +277,33 @@ class PanelMenuBuilder {
       }
     });
 
+    var running_item = new PopupMenu.PopupMenuItem(_("Running timers"), { reactive: false } );
+    this._menu.addMenuItem(running_item);
+
+    this.timers.sort_by_remaining().forEach( (timer) => {
+      var timer_item = this.create_timer_item(timer, this._menu);
+    });
+
+    this._addSeparator();
+
     this._quick_timer_menu = this._addSubMenu(_("Quick timers"), this._menu);
     this._presets = this._addSubMenu(_("Preset timers"), this._menu);
 
     // new create menu
 
-    this._addSeparator();
-
-    var counters = {
-      running: 0,
-      quick: 0,
-      presets: 0
-    }
-    this.timers.sorted().forEach( (timer) => {
+    this.timers.sorted({running:false}).forEach( (timer) => {
       this.logger.debug(`${timer.name} quick=${timer.quick}`);
 
       var timer_item;
       var menu = this._menu;
-      if (timer.is_running()) {
-        menu = this._menu;
-        counters.running++;
-      } else if (timer.quick) {
+      if (timer.quick) {
         menu = this._quick_timer_menu.menu;
-        counters.quick++;
       } else {
         menu = this._presets.menu;
-        counters.presets++;
       }
-      timer_item = this._addItem(timer.name, menu);
 
-      timer_item._timer = timer;
-      timer.label = new St.Label({ x_expand: true, x_align: St.Align.START });
-      var hms = new Utils.HMS(timer.duration);
+      timer_item = this.create_timer_item(timer, menu);
 
-      timer.label_progress(hms);
-
-      var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
-      bin.child = timer.label;
-      timer_item.add(bin);
-
-      var key = timer.degree_progress(15 /* 15 degree increments */);
-      var icon = new St.Icon({
-        gicon: this._indicator.progress_gicon(key),
-        style_class: 'system-status-icon'
-      });
-      icon.set_icon_size(16);
-
-      if (timer.is_running()) {
-        icon.connect('button-press-event', (timer) => {
-          timer.reset();
-        });
-      }
-      timer_item.add(icon);
-      timer_item.connect('activate', (ti) => {
-        ti._timer.start();
-      });
     });
 
     this._addSeparator();

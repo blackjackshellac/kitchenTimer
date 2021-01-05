@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-04 14:40-0500\n"
+"POT-Creation-Date: 2021-01-05 07:27-0500\n"
 "PO-Revision-Date: 2021-01-03 13:30-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -192,7 +192,7 @@ msgstr "Fichier son"
 msgid "Sound"
 msgstr "Son"
 
-#: ../settings.ui:639 ../indicator.js:74
+#: ../settings.ui:639 ../indicator.js:46
 msgid "Kitchen Timer"
 msgstr "Kitchen Timer"
 
@@ -225,11 +225,15 @@ msgstr "À propos"
 msgid "New timer"
 msgstr "Nouvelle minuterie"
 
-#: ../timers.js:393
+#: ../timers.js:396
 msgid "stopped early at"
 msgstr "arrêté tôt à"
 
-#: ../timers.js:394
+#: ../timers.js:396
+msgid "completed at"
+msgstr ""
+
+#: ../timers.js:397
 msgid "Timer"
 msgstr "Minuterie"
 
@@ -305,50 +309,54 @@ msgstr "Trier du plus long au plus court"
 msgid "Turn on debugging"
 msgstr "Activer le débogage"
 
-#: ../menus.js:115
+#: ../menus.js:149
 msgid "Label"
 msgstr ""
 
-#: ../menus.js:209
+#: ../menus.js:243
 msgid "Go"
 msgstr ""
 
-#: ../menus.js:246
+#: ../menus.js:280
+msgid "Running timers"
+msgstr ""
+
+#: ../menus.js:289
 msgid "Quick timers"
 msgstr ""
 
-#: ../menus.js:247
+#: ../menus.js:290
 msgid "Preset timers"
 msgstr ""
 
-#: ../menus.js:297
+#: ../menus.js:311
 msgid "Create Timer"
 msgstr "Créer une minuterie"
 
-#: ../menus.js:301
+#: ../menus.js:315
 msgid "Preferences…"
 msgstr "Préférences…"
 
-#: ../menus.js:317
+#: ../menus.js:331
 msgid "Hours"
 msgstr "Heures"
 
-#: ../menus.js:339
+#: ../menus.js:353
 msgid "Minutes"
 msgstr "Minutes"
 
-#: ../menus.js:358
+#: ../menus.js:372
 msgid "Seconds"
 msgstr "Secondes"
 
-#: ../menus.js:376
+#: ../menus.js:390
 msgid "Name"
 msgstr "Nom"
 
-#: ../menus.js:380
+#: ../menus.js:394
 msgid "Name for timer"
 msgstr "Nom de la minuterie"
 
-#: ../menus.js:388
+#: ../menus.js:402
 msgid "Create"
 msgstr "Créer"

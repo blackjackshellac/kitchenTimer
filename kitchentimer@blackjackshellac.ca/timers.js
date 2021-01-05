@@ -103,7 +103,7 @@ class Timers extends Array {
     });
     for (var i = 0; i < this.length; i++) {
       var timer=this[i];
-      if (timer.is_in_settings(settings_timers)) {
+      if (timer.still_valid(settings_timers)) {
         continue;
       }
       this.logger.debug(`timer ${timer.name} has been disabled`);
@@ -126,9 +126,12 @@ class Timers extends Array {
   }
 
   // list of enabled timers sorted according to the sort properties
-  sorted() {
+  sorted(params={running:true}) {
     // const cloneSheepsES6 = [...sheeps];
     var timers_array = [...this];
+    if (!params.running) {
+      timers_array=timers_array.filter(timer => !timer.is_running());
+    }
     if (this.sort_by_duration) {
       this.logger.debug('sort by duration');
       var direction= this.sort_descending ? -1 : 1;
@@ -145,7 +148,6 @@ class Timers extends Array {
     //log(`running timers length=${running_timers.length}`);
     var now=Date.now();
     return running_timers.sort( (a,b) => {
-      //log(`${ben}-${aen}=${diff}`);
       return a._end-b._end;
     });
   }
@@ -390,13 +392,13 @@ class Timer {
     this._interval_id = undefined;
 
     // TODO Notifications and play sounds
-    var reason = now < this._end ? _("stopped early at") : "completed at"
+    var early = now < this._end;
+    var reason = early ? _("stopped early at") : _("completed at");
     var timer_string = _('Timer');
 
-    now = new Date(now);
-    var time=now.toLocaleTimeString();
+    var time=new Date(now).toLocaleTimeString();
 
-    this._notifier.annoy(`${timer_string} [${this._name}] ${reason} ${time}`);
+    this._notifier.annoy(`${timer_string} [${this._name}] ${reason} ${time}`, !early);
     var hms = new Utils.HMS(this.duration);
 
     this.label_progress(hms);
@@ -454,7 +456,10 @@ class Timer {
     return false;
   }
 
-  is_in_settings(settings_timers) {
+  still_valid(settings_timers) {
+    if (this.quick) {
+      return true;
+    }
     for (var i=0; i < settings_timers.length; i++) {
       var timer_settings = settings_timers[i];
       if (this._id == timer_settings.id) {

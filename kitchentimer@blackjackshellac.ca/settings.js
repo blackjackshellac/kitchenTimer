@@ -49,12 +49,13 @@ class Settings {
       // create and array of GLib.Variant dicts with string key and GVariant values
       var atimers = [];
       timers.forEach( (timer) => {
-        // don't save it's been disabled
-        if (timer.duration > 0) {
+        if (timer.quick) {
+          this.logger.debug("Quick timer not saved "+timer.name);
+        } else if (timer.duration > 0) {
           var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
           atimers.push(atimer);
         } else {
-          this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
+          this.logger.warn(`Timer ${timer.name} not saved ${timer.duration}`);
         }
       });
       // TODO what if it's empty?

@@ -44,11 +44,13 @@ class Annoyer {
     this._initPlayer();
   }
 
-  annoy(msg) {
+  annoy(msg, play_sound=true) {
     if (this.notification) {
       Main.notify(msg);
     }
-    this._playSound();
+    if (play_sound) {
+      this._playSound();
+    }
   }
 
 	_playSound() {

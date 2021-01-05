@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-04 14:41-0500\n"
-"PO-Revision-Date: 2021-01-04 14:41-0500\n"
+"POT-Creation-Date: 2021-01-05 07:27-0500\n"
+"PO-Revision-Date: 2021-01-05 07:27-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,56 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: indicator.js:74 settings.ui:639
+#: indicator.js:46 indicator.js:74 settings.ui:639
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menus.js:80 menus.js:84 menus.js:297
+#: menus.js:80 menus.js:84 menus.js:297 menus.js:311
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:115
+#: menus.js:115 menus.js:149
 msgid "Label"
 msgstr ""
 
-#: menus.js:117 menus.js:121 menus.js:301
+#: menus.js:117 menus.js:121 menus.js:301 menus.js:315
 msgid "Preferences…"
 msgstr ""
 
-#: menus.js:133 menus.js:137 menus.js:317
+#: menus.js:133 menus.js:137 menus.js:317 menus.js:331
 msgid "Hours"
 msgstr ""
 
-#: menus.js:155 menus.js:159 menus.js:339
+#: menus.js:155 menus.js:159 menus.js:339 menus.js:353
 msgid "Minutes"
 msgstr ""
 
-#: menus.js:174 menus.js:178 menus.js:358
+#: menus.js:174 menus.js:178 menus.js:358 menus.js:372
 msgid "Seconds"
 msgstr ""
 
-#: menus.js:192 menus.js:196 menus.js:376
+#: menus.js:192 menus.js:196 menus.js:376 menus.js:390
 msgid "Name"
 msgstr ""
 
-#: menus.js:196 menus.js:200 menus.js:380
+#: menus.js:196 menus.js:200 menus.js:380 menus.js:394
 msgid "Name for timer"
 msgstr ""
 
-#: menus.js:204 menus.js:208 menus.js:388
+#: menus.js:204 menus.js:208 menus.js:388 menus.js:402
 msgid "Create"
 msgstr ""
 
-#: menus.js:209
+#: menus.js:209 menus.js:243
 msgid "Go"
 msgstr ""
 
-#: menus.js:246
+#: menus.js:246 menus.js:289
 msgid "Quick timers"
 msgstr ""
 
-#: menus.js:247
+#: menus.js:247 menus.js:290
 msgid "Preset timers"
+msgstr ""
+
+#: menus.js:280
+msgid "Running timers"
 msgstr ""
 
 #: prefs.js:230 prefs.js:231 prefs.js:232
@@ -336,10 +340,14 @@ msgctxt "about"
 msgid "About"
 msgstr ""
 
-#: timers.js:374 timers.js:378 timers.js:393
+#: timers.js:374 timers.js:378 timers.js:393 timers.js:396
 msgid "stopped early at"
 msgstr ""
 
-#: timers.js:375 timers.js:379 timers.js:394
+#: timers.js:375 timers.js:379 timers.js:394 timers.js:397
 msgid "Timer"
+msgstr ""
+
+#: timers.js:396
+msgid "completed at"
 msgstr ""
