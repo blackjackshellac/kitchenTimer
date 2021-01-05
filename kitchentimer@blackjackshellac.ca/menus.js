@@ -250,6 +250,11 @@ class PanelMenuBuilder {
 
     this._addSeparator();
 
+    var counters = {
+      running: 0,
+      quick: 0,
+      presets: 0
+    }
     this.timers.sorted().forEach( (timer) => {
       this.logger.debug(`${timer.name} quick=${timer.quick}`);
 
@@ -257,10 +262,13 @@ class PanelMenuBuilder {
       var menu = this._menu;
       if (timer.is_running()) {
         menu = this._menu;
+        counters.running++;
       } else if (timer.quick) {
         menu = this._quick_timer_menu.menu;
+        counters.quick++;
       } else {
         menu = this._presets.menu;
+        counters.presets++;
       }
       timer_item = this._addItem(timer.name, menu);
 
