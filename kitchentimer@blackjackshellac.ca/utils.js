@@ -24,6 +24,10 @@ const GLib = imports.gi.GLib;
 var clearTimeout, clearInterval;
 clearTimeout = clearInterval = GLib.Source.remove;
 
+function logObjectPretty(obj) {
+  log(JSON.stringify(obj, null, 2));
+}
+
 function setTimeout(func, delay, ...args) {
     const wrappedFunc = () => {
         return func.apply(this, args);

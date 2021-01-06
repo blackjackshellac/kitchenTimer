@@ -32,7 +32,8 @@ const Model = {
   NAME: 0,
   ID: 1,
   DURATION: 2,
-  ENABLED: 3
+  ENABLED: 3,
+  QUICK: 4
 }
 
 class PreferencesBuilder {
@@ -82,6 +83,7 @@ class PreferencesBuilder {
         this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
         this.timer_enabled = this._bo('timer_enabled');
+        this.quick_timer = this._bo('quick_timer');
         this.timer_icon = this._bo('timer_icon');
 
         // TODO update with initial value
@@ -98,6 +100,7 @@ class PreferencesBuilder {
           this.timers_liststore.set_value(iter, Model.ID, timer.id);
           this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
           this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
+          this.timers_liststore.set_value(iter, Model.QUICK, timer.quick);
         });
 
         this.allow_updates = true;
@@ -136,6 +139,12 @@ class PreferencesBuilder {
         });
 
         this.timer_enabled.connect('toggled', () => {
+          if (this._update_active_liststore_from_tab()) {
+            this._save_liststore();
+          }
+        });
+
+        this.quick_timer.connect('toggled', () => {
           if (this._update_active_liststore_from_tab()) {
             this._save_liststore();
           }
@@ -233,6 +242,7 @@ class PreferencesBuilder {
           this.timers_liststore.set_value(iter, Model.ID, Utils.uuid());   // id
           this.timers_liststore.set_value(iter, Model.DURATION, 0);           // duration
           this.timers_liststore.set_value(iter, Model.ENABLED, true);        // enabled
+          this.timers_liststore.set_value(iter, Model.QUICK, false);
 
           var index = this.timers_liststore.iter_n_children(null);
 
@@ -280,6 +290,7 @@ class PreferencesBuilder {
     // return true if the liststore was updated
     _update_active_liststore_from_tab() {
       if (!this.allow_updates) {
+        this.logger.debug('Updates not allowed');
         return false;
       }
       var [ ok, iter ] = this.timers_combo.get_active_iter();
@@ -296,6 +307,7 @@ class PreferencesBuilder {
           var id = model.get_value(iter, Model.ID);
           id = Utils.uuid(id);
           var enabled = this.timer_enabled.get_active();
+          var quick = this.quick_timer.get_active();
           var duration = hms.toSeconds();
 
           ok = false;
@@ -310,7 +322,7 @@ class PreferencesBuilder {
             model.set_value(iter, Model.ID, id);
           }
           var curdur=model.get_value(iter, Model.DURATION);
-          if (curdur != duration) {
+          if (curdur !== duration) {
             this.logger.debug(`${name} duration changed from ${curdur} to ${duration}`);
             this.logger.debug(hms.pretty());
             ok = true;
@@ -320,6 +332,11 @@ class PreferencesBuilder {
             this.logger.debug(`enabled changed to ${enabled}`);
             ok = true;
             model.set_value(iter, Model.ENABLED, enabled);
+          }
+          if (model.get_value(iter, Model.QUICK) !== quick) {
+            this.logger.debug(`quick changed to ${quick}`);
+            ok = true;
+            model.set_value(iter, Model.QUICK, quick);
           }
           if (ok) {
             this.logger.debug(`Updating liststore for ${name} entry`);
@@ -343,9 +360,10 @@ class PreferencesBuilder {
         timer.id = model.get_value(iter, Model.ID);
         timer.duration = model.get_value(iter, Model.DURATION);
         timer.enabled = model.get_value(iter, Model.ENABLED);
+        timer.quick = model.get_value(iter, Model.QUICK);
 
         if (timer.duration <= 0) {
-          this.logger.warn(`Refusing to save zero length timer ${timer.name}`);
+          this.logger.warn(`Refusing to save zero length timer ${timer.name} ${timer.duration}`);
         } else {
           this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
           timers.push(timer);
@@ -367,6 +385,7 @@ class PreferencesBuilder {
           this.timers_liststore.set_value(iter, Model.ID, timer.id);
           this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
           this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
+          this.timers_liststore.set_value(iter, Model.QUICK, timer.quick);
       } else {
         this.logger.debug('cannot update liststore entry, combo has no active iter');
       }
@@ -381,6 +400,7 @@ class PreferencesBuilder {
         timer.id = model.get_value(iter, Model.ID);
         timer.duration = model.get_value(iter, Model.DURATION);
         timer.enabled = model.get_value(iter, Model.ENABLED);
+        timer.quick = model.get_value(iter, Model.QUICK);
       } else {
         this.logger.debug('cannot get active liststore entry, combo has no active iter');
       }
@@ -407,6 +427,8 @@ class PreferencesBuilder {
         var enabled = model.get_value(iter, Model.ENABLED);
         var hms = new Utils.HMS(duration);
         this._update_spinners(hms);
+        this.timer_enabled.set_active(enabled);
+        this.quick_timer.set_active(model.get_value(iter, Model.QUICK));
         this.allow_updates = true;
         return true;
       } else {
@@ -463,6 +485,9 @@ class PreferencesBuilder {
 
       let sort_descending = this._bo('sort_descending');
       this._ssb('sort-descending', sort_descending, 'active');
+
+      let save_quick_timers = this._bo('save_quick_timers')
+      this._ssb('save-quick-timers', save_quick_timers, 'active');
     }
 }
 
@@ -476,6 +501,10 @@ function buildPrefsWidget() {
 
   var preferencesBuilder = new PreferencesBuilder();
   var widget = preferencesBuilder.build();
+  var window = widget.get_parent_window();
+  if (window) {
+    window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
+  }
   widget.show_all();
 
   return widget;

@@ -98,6 +98,9 @@ class Timers extends Array {
       if (!found) {
         this.logger.debug(`Timer ${settings_timer.name} not found`);
         var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
+        if (settings_timer._quick) {
+          timer.quick = true;
+        }
         this.add(timer);
       }
     });
@@ -446,11 +449,12 @@ class Timer {
     return true;
   }
 
-  refresh_with(timer_settings) {
-    if (timer_settings.id == this.id) {
-      this._name = timer_settings.name;
-      this._duration_secs = timer_settings.duration;
-      this._enabled = timer_settings.enabled;
+  refresh_with(settings_timer) {
+    if (settings_timer.id == this.id) {
+      this._name = settings_timer.name;
+      this._duration_secs = settings_timer.duration;
+      this._enabled = settings_timer.enabled;
+      this._quick = settings_timer.quick;
       return true;
     }
     return false;
@@ -461,8 +465,8 @@ class Timer {
       return true;
     }
     for (var i=0; i < settings_timers.length; i++) {
-      var timer_settings = settings_timers[i];
-      if (this._id == timer_settings.id) {
+      var settings_timer = settings_timers[i];
+      if (this._id == settings_timer.id) {
         return true;
       }
     }

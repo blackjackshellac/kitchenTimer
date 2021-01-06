@@ -26,22 +26,41 @@ const GioSSS = Gio.SettingsSchemaSource;
 const GLib = imports.gi.GLib;
 
 const Me = ExtensionUtils.getCurrentExtension();
-const Logger = Me.imports.utils.Logger;
+const Utils = Me.imports.utils;
+const Logger = Utils.Logger;
 
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
 class Settings {
     constructor() {
         this.settings = ExtensionUtils.getSettings();
-        this.logger = new Logger('kt settings', this.settings.debug)
+        this.logger = new Logger('kt settings', this.debug)
     }
 
     unpack_timers() {
-      var timers_settings = [];
+      var settings_timers = [];
       var timers = this.settings.get_value('timers').deep_unpack();
       timers.forEach( (timer) => {
-        timers_settings.push(this.to_h(timer));
+        var timer_h = this.unpack_timer(timer, false);
+        settings_timers.push(timer_h);
       });
-      return timers_settings;
+      if (this.save_quick_timers) {
+        var timers = this.settings.get_value('quick-timers').deep_unpack();
+        timers.forEach( (timer) => {
+          var timer_h = this.unpack_timer(timer, true);
+          settings_timers.push(timer_h);
+        });
+      }
+      //Utils.logObjectPretty(settings_timers);
+      return settings_timers;
+    }
+
+    unpack_timer(timer_settings, quick) {
+      var h={};
+      for (const [key, value] of Object.entries(timer_settings)) {
+        h[key]=value.unpack();
+      }
+      h.quick = quick;
+      return h;
     }
 
     // aa{sv}
@@ -49,36 +68,45 @@ class Settings {
       // create and array of GLib.Variant dicts with string key and GVariant values
       var atimers = [];
       timers.forEach( (timer) => {
-        if (timer.quick) {
-          this.logger.debug("Quick timer not saved "+timer.name);
-        } else if (timer.duration > 0) {
-          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer));
+        if (!timer.quick && timer.duration > 0) {
+          this.logger.debug(`Saving preset timer ${timer.name}}`);
+          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer, false));
           atimers.push(atimer);
-        } else {
-          this.logger.warn(`Timer ${timer.name} not saved ${timer.duration}`);
         }
       });
       // TODO what if it's empty?
-      var glvtype = atimers.length == 0 ? undefined : atimers[0].get_type();
+      var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
       var pack = GLib.Variant.new_array(glvtype, atimers);
       this.settings.set_value('timers', pack);
+
+      if (this.save_quick_timers) {
+        this.logger.debug(`Saving quick timers`);
+        var atimers = [];
+        timers.forEach( (timer) => {
+          if (timer.quick && timer.duration > 0) {
+            this.logger.debug(`Saving quick timer ${timer.name}`);
+            var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer, true));
+            atimers.push(atimer);
+          }
+        });
+        // TODO what if it's empty?
+        var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
+        var pack = GLib.Variant.new_array(glvtype, atimers);
+        this.settings.set_value('quick-timers', pack);
+      }
     }
 
-    pack_timer(timer) {
+    pack_timer(timer, quick) {
+      if (timer.quick != quick) {
+        this.logger.debug(`Don't pack timer ${timer.name} ${timer.quick}`);
+        return undefined;
+      }
       var dict = {};
       dict.id = GLib.Variant.new_string(timer.id);
       dict.name = GLib.Variant.new_string(timer.name);
       dict.duration = GLib.Variant.new_int64(timer.duration);
       dict.enabled = GLib.Variant.new_boolean(timer.enabled);
       return dict;
-    }
-
-    to_h(timer_settings) {
-      var h={};
-      for (const [key, value] of Object.entries(timer_settings)) {
-        h[key]=value.unpack();
-      }
-      return h;
     }
 
     get_default(key) {
@@ -175,6 +203,14 @@ class Settings {
 
     set sort_descending(bool) {
       this.settings.set_boolean('sort-descending', bool);
+    }
+
+    get save_quick_timers() {
+      return this.settings.get_boolean('save-quick-timers');
+    }
+
+    set save_quick_timers(bool) {
+      this.settings.set_boolean('save-quick-timers', bool);
     }
 
     get debug() {

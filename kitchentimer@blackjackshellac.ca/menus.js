@@ -109,7 +109,7 @@ class PanelMenuBuilder {
         gicon: this._indicator.progress_gicon(key),
         style_class: 'system-status-icon'
       });
-      icon.set_icon_size(16);
+      icon.set_icon_size(20);
 
       if (timer.is_running()) {
         icon.connect('button-press-event', (timer) => {
@@ -147,6 +147,7 @@ class PanelMenuBuilder {
       y_align: Clutter.ActorAlign.CENTER
     });
     this._name.set_hint_text(_("Label"));
+    //this._name.set_can_focus(true);
     this._name.get_clutter_text().connect('text-changed', (e) => {
       this.logger.debug("label changed="+e.get_text());
     });
@@ -157,6 +158,8 @@ class PanelMenuBuilder {
       margin_right: 5,
       y_align: Clutter.ActorAlign.CENTER
     });
+    //this._he.set_can_focus(true);
+
     this._me = new St.Entry( {
       text: "00",
       x_expand: true,
@@ -266,12 +269,12 @@ class PanelMenuBuilder {
           name = hms.toString(true);
         }
         var timer = new Timer(name, hms.toSeconds());
-        timer.enabled = false;
         timer._quick = true;
         if (this.timers.add(timer)) {
           timer.start();
           this._menu.close();
         } else {
+          this.logger.error(`Failed to add timer`);
           go.setToggleState(false);
         }
       }
@@ -286,24 +289,27 @@ class PanelMenuBuilder {
 
     this._addSeparator();
 
-    this._quick_timer_menu = this._addSubMenu(_("Quick timers"), this._menu);
-    this._presets = this._addSubMenu(_("Preset timers"), this._menu);
-
-    // new create menu
-
-    this.timers.sorted({running:false}).forEach( (timer) => {
-      this.logger.debug(`${timer.name} quick=${timer.quick}`);
-
-      var timer_item;
-      var menu = this._menu;
+    this._quick_timer_menu = undefined;
+    var timers=this.timers.sorted({running:false})
+    timers.forEach( (timer) => {
       if (timer.quick) {
-        menu = this._quick_timer_menu.menu;
-      } else {
-        menu = this._presets.menu;
+        if (!this._quick_timer_menu) {
+          // found quick timer, add the sub menu
+          this._quick_timer_menu = this._addSubMenu(_("Quick timers"), this._menu);
+        }
+        this.create_timer_item(timer, this._quick_timer_menu.menu);
       }
+    });
 
-      timer_item = this.create_timer_item(timer, menu);
-
+    this._presets_timer_menu = undefined;
+    timers.forEach( (timer) => {
+      if (!timer.quick) {
+        if (!this._presets_timer_menu) {
+          // found presets, add the sub menu
+          this._presets_timer_menu = this._addSubMenu(_("Preset timers"), this._menu);
+        }
+        this.create_timer_item(timer, this._presets_timer_menu.menu);
+      }
     });
 
     this._addSeparator();

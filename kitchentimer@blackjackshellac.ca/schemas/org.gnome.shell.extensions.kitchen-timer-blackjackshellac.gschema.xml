@@ -72,14 +72,13 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>300</default>
       <summary>Default length of timer in seconds</summary>
     </key>
-    <key name="presets" type="a{si}">
-      <default>{'3min': 180, '5min': 300, '1h': 3600}</default>
-      <summary>Timer presets</summary>
-      <description>Key-Value pairs of commonly used timer settings: key is the name of the preset, value the duration in seconds</description>
-    </key>
-    <key name="timers" type="aa{sv}">
+   <key name="timers" type="aa{sv}">
       <default>[ {'name': &lt;'5 minutes'&gt;, 'duration': &lt;300&gt;, 'enabled': &lt;true&gt;} ]</default>
-      <summary>Array of Timer object descriptions</summary>
+      <summary>Array of Timer descriptions</summary>
+    </key>
+    <key name="quick-timers" type="aa{sv}">
+      <default>[ ]</default>
+      <summary>Array of Quick Timer descriptions</summary>
     </key>
     <key name="timers-json" type="s">
       <default>'[{"name":"5 minutes","duration":300,"enabled":true}]'</default>
@@ -93,6 +92,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     <key name="sort-descending" type="b">
       <default>false</default>
       <summary>Sort from longest to shortest</summary>
+    </key>
+    <key name="save-quick-timers" type="b">
+      <default>false</default>
+      <summary>Save quick timers between sessions if enabled</summary>
     </key>
     <key name="debug" type="b">
       <default>false</default>
