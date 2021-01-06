@@ -693,6 +693,21 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkLabel" id="description">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">description</property>
+                        <attributes>
+                          <attribute name="scale" value="1.2"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkEventBox" id="timer_icon">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -710,7 +725,23 @@ Author: Steeve McCauley
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="version">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label">Version</property>
+                        <property name="justify">center</property>
+                        <attributes>
+                          <attribute name="scale" value="1.2"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                     <child>
@@ -726,7 +757,7 @@ Author: Steeve McCauley
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">2</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                     <child>
@@ -742,7 +773,7 @@ Author: Steeve McCauley
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">3</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                     <child>
@@ -759,7 +790,7 @@ See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 Lice
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">4</property>
+                        <property name="position">6</property>
                       </packing>
                     </child>
                   </object>

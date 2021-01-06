@@ -29,7 +29,8 @@ const PopupMenu = imports.ui.popupMenu;
 
 const Utils = Me.imports.utils;
 const Notifier = Me.imports.notifier;
-const Logger = Me.imports.utils.Logger;
+const Logger = Me.imports.logger.Logger;
+const HMS = Me.imports.hms.HMS;
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 
@@ -333,7 +334,7 @@ class Timer {
 
     var delta = Math.ceil((end-now) / 1000);
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
-    var hms = new Utils.HMS(delta);
+    var hms = new HMS(delta);
       timer.label_progress(hms, now);
 
       var running_timers = timersInstance.sort_by_remaining();
@@ -373,7 +374,7 @@ class Timer {
     var time=new Date(now).toLocaleTimeString();
 
     this._notifier.annoy(`${timer_string} [${this._name}] ${reason} ${time}`, !early);
-    var hms = new Utils.HMS(this.duration);
+    var hms = new HMS(this.duration);
 
     this.label_progress(hms);
     this.icon_progress();

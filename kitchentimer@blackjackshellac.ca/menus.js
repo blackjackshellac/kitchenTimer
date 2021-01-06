@@ -31,7 +31,8 @@ const Me = ExtensionUtils.getCurrentExtension();
 
 const Timer = Me.imports.timers.Timer;
 const Utils = Me.imports.utils;
-const Logger = Utils.Logger;
+const Logger = Me.imports.logger.Logger;
+const HMS = Me.imports.hms.HMS;
 
 class PanelMenuBuilder {
   constructor(menu, indicator) {
@@ -121,7 +122,7 @@ class PanelMenuBuilder {
         ti._timer.start();
       });
 
-      timer.label_progress(new Utils.HMS(timer.duration));
+      timer.label_progress(new HMS(timer.duration));
 
       return timer_item;
   }
@@ -173,7 +174,7 @@ class PanelMenuBuilder {
       y_align: Clutter.ActorAlign.CENTER
     });
 
-    this._go_hms = new Utils.HMS(0);
+    this._go_hms = new HMS(0);
     this._he.get_clutter_text().connect('text-changed', (e) => {
       var text = e.get_text();
       this.logger.debug('text-changed hours: '+text);
@@ -264,7 +265,7 @@ class PanelMenuBuilder {
         var s = this._se.get_clutter_text().get_text();
         var m = this._me.get_clutter_text().get_text();
         var h = this._he.get_clutter_text().get_text();
-        var hms = Utils.HMS.create(h,m,s);
+        var hms = HMS.create(h,m,s);
         if (name.length === 0) {
           name = hms.toString(true);
         }
@@ -327,7 +328,7 @@ class PanelMenuBuilder {
   // Add sliders SubMenu to manually set the timer
   _buildCreateTimerMenu() {
 
-    var hms = new Utils.HMS(this._settings.default_timer);
+    var hms = new HMS(this._settings.default_timer);
 
     this._hoursLabel = new St.Label({ text: hms.hours.toString() + "h" });
     this._minutesLabel = new St.Label({ text: hms.minutes.toString() + "m" });

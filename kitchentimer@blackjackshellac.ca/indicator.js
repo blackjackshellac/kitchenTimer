@@ -30,6 +30,7 @@ const Settings = Me.imports.settings.Settings;
 const Menus = Me.imports.menus;
 const Timers = Me.imports.timers.Timers;
 const Timer = Me.imports.timers.Timer;
+const Logger = Me.imports.logger.Logger;
 
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
@@ -40,7 +41,7 @@ class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
         this._settings = new Settings();
         this._timers = Timers.attach(this);
-        this._logger = new Utils.Logger('kt indicator', this._settings.debug);
+        this._logger = new Logger('kt indicator', this._settings.debug);
         this.logger.info('Initializing extension');
 
         super._init(0.0, _('Kitchen Timer'));

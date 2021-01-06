@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 11:39-0500\n"
+"POT-Creation-Date: 2021-01-06 12:59-0500\n"
 "PO-Revision-Date: 2021-01-06 10:34-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -217,19 +217,19 @@ msgstr "Fichier son"
 msgid "Sound"
 msgstr "Son"
 
-#: ../settings.ui:679 ../indicator.js:46
+#: ../settings.ui:679 ../indicator.js:47
 msgid "Kitchen Timer"
 msgstr "Kitchen Timer"
 
-#: ../settings.ui:720
+#: ../settings.ui:751
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr "Copyright © 2021, Steeve McCauley"
 
-#: ../settings.ui:734
+#: ../settings.ui:765
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr "https://github.com/blackjackshellac/kitchenTimer"
 
-#: ../settings.ui:752
+#: ../settings.ui:783
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -241,24 +241,24 @@ msgstr ""
 "See the <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU GPL 3 "
 "License</a> for details.</span>"
 
-#: ../settings.ui:774
+#: ../settings.ui:805
 msgctxt "about"
 msgid "About"
 msgstr "À propos"
 
-#: ../prefs.js:241
+#: ../prefs.js:245
 msgid "New timer"
 msgstr "Nouvelle minuterie"
 
-#: ../timers.js:370
+#: ../timers.js:371
 msgid "stopped early at"
 msgstr "arrêté tôt à"
 
-#: ../timers.js:370
+#: ../timers.js:371
 msgid "completed at"
 msgstr "terminé à"
 
-#: ../timers.js:371
+#: ../timers.js:372
 msgid "Timer"
 msgstr "Minuterie"
 
@@ -330,55 +330,55 @@ msgstr "Enregistrer des minuteries pratiques entre les sessions si activé"
 msgid "Turn on debugging"
 msgstr "Activer le débogage"
 
-#: ../menus.js:149
+#: ../menus.js:150
 msgid "Label"
 msgstr "Étiquette"
 
-#: ../menus.js:246
+#: ../menus.js:247
 msgid "Go"
 msgstr "Go"
 
-#: ../menus.js:283
+#: ../menus.js:284
 msgid "Running timers"
 msgstr "Minuteries en cours"
 
-#: ../menus.js:298
+#: ../menus.js:299
 msgid "Quick timers"
 msgstr "Minuteries pratiques"
 
-#: ../menus.js:309
+#: ../menus.js:310
 msgid "Preset timers"
 msgstr "Minuteries préréglées"
 
-#: ../menus.js:317
+#: ../menus.js:318
 msgid "Create Timer"
 msgstr "Créer une minuterie"
 
-#: ../menus.js:321
+#: ../menus.js:322
 msgid "Preferences…"
 msgstr "Préférences…"
 
-#: ../menus.js:337
+#: ../menus.js:338
 msgid "Hours"
 msgstr "Heures"
 
-#: ../menus.js:359
+#: ../menus.js:360
 msgid "Minutes"
 msgstr "Minutes"
 
-#: ../menus.js:378
+#: ../menus.js:379
 msgid "Seconds"
 msgstr "Secondes"
 
-#: ../menus.js:396
+#: ../menus.js:397
 msgid "Name"
 msgstr "Nom"
 
-#: ../menus.js:400
+#: ../menus.js:401
 msgid "Name for timer"
 msgstr "Nom de la minuterie"
 
-#: ../menus.js:408
+#: ../menus.js:409
 msgid "Create"
 msgstr "Créer"
 

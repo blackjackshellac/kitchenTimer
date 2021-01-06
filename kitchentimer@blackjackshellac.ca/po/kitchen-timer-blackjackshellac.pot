@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 11:39-0500\n"
-"PO-Revision-Date: 2021-01-06 11:39-0500\n"
+"POT-Creation-Date: 2021-01-06 12:58-0500\n"
+"PO-Revision-Date: 2021-01-06 12:58-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,64 +17,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: indicator.js:46 indicator.js:74 settings.ui:639 settings.ui:641
-#: settings.ui:654 settings.ui:679 settings.ui:680
+#: indicator.js:46 indicator.js:47 indicator.js:74 settings.ui:639
+#: settings.ui:641 settings.ui:654 settings.ui:679 settings.ui:680
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menus.js:80 menus.js:84 menus.js:297 menus.js:311 menus.js:317
+#: menus.js:80 menus.js:84 menus.js:297 menus.js:311 menus.js:317 menus.js:318
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:115 menus.js:149
+#: menus.js:115 menus.js:149 menus.js:150
 msgid "Label"
 msgstr ""
 
 #: menus.js:117 menus.js:121 menus.js:301 menus.js:315 menus.js:321
+#: menus.js:322
 msgid "Preferences…"
 msgstr ""
 
 #: menus.js:133 menus.js:137 menus.js:317 menus.js:331 menus.js:337
+#: menus.js:338
 msgid "Hours"
 msgstr ""
 
 #: menus.js:155 menus.js:159 menus.js:339 menus.js:353 menus.js:359
+#: menus.js:360
 msgid "Minutes"
 msgstr ""
 
 #: menus.js:174 menus.js:178 menus.js:358 menus.js:372 menus.js:378
+#: menus.js:379
 msgid "Seconds"
 msgstr ""
 
 #: menus.js:192 menus.js:196 menus.js:376 menus.js:390 menus.js:396
+#: menus.js:397
 msgid "Name"
 msgstr ""
 
 #: menus.js:196 menus.js:200 menus.js:380 menus.js:394 menus.js:400
+#: menus.js:401
 msgid "Name for timer"
 msgstr ""
 
 #: menus.js:204 menus.js:208 menus.js:388 menus.js:402 menus.js:408
+#: menus.js:409
 msgid "Create"
 msgstr ""
 
-#: menus.js:209 menus.js:243 menus.js:246
+#: menus.js:209 menus.js:243 menus.js:246 menus.js:247
 msgid "Go"
 msgstr ""
 
-#: menus.js:246 menus.js:289 menus.js:298
+#: menus.js:246 menus.js:289 menus.js:298 menus.js:299
 msgid "Quick timers"
 msgstr ""
 
-#: menus.js:247 menus.js:290 menus.js:309
+#: menus.js:247 menus.js:290 menus.js:309 menus.js:310
 msgid "Preset timers"
 msgstr ""
 
-#: menus.js:280 menus.js:283
+#: menus.js:280 menus.js:283 menus.js:284
 msgid "Running timers"
 msgstr ""
 
 #: prefs.js:230 prefs.js:231 prefs.js:232 prefs.js:234 prefs.js:241
+#: prefs.js:245
 msgid "New timer"
 msgstr ""
 
@@ -406,17 +414,17 @@ msgid "Sound"
 msgstr ""
 
 #: settings.ui:673 settings.ui:680 settings.ui:682 settings.ui:695
-#: settings.ui:720 settings.ui:721
+#: settings.ui:720 settings.ui:721 settings.ui:751
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr ""
 
 #: settings.ui:687 settings.ui:694 settings.ui:696 settings.ui:709
-#: settings.ui:734 settings.ui:735
+#: settings.ui:734 settings.ui:735 settings.ui:765
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr ""
 
 #: settings.ui:705 settings.ui:712 settings.ui:714 settings.ui:727
-#: settings.ui:752 settings.ui:753
+#: settings.ui:752 settings.ui:753 settings.ui:783
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -425,21 +433,21 @@ msgid ""
 msgstr ""
 
 #: settings.ui:727 settings.ui:734 settings.ui:736 settings.ui:749
-#: settings.ui:774 settings.ui:775
+#: settings.ui:774 settings.ui:775 settings.ui:805
 msgctxt "about"
 msgid "About"
 msgstr ""
 
-#: timers.js:370 timers.js:396 timers.js:399
+#: timers.js:370 timers.js:371 timers.js:396 timers.js:399
 msgid "completed at"
 msgstr ""
 
-#: timers.js:370 timers.js:374 timers.js:378 timers.js:393 timers.js:396
-#: timers.js:399
+#: timers.js:370 timers.js:371 timers.js:374 timers.js:378 timers.js:393
+#: timers.js:396 timers.js:399
 msgid "stopped early at"
 msgstr ""
 
-#: timers.js:371 timers.js:375 timers.js:379 timers.js:394 timers.js:397
-#: timers.js:400
+#: timers.js:371 timers.js:372 timers.js:375 timers.js:379 timers.js:394
+#: timers.js:397 timers.js:400
 msgid "Timer"
 msgstr ""

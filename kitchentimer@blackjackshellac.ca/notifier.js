@@ -35,7 +35,7 @@ const Gst = imports.gi.Gst;
 
 // for setInterval()
 const Utils = Me.imports.utils;
-const Logger = Utils.Logger;
+const Logger = Me.imports.logger.Logger;
 
 class Annoyer {
   constructor(settings) {

@@ -26,7 +26,8 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Settings = Me.imports.settings.Settings;
 const Utils = Me.imports.utils;
-const Logger = Me.imports.utils.Logger;
+const Logger = Me.imports.logger.Logger;
+const HMS = Me.imports.hms.HMS;
 
 const Model = {
   NAME: 0,
@@ -51,6 +52,9 @@ class PreferencesBuilder {
         this._viewport.add(this._settingsBox);
         this._widget = new Gtk.ScrolledWindow();
         this._widget.add(this._viewport);
+
+        this._bo('version').set_text("Version "+Me.metadata.version);
+        this._bo('description').set_text(Me.metadata.description);
 
         let file_chooser = this._bo('sound_path');
 
@@ -87,7 +91,7 @@ class PreferencesBuilder {
         this.timer_icon = this._bo('timer_icon');
 
         // TODO update with initial value
-        this._hms = new Utils.HMS(0);
+        this._hms = new HMS(0);
 
         var timer_settings = this._settings.unpack_timers();
         timer_settings.sort( (a,b) => {
@@ -298,7 +302,7 @@ class PreferencesBuilder {
           this.allow_updates = false;
           var model = this.timers_combo.get_model();
 
-          var hms = new Utils.HMS();
+          var hms = new HMS();
           hms.hours = this.spin_hours.get_value_as_int();
           hms.minutes = this.spin_mins.get_value_as_int();
           hms.seconds = this.spin_secs.get_value_as_int();
@@ -425,7 +429,7 @@ class PreferencesBuilder {
         var id = model.get_value(iter, Model.ID);
         var duration = model.get_value(iter, Model.DURATION);
         var enabled = model.get_value(iter, Model.ENABLED);
-        var hms = new Utils.HMS(duration);
+        var hms = new HMS(duration);
         this._update_spinners(hms);
         this.timer_enabled.set_active(enabled);
         this.quick_timer.set_active(model.get_value(iter, Model.QUICK));

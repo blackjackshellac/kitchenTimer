@@ -27,7 +27,7 @@ const GLib = imports.gi.GLib;
 
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
-const Logger = Utils.Logger;
+const Logger = Me.imports.logger.Logger;
 
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
 class Settings {
