@@ -20,6 +20,8 @@ const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
+String.prototype.format = imports.format.format;
+
 const GLib = imports.gi.GLib;
 var clearTimeout, clearInterval;
 clearTimeout = clearInterval = GLib.Source.remove;

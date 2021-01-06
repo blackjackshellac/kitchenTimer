@@ -98,7 +98,7 @@ class Timers extends Array {
       if (!found) {
         this.logger.debug(`Timer ${settings_timer.name} not found`);
         var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
-        if (settings_timer._quick) {
+        if (settings_timer.quick) {
           timer.quick = true;
         }
         this.add(timer);
@@ -268,40 +268,11 @@ class Timer {
     this._label = label;
   }
 
-  // get moon() {
-  //   this._moon.set_text('🌑');
-  //   return this._moon;
-  // }
-
-  // set moon(label) {
-  //   this._moon = label;
-  // }
-
   label_progress(hms, now=0) {
     if (!this.label) {
       return;
     }
 
-    // ⏳⌛⏰
-		// 🌑  🌒  🌓  🌔  🌕  🌖  🌗  🌘
-		// 8/8 1/8 2/8 3/8 4/8 5/8 6/8 7/8
-    // (now-this._start) / this.duration_ms
-
-    // const moons = [ '🌖', '🌗', '🌘', '🌑', '🌒', '🌓', '🌔', '🌕' ];
-    //const moons = [ '⏳', '⌛' ];
-    // const mlen = moons.length;
-
-    // var moon;
-    // if (now === 0) {
-    //   moon = '🌑';
-    // } else {
-    //   var idx = Math.floor((now-this._start) / this.duration_ms() * mlen);
-    //   if (idx > mlen) {
-    //     idx = mlen;
-    //   }
-    //   moon = moons[idx];
-    // }
-    //this.logger.info(`moons index=${idx} now=${now} start=${this._start} duration=${this.duration_ms()}`);
     this.label.set_text(hms.toString());
   }
 
@@ -475,3 +446,4 @@ class Timer {
   }
 
 }
+

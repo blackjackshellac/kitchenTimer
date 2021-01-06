@@ -386,7 +386,6 @@ Author: Steeve McCauley
                         <property name="can-focus">False</property>
                         <property name="margin-start">20</property>
                         <property name="hexpand">True</property>
-                        <property name="label" translatable="yes">timers_tab_message</property>
                         <property name="justify">center</property>
                         <attributes>
                           <attribute name="style" value="italic"/>
