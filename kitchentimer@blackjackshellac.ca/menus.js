@@ -94,19 +94,41 @@ class PanelMenuBuilder {
   }
 
   create_timer_item(timer, menu) {
-      var timer_item = new PopupMenu.PopupMenuItem(timer.name);
+      var timer_item = new PopupMenu.PopupMenuItem("");
       menu.addMenuItem(timer_item);
       //timer_item = this._addItem(timer.name, menu);
 
-      timer_item._timer = timer;
-      timer.label = new St.Label({ x_expand: true, x_align: St.Align.END });
+      var box = new St.BoxLayout({
+        x_expand: true,
+        x_align: St.Align.START,
+        pack_start: true,
+        style_class: 'kitchentimer-menu-box'
+      });
+      timer_item.add(box);
 
-      var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
-      bin.child = timer.label;
-      timer_item.add(bin);
+      var name = new St.Label({
+        style_class: 'kitchentimer-menu-name',
+        x_expand: true,
+        x_align: St.Align.START
+      });
+      name.set_text(timer.name);
+
+      timer_item._timer = timer;
+      timer.label = new St.Label({
+        style_class: 'kitchentimer-menu-label',
+        x_expand: false,
+        x_align: St.Align.END
+      });
+
+
+      //var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
+      //bin.child = timer.label;
+      //timer_item.add(bin);
 
       var key = timer.degree_progress(15 /* 15 degree increments */);
       var icon = new St.Icon({
+        x_align: St.Align.END,
+        x_expand: false,
         gicon: this._indicator.progress_gicon(key),
         style_class: 'system-status-icon'
       });
@@ -117,7 +139,12 @@ class PanelMenuBuilder {
           timer.reset();
         });
       }
-      timer_item.add(icon);
+      //timer_item.add(icon);
+
+      box.add_child(icon);
+      box.add_child(timer.label);
+      box.add_child(name);
+
       timer_item.connect('activate', (ti) => {
         ti._timer.start();
       });

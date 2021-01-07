@@ -1,1 +1,29 @@
 /* Add your custom extension styling here */
+
+.kitchentimer-menu-box {
+  padding: 0px;
+  /*spacing: 10px;*/
+}
+
+.kitchentimer-menu-label {
+  border-right: 10px;
+  font-family: monospace;
+}
+
+.kitchentimer-menu-name {
+  font-weight: normal;
+}
+
+.kitchentimer-panel-label {
+  font-weight: normal;
+  font-stretch: normal;
+  font-family: monospace;
+  font-size: smaller;
+}
+
+.kitchentimer-panel-name {
+  font-weight: bold;
+  font-stretch: normal;
+  font-family: monospace;
+  font-size: smaller;
+}

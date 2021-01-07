@@ -69,9 +69,19 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this._panel_label=new St.Label({ text: "",
           x_align: Clutter.ActorAlign.END,
           y_align: Clutter.ActorAlign.CENTER,
-          y_expand: false
+          y_expand: false,
+          style_class: 'kitchentimer-panel-label'
         });
 
+        this._panel_name=new St.Label({
+          x_align: Clutter.ActorAlign.END,
+          y_align: Clutter.ActorAlign.CENTER,
+          y_expand: false,
+          text: "",
+          style_class: 'kitchentimer-panel-name'
+        });
+
+        this._box.add(this._panel_name);
         this._box.add(this._panel_label);
 
         this.add_child(this._box);
