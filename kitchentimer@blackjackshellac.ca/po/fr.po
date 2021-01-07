@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-06 12:59-0500\n"
+"POT-Creation-Date: 2021-01-07 13:30-0500\n"
 "PO-Revision-Date: 2021-01-06 10:34-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -172,14 +172,14 @@ msgid "Show timer name in the panel menu"
 msgstr "Afficher le nom de la minuterie dans le menu du panneau"
 
 #: ../settings.ui:557
-msgctxt "prevent-dupes"
-msgid "Prevent dupes"
-msgstr "Évitez les doublons"
+msgctxt "detect-dupes"
+msgid "Detect dupes"
+msgstr ""
 
 #: ../settings.ui:561
-msgctxt "prevent-dupes-tooltip"
-msgid "Prevent timers with the same duration"
-msgstr "Évitez les minuteries de même durée"
+msgctxt "detect-dupes-tooltip"
+msgid "Prevent timers with the same duration, name and type"
+msgstr ""
 
 #: ../settings.ui:572
 msgid "Options"
@@ -250,15 +250,20 @@ msgstr "À propos"
 msgid "New timer"
 msgstr "Nouvelle minuterie"
 
-#: ../timers.js:371
+#: ../timers.js:204
+#, javascript-format
+msgid "Duplicate timer [%s] is already running"
+msgstr ""
+
+#: ../timers.js:429
 msgid "stopped early at"
 msgstr "arrêté tôt à"
 
-#: ../timers.js:371
+#: ../timers.js:429
 msgid "completed at"
 msgstr "terminé à"
 
-#: ../timers.js:372
+#: ../timers.js:430
 msgid "Timer"
 msgstr "Minuterie"
 
@@ -327,6 +332,10 @@ msgid "Save quick timers between sessions if enabled"
 msgstr "Enregistrer des minuteries pratiques entre les sessions si activé"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:102
+msgid "Prevent creation of duplicate timers of the same type"
+msgstr ""
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:106
 msgid "Turn on debugging"
 msgstr "Activer le débogage"
 
@@ -362,25 +371,33 @@ msgstr "Préférences…"
 msgid "Hours"
 msgstr "Heures"
 
-#: ../menus.js:360
+#: ../menus.js:359
 msgid "Minutes"
 msgstr "Minutes"
 
-#: ../menus.js:379
+#: ../menus.js:377
 msgid "Seconds"
 msgstr "Secondes"
 
-#: ../menus.js:397
+#: ../menus.js:394
 msgid "Name"
 msgstr "Nom"
 
-#: ../menus.js:401
+#: ../menus.js:398
 msgid "Name for timer"
 msgstr "Nom de la minuterie"
 
-#: ../menus.js:409
+#: ../menus.js:406
 msgid "Create"
 msgstr "Créer"
+
+#~ msgctxt "prevent-dupes"
+#~ msgid "Prevent dupes"
+#~ msgstr "Évitez les doublons"
+
+#~ msgctxt "prevent-dupes-tooltip"
+#~ msgid "Prevent timers with the same duration"
+#~ msgstr "Évitez les minuteries de même durée"
 
 #~ msgid "checkbutton"
 #~ msgstr "checkbutton"
