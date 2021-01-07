@@ -84,6 +84,10 @@ class Timers extends Array {
     return this.indicator === undefined ? undefined : this.indicator._panel_label;
   }
 
+  remove_by_id(id) {
+    this.logger.debug("Removing timer %s", id);
+  }
+
   refresh() {
     var settings_timers = this._settings.unpack_timers();
     settings_timers.forEach( (settings_timer) => {
@@ -116,10 +120,10 @@ class Timers extends Array {
       if (timer.still_valid(settings_timers)) {
         continue;
       }
-      this.logger.debug(`timer ${timer.name} has been disabled`);
       timer.disable();
       // remove from timers
       this.splice(i, 1);
+      this.logger.debug(`timer ${timer.name} has been purged`);
     }
   }
 
@@ -171,13 +175,17 @@ class Timers extends Array {
     if (!this.settings.detect_dupes) {
       return false;
     }
+    return this.get_dupe(timer) !== undefined;
+  }
+
+  get_dupe(timer) {
     for (var i=0; i < this.length; i++) {
       var t=this[i];
       if (timer.duration == t.duration && timer.quick == t.quick && timer.name == t.name) {
-        return true;
+        return t;
       }
     }
-    return false;
+    return undefined;
   }
 
   add(timer) {
@@ -190,19 +198,13 @@ class Timers extends Array {
       return false;
     }
     if (this.is_dupe(timer)) {
-      if (timer.is_running()) {
-        var msg;
-        if (timer.quick) {
-          msg=_("Quick timer [%s] already exists and is running").format(timer.name);
-        } else {
-          msg=_("Timer [%s] already exists and is running").format(timer.name);
-        }
-        this.logger.warn(msg);
-        timer.notify(msg);
-        return false;
-      }
+      this.logger.warn("%s timer [%s] already exists and is %srunning",
+        timer.quick ? "quick" : "preset",
+        timer.name,
+        timer.is_running() ? "" : "not "
+      );
       // don't push it to timersInstance, but allow the dupe to run
-      return true;
+      return false;
     }
     this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
     this.push(timer);
@@ -467,9 +469,6 @@ class Timer {
   }
 
   still_valid(settings_timers) {
-    if (this.quick) {
-      return true;
-    }
     for (var i=0; i < settings_timers.length; i++) {
       var settings_timer = settings_timers[i];
       if (this._id == settings_timer.id) {

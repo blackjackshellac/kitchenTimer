@@ -29,23 +29,24 @@ class Logger {
     _log(level, format, ...args) {
       var msg = (Array.isArray(args) && args.length > 0) ? format.format(...args) : format;
       log(`${level}: [${this._logid}] ${msg}`);
+      return msg;
     }
 
     debug(format, ...args) {
      if (!this._debug_enabled) return;
-      this._log("DEBUG", format, ...args);
+      return this._log("DEBUG", format, ...args);
     }
 
     warn(format, ...args) {
-      this._log("WARNING", format, ...args);
+      return this._log("WARNING", format, ...args);
     }
 
     info(format, ...args) {
-      this._log("INFO", format, ...args);
+      return this._log("INFO", format, ...args);
     }
 
     error(format, ...args) {
-      this._log("ERROR", format, ...args);
+      return this._log("ERROR", format, ...args);
     }
 }
 

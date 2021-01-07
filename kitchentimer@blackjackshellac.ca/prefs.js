@@ -212,8 +212,8 @@ class PreferencesBuilder {
             var model = this.timers_combo.get_model();
             // set disabled
             model.set_value(iter, Model.ENABLED, false);
-            this.logger.debug('Disabling active entry '+model.get_value(iter, Model.NAME));
-            //this.iter = null;
+            var id=model.get_value(iter, Model.ID);
+            this.logger.debug('Disabling active entry %s:%s', model.get_value(iter, Model.NAME), id);
             this.allow_updates=false;
             ok = model.remove(iter);
             if (ok) {

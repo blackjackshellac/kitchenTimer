@@ -276,7 +276,13 @@ class PanelMenuBuilder {
           this._menu.close();
         } else {
           this.logger.error(`Failed to add timer`);
-          go.setToggleState(false);
+          timer = this.timers.get_dupe(timer);
+          if (timer !== undefined) {
+            timer.start();
+            this._menu.close();
+          } else {
+            go.setToggleState(false);
+          }
         }
       }
     });
@@ -293,7 +299,7 @@ class PanelMenuBuilder {
     this._quick_timer_menu = undefined;
     var timers=this.timers.sorted({running:false})
     timers.forEach( (timer) => {
-      if (timer.quick) {
+      if (timer.quick && timer.enabled) {
         if (!this._quick_timer_menu) {
           // found quick timer, add the sub menu
           this._quick_timer_menu = this._addSubMenu(_("Quick timers"), this._menu);
@@ -304,7 +310,7 @@ class PanelMenuBuilder {
 
     this._presets_timer_menu = undefined;
     timers.forEach( (timer) => {
-      if (!timer.quick) {
+      if (!timer.quick && timer.enabled) {
         if (!this._presets_timer_menu) {
           // found presets, add the sub menu
           this._presets_timer_menu = this._addSubMenu(_("Preset timers"), this._menu);
