@@ -44,9 +44,9 @@ class Annoyer {
     this._initPlayer();
   }
 
-  notify(msg) {
+  notify(msg, ...args) {
     if (this.notification) {
-      Main.notify(msg);
+      Main.notify(msg.format(...args));
     }
   }
 

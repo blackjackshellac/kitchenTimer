@@ -172,13 +172,13 @@ class Timers extends Array {
   }
 
   is_dupe(timer) {
-    if (!this.settings.detect_dupes) {
-      return false;
-    }
     return this.get_dupe(timer) !== undefined;
   }
 
   get_dupe(timer) {
+    if (!this.settings.detect_dupes) {
+      return undefined;
+    }
     for (var i=0; i < this.length; i++) {
       var t=this[i];
       if (timer.duration == t.duration && timer.quick == t.quick && timer.name == t.name) {
@@ -186,6 +186,28 @@ class Timers extends Array {
       }
     }
     return undefined;
+  }
+
+  /**
+   * Add the new timer, after checking that it has no dupes
+   *
+   * timer is the new timer to add to timers
+   *
+   * @returns the new timer if it is not the original, otherwise the dupe
+   *     returns undefined if the timer could not be added
+  */
+  add_check_dupes(timer) {
+    var tdupe = this.get_dupe(timer);
+    if (tdupe !== undefined) {
+      if (tdupe.is_running()) {
+        // original timer is running, notify user
+        tdupe.notify(_("Duplicate timer [%s] is already running"), tdupe.name);
+        return undefined;
+      }
+      // found a duplicate, just return the dupe
+      return tdupe;
+    }
+    return this.add(timer) ? timer : undefined;
   }
 
   add(timer) {
@@ -197,15 +219,15 @@ class Timers extends Array {
       this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
       return false;
     }
-    if (this.is_dupe(timer)) {
-      this.logger.warn("%s timer [%s] already exists and is %srunning",
-        timer.quick ? "quick" : "preset",
-        timer.name,
-        timer.is_running() ? "" : "not "
-      );
+    // if (this.is_dupe(timer)) {
+    //   var msg = this.logger.warn("%s timer [%s] already exists and is %srunning",
+    //     timer.quick ? "quick" : "preset",
+    //     timer.name,
+    //     timer.is_running() ? "" : "not "
+    //   );
       // don't push it to timersInstance, but allow the dupe to run
-      return false;
-    }
+    //   return false;
+    // }
     this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
     this.push(timer);
 
@@ -479,8 +501,8 @@ class Timer {
     return false;
   }
 
-  notify(msg) {
-    timersInstance.notifier.notify(msg);
+  notify(msg, ...args) {
+    timersInstance.notifier.notify(msg, ...args);
   }
 }
 

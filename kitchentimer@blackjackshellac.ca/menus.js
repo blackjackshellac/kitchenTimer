@@ -271,18 +271,12 @@ class PanelMenuBuilder {
         }
         var timer = new Timer(name, hms.toSeconds());
         timer._quick = true;
-        if (this.timers.add(timer)) {
-          timer.start();
+        var tt = this.timers.add_check_dupes(timer);
+        if (tt !== undefined) {
+          tt.start();
           this._menu.close();
         } else {
-          this.logger.error(`Failed to add timer`);
-          timer = this.timers.get_dupe(timer);
-          if (timer !== undefined) {
-            timer.start();
-            this._menu.close();
-          } else {
-            go.setToggleState(false);
-          }
+          go.setToggleState(false);
         }
       }
     });
@@ -412,7 +406,7 @@ class PanelMenuBuilder {
     this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
       var name = this._name_entry.get_text();
       var timer = new Timer(name, hms.toSeconds());
-      this.timers.add(timer);
+      this.timers.add_check_dupes(timer);
     });
   }
 
