@@ -44,10 +44,14 @@ class Annoyer {
     this._initPlayer();
   }
 
-  annoy(msg, play_sound=true) {
+  notify(msg) {
     if (this.notification) {
       Main.notify(msg);
     }
+  }
+
+  annoy(msg, play_sound=true) {
+    this.notify(msg);
     if (play_sound) {
       this._playSound();
     }
@@ -55,7 +59,7 @@ class Annoyer {
 
 	_playSound() {
 		if (!this.sound_enabled) {
-		  log('sound not enabled');
+		  this.logger.warn('sound not enabled');
 		  return;
 		}
 

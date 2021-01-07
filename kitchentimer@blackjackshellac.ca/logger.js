@@ -18,31 +18,34 @@
 
 const LOGID = 'logger';
 
+String.prototype.format = imports.format.format;
+
 class Logger {
     constructor(logid=undefined, debug=false) {
         this._logid = logid === undefined ? LOGID : logid;
         this._debug_enabled = debug;
     }
 
-    _log(level,message) {
-      log(`${level}: [${this._logid}] ${message}`);
+    _log(level, format, ...args) {
+      var msg = (Array.isArray(args) && args.length > 0) ? format.format(...args) : format;
+      log(`${level}: [${this._logid}] ${msg}`);
     }
 
-    debug(message) {
-      if (!this._debug_enabled) return;
-      this._log("DEBUG", message);
+    debug(format, ...args) {
+     if (!this._debug_enabled) return;
+      this._log("DEBUG", format, ...args);
     }
 
-    warn(message) {
-      this._log("WARNING", message);
+    warn(format, ...args) {
+      this._log("WARNING", format, ...args);
     }
 
-    info(message) {
-      this._log("INFO", message);
+    info(format, ...args) {
+      this._log("INFO", format, ...args);
     }
 
-    error(message) {
-      this._log("ERROR", message);
+    error(format, ...args) {
+      this._log("ERROR", format, ...args);
     }
 }
 

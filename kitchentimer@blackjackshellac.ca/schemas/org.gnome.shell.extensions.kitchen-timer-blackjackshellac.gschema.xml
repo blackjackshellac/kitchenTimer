@@ -97,6 +97,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>false</default>
       <summary>Save quick timers between sessions if enabled</summary>
     </key>
+    <key name="detect-dupes" type="b">
+      <default>true</default>
+      <summary>Prevent creation of duplicate timers of the same type</summary>
+    </key>
     <key name="debug" type="b">
       <default>false</default>
       <summary>Turn on debugging</summary>

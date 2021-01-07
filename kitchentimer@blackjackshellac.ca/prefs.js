@@ -492,6 +492,9 @@ class PreferencesBuilder {
 
       let save_quick_timers = this._bo('save_quick_timers')
       this._ssb('save-quick-timers', save_quick_timers, 'active');
+
+      let detect_dupes = this._bo('detect_dupes');
+      this._ssb('detect-dupes', detect_dupes, 'active');
     }
 }
 

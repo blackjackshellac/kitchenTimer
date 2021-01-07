@@ -349,7 +349,6 @@ class PanelMenuBuilder {
     this._hoursSlider.connect('notify::value', () => {
       hms.hours = Math.ceil(this._hoursSlider._value*23);
       this._hoursLabel.set_text(hms.hours.toString() + "h");
-      this._time = hms.toSeconds();
     });
 
     item.add(this._hoursSlider);
@@ -370,7 +369,6 @@ class PanelMenuBuilder {
     this._minutesSlider.connect('notify::value', () => {
       hms.minutes = Math.ceil(this._minutesSlider._value*59);
       this._minutesLabel.set_text(hms.minutes.toString() + "m");
-      this._time = hms.toSeconds();
     });
     item.add(this._minutesSlider);
     this._create_timer_menu.menu.addMenuItem(item);
@@ -389,7 +387,6 @@ class PanelMenuBuilder {
     this._secondsSlider.connect('notify::value', () => {
       hms.seconds = Math.ceil(this._secondsSlider._value*59);
       this._secondsLabel.set_text(hms.seconds.toString() + "s");
-      this._time = hms.toSeconds();
     });
     item.add(this._secondsSlider);
     this._create_timer_menu.menu.addMenuItem(item);
@@ -408,15 +405,8 @@ class PanelMenuBuilder {
 
     this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
       var name = this._name_entry.get_text();
-      this._time = hms.toSeconds();
-      if (name.length == 0) {
-        this.logger.warn(`Refusing to create unnamed timer`);
-      } else if (this._time <= 0) {
-        this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
-      } else {
-        var timer = new Timer(name, this._time);
-        this.timers.add(timer);
-      }
+      var timer = new Timer(name, hms.toSeconds());
+      this.timers.add(timer);
     });
   }
 

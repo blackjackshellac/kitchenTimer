@@ -68,6 +68,10 @@ class Timers extends Array {
     this._indicator = indicator;
   }
 
+  get notifier() {
+    return this._notifier;
+  }
+
   get settings() {
     return this._settings;
   }
@@ -88,8 +92,10 @@ class Timers extends Array {
         timer=this[i];
         found = timer.refresh_with(settings_timer);
         if (found) {
-          var running = timer.is_running() ? "running" : "not running";
-          this.logger.debug(`Found timer [${timer.name}]: ${running}`);
+          this.logger.debug("Found %s timer [%s]: %s",
+            (timer.quick ? "quick" : "preset"),
+            timer.name,
+            (timer.is_running() ? "running" : "not running"));
           if (timer.is_running()) {
             this.logger.debug(timer.toString());
           }
@@ -161,14 +167,42 @@ class Timers extends Array {
     return tbid.length == 0 ? null : tbid[0];
   }
 
+  is_dupe(timer) {
+    if (!this.settings.detect_dupes) {
+      return false;
+    }
+    for (var i=0; i < this.length; i++) {
+      var t=this[i];
+      if (timer.duration == t.duration && timer.quick == t.quick && timer.name == t.name) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   add(timer) {
     if (timer.name.length == 0) {
-      this.logger.warn(`Refusing to create unnamed timer`);
+      this.logger.warn('Refusing to create unnamed timer');
       return false;
     }
     if (timer.duration <= 0) {
       this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
       return false;
+    }
+    if (this.is_dupe(timer)) {
+      if (timer.is_running()) {
+        var msg;
+        if (timer.quick) {
+          msg=_("Quick timer [%s] already exists and is running").format(timer.name);
+        } else {
+          msg=_("Timer [%s] already exists and is running").format(timer.name);
+        }
+        this.logger.warn(msg);
+        timer.notify(msg);
+        return false;
+      }
+      // don't push it to timersInstance, but allow the dupe to run
+      return true;
     }
     this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
     this.push(timer);
@@ -446,5 +480,8 @@ class Timer {
     return false;
   }
 
+  notify(msg) {
+    timersInstance.notifier.notify(msg);
+  }
 }
 

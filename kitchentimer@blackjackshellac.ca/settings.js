@@ -213,6 +213,14 @@ class Settings {
       this.settings.set_boolean('save-quick-timers', bool);
     }
 
+    get detect_dupes() {
+      return this.settings.get_boolean('detect-dupes');
+    }
+
+    set detect_dupes(bool) {
+      this.settings.set_boolean('detect-dupes', bool);
+    }
+
     get debug() {
       return this.settings.get_boolean('debug');
     }
