@@ -127,19 +127,7 @@ class PanelMenuBuilder {
       return timer_item;
   }
 
-  build() {
-    this.logger.info("Building the popup menu");
-
-    this._menu.removeAll();
-    this.timers.refresh();
-
-    // this._addSwitch(_("Run Timer")).connect("toggled", () => {
-      // this._stopTimer = !(this._stopTimer);
-      // this.remove_actor(this._logo);
-      // this.add_actor(this._box);
-    //   this._refresh_timer();
-    // });
-
+  _buildQuickTimerMenuItem() {
     this._box = new St.BoxLayout();
 
     this._name = new St.Entry( {
@@ -280,36 +268,76 @@ class PanelMenuBuilder {
         }
       }
     });
+  }
 
-    var running_item = new PopupMenu.PopupMenuItem(_("Running timers"), { reactive: false } );
-    this._menu.addMenuItem(running_item);
+  build() {
+    this.logger.info("Building the popup menu");
 
-    this.timers.sort_by_remaining().forEach( (timer) => {
+    this._menu.removeAll();
+    this.timers.refresh();
+
+    // this._addSwitch(_("Run Timer")).connect("toggled", () => {
+      // this._stopTimer = !(this._stopTimer);
+      // this.remove_actor(this._logo);
+      // this.add_actor(this._box);
+    //   this._refresh_timer();
+    // });
+
+    this._buildQuickTimerMenuItem();
+
+    var running_item;
+
+    this.timers.sort_by_running().forEach( (timer) => {
+      if (running_item === undefined) {
+        running_item = new PopupMenu.PopupMenuItem(_("Running timers"), { reactive: false } );
+        this._menu.addMenuItem(running_item);
+      }
       var timer_item = this.create_timer_item(timer, this._menu);
     });
 
-    this._addSeparator();
+    if (running_item !== undefined) {
+      this._addSeparator();
+    }
 
     this._quick_timer_menu = undefined;
+    var quick_timers_label = _("Quick timers");
     var timers=this.timers.sorted({running:false})
     timers.forEach( (timer) => {
       if (timer.quick && timer.enabled) {
-        if (!this._quick_timer_menu) {
-          // found quick timer, add the sub menu
-          this._quick_timer_menu = this._addSubMenu(_("Quick timers"), this._menu);
+        if (this._quick_timer_menu === undefined) {
+          // found quick timer, add the sub menu if running timers
+          if (running_item === undefined) {
+            var quick_item = new PopupMenu.PopupMenuItem(quick_timers_label, { reactive: false } );
+            this._menu.addMenuItem(quick_item);
+            this._quick_timer_menu = this._menu;
+          } else {
+            this._quick_timer_menu = this._addSubMenu(quick_timers_label, this._menu).menu;
+          }
         }
-        this.create_timer_item(timer, this._quick_timer_menu.menu);
+        this.create_timer_item(timer, this._quick_timer_menu);
       }
     });
 
+    if (this.running_item !== undefined || this._quick_timer_menu !== undefined) {
+      this._addSeparator();
+    }
+
     this._presets_timer_menu = undefined;
+
+    var preset_timers_label = _("Preset timers");
     timers.forEach( (timer) => {
       if (!timer.quick && timer.enabled) {
-        if (!this._presets_timer_menu) {
-          // found presets, add the sub menu
-          this._presets_timer_menu = this._addSubMenu(_("Preset timers"), this._menu);
+        if (this._presets_timer_menu === undefined) {
+          // found presets, add the sub menu if quick timers
+          if (running_item === undefined && this._quick_timer_menu === undefined) {
+            var presets_item = new PopupMenu.PopupMenuItem(preset_timers_label, { reactive: false } );
+            this._menu.addMenuItem(presets_item);
+            this._presets_timer_menu = this._menu;
+          } else {
+            this._presets_timer_menu = this._addSubMenu(preset_timers_label, this._menu).menu;
+          }
         }
-        this.create_timer_item(timer, this._presets_timer_menu.menu);
+        this.create_timer_item(timer, this._presets_timer_menu);
       }
     });
 

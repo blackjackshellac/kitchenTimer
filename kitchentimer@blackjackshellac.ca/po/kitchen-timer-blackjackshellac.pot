@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-07 13:30-0500\n"
-"PO-Revision-Date: 2021-01-07 13:30-0500\n"
+"POT-Creation-Date: 2021-01-07 14:34-0500\n"
+"PO-Revision-Date: 2021-01-07 14:34-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -23,61 +23,62 @@ msgid "Kitchen Timer"
 msgstr ""
 
 #: menus.js:80 menus.js:84 menus.js:297 menus.js:311 menus.js:317 menus.js:318
+#: menus.js:346
 msgid "Create Timer"
 msgstr ""
 
-#: menus.js:115 menus.js:149 menus.js:150
+#: menus.js:115 menus.js:138 menus.js:149 menus.js:150
 msgid "Label"
 msgstr ""
 
 #: menus.js:117 menus.js:121 menus.js:301 menus.js:315 menus.js:321
-#: menus.js:322
+#: menus.js:322 menus.js:350
 msgid "Preferences…"
 msgstr ""
 
 #: menus.js:133 menus.js:137 menus.js:317 menus.js:331 menus.js:337
-#: menus.js:338
+#: menus.js:338 menus.js:366
 msgid "Hours"
 msgstr ""
 
 #: menus.js:155 menus.js:159 menus.js:339 menus.js:353 menus.js:359
-#: menus.js:360
+#: menus.js:360 menus.js:387
 msgid "Minutes"
 msgstr ""
 
 #: menus.js:174 menus.js:178 menus.js:358 menus.js:372 menus.js:377
-#: menus.js:378 menus.js:379
+#: menus.js:378 menus.js:379 menus.js:405
 msgid "Seconds"
 msgstr ""
 
 #: menus.js:192 menus.js:196 menus.js:376 menus.js:390 menus.js:394
-#: menus.js:396 menus.js:397
+#: menus.js:396 menus.js:397 menus.js:422
 msgid "Name"
 msgstr ""
 
 #: menus.js:196 menus.js:200 menus.js:380 menus.js:394 menus.js:398
-#: menus.js:400 menus.js:401
+#: menus.js:400 menus.js:401 menus.js:426
 msgid "Name for timer"
 msgstr ""
 
 #: menus.js:204 menus.js:208 menus.js:388 menus.js:402 menus.js:406
-#: menus.js:408 menus.js:409
+#: menus.js:408 menus.js:409 menus.js:434
 msgid "Create"
 msgstr ""
 
-#: menus.js:209 menus.js:243 menus.js:246 menus.js:247
+#: menus.js:209 menus.js:235 menus.js:243 menus.js:246 menus.js:247
 msgid "Go"
 msgstr ""
 
-#: menus.js:246 menus.js:289 menus.js:298 menus.js:299
+#: menus.js:246 menus.js:289 menus.js:298 menus.js:299 menus.js:303
 msgid "Quick timers"
 msgstr ""
 
-#: menus.js:247 menus.js:290 menus.js:309 menus.js:310
+#: menus.js:247 menus.js:290 menus.js:309 menus.js:310 menus.js:327
 msgid "Preset timers"
 msgstr ""
 
-#: menus.js:280 menus.js:283 menus.js:284
+#: menus.js:280 menus.js:283 menus.js:284 menus.js:292
 msgid "Running timers"
 msgstr ""
 

@@ -156,7 +156,7 @@ class Timers extends Array {
     return timers_array.filter(timer => (timer.enabled || timer.quick));
   }
 
-  sort_by_remaining() {
+  sort_by_running() {
     var running_timers = [...this].filter(timer => timer.is_running());
 
     //log(`running timers length=${running_timers.length}`);
@@ -395,7 +395,7 @@ class Timer {
     var hms = new HMS(delta);
       timer.label_progress(hms, now);
 
-      var running_timers = timersInstance.sort_by_remaining();
+      var running_timers = timersInstance.sort_by_running();
       if (running_timers.length > 0 && running_timers[0] == timer) {
         timer.icon_progress();
         var panel_label = timersInstance.panel_label;
