@@ -33,6 +33,7 @@ const Timer = Me.imports.timers.Timer;
 const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
+const MenuButton = Me.imports.menubutton;
 
 class PanelMenuBuilder {
   constructor(menu, indicator) {
@@ -134,18 +135,14 @@ class PanelMenuBuilder {
       });
       icon.set_icon_size(20);
 
-      // var delicon = new St.Icon({
-      //   icon_name: 'edit-delete-symbolic',
-      //   style_class: 'kitchentimer-menu-delete-icon',
-      //   x_align: St.Align.END,
-      //   x_expand: false
-      // });
-
-      // delicon.connect('button-press-event', (icon, event) => {
-      //   this.logger.debug('icon clicked');
-      //   Utils.logObjectPretty(event);
-      //   return false;
-      // });
+      var control_button;
+      if (!timer.is_running() && timer.quick) {
+        control_button = new MenuButton.KitchenTimerDeleteBin(timer);
+        control_button = new St.Icon({
+          x_align: St.Align.END,
+          x_expand: false
+        });
+      }
 
       if (timer.is_running()) {
         icon.connect('button-press-event', (timer) => {
@@ -153,8 +150,12 @@ class PanelMenuBuilder {
         });
       }
 
-      // box.add_child(delicon);
-      box.add_child(icon);
+      if (control_button) {
+        this.logger.debug("Adding control icon button");
+        box.add_child(control_button);
+      } else {
+        box.add_child(icon);
+      }
       box.add_child(timer.label);
       box.add_child(name);
 
