@@ -25,6 +25,9 @@ class HMS {
   }
 
   static create(h,m,s) {
+    if (!h) { h=0; }
+    if (!m) { m=0; }
+    if (!s) { s=0; }
     return new HMS(Number(h)*3600+Number(m)*60+Number(s));
   }
 
@@ -105,15 +108,23 @@ class HMS {
     return `${this.toString()} is ${this.toSeconds()}`;
   }
 
+  toName() {
+    if (this._hours == 0 && this._minutes == 0) {
+      return "%ds".format(this.seconds);
+    } else if (this._hours == 0) {
+      return "%dm%ds".format(this.minutes, this.seconds);
+    }
+    return "%dh%dm%ds".format(this.hours, this.minutes, this.seconds);
+  }
+
   toString(compact) {
     if (compact) {
-      var time="";
       if (this._hours == 0 && this._minutes == 0) {
-        return `${this._seconds}s`;
+        return "%02ds".format(this._seconds);;
       } else if (this._hours == 0) {
-        return "%dm%02ds".format(this.minutes, this.seconds);
+        return "%02dm%02ds".format(this.minutes, this.seconds);
       }
-      return "%dh%02dm%02d".format(this.hours, this.minutes, this.seconds);
+      return "%02dh%02dm%02ds".format(this.hours, this.minutes, this.seconds);
     }
     return "%02d:%02d:%02d".format(this.hours, this.minutes, this.seconds);
   }

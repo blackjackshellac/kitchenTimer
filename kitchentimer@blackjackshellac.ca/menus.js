@@ -94,7 +94,7 @@ class PanelMenuBuilder {
   }
 
   create_timer_item(timer, menu) {
-      var timer_item = new PopupMenu.PopupMenuItem("");
+      var timer_item = new PopupMenu.PopupMenuItem("", { reactive: true });
       menu.addMenuItem(timer_item);
       //timer_item = this._addItem(timer.name, menu);
 
@@ -130,17 +130,30 @@ class PanelMenuBuilder {
         x_align: St.Align.END,
         x_expand: false,
         gicon: this._indicator.progress_gicon(key),
-        style_class: 'system-status-icon'
+        style_class: 'popup-menu-icon'
       });
       icon.set_icon_size(20);
+
+      // var delicon = new St.Icon({
+      //   icon_name: 'edit-delete-symbolic',
+      //   style_class: 'kitchentimer-menu-delete-icon',
+      //   x_align: St.Align.END,
+      //   x_expand: false
+      // });
+
+      // delicon.connect('button-press-event', (icon, event) => {
+      //   this.logger.debug('icon clicked');
+      //   Utils.logObjectPretty(event);
+      //   return false;
+      // });
 
       if (timer.is_running()) {
         icon.connect('button-press-event', (timer) => {
           timer.reset();
         });
       }
-      //timer_item.add(icon);
 
+      // box.add_child(delicon);
       box.add_child(icon);
       box.add_child(timer.label);
       box.add_child(name);
@@ -154,144 +167,125 @@ class PanelMenuBuilder {
       return timer_item;
   }
 
+  _parseTimerEntry(entry, quick) {
+    if (entry.length === 0) {
+      this.logger.error("timer entry is empty");
+      return undefined;
+    }
+
+    this.logger.debug("timer entry=%s", entry);
+
+    var name="";
+    var hours = 0;
+    var minutes = 0;
+    var seconds = 0;
+
+    var re = /(?<name>[a-zA-Z][^\d]+?)?\s?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
+    var m=re.exec(entry);
+    if (m) {
+      var g=m.groups;
+      if (g.name) {
+        name=g.name;
+      }
+      if (g.t3 && g.t2 && g.t1) {
+        hours=g.t1;
+        minutes=g.t2;
+        seconds=g.t3;
+      } else if (g.t2 && g.t1) {
+        minutes=g.t1;
+        seconds=g.t2;
+      } else if (g.t1) {
+        seconds=g.t1;
+      }
+    }
+
+    var hms = HMS.create(hours, minutes, seconds);
+    return {
+      name: name,
+      hms: hms,
+      quick: quick
+    };
+  }
+
+  _addTimerStart(result) {
+    if (result.name.length == 0) {
+      result.name = result.hms.toString(true);
+    }
+    var timer = new Timer(result.name, result.hms.toSeconds());
+    timer.quick = result.quick;
+    var tt = this.timers.add_check_dupes(timer);
+    if (tt !== undefined) {
+      tt.start();
+    }
+    return tt;
+  }
+
   _buildQuickTimerMenuItem() {
-    this._box = new St.BoxLayout();
+    var layout = new St.BoxLayout({
+      style_class: 'kitchentimer-quick-menu',
+      x_expand: true
+    });
 
-    this._name = new St.Entry( {
+    var quick = new PopupMenu.PopupMenuItem("", { reactive: false } );
+    quick.add(layout);
+    this._menu.addMenuItem(quick);
+
+    this._entry = new St.Entry( {
       x_expand: true,
       x_align: St.Align.START,
       y_align: Clutter.ActorAlign.CENTER
     });
-    this._name.set_hint_text(_("Label"));
-    //this._name.set_can_focus(true);
-    this._name.get_clutter_text().connect('text-changed', (e) => {
-      this.logger.debug("label changed="+e.get_text());
-    });
-    this._he = new St.Entry( {
-      text: "00",
-      x_expand: true,
-      x_align: St.Align.START,
-      margin_right: 5,
-      y_align: Clutter.ActorAlign.CENTER
-    });
-    //this._he.set_can_focus(true);
+    this._entry.set_hint_text(_("Quick name 00:00:00"));
+    this._entry.get_clutter_text().set_activatable(true);
 
-    this._me = new St.Entry( {
-      text: "00",
-      x_expand: true,
-      x_align: St.Align.START,
-      y_align: Clutter.ActorAlign.CENTER
-    });
-    this._se = new St.Entry( {
-      text: "00",
-      x_expand: true,
-      x_align: St.Align.START,
-      y_align: Clutter.ActorAlign.CENTER
-    });
-
-    this._go_hms = new HMS(0);
-    this._he.get_clutter_text().connect('text-changed', (e) => {
-      var text = e.get_text();
-      this.logger.debug('text-changed hours: '+text);
-      var num = this.time_number(text);
-      if (num !== text) {
-        this.logger.debug('entry update num='+num);
-        e.set_text(num);
-      }
-    });
-
-   this._me.get_clutter_text().connect('text-changed', (e) => {
-      var text = e.get_text();
-      this.logger.debug('text-changed minutes: '+text);
-      var num = this.time_number(text);
-      if (num !== text) {
-        this.logger.debug('entry update num='+num);
-        e.set_text(num);
-      }
-    });
-
-   this._se.get_clutter_text().connect('text-changed', (e) => {
-      var text = e.get_text();
-      this.logger.debug('text-changed seconds: '+text);
-      var num = this.time_number(text);
-      if (num !== text) {
-        this.logger.debug('entry update num='+num);
-        e.set_text(num);
-      }
-    });
-
-    this._he.get_clutter_text().connect('key-focus-out', (e) => {
-      var text = e.get_text();
-      this.logger.debug('key out hours: '+text);
-      var num = this.validate_integer(text);
-      if (num !== undefined) {
-        this._go_hms.hours = num;
-        this.logger.debug('hms='+this._go_hms.toString());
-      }
-      this._se.get_clutter_text().set_text(this._go_hms.s2s());
-      this._me.get_clutter_text().set_text(this._go_hms.m2s());
-      this._he.get_clutter_text().set_text(this._go_hms.h2s());
-    });
-
-    this._me.get_clutter_text().connect('key-focus-out', (e) => {
-      var text = e.get_text();
-      this.logger.debug('key out minutes: '+text);
-      var num = this.validate_integer(text);
-      if (num !== undefined) {
-        this._go_hms.adjust_minutes(num);
-        this.logger.debug('hms='+this._go_hms.toString());
-      }
-      this._se.get_clutter_text().set_text(this._go_hms.s2s());
-      this._me.get_clutter_text().set_text(this._go_hms.m2s());
-      this._he.get_clutter_text().set_text(this._go_hms.h2s());
-    });
-
-    this._se.get_clutter_text().connect('key-focus-out', (e) => {
-      var text = e.get_text();
-      this.logger.debug('key out seconds: '+text);
-      var num = this.validate_integer(text);
-      if (num !== undefined) {
-        this._go_hms.adjust_seconds(num);
-        this.logger.debug('hms='+this._go_hms.toString());
-      }
-      this._se.get_clutter_text().set_text(this._go_hms.s2s());
-      this._me.get_clutter_text().set_text(this._go_hms.m2s());
-      this._he.get_clutter_text().set_text(this._go_hms.h2s());
-    });
-
-    this._go = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
+    this._gogo = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
       hover: false,
       style_class: null
     });
 
-    this._box.add_child(this._name);
-    this._box.add_child(this._he);
-    this._box.add_child(this._me);
-    this._box.add_child(this._se);
-    this._box.add_child(this._go);
+    layout.add_child(this._entry);
+    layout.add_child(this._gogo);
 
-    var oneoff = new PopupMenu.PopupMenuItem("", { reactive: false } );
-    oneoff.add(this._box);
-    this._menu.addMenuItem(oneoff);
-
-    this._go.connect('toggled', (go) => {
-      if (go.state) {
-        var name = this._name.get_clutter_text().get_text().trim();
-        var s = this._se.get_clutter_text().get_text();
-        var m = this._me.get_clutter_text().get_text();
-        var h = this._he.get_clutter_text().get_text();
-        var hms = HMS.create(h,m,s);
-        if (name.length === 0) {
-          name = hms.toString(true);
-        }
-        var timer = new Timer(name, hms.toSeconds());
-        timer._quick = true;
-        var tt = this.timers.add_check_dupes(timer);
-        if (tt !== undefined) {
-          tt.start();
-          this._menu.close();
+    this._entry.get_clutter_text().connect('activate', (e) => {
+      var entry = e.get_text();
+      this.logger.debug('activate: '+entry);
+      var result = this._parseTimerEntry(entry, true);
+      if (result) {
+        this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
+        var timer = this._addTimerStart(result);
+        if (timer === undefined) {
+          this._gogo.setToggledState(false);
         } else {
+          this._menu.close();
+        }
+      }
+    });
+
+    this._entry.get_clutter_text().connect('key-focus-out', (e) => {
+      var entry = e.get_text();
+      this.logger.debug('key out hours: '+entry);
+      var result = this._parseTimerEntry(entry, true);
+      if (result) {
+        this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
+      }
+    });
+
+    this._gogo.connect('toggled', (go) => {
+      if (go.state) {
+        var entry = this._entry.get_clutter_text().get_text().trim();
+
+        var result = this._parseTimerEntry(entry, true);
+        if (!result) {
+          this.logger.error("Invalid timer entry='%s'", entry);
           go.setToggleState(false);
+          return;
+        }
+
+        var timer = this._addTimerStart(result);
+        if (timer === undefined) {
+          go.setToggledState(false);
+        } else {
+          this._menu.close();
         }
       }
     });
@@ -302,13 +296,6 @@ class PanelMenuBuilder {
 
     this._menu.removeAll();
     this.timers.refresh();
-
-    // this._addSwitch(_("Run Timer")).connect("toggled", () => {
-      // this._stopTimer = !(this._stopTimer);
-      // this.remove_actor(this._logo);
-      // this.add_actor(this._box);
-    //   this._refresh_timer();
-    // });
 
     this._buildQuickTimerMenuItem();
 

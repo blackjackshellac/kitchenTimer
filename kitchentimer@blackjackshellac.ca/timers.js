@@ -141,6 +141,7 @@ class Timers extends Array {
       timer.disable();
       // remove from timers
       this.splice(i, 1);
+      i--;
       this.logger.debug(`timer ${timer.name} has been purged`);
     }
   }

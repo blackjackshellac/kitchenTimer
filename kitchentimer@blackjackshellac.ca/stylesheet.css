@@ -1,5 +1,10 @@
 /* Add your custom extension styling here */
 
+.kitchentimer-quick-layout {
+  padding: 0px;
+  spacing: 5px;
+}
+
 .kitchentimer-menu-box {
   padding: 0px;
   /*spacing: 10px;*/
@@ -8,6 +13,11 @@
 .kitchentimer-menu-label {
   border-right: 10px;
   font-family: monospace;
+}
+
+.kitchentimer-menu-delete-icon {
+  border-left: 10px;
+  icon-size: 1.2em;
 }
 
 .kitchentimer-menu-name {
