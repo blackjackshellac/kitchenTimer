@@ -209,7 +209,7 @@ class PanelMenuBuilder {
 
   _addTimerStart(result) {
     if (result.name.length == 0) {
-      result.name = result.hms.toString(true);
+      result.name = result.hms.toName();
     }
     var timer = new Timer(result.name, result.hms.toSeconds());
     timer.quick = result.quick;
