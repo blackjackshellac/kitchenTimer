@@ -106,17 +106,16 @@ class HMS {
   }
 
   toString(compact) {
-    var ws=" ";
     if (compact) {
       var time="";
       if (this._hours == 0 && this._minutes == 0) {
         return `${this._seconds}s`;
       } else if (this._hours == 0) {
-        return `${this._minutes}m${this._seconds}s`;
+        return "%dm%02ds".format(this.minutes, this.seconds);
       }
-      ws="";
+      return "%dh%02dm%02d".format(this.hours, this.minutes, this.seconds);
     }
-    return `${this._hours}h${ws}${this._minutes}m${ws}${this._seconds}s`;
+    return "%02d:%02d:%02d".format(this.hours, this.minutes, this.seconds);
   }
 }
 

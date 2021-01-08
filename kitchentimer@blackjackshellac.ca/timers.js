@@ -80,8 +80,26 @@ class Timers extends Array {
     return this.indicator === undefined ? undefined : this.indicator._box;
   }
 
+  get panel_name() {
+    return this.indicator === undefined ? undefined : this.indicator._panel_name;
+  }
+
   get panel_label() {
     return this.indicator === undefined ? undefined : this.indicator._panel_label;
+  }
+
+  set_panel_name(text) {
+    var label = this.panel_name;
+    if (label) {
+      label.set_text(this.settings.show_label ? text : "");
+    }
+  }
+
+  set_panel_label(text) {
+    var label = this.panel_label;
+    if (label) {
+      label.set_text(this.settings.show_time ? text : "");
+    }
   }
 
   remove_by_id(id) {
@@ -398,17 +416,10 @@ class Timer {
       var running_timers = timersInstance.sort_by_running();
       if (running_timers.length > 0 && running_timers[0] == timer) {
         timer.icon_progress();
-        var panel_label = timersInstance.panel_label;
-        if (panel_label && (timersInstance._settings.show_time || timersInstance._settings.show_label)) {
-          var text = "";
-          if (timersInstance._settings.show_label) {
-            text=timer.name+" ";
-          }
-          if (timersInstance._settings.show_time) {
-            text += hms.toString(true);
-          }
-          panel_label.set_text(text);
-        }
+
+        timersInstance.set_panel_name(timer.name);
+        timersInstance.set_panel_label(hms.toString(true));
+
         timersInstance._active_timer = timer;
       }
     return true;
@@ -437,10 +448,8 @@ class Timer {
     this.label_progress(hms);
     this.icon_progress();
 
-    var panel_label = timersInstance.panel_label
-    if (panel_label) {
-      panel_label.set_text("");
-    }
+    timersInstance.set_panel_name("");
+    timersInstance.set_panel_label("");
 
     // return with false to stop interval callback loop
     return false;

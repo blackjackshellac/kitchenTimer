@@ -412,7 +412,7 @@ Author: Steeve McCauley
               </packing>
             </child>
             <child>
-              <!-- n-columns=2 n-rows=5 -->
+              <!-- n-columns=2 n-rows=6 -->
               <object class="GtkGrid" id="stack_options">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
@@ -428,41 +428,10 @@ Author: Steeve McCauley
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="notification">Show a notification when the timer is done</property>
                     <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_notification_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="show_time">
-                    <property name="label" translatable="yes" context="show_time">Show time</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-time">Show remaining time for running timers in the panel</property>
-                    <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_show_time_toggled" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="show_progress">
-                    <property name="label" translatable="yes" context="show_progress">Show progress</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Show progress in the panel menu</property>
-                    <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_show_progress_toggled" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
                   </packing>
                 </child>
                 <child>
@@ -473,7 +442,6 @@ Author: Steeve McCauley
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="sort-by-duration">Sort timers by duration</property>
                     <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_sort_by_duration_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -488,7 +456,6 @@ Author: Steeve McCauley
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="sort-descending">Sort timers by duration from longest to shortest</property>
                     <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_sort_descending_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -503,7 +470,6 @@ Author: Steeve McCauley
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="model-notifiation">System model notificaiton</property>
                     <property name="draw-indicator">True</property>
-                    <signal name="toggled" handler="on_modal_notification_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="left-attach">1</property>
@@ -540,7 +506,7 @@ Author: Steeve McCauley
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="show_label">
-                    <property name="label" translatable="yes" context="show_label">Show label</property>
+                    <property name="label" translatable="yes" context="show_label">Show name</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
@@ -565,6 +531,40 @@ Author: Steeve McCauley
                     <property name="left-attach">1</property>
                     <property name="top-attach">4</property>
                   </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="show_progress">
+                    <property name="label" translatable="yes" context="show_progress">Show progress icon</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Animate progress icon in the panel menu</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="show_time">
+                    <property name="label" translatable="yes" context="show_time">Show time</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="show-time">Show remaining time for running timers in the panel</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>

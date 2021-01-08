@@ -61,10 +61,13 @@ class KitchenTimerIndicator extends PanelMenu.Button {
           gicon: this._progressIconsDegrees[0],
           style_class: 'system-status-icon'
         });
+        icon.set_icon_size(20);
 
-        this._box = new St.BoxLayout({ name: 'panelStatusMenu' });
+        this._box = new St.BoxLayout({ name: 'panelStatusMenu',
+          style_class: 'kitchentimer-panel-box'
+        });
         this._box.add_child(icon);
-        this._box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
+        //this._box.add_child(PopupMenu.arrowIcon(St.Side.BOTTOM));
 
         this._panel_label=new St.Label({ text: "",
           x_align: Clutter.ActorAlign.END,
@@ -73,11 +76,10 @@ class KitchenTimerIndicator extends PanelMenu.Button {
           style_class: 'kitchentimer-panel-label'
         });
 
-        this._panel_name=new St.Label({
+        this._panel_name=new St.Label({ text: "",
           x_align: Clutter.ActorAlign.END,
           y_align: Clutter.ActorAlign.CENTER,
           y_expand: false,
-          text: "",
           style_class: 'kitchentimer-panel-name'
         });
 

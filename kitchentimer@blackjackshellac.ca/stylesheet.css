@@ -14,6 +14,10 @@
   font-weight: normal;
 }
 
+.kitchentimer-panel-box {
+  spacing: 4px;
+}
+
 .kitchentimer-panel-label {
   font-weight: normal;
   font-stretch: normal;
@@ -22,8 +26,8 @@
 }
 
 .kitchentimer-panel-name {
-  font-weight: bold;
-  font-stretch: normal;
-  font-family: monospace;
+  font-weight: lighter;
+  font-stretch: condensed;
+  font-family: sans-serif;
   font-size: smaller;
 }
