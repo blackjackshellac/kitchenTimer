@@ -83,16 +83,16 @@ class KitchenTimerStopButton extends St.Button {
     }
 });
 
-var KitchenTimerDeleteBin = GObject.registerClass(
-class KitchenTimerDeleteBin extends St.Bin {
-    _init(timer) {
-        super._init({ x_expand: false, x_align: St.Align.END });
-        this._deleteButton = new KitchenTimerDeleteButton(timer);
-        this.child = this._deleteButton;
-    }
+// var KitchenTimerDeleteBin = GObject.registerClass(
+// class KitchenTimerDeleteBin extends St.Bin {
+//     _init(timer) {
+//         super._init({ x_expand: false, x_align: St.Align.END });
+//         this._deleteButton = new KitchenTimerDeleteButton(timer);
+//         this.child = this._deleteButton;
+//     }
 
-    get button() {
-      return this._deleteButton;
-    }
-});
+//     get button() {
+//       return this._deleteButton;
+//     }
+// });
 
