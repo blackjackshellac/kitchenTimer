@@ -253,13 +253,28 @@ class Timers extends Array {
     this._settings.pack_timers(this);
     return true;
   }
+
+  remove(timer) {
+    for (var i = 0; i < this.length; i++) {
+      if (timer.id !== this[i].id) {
+        continue;
+      }
+      timer.disable();
+      // remove from timers
+      this.splice(i, 1);
+      this.logger.debug(`timer ${timer.name} has been purged`);
+      this.settings.pack_timers(this);
+      return true;
+    }
+    return false;
+  }
 }
 
 // timers is a singleton class
-const timersInstance = new Timers();
+var timersInstance = new Timers();
 //Object.freeze(timersInstance);
 
-const TimerState = {
+var TimerState = {
   RESET: 0,
   RUNNING: 1,
   EXPIRED: 2
@@ -288,6 +303,10 @@ class Timer {
 
   toString() {
     return `name=${this._name} state=${this._state} start=${this._start} end=${this._end} duration=${this._duration_secs} iid=${this._interval_id}`;
+  }
+
+  get timers() {
+    return timersInstance;
   }
 
   get id() {
@@ -464,6 +483,10 @@ class Timer {
     this._state = Timer.RESET;
   }
 
+  stop() {
+    this.reset();
+  }
+
   start() {
     if (this._enabled || this._quick) {
       if (this._state == TimerState.RUNNING) {
@@ -513,6 +536,10 @@ class Timer {
 
   notify(msg, ...args) {
     timersInstance.notifier.notify(msg, ...args);
+  }
+
+  delete() {
+    this.timers.remove(this);
   }
 }
 

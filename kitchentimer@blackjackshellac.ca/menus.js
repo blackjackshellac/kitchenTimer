@@ -33,7 +33,7 @@ const Timer = Me.imports.timers.Timer;
 const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
-const MenuButton = Me.imports.menubutton;
+const Mitem = Me.imports.menuitem;
 
 class PanelMenuBuilder {
   constructor(menu, indicator) {
@@ -137,16 +137,25 @@ class PanelMenuBuilder {
 
       var control_button;
       if (timer.is_running()) {
-        control_button = new MenuButton.KitchenTimerStopButton(timer);
+        control_button = new Mitem.KitchenTimerControlButton(timer, "stop");
+        control_button.connect('clicked', (cb) => {
+          cb.stop();
+          menu.close();
+        });
       } else if (timer.quick) {
-        control_button = new MenuButton.KitchenTimerDeleteButton(timer);
+        control_button = new Mitem.KitchenTimerControlButton(timer, "delete");
+        control_button.connect('clicked', (cb) => {
+          cb.delete();
+          menu.close();
+        });
+
       }
 
-      if (timer.is_running()) {
-        icon.connect('button-press-event', (timer) => {
-          timer.reset();
-        });
-      }
+      // if (timer.is_running()) {
+      //   icon.connect('button-press-event', (timer) => {
+          //timer.reset();
+      //   });
+      // }
 
       if (control_button) {
         this.logger.debug("Adding control icon button");
@@ -158,7 +167,9 @@ class PanelMenuBuilder {
       box.add_child(name);
 
       timer_item.connect('activate', (ti) => {
-        ti._timer.start();
+        if (!ti._timer.is_running()) {
+          ti._timer.start();
+        }
       });
 
       timer.label_progress(new HMS(timer.duration));
@@ -225,7 +236,7 @@ class PanelMenuBuilder {
       x_expand: true
     });
 
-    var quick = new PopupMenu.PopupMenuItem("", { reactive: false } );
+    var quick = new PopupMenu.PopupMenuItem("Quick", { reactive: false } );
     quick.add(layout);
     this._menu.addMenuItem(quick);
 
@@ -234,7 +245,7 @@ class PanelMenuBuilder {
       x_align: St.Align.START,
       y_align: Clutter.ActorAlign.CENTER
     });
-    this._entry.set_hint_text(_("Quick name 00:00:00"));
+    this._entry.set_hint_text(_("Name 00:00:00"));
     this._entry.get_clutter_text().set_activatable(true);
 
     this._gogo = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
