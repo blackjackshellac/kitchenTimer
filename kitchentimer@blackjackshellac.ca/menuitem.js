@@ -49,12 +49,14 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       });
       this.add(box);
 
+      var hms = new HMS(timer.duration);
+
       var name = new St.Label({
         style_class: 'kitchentimer-menu-name',
         x_expand: true,
         x_align: St.Align.START
       });
-      name.set_text(timer.name.length == 0 ? _('unnamed') : timer.name);
+      name.set_text(timer.name.length == 0 ? hms.toName() : timer.name);
 
       timer.label = new St.Label({
         style_class: 'kitchentimer-menu-label',
@@ -108,7 +110,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         }
       });
 
-      timer.label_progress(new HMS(timer.duration));
+      timer.label_progress(hms);
 
       menu.addMenuItem(this);
   }
