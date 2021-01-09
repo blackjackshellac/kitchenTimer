@@ -131,7 +131,7 @@ class PanelMenuBuilder {
         x_align: St.Align.END,
         x_expand: false,
         gicon: this._indicator.progress_gicon(key),
-        style_class: 'popup-menu-icon'
+        style_class: 'kitchentimer-menu-icon'
       });
       icon.set_icon_size(20);
 
@@ -151,10 +151,10 @@ class PanelMenuBuilder {
       if (control_button) {
         this.logger.debug("Adding control icon button");
         box.add_child(control_button);
-      } else {
-        box.add_child(icon);
       }
+
       box.add_child(timer.label);
+      box.add_child(icon);
       box.add_child(name);
 
       timer_item.connect('activate', (ti) => {

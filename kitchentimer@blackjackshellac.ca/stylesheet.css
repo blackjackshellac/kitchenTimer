@@ -10,6 +10,11 @@
   /*spacing: 10px;*/
 }
 
+.kitchentimer-menu-icon {
+  border-right: 10px;
+  icon-size: 1.2em;
+}
+
 .kitchentimer-menu-label {
   border-right: 10px;
   font-family: monospace;
