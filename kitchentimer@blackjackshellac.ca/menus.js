@@ -94,220 +94,13 @@ class PanelMenuBuilder {
     return text;
   }
 
-  create_timer_item(timer, menu) {
-      var timer_item = new PopupMenu.PopupMenuItem("", { reactive: true });
-      menu.addMenuItem(timer_item);
-      //timer_item = this._addItem(timer.name, menu);
-
-      var box = new St.BoxLayout({
-        x_expand: true,
-        x_align: St.Align.START,
-        pack_start: true,
-        style_class: 'kitchentimer-menu-box'
-      });
-      timer_item.add(box);
-
-      var name = new St.Label({
-        style_class: 'kitchentimer-menu-name',
-        x_expand: true,
-        x_align: St.Align.START
-      });
-      name.set_text(timer.name);
-
-      timer_item._timer = timer;
-      timer.label = new St.Label({
-        style_class: 'kitchentimer-menu-label',
-        x_expand: false,
-        x_align: St.Align.END
-      });
-
-
-      //var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
-      //bin.child = timer.label;
-      //timer_item.add(bin);
-
-      var key = timer.degree_progress(15 /* 15 degree increments */);
-      var icon = new St.Icon({
-        x_align: St.Align.END,
-        x_expand: false,
-        gicon: this._indicator.progress_gicon(key),
-        style_class: 'kitchentimer-menu-icon'
-      });
-      icon.set_icon_size(20);
-
-      var control_button;
-      if (timer.is_running()) {
-        control_button = new Mitem.KitchenTimerControlButton(timer, "stop");
-        control_button.connect('clicked', (cb) => {
-          cb.stop();
-          menu.close();
-        });
-      } else if (timer.quick) {
-        control_button = new Mitem.KitchenTimerControlButton(timer, "delete");
-        control_button.connect('clicked', (cb) => {
-          cb.delete();
-          menu.close();
-        });
-
-      }
-
-      // if (timer.is_running()) {
-      //   icon.connect('button-press-event', (timer) => {
-          //timer.reset();
-      //   });
-      // }
-
-      if (control_button) {
-        this.logger.debug("Adding control icon button");
-        box.add_child(control_button);
-      }
-
-      box.add_child(timer.label);
-      box.add_child(icon);
-      box.add_child(name);
-
-      timer_item.connect('activate', (ti) => {
-        if (!ti._timer.is_running()) {
-          ti._timer.start();
-        }
-      });
-
-      timer.label_progress(new HMS(timer.duration));
-
-      return timer_item;
-  }
-
-  _parseTimerEntry(entry, quick) {
-    if (entry.length === 0) {
-      this.logger.error("timer entry is empty");
-      return undefined;
-    }
-
-    this.logger.debug("timer entry=%s", entry);
-
-    var name="";
-    var hours = 0;
-    var minutes = 0;
-    var seconds = 0;
-
-    var re = /(?<name>[a-zA-Z][^\d]+?)?\s?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
-    var m=re.exec(entry);
-    if (m) {
-      var g=m.groups;
-      if (g.name) {
-        name=g.name;
-      }
-      if (g.t3 && g.t2 && g.t1) {
-        hours=g.t1;
-        minutes=g.t2;
-        seconds=g.t3;
-      } else if (g.t2 && g.t1) {
-        minutes=g.t1;
-        seconds=g.t2;
-      } else if (g.t1) {
-        seconds=g.t1;
-      }
-    }
-
-    var hms = HMS.create(hours, minutes, seconds);
-    return {
-      name: name,
-      hms: hms,
-      quick: quick
-    };
-  }
-
-  _addTimerStart(result) {
-    if (result.name.length == 0) {
-      result.name = result.hms.toName();
-    }
-    var timer = new Timer(result.name, result.hms.toSeconds());
-    timer.quick = result.quick;
-    var tt = this.timers.add_check_dupes(timer);
-    if (tt !== undefined) {
-      tt.start();
-    }
-    return tt;
-  }
-
-  _buildQuickTimerMenuItem() {
-    var layout = new St.BoxLayout({
-      style_class: 'kitchentimer-quick-menu',
-      x_expand: true
-    });
-
-    var quick = new PopupMenu.PopupMenuItem("Quick", { reactive: false } );
-    quick.add(layout);
-    this._menu.addMenuItem(quick);
-
-    this._entry = new St.Entry( {
-      x_expand: true,
-      x_align: St.Align.START,
-      y_align: Clutter.ActorAlign.CENTER
-    });
-    this._entry.set_hint_text(_("Name 00:00:00"));
-    this._entry.get_clutter_text().set_activatable(true);
-
-    this._gogo = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
-      hover: false,
-      style_class: null
-    });
-
-    layout.add_child(this._entry);
-    layout.add_child(this._gogo);
-
-    this._entry.get_clutter_text().connect('activate', (e) => {
-      var entry = e.get_text();
-      this.logger.debug('activate: '+entry);
-      var result = this._parseTimerEntry(entry, true);
-      if (result) {
-        this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
-        var timer = this._addTimerStart(result);
-        if (timer === undefined) {
-          this._gogo.setToggledState(false);
-        } else {
-          this._menu.close();
-        }
-      }
-    });
-
-    this._entry.get_clutter_text().connect('key-focus-out', (e) => {
-      var entry = e.get_text();
-      this.logger.debug('key out hours: '+entry);
-      var result = this._parseTimerEntry(entry, true);
-      if (result) {
-        this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
-      }
-    });
-
-    this._gogo.connect('toggled', (go) => {
-      if (go.state) {
-        var entry = this._entry.get_clutter_text().get_text().trim();
-
-        var result = this._parseTimerEntry(entry, true);
-        if (!result) {
-          this.logger.error("Invalid timer entry='%s'", entry);
-          go.setToggleState(false);
-          return;
-        }
-
-        var timer = this._addTimerStart(result);
-        if (timer === undefined) {
-          go.setToggledState(false);
-        } else {
-          this._menu.close();
-        }
-      }
-    });
-  }
-
   build() {
     this.logger.info("Building the popup menu");
 
     this._menu.removeAll();
     this.timers.refresh();
 
-    this._buildQuickTimerMenuItem();
+    new Mitem.KitchenTimerQuickItem(this._menu, this.timers);
 
     var running_item;
 
@@ -316,7 +109,7 @@ class PanelMenuBuilder {
         running_item = new PopupMenu.PopupMenuItem(_("Running timers"), { reactive: false } );
         this._menu.addMenuItem(running_item);
       }
-      var timer_item = this.create_timer_item(timer, this._menu);
+      var timer_item = new Mitem.KitchenTimerMenuItem(timer, this._menu);
     });
 
     if (running_item !== undefined) {
@@ -338,7 +131,7 @@ class PanelMenuBuilder {
             this._quick_timer_menu = this._addSubMenu(quick_timers_label, this._menu).menu;
           }
         }
-        this.create_timer_item(timer, this._quick_timer_menu);
+        new Mitem.KitchenTimerMenuItem(timer, this._quick_timer_menu);
       }
     });
 
@@ -361,7 +154,7 @@ class PanelMenuBuilder {
             this._presets_timer_menu = this._addSubMenu(preset_timers_label, this._menu).menu;
           }
         }
-        this.create_timer_item(timer, this._presets_timer_menu);
+        new Mitem.KitchenTimerMenuItem(timer, this._presets_timer_menu);
       }
     });
 

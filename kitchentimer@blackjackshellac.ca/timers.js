@@ -230,8 +230,8 @@ class Timers extends Array {
   }
 
   add(timer) {
-    if (timer.name.length == 0) {
-      this.logger.warn('Refusing to create unnamed timer');
+    if (!timer.quick && timer.name.length == 0) {
+      this.logger.warn('Refusing to create unnamed preset timer');
       return false;
     }
     if (timer.duration <= 0) {

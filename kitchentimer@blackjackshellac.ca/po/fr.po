@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-08 22:47-0500\n"
-"PO-Revision-Date: 2021-01-08 22:47-0500\n"
+"POT-Creation-Date: 2021-01-09 16:40-0500\n"
+"PO-Revision-Date: 2021-01-09 16:41-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
 "Language: fr\n"
@@ -100,67 +100,59 @@ msgstr "Activer le débogage"
 msgid "Duplicate timer [%s] is already running"
 msgstr "La minuterie en double [%s] est déjà en cours"
 
-#: ../timers.js:441
+#: ../timers.js:460
 msgid "stopped early at"
 msgstr "arrêté tôt à"
 
-#: ../timers.js:441
+#: ../timers.js:460
 msgid "completed at"
 msgstr "terminé à"
 
-#: ../timers.js:442
+#: ../timers.js:461
 msgid "Timer"
 msgstr "Minuterie"
 
-#: ../menus.js:237
-msgid "Quick name 00:00:00"
-msgstr "Nom de minuterie pratique 00:00:00"
-
-#: ../menus.js:240
-msgid "Go"
-msgstr "Go"
-
-#: ../menus.js:305
+#: ../menus.js:109
 msgid "Running timers"
 msgstr "Minuteries en cours"
 
-#: ../menus.js:316
+#: ../menus.js:120
 msgid "Quick timers"
 msgstr "Minuteries pratiques"
 
-#: ../menus.js:340
+#: ../menus.js:144
 msgid "Preset timers"
 msgstr "Minuteries préréglées"
 
-#: ../menus.js:359
+#: ../menus.js:163
 msgid "Create Timer"
 msgstr "Créer une minuterie"
 
-#: ../menus.js:363
+#: ../menus.js:167
 msgid "Preferences…"
 msgstr "Préférences…"
 
-#: ../menus.js:379
+#: ../menus.js:183
 msgid "Hours"
 msgstr "Heures"
 
-#: ../menus.js:400
+#: ../menus.js:204
 msgid "Minutes"
 msgstr "Minutes"
 
-#: ../menus.js:418
+#: ../menus.js:222
 msgid "Seconds"
 msgstr "Secondes"
 
-#: ../menus.js:435
+#: ../menus.js:239
 msgid "Name"
 msgstr "Nom"
 
-#: ../menus.js:439
+#: ../menus.js:243
 msgid "Name for timer"
 msgstr "Nom de la minuterie"
 
-#: ../menus.js:447
+#: ../menus.js:251
 msgid "Create"
 msgstr "Créer"
 
@@ -390,6 +382,25 @@ msgstr ""
 msgctxt "about"
 msgid "About"
 msgstr "À propos"
+
+#: ../menuitem.js:57
+msgid "unnamed"
+msgstr "innomé"
+
+#: ../menuitem.js:161
+msgid "Quick"
+msgstr "Pratique"
+
+#: ../menuitem.js:182
+msgid "Name 00:00:00"
+msgstr "Nom 00:00:00"
+
+#: ../menuitem.js:185
+msgid "Go"
+msgstr "Go"
+
+#~ msgid "Quick name 00:00:00"
+#~ msgstr "Nom de minuterie pratique 00:00:00"
 
 #~ msgctxt "show_progress"
 #~ msgid "Show progress"
