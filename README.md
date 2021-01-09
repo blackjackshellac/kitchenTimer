@@ -18,7 +18,7 @@ and then restart gnome shell to enable (Alt-F2 'r') or logout/login.
 
 ## Setting a quick timer demo
 
-![quick timer demo](https://raw.githubusercontent.com/blackjackshellac/kitchenTimer/main/img/Screencast%20from%202021-01-09%2008%3A39%3A04%20AM.webm)
+![quick timer demo](https://raw.githubusercontent.com/blackjackshellac/kitchenTimer/main/img/quick_timers_panel_menu_stop_delete.webm)
 
 ## References
 
