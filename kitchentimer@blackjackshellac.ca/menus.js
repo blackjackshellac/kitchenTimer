@@ -136,12 +136,10 @@ class PanelMenuBuilder {
       icon.set_icon_size(20);
 
       var control_button;
-      if (!timer.is_running() && timer.quick) {
-        control_button = new MenuButton.KitchenTimerDeleteBin(timer);
-        control_button = new St.Icon({
-          x_align: St.Align.END,
-          x_expand: false
-        });
+      if (timer.is_running()) {
+        control_button = new MenuButton.KitchenTimerStopButton(timer);
+      } else if (timer.quick) {
+        control_button = new MenuButton.KitchenTimerDeleteButton(timer);
       }
 
       if (timer.is_running()) {

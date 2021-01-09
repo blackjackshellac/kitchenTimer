@@ -32,16 +32,19 @@ class KitchenTimerDeleteButton extends St.Button {
 
         var icon = new St.Icon({
             icon_name: 'edit-delete-symbolic',
-            style_class: 'popup-menu-icon'
+            style_class: 'kitchentimer-menu-delete-icon'
         });
+        icon.set_icon_size(20);
 
         this.child = icon;
 
         this._timer = timer;
 
-        log("Created new delete button for "+timer.name);
-
         this.connect('clicked', this._onClick.bind(this));
+    }
+
+    get icon() {
+      return this.child;
     }
 
     _onClick() {
@@ -51,12 +54,45 @@ class KitchenTimerDeleteButton extends St.Button {
     }
 });
 
+var KitchenTimerStopButton = GObject.registerClass(
+class KitchenTimerStopButton extends St.Button {
+    _init(timer) {
+        super._init();
+
+        var icon = new St.Icon({
+            icon_name: 'process-stop-symbolic',
+            style_class: 'kitchentimer-menu-delete-icon'
+        });
+        icon.set_icon_size(20);
+
+        this.child = icon;
+
+        this._timer = timer;
+
+        this.connect('clicked', this._onClick.bind(this));
+    }
+
+    get icon() {
+      return this.child;
+    }
+
+    _onClick() {
+        log('Clicked stop button for '+this._timer.name)
+        //this._timer.delete();
+        return Clutter.EVENT_STOP;
+    }
+});
+
 var KitchenTimerDeleteBin = GObject.registerClass(
 class KitchenTimerDeleteBin extends St.Bin {
     _init(timer) {
-        super._init({ x_align: St.Align.END });
+        super._init({ x_expand: false, x_align: St.Align.END });
         this._deleteButton = new KitchenTimerDeleteButton(timer);
         this.child = this._deleteButton;
+    }
+
+    get button() {
+      return this._deleteButton;
     }
 });
 
