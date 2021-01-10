@@ -238,15 +238,7 @@ class Timers extends Array {
       this.logger.warn(`Refusing to create zero length timer ${timer.name}`);
       return false;
     }
-    // if (this.is_dupe(timer)) {
-    //   var msg = this.logger.warn("%s timer [%s] already exists and is %srunning",
-    //     timer.quick ? "quick" : "preset",
-    //     timer.name,
-    //     timer.is_running() ? "" : "not "
-    //   );
-      // don't push it to timersInstance, but allow the dupe to run
-    //   return false;
-    // }
+
     this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
     this.push(timer);
 
@@ -536,6 +528,9 @@ class Timer {
   }
 
   still_valid(settings_timers) {
+    if (this.is_running() || this.quick) {
+      return true;
+    }
     for (var i=0; i < settings_timers.length; i++) {
       var settings_timer = settings_timers[i];
       if (this._id == settings_timer.id) {
