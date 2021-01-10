@@ -160,98 +160,12 @@ class PanelMenuBuilder {
 
     this._addSeparator();
 
-    this._create_timer_menu = this._addSubMenu(_("Create Timer"), this._menu);
-    this._buildCreateTimerMenu();
+    new Mitem.KitchenTimerCreatePreset(this._menu, this.timers);
 
     this._addSeparator();
     var prefs = this._addItem(_("Preferences…"));
     prefs.connect('activate', () => {
       ExtensionUtils.openPrefs();
-    });
-  }
-
-  // Add sliders SubMenu to manually set the timer
-  _buildCreateTimerMenu() {
-
-    var hms = new HMS(this._settings.default_timer);
-
-    this._hoursLabel = new St.Label({ text: hms.hours.toString() + "h" });
-    this._minutesLabel = new St.Label({ text: hms.minutes.toString() + "m" });
-    this._secondsLabel = new St.Label({ text: hms.seconds.toString() + "s" });
-
-    // Hours
-    var item = new PopupMenu.PopupMenuItem(_("Hours"), { reactive: false });
-
-    var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
-    bin.child = this._hoursLabel;
-    item.add(bin);
-
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    item = new PopupMenu.PopupBaseMenuItem({ activate: false });
-    this._hoursSlider = new Slider.Slider(0, {x_expand: true, y_expand:true});
-    this._hoursSlider._value = hms.hours / 23;
-    this._hoursSlider.connect('notify::value', () => {
-      hms.hours = Math.ceil(this._hoursSlider._value*23);
-      this._hoursLabel.set_text(hms.hours.toString() + "h");
-    });
-
-    item.add(this._hoursSlider);
-
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    // Minutes
-    item = new PopupMenu.PopupMenuItem(_("Minutes"), { reactive: false });
-    bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
-    bin.child = this._minutesLabel;
-    item.add(bin);
-
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    item = new PopupMenu.PopupBaseMenuItem({ activate: false });
-    this._minutesSlider = new Slider.Slider(0, { x_expand: true });
-    this._minutesSlider._value = hms.minutes / 59;
-    this._minutesSlider.connect('notify::value', () => {
-      hms.minutes = Math.ceil(this._minutesSlider._value*59);
-      this._minutesLabel.set_text(hms.minutes.toString() + "m");
-    });
-    item.add(this._minutesSlider);
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    // Seconds
-    item = new PopupMenu.PopupMenuItem(_("Seconds"), { reactive: false });
-
-    bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
-    bin.child = this._secondsLabel;
-    item.add(bin);
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    item = new PopupMenu.PopupBaseMenuItem({ activate: false });
-    this._secondsSlider = new Slider.Slider(0, { expand: true });
-    this._secondsSlider._value = hms.seconds / 59;
-    this._secondsSlider.connect('notify::value', () => {
-      hms.seconds = Math.ceil(this._secondsSlider._value*59);
-      this._secondsLabel.set_text(hms.seconds.toString() + "s");
-    });
-    item.add(this._secondsSlider);
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    item = new PopupMenu.PopupMenuItem(_("Name"), { reactive: false } );
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    this._name_entry = new St.Entry();
-    this._name_entry.hint_text = _('Name for timer');
-    this._name_entry.set_primary_icon(this.create_icon());
-    item = new PopupMenu.PopupMenuItem("", { reactive: false } );
-    bin = new St.Bin({ x_expand: true, x_align: St.Align.START });
-    bin.child = this._name_entry;
-    item.add(bin);
-    this._create_timer_menu.menu.addMenuItem(item);
-
-    this._addSwitch(_("Create"), false, this._create_timer_menu.menu).connect('toggled', (create_switch) => {
-      var name = this._name_entry.get_text();
-      var timer = new Timer(name, hms.toSeconds());
-      this.timers.add_check_dupes(timer);
     });
   }
 
