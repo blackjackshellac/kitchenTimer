@@ -23,7 +23,7 @@ String.prototype.format = imports.format.format;
 class Logger {
     constructor(logid=undefined, debug=false) {
         this._logid = logid === undefined ? LOGID : logid;
-        this._debug_enabled = debug;
+        this._debugging = debug;
     }
 
     _log(level, format, ...args) {
@@ -32,8 +32,16 @@ class Logger {
       return msg;
     }
 
+    get debugging() {
+      return this._debugging;
+    }
+
+    set debugging(bool) {
+      this._debugging = bool;
+    }
+
     debug(format, ...args) {
-     if (!this._debug_enabled) return;
+     if (!this._debugging) return;
       return this._log("DEBUG", format, ...args);
     }
 

@@ -33,13 +33,16 @@ var KTTypes = {
   "delete" : 'edit-delete-symbolic'
 }
 
+var logger = new Logger('kt menuitem');
+
 var KitchenTimerMenuItem = GObject.registerClass(
 class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
   _init(timer, menu) {
       super._init("", { reactive: true });
 
       this._timer = timer;
-      this.logger = new Logger('kt menuitem', timer.timers.settings.debug);
+      this.logger = logger;
+      this.logger.debugging = timer.timers.settings.debug;
 
       var box = new St.BoxLayout({
         x_expand: true,
@@ -80,7 +83,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
           cb.stop();
           menu.close();
         });
-      } else if (timer.quick) {
+      } else {
         control_button = new KitchenTimerControlButton(timer, "delete");
         control_button.connect('clicked', (cb) => {
           cb.delete();
@@ -89,14 +92,8 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
       }
 
-      // if (timer.is_running()) {
-      //   timer_icon.connect('button-press-event', (timer) => {
-          //timer.reset();
-      //   });
-      // }
-
       if (control_button) {
-        this.logger.debug("Adding control icon button");
+        //this.logger.debug("Adding control icon button");
         box.add_child(control_button);
       }
 
@@ -124,37 +121,39 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       return undefined;
     }
 
-    var name="";
-    var hours = 0;
-    var minutes = 0;
-    var seconds = 0;
+    var parse = {
+      name: "",
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      hms: null,
+      quick: quick
+    }
 
     //var re = /(?<name>[a-zA-Z][^\d]+?)?\s?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
-    var re = /(?<name>[^\s]+\s)?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
+    var re = /(?<name>([^\s]+\s)*?)?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
     var m=re.exec(entry);
     if (m) {
       var g=m.groups;
       if (g.name) {
-        name=g.name;
+        parse.name=g.name.trim();
       }
       if (g.t3 && g.t2 && g.t1) {
-        hours=g.t1;
-        minutes=g.t2;
-        seconds=g.t3;
+        parse.hours=g.t1;
+        parse.minutes=g.t2;
+        parse.seconds=g.t3;
       } else if (g.t2 && g.t1) {
-        minutes=g.t1;
-        seconds=g.t2;
+        parse.minutes=g.t1;
+        parse.seconds=g.t2;
       } else if (g.t1) {
-        seconds=g.t1;
+        parse.seconds=g.t1;
       }
     }
 
-    var hms = HMS.create(hours, minutes, seconds);
-    return {
-      name: name,
-      hms: hms,
-      quick: quick
-    };
+
+    parse.hms = HMS.create(parse.hours, parse.minutes, parse.seconds);
+    //Utils.logObjectPretty(parse);
+    return parse;
   }
 });
 
@@ -168,7 +167,8 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
 
     menu.addMenuItem(this);
 
-    this.logger = new Logger('kt menuitem', timers.settings.debug);
+    this.logger = logger;
+    this.logger.debugging = timers.settings.debug;
 
     var layout = new St.BoxLayout({
       style_class: 'kitchentimer-quick-menu',
