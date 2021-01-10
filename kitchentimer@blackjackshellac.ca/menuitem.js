@@ -56,7 +56,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         x_expand: true,
         x_align: St.Align.START
       });
-      name.set_text(timer.name.length == 0 ? hms.toName() : timer.name);
+      name.set_text(timer.name);
 
       timer.label = new St.Label({
         style_class: 'kitchentimer-menu-label',
@@ -129,7 +129,8 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     var minutes = 0;
     var seconds = 0;
 
-    var re = /(?<name>[a-zA-Z][^\d]+?)?\s?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
+    //var re = /(?<name>[a-zA-Z][^\d]+?)?\s?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
+    var re = /(?<name>[^\s]+\s)?(?<t1>\d+)\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
     var m=re.exec(entry);
     if (m) {
       var g=m.groups;

@@ -88,10 +88,10 @@ class Timers extends Array {
     return this.indicator === undefined ? undefined : this.indicator._panel_label;
   }
 
-  set_panel_name(text) {
+  set_panel_name(text, has_name=true) {
     var label = this.panel_name;
     if (label) {
-      label.set_text(this.settings.show_label ? text : "");
+      label.set_text(this.settings.show_label && has_name ? text : "");
     }
   }
 
@@ -289,7 +289,6 @@ class Timer {
     this._enabled = true;
     this._quick = false;
     this._interval_ms = debug ? 500 : 250;
-    this._name = name;
     this._duration_secs = duration_secs;
     this._state = TimerState.RESET;
     this._id = Utils.uuid(id);
@@ -297,6 +296,9 @@ class Timer {
     this._gicon = null;
     this._start = 0;
     this._end = 0;
+
+    // this calls the setter
+    this.name = name;
 
     this._notifier = timersInstance._notifier;
   }
@@ -338,8 +340,18 @@ class Timer {
     return this._name;
   }
 
+  automatic_name(hms) {
+    return hms.toName();
+  }
+
   set name(name) {
-    this._name = name;
+    var hms = new HMS(this.duration);
+    this._name = name.length > 0 ? name : this.automatic_name(hms);
+    this._has_name = this._name != this.automatic_name(hms);
+  }
+
+  get has_name() {
+    return this._has_name;
   }
 
   get duration() {
@@ -437,7 +449,7 @@ class Timer {
       if (running_timers.length > 0 && running_timers[0] == timer) {
         timer.icon_progress();
 
-        timersInstance.set_panel_name(timer.name);
+        timersInstance.set_panel_name(timer.name, timer.has_name);
         timersInstance.set_panel_label(hms.toString(true));
 
         timersInstance._active_timer = timer;
