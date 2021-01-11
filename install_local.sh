@@ -41,6 +41,8 @@ run() {
 
 run cd $MD
 
+[ "$1" == "debug" ] && DEBUG=1
+
 if [ $DEBUG -ne 0 ]; then
 	run ./bin/pot_create.sh
 fi
