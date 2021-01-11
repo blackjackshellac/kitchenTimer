@@ -93,7 +93,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
       if (result) {
         this._name = result.name;
         if (result.has_time) {
-          this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
+          //this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
           this._hslider.value = result.hms.hours;
           this._mslider.value = result.hms.minutes;
           this._sslider.value = result.hms.seconds;
@@ -288,13 +288,27 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     return tt;
   }
 
-  // just seconds, no name
-  static re_number(parse) {
-    var re=/^(?<secs>\d+$)/;
+  // hms, ms or s
+  static re_hms(parse) {
+   var re = /^((?<t1>\d+):)?((?<t2>\d+):)?(?<t3>\d+)$/;
     var m = re.exec(parse.entry);
     if (m) {
-      parse.seconds = m.groups.secs;
+      logger.debug("matched in re_hms");
+      var g=m.groups;
+      //Utils.logObjectPretty(g);
       parse.has_time = true;
+      if (g.t3 && g.t2 && g.t1) {
+        parse.hours=g.t1;
+        parse.minutes=g.t2;
+        parse.seconds=g.t3;
+      } else if (g.t1 && g.t3) {
+        parse.minutes=g.t1;
+        parse.seconds=g.t3;
+      } else if (g.t3) {
+        parse.seconds=g.t3;
+      } else {
+        parse.has_time = false;
+      }
       return true;
     }
     return false;
@@ -302,10 +316,13 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
   // well formed, name HH:MM:SS
   static re_name_hms(parse) {
-    var re = /^(?<name>.*?)\s(?<t1>\d+)\s*:\s*(?<t2>[\d]+)\s*:\s*(?<t3>\d+)$/;
+    var re = /^(?<name>.*?)\s+(?<t1>\d+):(?<t2>[\d]+):(?<t3>\d+)$/;
     var m = re.exec(parse.entry);
     if (m) {
+      logger.debug("matched in re_name_hms");
       var g=m.groups;
+      Utils.logObjectPretty(g);
+
       parse.name = g.name;
       parse.hours = g.t1;
       parse.minutes = g.t2;
@@ -362,7 +379,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       has_time: false
     }
 
-    if (!KitchenTimerMenuItem.re_number(parse)) {
+    if (!KitchenTimerMenuItem.re_hms(parse)) {
       if (!KitchenTimerMenuItem.re_name_hms(parse)) {
         if (!KitchenTimerMenuItem.re_wildcard(parse)) {
           return undefined;
@@ -371,7 +388,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     }
 
     parse.hms = HMS.create(parse.hours, parse.minutes, parse.seconds);
-    //Utils.logObjectPretty(parse);
+    Utils.logObjectPretty(parse);
     return parse;
   }
 });
