@@ -242,13 +242,14 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         control_button = new KitchenTimerControlButton(timer, "stop");
         control_button.connect('clicked', (cb) => {
           cb.stop();
-          menu.close();
+          //menu.close();
+          this._timer.timers.indicator.rebuild_menu();
         });
       } else {
         control_button = new KitchenTimerControlButton(timer, "delete");
         control_button.connect('clicked', (cb) => {
           cb.delete();
-          menu.close();
+          this._timer.timers.indicator.rebuild_menu();
         });
 
       }

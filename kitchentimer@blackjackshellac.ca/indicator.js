@@ -120,6 +120,9 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 	    return this._logger;
 	  }
 
+    rebuild_menu() {
+      this._pmbuilder.build();
+    }
 });
 
 
