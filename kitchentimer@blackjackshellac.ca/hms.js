@@ -110,9 +110,15 @@ class HMS {
 
   toName() {
     if (this._hours == 0 && this._minutes == 0) {
-      return "%ds".format(this.seconds);
+      return "%d %s".format(this.seconds, _("seconds"));
     } else if (this._hours == 0) {
+      if (this._seconds == 0) {
+        return "%d %s".format(this.minutes, _("minutes"));
+      }
       return "%dm%ds".format(this.minutes, this.seconds);
+    }
+    if (this.minutes == 0 && this.seconds == 0) {
+      return "%d %s".format(this.hours, _("hours"));
     }
     return "%dh%dm%ds".format(this.hours, this.minutes, this.seconds);
   }
