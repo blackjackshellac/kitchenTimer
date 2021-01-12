@@ -24,7 +24,18 @@ and then restart gnome shell to enable (Alt-F2 'r') or logout/login.
 
 You can also specify alarms as timers with the syntax,
 
-```name @ time_spec [am|pm]```
+```
+name @ HH[:MM[:SS[.ms]]] [am|pm]
+```
+
+The time_spec can include am/pm or use 24 hour time.
+
+```
+alarm @ 5am
+alarm @ 11:30pm
+alarm @ 23:30
+alarm @ 8:45:00.444am
+```
 
 for example, to create an alarm timer that goes off at 5am tomorrow,
 
