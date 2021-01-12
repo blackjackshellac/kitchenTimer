@@ -1,0 +1,71 @@
+
+alarm @3:55pm
+alarm @15:55
+alarm @3pm
+
+// date now
+d=new Date();
+d.toLocaleTimeString()
+"12:59:44 p.m."
+
+// UTC time string
+d.toISOString().replace(/\d+-\d+-\d+T/, "").replace(/\.\d+Z/, "")
+"17:59:44"
+
+// timezone offset in minutes
+n=d.getTimezoneOffset()
+300
+300/60 = +5 hours
+
+gjs> d=new Date();
+Tue Jan 12 2021 14:27:10 GMT-0500 (Eastern Standard Time)
+gjs> d
+Tue Jan 12 2021 14:27:10 GMT-0500 (Eastern Standard Time)
+gjs> d.constructor.name
+"Date"
+gjs> d.getDate()
+12
+gjs> d.getDay()
+2
+gjs> d.getFullYear()
+2021
+gjs> d.getHours()
+14
+gjs> d.getMilliseconds()
+28
+gjs> d.getMinutes()
+27
+gjs> d.getSeconds()
+10
+gjs> d.getTime()
+1610479630028
+gjs> d.getTimezoneOffset()
+300
+gjs> d.getMonth()
+
+e=new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHour(), d.getMinute(), d.getSeconds(), d.getMilliseconds())
+
+gjs> h=12
+12
+gjs> m=30
+30
+gjs> e=new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, m, 0, 0)
+Tue Jan 12 2021 12:30:00 GMT-0500 (Eastern Standard Time)
+gjs> e.getTime()
+1610472600000
+gjs> e.getTime()-d.getTime()
+-7030028
+gjs> f=e.getTime()-d.getTime()
+// negative difference, add a day's worth of seconds to get tomorrow's date
+-7030028
+gjs> f+=86400000
+// this is the duration of the timer in milliseconds
+79369972
+gjs> f
+79369972
+gjs> f += d.getTime()
+1610559000000
+gjs> g=new Date(f)
+Wed Jan 13 2021 12:30:00 GMT-0500 (Eastern Standard Time)
+
+

@@ -299,6 +299,83 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     return tt;
   }
 
+  // alarm @3:55pm
+  // alarm @15:55:00.000
+  // alarm @3pm
+  static re_alarm(parse) {
+    var re = /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
+    var m=re.exec(parse.entry);
+    if (!m) {
+      return false;
+    }
+
+    var g=m.groups
+    Utils.logObjectPretty(g);
+    parse.name=parse.entry;
+    parse.alarm = true;
+
+    //e=new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHour(), d.getMinute(), d.getSeconds(), d.getMilliseconds())
+    var now=new Date();
+    var alarm_time={
+      hour: Number(g.h),
+      minute: 0,
+      second: 0,
+      ms: 0,
+      ampm: g.ampm !== undefined
+    }
+    Utils.logObjectPretty(alarm_time);
+    if (alarm_time.ampm) {
+      if (g.ampm.match(/p\.?m\.?/i)) {
+        alarm_time.hour += 12;
+        if (alarm_time.hour > 24) {
+          logger.warn("hour is greater than 24: %s h=%d", parse.entry, alarm_time.hour);
+        }
+      }
+    }
+    if (g.m) {
+      alarm_time.minute = Number(g.m);
+      if (alarm_time.minute > 59) {
+        logger.warn("minute is greater than 59");
+        alarm_time.minute = 59;
+      }
+    }
+    if (g.s) {
+      alarm_time.second = Number(g.s);
+      if (alarm_time.second > 59) {
+        logger.warn("second is greater than 59");
+        alarm_time.second = 59;
+      }
+    }
+    if (g.ms) {
+      alarm_time.ms=Number(g.ms);
+      if (alarm_time.ms > 1000) {
+        logger.warn("ms is greater than 999");
+        alarm_time.ms = 999;
+      }
+    }
+
+    var alarm_date=new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      alarm_time.hour,
+      alarm_time.minute,
+      alarm_time.second,
+      alarm_time.ms
+    );
+    var duration_ms = alarm_date.getTime() - now.getTime();
+    if (duration_ms < 0) {
+      duration_ms += 86400000;
+    }
+    parse.hms = new HMS(duration_ms/1000);
+    parse.hours = parse.hms.hours;
+    parse.minutes = parse.hms.minutes;
+    parse.seconds = parse.hms.seconds;
+    parse.has_time = true;
+
+    return true;
+  }
+
   // hms, ms or s
   static re_hms(parse) {
    var re = /^((?<t1>\d+):)?((?<t2>\d+):)?(?<t3>\d+)$/;
@@ -387,9 +464,13 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       seconds: 0,
       hms: null,
       quick: quick,
-      has_time: false
+      has_time: false,
+      alarm: false
     }
 
+    if (KitchenTimerMenuItem.re_alarm(parse)) {
+      return parse;
+    }
     if (!KitchenTimerMenuItem.re_hms(parse)) {
       if (!KitchenTimerMenuItem.re_name_hms(parse)) {
         if (!KitchenTimerMenuItem.re_wildcard(parse)) {
