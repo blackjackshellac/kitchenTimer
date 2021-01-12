@@ -20,6 +20,19 @@ and then restart gnome shell to enable (Alt-F2 'r') or logout/login.
 
 ![quick timer demo](https://raw.githubusercontent.com/blackjackshellac/kitchenTimer/main/img/quick_timers_panel_menu_stop_delete.webm)
 
+## Alarm timers
+
+You can also specify alarms as timers with the syntax,
+
+```name @ time_spec [am|pm]```
+
+for example, to create an alarm timer that goes off at 5am tomorrow,
+
+![taxi @ 5am create](https://github.com/blackjackshellac/kitchenTimer/blob/main/img/taxi_at_5am_quick.png)
+
+![taxi @ 5am running](https://github.com/blackjackshellac/kitchenTimer/blob/main/img/taxi_at_5am_running.png)
+
+
 ## References
 
 Updating the functionality of this extension, that is no longer maintained,
