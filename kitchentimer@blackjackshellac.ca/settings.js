@@ -36,19 +36,28 @@ class Settings {
         this.logger = new Logger('kt settings', this.debug)
     }
 
-    unpack_timers() {
-      var settings_timers = [];
+    unpack_preset_timers(settings_timers) {
       var timers = this.settings.get_value('timers').deep_unpack();
       timers.forEach( (timer) => {
         var timer_h = this.unpack_timer(timer, false);
         settings_timers.push(timer_h);
       });
+      return settings_timers;
+    }
+
+    unpack_quick_timers(settings_timers) {
+      var timers = this.settings.get_value('quick-timers').deep_unpack();
+      timers.forEach( (timer) => {
+        var timer_h = this.unpack_timer(timer, true);
+        settings_timers.push(timer_h);
+      });
+      return settings_timers;
+    }
+
+    unpack_timers() {
+      var settings_timers = this.unpack_preset_timers([]);
       if (this.save_quick_timers) {
-        var timers = this.settings.get_value('quick-timers').deep_unpack();
-        timers.forEach( (timer) => {
-          var timer_h = this.unpack_timer(timer, true);
-          settings_timers.push(timer_h);
-        });
+        this.unpack_quick_timers(settings_timers);
       }
       //Utils.logObjectPretty(settings_timers);
       return settings_timers;
@@ -61,6 +70,37 @@ class Settings {
       }
       h.quick = quick;
       return h;
+    }
+
+    pack_preset_timers(timers) {
+      var atimers = [];
+      timers.forEach( (timer) => {
+        if (!timer.quick && timer.duration > 0) {
+          this.logger.debug(`Saving preset timer ${timer.name}}`);
+          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer, false));
+          atimers.push(atimer);
+        }
+      });
+      // TODO what if it's empty?
+      var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
+      var pack = GLib.Variant.new_array(glvtype, atimers);
+      this.settings.set_value('timers', pack);
+    }
+
+    pack_quick_timers(timers) {
+      this.logger.debug(`Saving quick timers`);
+      var atimers = [];
+      timers.forEach( (timer) => {
+        if (timer.quick && timer.duration > 0) {
+          this.logger.debug(`Saving quick timer ${timer.name}`);
+          var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer, true));
+          atimers.push(atimer);
+        }
+      });
+      // TODO what if it's empty?
+      var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
+      var pack = GLib.Variant.new_array(glvtype, atimers);
+      this.settings.set_value('quick-timers', pack);
     }
 
     // aa{sv}
@@ -107,6 +147,55 @@ class Settings {
       dict.duration = GLib.Variant.new_int64(timer.duration);
       dict.enabled = GLib.Variant.new_boolean(timer.enabled);
       return dict;
+    }
+
+    export_json() {
+      this.logger.info("Export settings to json");
+      var h={
+        debug: this.debug,
+        detect_dupes: this.detect_dupes,
+        modal_notification: this.modal_notification,
+        notification: this.notification,
+        play_sound: this.play_sound,
+        save_quick_timers: this.save_quick_timers,
+        show_label: this.show_label,
+        show_progress: this.show_progress,
+        show_time: this.show_time,
+        sort_by_duration: this.sort_by_duration,
+        sort_descending: this.sort_descending,
+        sound_file: this.sound_file,
+        sound_loops: this.sound_loops,
+        quick_timers: this.unpack_quick_timers([]),
+        timers: this.unpack_preset_timers([])
+      }
+      return JSON.stringify(h, null, 2);
+    }
+
+    import_json(json) {
+      this.logger.info("Import json to settings");
+      var obj = JSON.parse(json.replace( /[\r\n]+/gm, " "));
+      for (var [key, value] of Object.entries(obj)) {
+        this.logger.info("Import setting %s=%s (%s)", key, value, value.constructor.name);
+        switch(key) {
+          case "timers":
+            this.pack_preset_timers(value);
+            break;
+          case "quick_timers":
+            this.pack_quick_timers(value);
+            break;
+          case "sound_loopes":
+            this.settings.sound_loops = value;
+            break;
+          case "sound_file":
+            this.settings.sound_file = value;
+            break;
+          default:
+            key=key.replace(/_/g, '-');
+            this.settings.set_boolean(key, value);
+            break;
+        }
+
+      }
     }
 
     get_default(key) {
@@ -223,6 +312,10 @@ class Settings {
 
     get debug() {
       return this.settings.get_boolean('debug');
+    }
+
+    set debug(bool) {
+      this.settings.set_boolean('debug', bool);
     }
 
 }

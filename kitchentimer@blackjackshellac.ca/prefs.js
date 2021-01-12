@@ -17,6 +17,7 @@
 */
 
 const { Gio, Gtk, GLib } = imports.gi;
+const ByteArray = imports.byteArray;
 
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
@@ -276,9 +277,138 @@ class PreferencesBuilder {
           }
         });
 
+        this._json_file_chooser_button = this._bo('json_file_chooser_button');
+        this._json_file_chooser_button.connect('clicked', (button) => {
+          if (this._bo('export_settings_radio').get_active()) {
+            this.export_settings();
+          } else {
+            this.import_settings();
+          }
+        });
         this._bind();
 
         return this._widget;
+    }
+
+    // https://stackoverflow.com/questions/54487052/how-do-i-add-a-save-button-to-the-gtk-filechooser-dialog
+    export_settings() {
+      // import/export settings
+      var file_dialog = new Gtk.FileChooserDialog( {
+        title: _("Export"),
+        action: Gtk.FileChooserAction.SAVE,
+        local_only: false,
+        create_folders: true
+      });
+
+      if (file_dialog.current_folder == undefined) {
+         file_dialog.current_folder = Me.path;
+      }
+
+      let settings_json = GLib.build_filenamev([ Me.path, 'kitchen_timer_settings.json' ]);
+
+      this.logger.debug("json file=%s", settings_json);
+      file_dialog.set_filter(this._bo('json_files_filter'));
+      file_dialog.set_filename(settings_json);
+      file_dialog.title = _("Export");
+      file_dialog.set_do_overwrite_confirmation(true);
+      file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+      file_dialog.add_button('Export', Gtk.ResponseType.OK);
+      this.logger.debug("action=%s", ""+file_dialog.get_action());
+
+      file_dialog.connect('response', (dialog, response_id) => {
+        if (response_id === Gtk.ResponseType.OK) {
+           // outputs "-5"
+            this.logger.debug("response_id=%d", response_id);
+
+            var filename = dialog.get_filename();
+
+            this.logger.debug(filename);
+
+            var json = this._settings.export_json();
+            //this.logger.debug("json=%s", json);
+
+            var file = Gio.File.new_for_path(filename);
+
+            file.replace_contents_bytes_async(
+                new GLib.Bytes(json),
+                null,
+                false,
+                Gio.FileCreateFlags.REPLACE_DESTINATION,
+                null,
+                // "shadowing" variable with the same name is another way
+                // to prevent cyclic references in callbacks.
+                (file, res) => {
+                    try {
+                        file.replace_contents_finish(res);
+                        this._bo('import_export_msg').set_text(_("Exported settings to %s".format(filename)));
+                    } catch (e) {
+                        this.logger.debug("Failed to export settings to %s: %s", filename, e);
+                    }
+                }
+            );
+         }
+
+        // destroy the dialog regardless of the response when we're done.
+        dialog.destroy();
+      });
+
+      file_dialog.show();
+    }
+
+    import_settings() {
+      // import/export settings
+      var file_dialog = new Gtk.FileChooserDialog( {
+        action: Gtk.FileChooserAction.OPEN,
+        local_only: false,
+        create_folders: true
+      });
+
+      if (file_dialog.current_folder == undefined) {
+         file_dialog.current_folder = Me.path;
+      }
+
+      let settings_json = GLib.build_filenamev([ Me.path, 'kitchen_timer_settings.json' ]);
+
+      this.logger.debug("json file=%s", settings_json);
+      file_dialog.set_filter(this._bo('json_files_filter'));
+      file_dialog.set_filename(settings_json);
+      file_dialog.title = _("Import");
+      file_dialog.set_do_overwrite_confirmation(true);
+      file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+      file_dialog.add_button('Import', Gtk.ResponseType.OK);
+      this.logger.debug("action=%s", ""+file_dialog.get_action());
+
+      file_dialog.connect('response', (dialog, response_id) => {
+        if (response_id === Gtk.ResponseType.OK) {
+            // outputs "-5"
+            this.logger.debug("response_id=%d", response_id);
+
+            var filename = dialog.get_filename();
+
+            this.logger.debug(filename);
+
+            var file = Gio.File.new_for_path(filename);
+
+            file.read_async(GLib.PRIORITY_DEFAULT, null, (file, res) => {
+              try {
+                var stream = file.read_finish(res);
+                var size = file.query_info("standard::size", Gio.FileQueryInfoFlags.NONE, null).get_size();
+                var data = stream.read_bytes(size, null).get_data();
+                var json = ByteArray.toString(data);
+                //this.logger.debug("json=%s", json);
+                this._settings.import_json(json);
+                this._bo('import_export_msg').set_text(_("Imported settings from %s".format(filename)));
+              } catch(e) {
+                logError(e, "Failed to read kitchen timer settings import file");
+              }
+            });
+        }
+
+        // destroy the dialog regardless of the response when we're done.
+        dialog.destroy();
+      });
+
+      file_dialog.show();
     }
 
     _update_combo_model_entry(combo, iter, entry) {
