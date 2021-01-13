@@ -59,16 +59,20 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
     this.menu.addMenuItem(name_item);
 
     this._name = "";
-    this._time = new PopupMenu.PopupMenuItem("00:00:00", { reactive: false, style_class: 'kitchentimer-panel-label' });
-    this._time.label.set_x_align( Clutter.ActorAlign.CENTER );
-    this._time.label.set_x_expand(true);
-    this.menu.addMenuItem(this._time);
 
     this._hslider = new KitchenTimerTimeSliderItem(this, "h", 0, 99);
     this._mslider = new KitchenTimerTimeSliderItem(this, "m", 0, 59);
     this._sslider = new KitchenTimerTimeSliderItem(this, "s", 0, 59);
 
     this._go = new PopupMenu.PopupImageMenuItem(_("Create"), this._timers.indicator.progress_gicon(0));
+    this._go.label.set_y_align( Clutter.ActorAlign.CENTER );
+-   this._go.label.set_y_expand(true);
+
+    bin = new St.Bin({ x_expand: true, x_align: St.Align.START });
+    this._time = new St.Label( { text: "00:00:00", style_class: 'popup-menu-item', x_expand: true, x_align: St.Align.START });
+    bin.child = this._time;
+    this._go.add(bin);
+
     this.menu.addMenuItem(this._go);
 
     this._go.connect('activate', (go) => {
@@ -122,9 +126,9 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
   }
 
   update_time() {
-    var time="%02d:%02d:%02d".format(this._hslider.value, this._mslider.value, this._sslider.value);
-    this._time.label.set_text(time);
-    this._entry.get_clutter_text().set_text(this._name+" "+time);
+    var text="%s %02d:%02d:%02d".format(this._name, this._hslider.value, this._mslider.value, this._sslider.value);
+    this._time.set_text(text);
+    this._entry.get_clutter_text().set_text(text);
   }
 
 });
