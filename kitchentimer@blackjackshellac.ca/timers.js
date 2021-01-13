@@ -46,7 +46,7 @@ class Timers extends Array {
     timersInstance.indicator = indicator;
     timersInstance._settings = indicator._settings;
     timersInstance.logger = new Logger('kt timers', timersInstance.settings.debug);
-    timersInstance._notifier = new Notifier.Annoyer(timersInstance.settings);
+    timersInstance._notifier = new Notifier.Annoyer(timersInstance);
 
     //timersInstance.logger.info("Attaching indicator "+indicator);
 
@@ -220,7 +220,7 @@ class Timers extends Array {
     if (tdupe !== undefined) {
       if (tdupe.is_running()) {
         // original timer is running, notify user
-        tdupe.notify(_("Duplicate timer [%s] is already running"), tdupe.name);
+        tdupe.notify(tdupe.name, _("Duplicate timer is already running"));
         return undefined;
       }
       // found a duplicate, just return the dupe
@@ -466,7 +466,7 @@ class Timer {
 
     var time=new Date(now).toLocaleTimeString();
 
-    this._notifier.annoy(`${timer_string} [${this._name}] ${reason} ${time}`, !early);
+    this._notifier.notify(this, true, "%s %s %s", timer_string, reason, time);
     var hms = new HMS(this.duration);
 
     this.label_progress(hms);
@@ -542,7 +542,7 @@ class Timer {
   }
 
   notify(msg, ...args) {
-    timersInstance.notifier.notify(msg, ...args);
+    timersInstance.notifier.notify(timer, false, msg, ...args);
   }
 
   delete() {

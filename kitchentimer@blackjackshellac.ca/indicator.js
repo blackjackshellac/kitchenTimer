@@ -46,6 +46,8 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
         super._init(0.0, _('Kitchen Timer'));
 
+        this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
+
         this._progressIcons = [];
         this._progressIconsDegrees = {};
 
@@ -97,6 +99,10 @@ class KitchenTimerIndicator extends PanelMenu.Button {
           this._box = undefined;
           Timers.detach();
         });
+    }
+
+    get gicon() {
+      return this._fullIcon;
     }
 
     progress_gicon(degrees) {

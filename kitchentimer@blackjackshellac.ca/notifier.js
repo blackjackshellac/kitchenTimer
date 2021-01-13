@@ -20,14 +20,13 @@ const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
-// TODO get rid
-const Lang = imports.lang;
-
+const Params = imports.misc.params;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const {GLib} = imports.gi;
+const { GLib, GObject } = imports.gi;
 const Main = imports.ui.main;
+const MessageTray = imports.ui.messageTray;
 
 // szm - from tea-time
 imports.gi.versions.Gst = '1.0';
@@ -38,52 +37,231 @@ const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
 
 class Annoyer {
-  constructor(settings) {
-    this._settings = settings;
-    this.logger = new Logger('kt notifier', settings.debug);
-    this._initPlayer();
+  constructor(timers) {
+    this._settings = timers.settings;
   }
 
-  notify(msg, ...args) {
+  notifier(timer, play_sound, fmt=undefined, ...args) {
+    let source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+
+    var params = Params.parse(params, {
+                gicon: timer.timers.indicator.gicon,
+                secondaryGIcon: null,
+                bannerMarkup: false,
+                clear: false,
+                datetime: null,
+                soundName: null,
+                soundFile: null
+              });
+    let details = fmt.undefined ? fmt : fmt.format(...args);
+    let notification = new KitchenTimerNotifier(timer, play_sound,
+                                                source,
+                                                timer.name,
+                                                details,
+                                                params);
+    notification.setTransient(false);
+    Main.messageTray.add(source);
+    source.showNotification(notification);
+
+    notification.connect('destroy', (notification) => {
+      notification.stop_player();
+    });
+  }
+
+  notify(timer, play_sound, fmt, ...args) {
     if (this.notification) {
-      Main.notify(msg.format(...args));
+      this.notifier(timer, play_sound, fmt, ...args);
     }
   }
 
-  annoy(msg, play_sound=true) {
-    this.notify(msg);
-    if (play_sound) {
-      this._playSound();
+  get notification() {
+    return this._settings.notification;
+  }
+
+  // annoy(timer, play_sound, fmt, ...args) {
+  //   this.notify(timer, fmt, ...args);
+  //   if (play_sound) {
+  //     this.playSound_callback();
+  //   }
+  // }
+
+}
+
+// https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/master/js/ui/messageTray.js
+// Notification:
+// @source: the notification's Source
+// @title: the title
+// @banner: the banner text
+// @params: optional additional params
+//
+// Creates a notification. In the banner mode, the notification
+// will show an icon, @title (in bold) and @banner, all on a single
+// line (with @banner ellipsized if necessary).
+//
+// The notification will be expandable if either it has additional
+// elements that were added to it or if the @banner text did not
+// fit fully in the banner mode. When the notification is expanded,
+// the @banner text from the top line is always removed. The complete
+// @banner text is added as the first element in the content section,
+// unless 'customContent' parameter with the value 'true' is specified
+// in @params.
+//
+// Additional notification content can be added with addActor() and
+// addBody() methods. The notification content is put inside a
+// scrollview, so if it gets too tall, the notification will scroll
+// rather than continue to grow. In addition to this main content
+// area, there is also a single-row action area, which is not
+// scrolled and can contain a single actor. The action area can
+// be set by calling setActionArea() method. There is also a
+// convenience method addButton() for adding a button to the action
+// area.
+//
+// If @params contains a 'customContent' parameter with the value %true,
+// then @banner will not be shown in the body of the notification when the
+// notification is expanded and calls to update() will not clear the content
+// unless 'clear' parameter with value %true is explicitly specified.
+//
+// By default, the icon shown is the same as the source's.
+// However, if @params contains a 'gicon' parameter, the passed in gicon
+// will be used.
+//
+// You can add a secondary icon to the banner with 'secondaryGIcon'. There
+// is no fallback for this icon.
+//
+// If @params contains 'bannerMarkup', with the value %true, a subset (<b>,
+// <i> and <u>) of the markup in [1] will be interpreted within @banner. If
+// the parameter is not present, then anything that looks like markup
+// in @banner will appear literally in the output.
+//
+// If @params contains a 'clear' parameter with the value %true, then
+// the content and the action area of the notification will be cleared.
+// The content area is also always cleared if 'customContent' is false
+// because it might contain the @banner that didn't fit in the banner mode.
+//
+// If @params contains 'soundName' or 'soundFile', the corresponding
+// event sound is played when the notification is shown (if the policy for
+// @source allows playing sounds).
+//
+// [1] https://developer.gnome.org/notification-spec/#markup
+// var Notification = GObject.registerClass({
+//     Properties: {
+//         'acknowledged': GObject.ParamSpec.boolean(
+//             'acknowledged', 'acknowledged', 'acknowledged',
+//             GObject.ParamFlags.READWRITE,
+//             false),
+//     },
+//     Signals: {
+//         'activated': {},
+//         'destroy': { param_types: [GObject.TYPE_UINT] },
+//         'updated': { param_types: [GObject.TYPE_BOOLEAN] },
+//     },
+// }, class Notification extends GObject.Object {
+//     _init(source, title, banner, params) {
+//         super._init();
+
+    // update:
+    // @title: the new title
+    // @banner: the new banner
+    // @params: as in the Notification constructor
+    //
+    // Updates the notification by regenerating its icon and updating
+    // the title/banner. If @params.clear is %true, it will also
+    // remove any additional actors/action buttons previously added.
+    // update(title, banner, params) {
+    //     params = Params.parse(params, { gicon: null,
+    //                                     secondaryGIcon: null,
+    //                                     bannerMarkup: false,
+    //                                     clear: false,
+    //                                     datetime: null,
+    //                                     soundName: null,
+    //                                     soundFile: null });
+
+
+
+
+var KitchenTimerNotifier = GObject.registerClass(
+class KitchenTimerNotifier extends MessageTray.Notification {
+  _init(timer, play_sound, source, title, banner, params) {
+    super._init(source, title, banner, params);
+
+    this.logger = new Logger('kt notifier', timer.timers.settings.debug);
+
+    this._settings = timer.timers.settings;
+    this._timer = timer;
+    this._loops = 0;
+
+    if (play_sound && this.sound_enabled) {
+      this._initPlayer();
+
+      // call callback manually to play a sound without waiting for the given interval to end
+      this.playSound_callback(this);
+      this._interval_id = Utils.setInterval(this.playSound_callback, 500, this);
     }
   }
 
-	_playSound() {
-		if (!this.sound_enabled) {
-		  this.logger.warn('sound not enabled');
-		  return;
-		}
+	playSound_callback(ktn) {
+	  //ktn.logger.debug("Entering playSound_callback after %d of %d loops", ktn._loops, ktn.sound_loops);
 
-    var uri="file://";
+    var [ rv, state, pending ] = ktn._player.get_state(500000);
+    //ktn.logger.debug("state=%s %s %s", ""+rv, ""+state, ""+pending)
+
+    if (rv === Gst.StateChangeReturn.SUCCESS && state === Gst.State. PLAYING) {
+      //ktn.logger.debug("Already playing, wait for the stream to end")
+      return true;
+    }
+
+    ktn._player.set_property('uri', ktn._uri);
+    ktn._player.set_state(Gst.State.PLAYING);
+
+    //ktn.logger.debug("player gst state=%s", ""+ktn._player.get_state());
+
+	  ktn._loops++;
+	  if (ktn._loops >= ktn.sound_loops) {
+	    //ktn.logger.debug("exiting callback after %d loops", ktn._loops);
+      return ktn.stop_player();
+	  }
+
+
+	  return true;
+	}
+
+  stop_player() {
+    this.logger.debug("Stopping player after %d loops: %d", this._loops, this._interval_id);
+    Utils.clearInterval(this._interval_id);
+    return false;
+  }
+
+  _initPlayer() {
+    if (this._player) {
+      this.logger.debug("Player is already initialized")
+      return;
+    }
+    this._uri="file://";
     if (GLib.file_test(this.sound_file, GLib.FileTest.EXISTS)) {
-      uri += this.sound_file;
+      this._uri += this.sound_file;
     } else {
       var base = GLib.path_get_basename(this.sound_file);
       if (base !== this.sound_file) {
         this.logger.error("Sound file not found, use default");
         base = this._settings.get_default('sound-file');
       }
-      uri += GLib.build_filenamev([ Me.path, base ]);
+      this._uri += GLib.build_filenamev([ Me.path, base ]);
     }
 
-	  this.logger.info(`Playing ${uri}`);
-	  for (var i=0; i < this.sound_loops; i++) {
-	    this._player.set_property('uri', uri);
-	    this._player.set_state(Gst.State.PLAYING);
-	  }
-	}
-
-  get notification() {
-    return this._settings.notification;
+    this.logger.debug("initPlayer with uri=%s", this._uri);
+    Gst.init(null);
+    this._player  = Gst.ElementFactory.make("playbin","player");
+    this.playBus = this._player.get_bus();
+    this.playBus.add_signal_watch();
+    this.playBus.connect('message', (playBus, message) => {
+	    if (message != null) {
+		    // IMPORTANT: to reuse the player, set state to READY
+		    let message_type = message.type;
+		    if (message_type == Gst.MessageType.EOS || message_type == Gst.MessageType.ERROR) {
+			    this._player.set_state(Gst.State.READY);
+		    }
+	    } // message handler
+    });
   }
 
   get sound_enabled() {
@@ -97,31 +275,4 @@ class Annoyer {
   get sound_file() {
     return this._settings.sound_file
   }
-
-  _initPlayer() {
-    if (this._player !== undefined) {
-      return;
-    }
-    Gst.init(null);
-    this._player  = Gst.ElementFactory.make("playbin","player");
-    this.playBus = this._player.get_bus();
-    this.playBus.add_signal_watch();
-    this.playBus.connect("message", Lang.bind(this, function(playBus, message) {
-	    if (message != null) {
-		    // IMPORTANT: to reuse the player, set state to READY
-		    let t = message.type;
-		    if (t == Gst.MessageType.EOS || t == Gst.MessageType.ERROR) {
-			    this._player.set_state(Gst.State.READY);
-		    }
-
-		    // TODO use setTimeout to loop playSound?
-		    // if ( t == Gst.MessageType.EOS && this._sound_loop ) {
-			   //  this._player.set_state(Gst.State.READY);
-			   //  this._player.set_property('uri', this.sound_file);
-			   //  this._player.set_state(Gst.State.PLAYING);
-		    // }
-	    } // message handler
-    }));
-
-  }
-}
+});
