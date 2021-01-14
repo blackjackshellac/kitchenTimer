@@ -41,49 +41,30 @@ class Annoyer {
     this._settings = timers.settings;
   }
 
-  notifier(timer, play_sound, fmt=undefined, ...args) {
-    let source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+  notify(timer, fmt=undefined, ...args) {
+    let source = new MessageTray.Source("Kitchen Timer", timer.timers.indicator.gicon /* icon name */);
 
-    var params = Params.parse(params, {
-                gicon: timer.timers.indicator.gicon,
-                secondaryGIcon: null,
-                bannerMarkup: false,
-                clear: false,
-                datetime: null,
-                soundName: null,
-                soundFile: null
-              });
     let details = fmt.undefined ? fmt : fmt.format(...args);
-    let notification = new KitchenTimerNotifier(timer, play_sound,
+    let notification = new KitchenTimerNotifier(timer,
                                                 source,
                                                 timer.name,
                                                 details,
-                                                params);
+                                                { gicon: timer.timers.indicator.gicon });
     notification.setTransient(false);
     Main.messageTray.add(source);
-    source.showNotification(notification);
+
+    if (this.notification) {
+      source.showNotification(notification);
+    }
 
     notification.connect('destroy', (notification) => {
       notification.stop_player();
     });
   }
 
-  notify(timer, play_sound, fmt, ...args) {
-    if (this.notification) {
-      this.notifier(timer, play_sound, fmt, ...args);
-    }
-  }
-
   get notification() {
     return this._settings.notification;
   }
-
-  // annoy(timer, play_sound, fmt, ...args) {
-  //   this.notify(timer, fmt, ...args);
-  //   if (play_sound) {
-  //     this.playSound_callback();
-  //   }
-  // }
 
 }
 
@@ -181,7 +162,7 @@ class Annoyer {
 
 var KitchenTimerNotifier = GObject.registerClass(
 class KitchenTimerNotifier extends MessageTray.Notification {
-  _init(timer, play_sound, source, title, banner, params) {
+  _init(timer, source, title, banner, params) {
     super._init(source, title, banner, params);
 
     this.logger = new Logger('kt notifier', timer.timers.settings.debug);
@@ -190,7 +171,8 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this._timer = timer;
     this._loops = 0;
 
-    if (play_sound && this.sound_enabled) {
+    this.logger.debug('timer is %s', timer.expired ? "expired" : "not expired");
+    if (timer.expired && this.sound_enabled) {
       this._initPlayer();
 
       // call callback manually to play a sound without waiting for the given interval to end
@@ -227,7 +209,10 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 
   stop_player() {
     this.logger.debug("Stopping player after %d loops: %d", this._loops, this._interval_id);
-    Utils.clearInterval(this._interval_id);
+    if (this._interval_id !== 0) {
+      Utils.clearInterval(this._interval_id);
+      this._interval_id = 0;
+    }
     return false;
   }
 

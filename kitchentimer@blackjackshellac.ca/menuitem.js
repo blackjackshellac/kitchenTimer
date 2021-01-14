@@ -243,7 +243,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       timer_icon.set_icon_size(20);
 
       var control_button;
-      if (timer.is_running()) {
+      if (timer.running) {
         control_button = new KitchenTimerControlButton(timer, "stop");
         control_button.connect('clicked', (cb) => {
           cb.stop();
@@ -269,7 +269,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       box.add_child(name);
 
       this.connect('activate', (tmi) => {
-        if (!tmi._timer.is_running()) {
+        if (!tmi._timer.running) {
           tmi._timer.start();
         }
       });

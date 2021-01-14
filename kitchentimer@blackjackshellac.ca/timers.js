@@ -117,10 +117,8 @@ class Timers extends Array {
           this.logger.debug("Found %s timer [%s]: %s",
             (timer.quick ? "quick" : "preset"),
             timer.name,
-            (timer.is_running() ? "running" : "not running"));
-          if (timer.is_running()) {
-            this.logger.debug(timer.toString());
-          }
+            (timer.running ? "running" : "not running"));
+          //if (timer.running) { this.logger.debug(timer.toString()); }
           break;
         }
       }
@@ -163,7 +161,7 @@ class Timers extends Array {
     // const cloneSheepsES6 = [...sheeps];
     var timers_array = [...this];
     if (!params.running) {
-      timers_array=timers_array.filter(timer => !timer.is_running());
+      timers_array=timers_array.filter(timer => !timer.running);
     }
     if (this.sort_by_duration) {
       this.logger.debug('sort by duration');
@@ -176,7 +174,7 @@ class Timers extends Array {
   }
 
   sort_by_running() {
-    var running_timers = [...this].filter(timer => timer.is_running());
+    var running_timers = [...this].filter(timer => timer.running);
 
     //log(`running timers length=${running_timers.length}`);
     var now=Date.now();
@@ -218,7 +216,7 @@ class Timers extends Array {
   add_check_dupes(timer) {
     var tdupe = this.get_dupe(timer);
     if (tdupe !== undefined) {
-      if (tdupe.is_running()) {
+      if (tdupe.running) {
         // original timer is running, notify user
         tdupe.notify(tdupe.name, _("Duplicate timer is already running"));
         return undefined;
@@ -267,9 +265,10 @@ var timersInstance = new Timers();
 //Object.freeze(timersInstance);
 
 var TimerState = {
-  RESET: 0,
-  RUNNING: 1,
-  EXPIRED: 2
+  INIT: 0,
+  RESET: 1,
+  RUNNING: 2,
+  EXPIRED: 3
 }
 
 class Timer {
@@ -282,7 +281,7 @@ class Timer {
     this._quick = false;
     this._interval_ms = debug ? 500 : 250;
     this._duration_secs = duration_secs;
-    this._state = TimerState.RESET;
+    this._state = TimerState.INIT;
     this._id = Utils.uuid(id);
     this._label = null;
     this._gicon = null;
@@ -405,7 +404,7 @@ class Timer {
     24 - 360
   */
   degree_progress(chunk=15) {
-    if (this.is_running()) {
+    if (this.running) {
       var chunks = Math.floor(360 / chunk);
       var delta = Date.now() - this._start;
       //this.logger.info(`chunk=${chunk} chunks=${chunks} delta=${delta} duration=${this.duration_ms()}`);
@@ -445,7 +444,10 @@ class Timer {
     var end = timer._end;
 
     //timer.logger.debug(`test end=${end} at ${now}`);
-    if (now > end || !timer.is_running()) {
+    if (now > end) {
+      timer.expired = true;
+    }
+    if (timer.expired || timer.reset) {
       return timer.stop_callback(now);
     }
 
@@ -466,24 +468,51 @@ class Timer {
     return true;
   }
 
-  is_running() {
-    return (this._state == TimerState.RUNNING);
+  get running() {
+    return (this._state === TimerState.RUNNING);
+  }
+
+  get expired() {
+    return (this._state === TimerState.EXPIRED);
+  }
+
+  get reset() {
+    return (this._state == TimerState.RESET);
+  }
+
+  set running(bool) {
+    if (bool) { this._state = TimerState.RUNNING };
+  }
+
+  set expired(bool) {
+    if (bool) { this._state = TimerState.EXPIRED; }
+  }
+
+  set reset(bool) {
+    if (bool) { this._state = TimerState.RESET; }
   }
 
   stop_callback(now) {
-    this._state = TimerState.EXPIRED;
-    this.logger.info('Timer has ended');
+    var early = now < this._end;
+
+    // shouldn't be necessary, but we'll make sure
+    if (early) {
+      this.reset = true;
+    } else {
+      this.expired = true;
+    }
+
+    this.logger.info('Timer has ended state=%d', this._state);
     Utils.clearInterval(this._interval_id);
     this._interval_id = undefined;
 
     // TODO Notifications and play sounds
-    var early = now < this._end;
     var reason = early ? _("stopped early at") : _("completed at");
     var timer_string = _('Timer');
 
     var time=new Date(now).toLocaleTimeString();
 
-    this._notifier.notify(this, true, "%s %s %s", timer_string, reason, time);
+    this._notifier.notify(this, "%s %s %s", timer_string, reason, time);
     var hms = new HMS(this.duration);
 
     this.label_progress(hms);
@@ -496,24 +525,16 @@ class Timer {
     return false;
   }
 
-  expired() {
-    return (this._state == TimerState.EXPIRED);
-  }
-
-  reset() {
-    this._state = Timer.RESET;
-  }
-
   stop() {
-    this.reset();
+    this.reset = true;
   }
 
   start() {
     if (this._enabled || this._quick) {
-      if (this._state == TimerState.RUNNING) {
+      if (this.running) {
         this.logger.info(`Timer is already running, resetting`);
         // TODO prompt to reset
-        this.reset();
+        this.reset = true;
         return false;
       }
       return this.go();
@@ -545,7 +566,7 @@ class Timer {
   }
 
   still_valid(settings_timers) {
-    if (this.is_running() || this.quick) {
+    if (this.running || this.quick) {
       return true;
     }
     for (var i=0; i < settings_timers.length; i++) {
@@ -559,7 +580,7 @@ class Timer {
   }
 
   notify(msg, ...args) {
-    timersInstance.notifier.notify(timer, false, msg, ...args);
+    timersInstance.notifier.notify(this, msg, ...args);
   }
 
   delete() {
