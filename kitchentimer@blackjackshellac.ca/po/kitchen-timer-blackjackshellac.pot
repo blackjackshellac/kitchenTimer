@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-13 21:03-0500\n"
-"PO-Revision-Date: 2021-01-13 21:03-0500\n"
+"POT-Creation-Date: 2021-01-14 08:40-0500\n"
+"PO-Revision-Date: 2021-01-14 08:40-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -483,6 +483,11 @@ msgctxt "json_file_chooser_button"
 msgid "Settings ..."
 msgstr ""
 
+#: settings.ui:579
+msgctxt "json_file_chooser_button"
+msgid "Settings…"
+msgstr ""
+
 #: settings.ui:583
 msgctxt "json_file_chooser_tooltip"
 msgid "Export timer settings, or import them into the program"
@@ -561,23 +566,24 @@ msgstr ""
 msgid "Duplicate timer [%s] is already running"
 msgstr ""
 
-#: timers.js:223
+#: timers.js:221 timers.js:223
 msgid "Duplicate timer is already running"
 msgstr ""
 
 #: timers.js:370 timers.js:371 timers.js:383 timers.js:396 timers.js:399
 #: timers.js:405 timers.js:429 timers.js:460 timers.js:464 timers.js:481
+#: timers.js:510
 msgid "completed at"
 msgstr ""
 
 #: timers.js:370 timers.js:371 timers.js:374 timers.js:378 timers.js:383
 #: timers.js:393 timers.js:396 timers.js:399 timers.js:405 timers.js:429
-#: timers.js:460 timers.js:464 timers.js:481
+#: timers.js:460 timers.js:464 timers.js:481 timers.js:510
 msgid "stopped early at"
 msgstr ""
 
 #: timers.js:371 timers.js:372 timers.js:375 timers.js:379 timers.js:384
 #: timers.js:394 timers.js:397 timers.js:400 timers.js:406 timers.js:430
-#: timers.js:461 timers.js:465 timers.js:482
+#: timers.js:461 timers.js:465 timers.js:482 timers.js:511
 msgid "Timer"
 msgstr ""
