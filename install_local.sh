@@ -1,5 +1,8 @@
 #!/bin/bash
 
+declare -i DEBUG=${KITCHENTIMER_DEBUG:=0}
+[ "$1" == "debug" ] && DEBUG=1
+
 ME=$(basename $0)
 MD=$(dirname $0)
 ED=kitchentimer@blackjackshellac.ca
@@ -7,8 +10,6 @@ USR_SHARE=~/.local/share
 ICONS=$USR_SHARE/icons/hicolor
 EXTENSIONS=$USR_SHARE/gnome-shell/extensions
 SCHEMAS=schemas
-
-declare -i DEBUG=${KITCHENTIMER_DEBUG:=0}
 
 puts() {
 	echo -e $*
@@ -40,8 +41,6 @@ run() {
 [ $DEBUG -ne 0 ] && warn "DEBUG is enabled"
 
 run cd $MD
-
-[ "$1" == "debug" ] && DEBUG=1
 
 if [ $DEBUG -ne 0 ]; then
 	run ./bin/pot_create.sh
