@@ -42,7 +42,7 @@ class Annoyer {
   }
 
   notify(timer, fmt=undefined, ...args) {
-    let source = new MessageTray.Source("Kitchen Timer", timer.timers.indicator.gicon /* icon name */);
+    let source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
 
     let details = fmt.undefined ? fmt : fmt.format(...args);
     let notification = new KitchenTimerNotifier(timer,
