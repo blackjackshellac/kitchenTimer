@@ -288,7 +288,7 @@ class Timer {
     this._start = 0;
     this._end = 0;
 
-    this._alarm_timer = undefined;
+    this._alarm_timer = AlarmTimer.matchRegex(name);
 
     // this calls the setter
     this.name = name;
@@ -355,6 +355,9 @@ class Timer {
   }
 
   get duration() {
+    if (this.alarm_timer) {
+      return this.alarm_timer.hms().toSeconds();
+    }
     return this._duration_secs;
   }
 
@@ -672,6 +675,7 @@ class AlarmTimer {
     if (val === undefined) { return; }
     this._name = val.trim();
   }
+
   static matchRegex(entry) {
     var re = /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
     var m=re.exec(entry);

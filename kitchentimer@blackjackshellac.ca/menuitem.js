@@ -117,6 +117,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
       }
     }
   }
+
   static create_icon(indicator) {
     var icon = new St.Icon({
             gicon: indicator.progress_gicon(0),
@@ -218,8 +219,6 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       });
       this.add(box);
 
-      var hms = new HMS(timer.duration);
-
       var name = new St.Label({
         style_class: 'kitchentimer-menu-name',
         x_expand: true,
@@ -274,6 +273,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         }
       });
 
+      var hms = timer.alarm_timer ? timer.alarm_timer.hms() : new HMS(timer.duration);
       timer.label_progress(hms);
 
       menu.addMenuItem(this);
