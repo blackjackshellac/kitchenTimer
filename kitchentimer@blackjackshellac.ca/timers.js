@@ -289,6 +289,8 @@ class Timer {
     this._start = 0;
     this._end = 0;
 
+    this._alarm_timer = undefined;
+
     // this calls the setter
     this.name = name;
 
@@ -297,6 +299,13 @@ class Timer {
 
   toString() {
     return `name=${this._name} state=${this._state} start=${this._start} end=${this._end} duration=${this._duration_secs} iid=${this._interval_id}`;
+  }
+
+  static fromResult(result) {
+    var timer = new Timer(result.name, result.hms.toSeconds());
+    timer.quick = result.quick;
+    timer.alarm_timer = result.alarm_timer;
+    return timer;
   }
 
   get timers() {
@@ -367,6 +376,14 @@ class Timer {
   set label(label) {
     //this.logger.debug(label ? `Timer label set to ${label}`: 'Timer label set to null');
     this._label = label;
+  }
+
+  get alarm_timer() {
+    return this._alarm_timer;
+  }
+
+  set alarm_timer(val) {
+    this._alarm_timer = val;
   }
 
   label_progress(hms, now=0) {
@@ -550,3 +567,130 @@ class Timer {
   }
 }
 
+var AmPm = {
+  H24: 0,
+  AM: 1,
+  PM: 2
+}
+
+// var alarm_time={
+//   hour: Number(g.h),
+//   minute: 0,
+//   second: 0,
+//   ms: 0,
+//   ampm: undefined|am|pm
+// }
+class AlarmTimer {
+  constructor() {
+    this.logger = timersInstance.logger;
+
+    this._name = "";
+    this._hour = 0;
+    this._minute = 0;
+    this._second = 0;
+    this._ms = 0;
+    this._ampm = AmPm.H24;
+  }
+
+  get hour() { return this._hour; }
+
+  set hour(h) {
+    if (h === undefined) { return; }
+    this._hour = Number(h);
+    if (this.ampm == AmPm.PM) {
+      this._hour += 12;
+    }
+    if (this._hour > 23) {
+      this.logger.warn("AlarmTimer hour %d > 23", this._hour);
+      this._hour = 23;
+    }
+  }
+
+  get minute() { return this._minute; }
+
+  set minute(m) {
+    if (m === undefined) { return; }
+    this._minute = Number(m);
+    if (this._minute > 59) {
+      this.logger.warn("AlarmTimer minute %d > 59", this._minute);
+      this._minute = 59;
+    }
+  }
+
+  get second() { return this._second; }
+
+  set second(s) {
+    if (s === undefined) { return; }
+    this._second = Number(s);
+    if (this._second > 59) {
+      this.logger.warn("AlarmTimer second %d > 59", this._second);
+      this._second = 59;
+    }
+  }
+
+  get ms() { return this._ms; }
+  set ms(msecs) {
+    if (msecs === undefined) { return; }
+    this._ms = Number(msecs);
+    if (this._ms > 999) {
+      this.logger.warn("AlarmTimer milliseconds > 999", this._ms);
+      this._ms = 999;
+    }
+  }
+
+  get ampm() { return this._ampm; }
+
+  set ampm(val) {
+    if (val === undefined) { return; }
+    this._ampm = val;
+  }
+
+  get name() { return this._name; }
+
+  set name(val) {
+    if (val === undefined) { return; }
+    this._name = val.trim();
+  }
+  static matchRegex(entry) {
+    var re = /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
+    var m=re.exec(entry);
+    if (!m) {
+      return undefined;
+    }
+
+    var alarm_timer = new AlarmTimer();
+    alarm_timer.fromRegexGroups(m.groups);
+    return alarm_timer;
+  }
+
+  fromRegexGroups(g) {
+    if (g.ampm) {
+      this.ampm = g.ampm.match(/p\.?m\.?/i) ? AmPm.PM : AmPm.AM;
+    }
+    this.name = g.name;
+    this.hour = g.h;
+    this.minute = g.m;
+    this.second = g.s;
+    this.ms = g.ms;
+  }
+
+  hms() {
+    var now=new Date();
+    var alarm_date=new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      this.hour,
+      this.minute,
+      this.second,
+      this.ms
+    );
+
+    var duration_ms = alarm_date.getTime() - now.getTime();
+    if (duration_ms < 0) {
+      duration_ms += 86400000;
+    }
+    var hms = new HMS(duration_ms/1000);
+    return hms;
+  }
+}
