@@ -576,7 +576,7 @@ Author: Steeve McCauley
                     <property name="margin-top">10</property>
                     <child>
                       <object class="GtkButton" id="json_file_chooser_button">
-                        <property name="label" translatable="yes" context="json_file_chooser_button">Settings ...</property>
+                        <property name="label" translatable="yes" context="json_file_chooser_button">Settings…</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
