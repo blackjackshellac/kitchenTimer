@@ -208,10 +208,10 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 	}
 
   stop_player() {
-    this.logger.debug("Stopping player after %d loops: %d", this._loops, this._interval_id);
-    if (this._interval_id !== 0) {
+    if (this._interval_id) {
+      this.logger.debug("Stopping player after %d loops: %d", this._loops, this._interval_id);
       Utils.clearInterval(this._interval_id);
-      this._interval_id = 0;
+      this._interval_id = undefined;
     }
     return false;
   }

@@ -131,6 +131,9 @@ Author: Steeve McCauley
               <object class="GtkGrid" id="stack_timers">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
+                <property name="margin-start">20</property>
+                <property name="margin-end">20</property>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
@@ -424,6 +427,7 @@ Author: Steeve McCauley
               <object class="GtkGrid" id="stack_options">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
                 <property name="margin-start">20</property>
                 <property name="margin-end">20</property>
                 <property name="row-spacing">7</property>
@@ -677,7 +681,9 @@ Author: Steeve McCauley
               <object class="GtkGrid" id="stack_sound">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <property name="margin-start">20</property>
+                <property name="margin-end">20</property>
                 <property name="row-spacing">10</property>
                 <child>
                   <object class="GtkBox">
@@ -762,6 +768,9 @@ Author: Steeve McCauley
               <object class="GtkGrid" id="stack_about">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
+                <property name="margin-start">20</property>
+                <property name="margin-end">20</property>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
