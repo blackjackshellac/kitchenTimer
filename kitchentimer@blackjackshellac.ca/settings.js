@@ -36,7 +36,7 @@ class Settings {
         this.logger = new Logger('kt settings', this.debug)
     }
 
-    unpack_preset_timers(settings_timers) {
+    unpack_preset_timers(settings_timers=[]) {
       var timers = this.settings.get_value('timers').deep_unpack();
       timers.forEach( (timer) => {
         var timer_h = this.unpack_timer(timer, false);
@@ -45,7 +45,7 @@ class Settings {
       return settings_timers;
     }
 
-    unpack_quick_timers(settings_timers) {
+    unpack_quick_timers(settings_timers=[]) {
       var timers = this.settings.get_value('quick-timers').deep_unpack();
       timers.forEach( (timer) => {
         var timer_h = this.unpack_timer(timer, true);

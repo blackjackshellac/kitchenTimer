@@ -85,31 +85,23 @@ class PreferencesBuilder {
         this.spin_secs = this._bo('spin_secs');
 
         //this.timers_apply = this._bo('timers_apply');
+        //this.preset_radio = this._bo('preset_radio');
+        this.quick_radio = this._bo('quick_radio');
         this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
         this.timer_enabled = this._bo('timer_enabled');
-        this.quick_timer = this._bo('quick_timer');
         this.timer_icon = this._bo('timer_icon');
 
         // TODO update with initial value
         this._hms = new HMS(0);
 
-        var timer_settings = this._settings.unpack_timers();
-        timer_settings.sort( (a,b) => {
-          return (a.duration-b.duration);
-        });
-        timer_settings.forEach( (timer) => {
-          var iter = this.timers_liststore.append();
-          //log(`Timer ${Object.keys(timer)}`);
-          this.timers_liststore.set_value(iter, Model.NAME, timer.name);
-          this.timers_liststore.set_value(iter, Model.ID, timer.id);
-          this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
-          this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
-          this.timers_liststore.set_value(iter, Model.QUICK, timer.quick);
-        });
-
         this.allow_updates = true;
-        this.timers_combo.set_active(0);
+
+        this.quick_radio.connect('toggled', (quick_radio) => {
+          this._populate_liststore();
+        });
+        this._populate_liststore();
+
         this.timers_combo.connect('changed', (combo) => {
           var [ ok, iter ] = combo.get_active_iter();
           if (ok) {
@@ -122,8 +114,6 @@ class PreferencesBuilder {
             }
           }
         });
-
-        this._update_timers_tab_from_model(this.timers_combo);
 
         this.spin_hours.connect('value-changed', (spin) => {
           if (this._update_active_liststore_from_tab()) {
@@ -148,17 +138,6 @@ class PreferencesBuilder {
             this._save_liststore();
           }
         });
-
-        this.quick_timer.connect('toggled', () => {
-          if (this._update_active_liststore_from_tab()) {
-            this._save_liststore();
-          }
-        });
-
-        // this.timers_combo.connect('editing-done', (combo) => {
-        //   var [ ok, iter ] = combo.get_active_iter();
-        //   log(`editing done: ${ok} ${iter}`);
-        // });
 
         this.timers_combo.connect('set-focus-child', (combo, child) => {
           var [ ok, iter ] = combo.get_active_iter();
@@ -288,6 +267,63 @@ class PreferencesBuilder {
         this._bind();
 
         return this._widget;
+    }
+
+    _populate_liststore() {
+      var quick = this.quick_radio.get_active();
+
+      var timer_settings = quick ? this._settings.unpack_quick_timers() : this._settings.unpack_preset_timers();
+      timer_settings.sort( (a,b) => {
+        return (a.duration-b.duration);
+      });
+
+      this.timers_liststore.clear();
+      timer_settings.forEach( (timer) => {
+        var iter = this.timers_liststore.append();
+        this.timers_liststore.set_value(iter, Model.NAME, timer.name);
+        this.timers_liststore.set_value(iter, Model.ID, timer.id);
+        this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
+        this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
+        this.timers_liststore.set_value(iter, Model.QUICK, timer.quick);
+      });
+
+      this.timers_combo.set_active(0);
+      this._update_timers_tab_from_model(this.timers_combo);
+    }
+
+    _save_liststore(pack=true) {
+      var model = this.timers_combo.get_model();
+      var [ok, iter] = model.get_iter_first();
+
+      var timers = [];
+      while (ok) {
+
+        var timer={};
+        timer.name = model.get_value(iter, Model.NAME);
+        timer.id = model.get_value(iter, Model.ID);
+        timer.duration = model.get_value(iter, Model.DURATION);
+        timer.enabled = model.get_value(iter, Model.ENABLED);
+        timer.quick = model.get_value(iter, Model.QUICK);
+
+        if (timer.duration <= 0) {
+          this.logger.warn(`Refusing to save zero length timer ${timer.name} ${timer.duration}`);
+        } else {
+          this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
+          timers.push(timer);
+        }
+
+        ok = model.iter_next(iter);
+      }
+      if (pack) {
+        var quick = this.quick_radio.get_active();
+        this.logger.debug('Saving updated %s timers to settings', quick ? "quick" : "preset");
+        if (quick) {
+          this._settings.pack_quick_timers(timers);
+        } else {
+          this._settings.pack_preset_timers(timers);
+        }
+      }
+
     }
 
     // https://stackoverflow.com/questions/54487052/how-do-i-add-a-save-button-to-the-gtk-filechooser-dialog
@@ -441,7 +477,7 @@ class PreferencesBuilder {
           var id = model.get_value(iter, Model.ID);
           id = Utils.uuid(id);
           var enabled = this.timer_enabled.get_active();
-          var quick = this.quick_timer.get_active();
+          var quick = this.quick_radio.get_active();
           var duration = hms.toSeconds();
 
           ok = false;
@@ -482,35 +518,6 @@ class PreferencesBuilder {
       return ok;
     }
 
-    _save_liststore(pack=true) {
-      var model = this.timers_combo.get_model();
-      var [ok, iter] = model.get_iter_first();
-
-      var timers = [];
-      while (ok) {
-
-        var timer={};
-        timer.name = model.get_value(iter, Model.NAME);
-        timer.id = model.get_value(iter, Model.ID);
-        timer.duration = model.get_value(iter, Model.DURATION);
-        timer.enabled = model.get_value(iter, Model.ENABLED);
-        timer.quick = model.get_value(iter, Model.QUICK);
-
-        if (timer.duration <= 0) {
-          this.logger.warn(`Refusing to save zero length timer ${timer.name} ${timer.duration}`);
-        } else {
-          this.logger.debug(`Updating ${timer.name} ${timer.duration} ${timer.enabled}`);
-          timers.push(timer);
-        }
-
-        ok = model.iter_next(iter);
-      }
-      if (pack) {
-        this.logger.debug('Saving updated timers to settings');
-        this._settings.pack_timers(timers);
-      }
-
-    }
 
     _update_active_listore_entry(timer) {
       var [ ok, iter ] = this.timers_combo.get_active_iter();
@@ -562,7 +569,6 @@ class PreferencesBuilder {
         var hms = new HMS(duration);
         this._update_spinners(hms);
         this.timer_enabled.set_active(enabled);
-        this.quick_timer.set_active(model.get_value(iter, Model.QUICK));
         this.allow_updates = true;
         return true;
       } else {
