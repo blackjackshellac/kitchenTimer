@@ -434,11 +434,10 @@ class Timer {
         style_class: 'system-status-icon'
       });
 		  //icon.set_icon_size(16);
-		  if (timersInstance.box) {
-        var current = timersInstance.box.get_child_at_index(0);
-        if (current !== icon) {
-          timersInstance.box.replace_child(current, icon);
-        }
+		  var panel_box = timersInstance.box;
+		  if (panel_box) {
+        var current = panel_box.get_child_at_index(0);
+        panel_box.replace_child(current, icon);
       }
     }
   }
