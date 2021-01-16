@@ -39,6 +39,9 @@ class Timers extends Array {
   constructor(...args) {
     super(...args);
 
+    // id => timer
+    this._lookup = {};
+
     this.logger = new Logger('kt timers', true);
   }
 
@@ -52,6 +55,8 @@ class Timers extends Array {
     //timersInstance.logger.info("Attaching indicator "+indicator);
 
     timersInstance.refresh();
+
+    timersInstance.restoreRunningTimers();
 
     return timersInstance;
   }
@@ -141,8 +146,49 @@ class Timers extends Array {
       // remove from timers
       this.splice(i, 1);
       i--;
+      delete this._lookup[timer.id];
       this.logger.debug(`timer ${timer.name} has been purged`);
     }
+  }
+
+  saveRunningTimers() {
+    var running=[];
+    this.sort_by_running().forEach( (timer) => {
+      if (timer.running) {
+        this.logger.debug("Saving running timer state id=%s start=%d end=%d", timer.id, timer._start, timer._end)
+        var rstate = {
+          id: timer.id,
+          start: timer._start
+        }
+        running.push(rstate);
+      }
+    });
+    this.settings.running = JSON.stringify(running);
+  }
+
+  restoreRunningTimers() {
+    var json = this.settings.running;
+    var running = JSON.parse(json);
+    running.forEach( (rstate) => {
+      var timer = this.getTimerById(rstate.id);
+      if (timer) {
+        timer.go(rstate.start);
+      }
+    });
+  }
+
+  getTimerById(id) {
+    if (this._lookup[id] !== undefined) {
+      return this._lookup[id];
+    }
+    this.logger.debug("timer %s not found in lookup table", id);
+    for (var i=0; i < this.length; i++) {
+      var t=this[i];
+      if (t.id == id) {
+        return t;
+      }
+    }
+    return undefined;
   }
 
   isEmpty() {
@@ -242,6 +288,7 @@ class Timers extends Array {
     this.push(timer);
 
     this._settings.pack_timers(this);
+    this._lookup[timer.id] = timer;
     return true;
   }
 
@@ -253,8 +300,9 @@ class Timers extends Array {
       timer.disable();
       // remove from timers
       this.splice(i, 1);
-      this.logger.debug(`timer ${timer.name} has been purged`);
+      this.logger.debug("timer %s has been purged", timer.name);
       this.settings.pack_timers(this);
+      delete this._lookup[timer.id];
       return true;
     }
     return false;
@@ -524,6 +572,7 @@ class Timer {
 
     timersInstance.set_panel_name("");
     timersInstance.set_panel_label("");
+    timersInstance.saveRunningTimers();
 
     // return with false to stop interval callback loop
     return false;
@@ -547,13 +596,22 @@ class Timer {
     return false;
   }
 
-  go() {
-    this._start = Date.now();
+  go(start=undefined) {
+    var prefix;
+    if (start === undefined) {
+      this._start = Date.now();
+      prefix="Starting";
+    } else {
+      this._start = start;
+      prefix="Restarting";
+    }
     this._end = this._start + this.duration_ms();
     this._state = TimerState.RUNNING;
 
+    timersInstance.saveRunningTimers();
+
     var quick=this._quick ? ' quick ' : ' ';
-    this.logger.info(`Starting${quick}timer at ${this._start}`);
+    this.logger.info("%s%stimer at %d", prefix, quick, start);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
   }

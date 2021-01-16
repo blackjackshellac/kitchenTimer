@@ -310,6 +310,14 @@ class Settings {
       this.settings.set_boolean('detect-dupes', bool);
     }
 
+    get running() {
+      return this.settings.get_string('running');
+    }
+
+    set running(json) {
+      this.settings.set_string('running', json);
+    }
+
     get debug() {
       return this.settings.get_boolean('debug');
     }

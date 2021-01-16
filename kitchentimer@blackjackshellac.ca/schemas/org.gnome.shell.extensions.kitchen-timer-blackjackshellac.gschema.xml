@@ -101,6 +101,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>true</default>
       <summary>Prevent creation of duplicate timers of the same type</summary>
     </key>
+    <key name="running" type="s">
+      <default>'[]'</default>
+      <summary>State of running timers as json string</summary>
+    </key>
     <key name="debug" type="b">
       <default>false</default>
       <summary>Turn on debugging</summary>
