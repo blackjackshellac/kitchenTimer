@@ -92,7 +92,7 @@ class Timers extends Array {
   set_panel_name(text, has_name=true) {
     var label = this.panel_name;
     if (label) {
-      label.set_text(this.settings.show_label && has_name ? text : "");
+      label.set_text(this.settings.show_label && has_name && text.length > 0 ? text+"⮚" : "");
     }
   }
 
@@ -438,6 +438,7 @@ class Timer {
 		  if (panel_box) {
         var current = panel_box.get_child_at_index(0);
         panel_box.replace_child(current, icon);
+        current.destroy();
       }
     }
   }
