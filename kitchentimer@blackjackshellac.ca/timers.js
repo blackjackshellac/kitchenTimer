@@ -342,7 +342,6 @@ class Timer {
     // this calls the setter
     this.name = name;
 
-    this._notifier = timersInstance._notifier;
   }
 
   toString() {
@@ -564,7 +563,7 @@ class Timer {
 
     var time=new Date(now).toLocaleTimeString();
 
-    this._notifier.notify(this, "%s %s %s", timer_string, reason, time);
+    timersInstance.notifier.notify(this, "%s %s %s", timer_string, reason, time);
     var hms = new HMS(this.duration);
 
     this.label_progress(hms);
@@ -597,13 +596,13 @@ class Timer {
   }
 
   go(start=undefined) {
-    var prefix;
+    var action;
     if (start === undefined) {
       this._start = Date.now();
-      prefix="Starting";
+      action="Starting";
     } else {
       this._start = start;
-      prefix="Restarting";
+      action="Restarting";
     }
     this._end = this._start + this.duration_ms();
     this._state = TimerState.RUNNING;
@@ -611,7 +610,7 @@ class Timer {
     timersInstance.saveRunningTimers();
 
     var quick=this._quick ? ' quick ' : ' ';
-    this.logger.info("%s%stimer at %d", prefix, quick, start);
+    this.logger.info("%s%stimer at %d", action, quick, this._start);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
   }

@@ -39,27 +39,34 @@ const Logger = Me.imports.logger.Logger;
 class Annoyer {
   constructor(timers) {
     this._settings = timers.settings;
+    this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+    Main.messageTray.add(this._source);
   }
 
   notify(timer, fmt=undefined, ...args) {
-    let source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
 
     let details = fmt.undefined ? fmt : fmt.format(...args);
-    let notification = new KitchenTimerNotifier(timer,
-                                                source,
-                                                timer.name,
-                                                details,
-                                                { gicon: timer.timers.indicator.gicon });
-    notification.setTransient(false);
-    Main.messageTray.add(source);
+
+    var notifier = new KitchenTimerNotifier(timer,
+                                              this.source,
+                                              timer.name,
+                                              details,
+                                              { gicon: timer.timers.indicator.gicon });
+
+    notifier.setTransient(false);
 
     if (this.notification) {
-      source.showNotification(notification);
+      this.source.showNotification(notifier);
     }
 
-    notification.connect('destroy', (notification) => {
-      notification.stop_player();
+    notifier.connect('destroy', (notifier) => {
+      notifier.stop_player();
     });
+  }
+
+  // MessageTray notification source
+  get source() {
+    return this._source;
   }
 
   get notification() {
