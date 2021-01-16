@@ -621,6 +621,9 @@ class Timer {
       this._duration_secs = settings_timer.duration;
       this._enabled = settings_timer.enabled;
       this._quick = settings_timer.quick;
+
+      this._alarm_timer = AlarmTimer.matchRegex(this._name);
+
       return true;
     }
     return false;
