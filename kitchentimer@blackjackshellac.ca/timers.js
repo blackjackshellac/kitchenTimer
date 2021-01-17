@@ -108,32 +108,24 @@ class Timers extends Array {
     }
   }
 
-  remove_by_id(id) {
-    this.logger.debug("Removing timer %s", id);
-  }
+  // remove_by_id(id) {
+  //   this.logger.debug("Removing timer %s", id);
+  // }
 
   refresh() {
     var settings_timers = this._settings.unpack_timers();
     settings_timers.forEach( (settings_timer) => {
-      var found = false;
-      for (var i = 0; i < this.length; i++) {
-        timer=this[i];
-        found = timer.refresh_with(settings_timer);
-        if (found) {
-          this.logger.debug("Found %s timer [%s]: %s",
+      var id=settings_timer.id;
+      var timer = this.lookup(id);
+      if (timer) {
+        timer.refresh_with(settings_timer);
+        this.logger.debug("Found %s timer [%s]: %s",
             (timer.quick ? "quick" : "preset"),
             timer.name,
             (timer.running ? "running" : "not running"));
-          //if (timer.running) { this.logger.debug(timer.toString()); }
-          break;
-        }
-      }
-      if (!found) {
+      } else {
         this.logger.debug(`Timer ${settings_timer.name} not found`);
-        var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
-        if (settings_timer.quick) {
-          timer.quick = true;
-        }
+        timer = Timer.fromSettingsTimer(settings_timer);
         this.add(timer);
       }
     });
@@ -155,7 +147,7 @@ class Timers extends Array {
     var running=[];
     this.sort_by_running().forEach( (timer) => {
       if (timer.running) {
-        this.logger.debug("Saving running timer state id=%s start=%d end=%d", timer.id, timer._start, timer._end)
+        this.logger.debug("Saving running timer state id=%s start=%d", timer.id, timer._start);
         var rstate = {
           id: timer.id,
           start: timer._start
@@ -170,14 +162,14 @@ class Timers extends Array {
     var json = this.settings.running;
     var running = JSON.parse(json);
     running.forEach( (rstate) => {
-      var timer = this.getTimerById(rstate.id);
+      var timer = this.lookup(rstate.id);
       if (timer) {
         timer.go(rstate.start);
       }
     });
   }
 
-  getTimerById(id) {
+  lookup(id) {
     if (this._lookup[id] !== undefined) {
       return this._lookup[id];
     }
@@ -613,6 +605,12 @@ class Timer {
     this.logger.info("%s%stimer at %d", action, quick, this._start);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
     return true;
+  }
+
+  static fromSettingsTimer(settings_timer) {
+    var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
+    timer.quick = settings_timer.quick;
+    return timer;
   }
 
   refresh_with(settings_timer) {
