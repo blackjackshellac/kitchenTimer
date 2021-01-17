@@ -134,12 +134,9 @@ class Timers extends Array {
       if (timer.still_valid(settings_timers)) {
         continue;
       }
-      timer.disable();
-      // remove from timers
-      this.splice(i, 1);
-      i--;
-      delete this._lookup[timer.id];
-      this.logger.debug(`timer ${timer.name} has been purged`);
+      if (this.remove(timer, i)) {
+        i--;
+      }
     }
   }
 
@@ -148,11 +145,11 @@ class Timers extends Array {
     this.sort_by_running().forEach( (timer) => {
       if (timer.running) {
         this.logger.debug("Saving running timer state id=%s start=%d", timer.id, timer._start);
-        var rstate = {
+        var run_state = {
           id: timer.id,
           start: timer._start
         }
-        running.push(rstate);
+        running.push(run_state);
       }
     });
     this.settings.running = JSON.stringify(running);
@@ -161,10 +158,10 @@ class Timers extends Array {
   restoreRunningTimers() {
     var json = this.settings.running;
     var running = JSON.parse(json);
-    running.forEach( (rstate) => {
-      var timer = this.lookup(rstate.id);
+    running.forEach( (run_state) => {
+      var timer = this.lookup(run_state.id);
       if (timer) {
-        timer.go(rstate.start);
+        timer.go(run_state.start);
       }
     });
   }
@@ -174,9 +171,14 @@ class Timers extends Array {
       return this._lookup[id];
     }
     this.logger.debug("timer %s not found in lookup table", id);
+
+    // this shouldn't happen
+
     for (var i=0; i < this.length; i++) {
       var t=this[i];
       if (t.id == id) {
+        this.logger.debug("adding timer to lookup hash %s:%s", t.name, t.id);
+        this._lookup[id] = t;
         return t;
       }
     }
@@ -284,20 +286,21 @@ class Timers extends Array {
     return true;
   }
 
-  remove(timer) {
-    for (var i = 0; i < this.length; i++) {
-      if (timer.id !== this[i].id) {
-        continue;
+  remove(timer, i=undefined) {
+    if (i === undefined) {
+      // we don't know index of timer
+      i = this.indexOf(timer);
+      if (i == -1) {
+        return false;
       }
-      timer.disable();
-      // remove from timers
-      this.splice(i, 1);
-      this.logger.debug("timer %s has been purged", timer.name);
-      this.settings.pack_timers(this);
-      delete this._lookup[timer.id];
-      return true;
     }
-    return false;
+    timer.disable();
+    // remove from timers
+    this.splice(i, 1);
+    this.logger.debug("timer %s has been purged", timer.name);
+    this.settings.pack_timers(this);
+    delete this._lookup[timer.id];
+    return true;
   }
 }
 
@@ -316,8 +319,6 @@ class Timer {
 
   constructor(name, duration_secs, id=undefined) {
     var debug = timersInstance.settings.debug;
-    this.logger = new Logger(`kt timer: ${name}`, debug);
-    this.logger.info(`Create timer [${name}] duration=[${duration_secs}]`);
     this._enabled = true;
     this._quick = false;
     this._interval_ms = debug ? 500 : 250;
@@ -333,6 +334,8 @@ class Timer {
 
     // this calls the setter
     this.name = name;
+    this.logger = new Logger(`kt timer: ${this.name}`, debug);
+    this.logger.info(`Create timer [${this.name}] duration=[${duration_secs}]`);
 
   }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-16 14:39-0500\n"
+"POT-Creation-Date: 2021-01-17 12:29-0500\n"
 "PO-Revision-Date: 2021-01-16 14:41-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -318,19 +318,19 @@ msgstr "Pratique"
 msgid "Go"
 msgstr "Go"
 
-#: ../timers.js:268
+#: ../timers.js:262
 msgid "Duplicate timer is already running"
 msgstr "Une minuterie en double est déjà en cours d'exécution"
 
-#: ../timers.js:561
+#: ../timers.js:556
 msgid "stopped early at"
 msgstr "arrêté tôt à"
 
-#: ../timers.js:561
+#: ../timers.js:556
 msgid "completed at"
 msgstr "terminé à"
 
-#: ../timers.js:562
+#: ../timers.js:557
 msgid "Timer"
 msgstr "Minuterie"
 
