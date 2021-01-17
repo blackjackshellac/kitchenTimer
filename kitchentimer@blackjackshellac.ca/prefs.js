@@ -340,11 +340,12 @@ class PreferencesBuilder {
          file_dialog.current_folder = Me.path;
       }
 
-      let settings_json = GLib.build_filenamev([ Me.path, 'kitchen_timer_settings.json' ]);
+      let settings_json = 'kitchen_timer_settings.json';
 
       this.logger.debug("json file=%s", settings_json);
       file_dialog.set_filter(this._bo('json_files_filter'));
-      file_dialog.set_filename(settings_json);
+      file_dialog.set_current_folder(Me.path);
+      file_dialog.set_current_name(settings_json);
       file_dialog.title = _("Export");
       file_dialog.set_do_overwrite_confirmation(true);
       file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
@@ -403,11 +404,12 @@ class PreferencesBuilder {
          file_dialog.current_folder = Me.path;
       }
 
-      let settings_json = GLib.build_filenamev([ Me.path, 'kitchen_timer_settings.json' ]);
+      let settings_json = 'kitchen_timer_settings.json' ;
 
       this.logger.debug("json file=%s", settings_json);
       file_dialog.set_filter(this._bo('json_files_filter'));
-      file_dialog.set_filename(settings_json);
+      file_dialog.set_current_folder(Me.path);
+      file_dialog.set_current_name(settings_json);
       file_dialog.title = _("Import");
       file_dialog.set_do_overwrite_confirmation(true);
       file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
