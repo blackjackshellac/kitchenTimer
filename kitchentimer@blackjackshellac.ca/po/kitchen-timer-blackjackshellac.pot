@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-17 12:29-0500\n"
-"PO-Revision-Date: 2021-01-17 12:29-0500\n"
+"POT-Creation-Date: 2021-01-18 12:56-0500\n"
+"PO-Revision-Date: 2021-01-18 12:56-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -122,20 +122,20 @@ msgstr ""
 msgid "New timer"
 msgstr ""
 
-#: prefs.js:297 prefs.js:312 prefs.js:333 prefs.js:348
+#: prefs.js:297 prefs.js:312 prefs.js:333 prefs.js:348 prefs.js:349
 msgid "Export"
 msgstr ""
 
-#: prefs.js:343 prefs.js:379
+#: prefs.js:343 prefs.js:379 prefs.js:380
 #, javascript-format
 msgid "Exported settings to %s"
 msgstr ""
 
-#: prefs.js:375 prefs.js:411
+#: prefs.js:375 prefs.js:411 prefs.js:413
 msgid "Import"
 msgstr ""
 
-#: prefs.js:400 prefs.js:436
+#: prefs.js:400 prefs.js:436 prefs.js:438
 #, javascript-format
 msgid "Imported settings from %s"
 msgstr ""
@@ -631,4 +631,18 @@ msgstr ""
 #: timers.js:461 timers.js:465 timers.js:482 timers.js:511 timers.js:514
 #: timers.js:515 timers.js:551 timers.js:557 timers.js:562 timers.js:563
 msgid "Timer"
+msgstr ""
+
+#: timers.js:566
+#, javascript-format
+msgid "Timer stopped %s early at"
+msgstr ""
+
+#: timers.js:568
+#, javascript-format
+msgid "Timer completed %s late at"
+msgstr ""
+
+#: timers.js:571
+msgid "Timer completed on time at"
 msgstr ""

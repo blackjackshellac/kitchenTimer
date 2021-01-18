@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-17 12:29-0500\n"
-"PO-Revision-Date: 2021-01-16 14:41-0500\n"
+"POT-Creation-Date: 2021-01-18 12:57-0500\n"
+"PO-Revision-Date: 2021-01-18 12:59-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
 "Language: fr\n"
@@ -280,20 +280,20 @@ msgstr "À propos"
 msgid "New timer"
 msgstr "Nouvelle minuterie"
 
-#: ../prefs.js:333 ../prefs.js:348
+#: ../prefs.js:333 ../prefs.js:349
 msgid "Export"
 msgstr "Exporter"
 
-#: ../prefs.js:379
+#: ../prefs.js:380
 #, javascript-format
 msgid "Exported settings to %s"
 msgstr "Les paramètres ont été exportés vers %s"
 
-#: ../prefs.js:411
+#: ../prefs.js:413
 msgid "Import"
 msgstr "Importer"
 
-#: ../prefs.js:436
+#: ../prefs.js:438
 #, javascript-format
 msgid "Imported settings from %s"
 msgstr "Les paramètres ont été importés du %s"
@@ -322,17 +322,19 @@ msgstr "Go"
 msgid "Duplicate timer is already running"
 msgstr "Une minuterie en double est déjà en cours d'exécution"
 
-#: ../timers.js:556
-msgid "stopped early at"
-msgstr "arrêté tôt à"
+#: ../timers.js:566
+#, javascript-format
+msgid "Timer stopped %s early at"
+msgstr "La minuterie s'est arrêtée %s plus tôt à"
 
-#: ../timers.js:556
-msgid "completed at"
-msgstr "terminé à"
+#: ../timers.js:568
+#, javascript-format
+msgid "Timer completed %s late at"
+msgstr "La minuterie a terminé avec %s de retard à"
 
-#: ../timers.js:557
-msgid "Timer"
-msgstr "Minuterie"
+#: ../timers.js:571
+msgid "Timer completed on time at"
+msgstr "Minuterie terminée à temps à"
 
 #: ../hms.js:113
 msgid "seconds"
@@ -437,6 +439,15 @@ msgstr "Minuteries préréglées"
 #: ../menus.js:166
 msgid "Preferences…"
 msgstr "Préférences…"
+
+#~ msgid "stopped early at"
+#~ msgstr "arrêté tôt à"
+
+#~ msgid "completed at"
+#~ msgstr "terminé à"
+
+#~ msgid "Timer"
+#~ msgstr "Minuterie"
 
 #~ msgid "Quick timer"
 #~ msgstr "Minuterie pratique"

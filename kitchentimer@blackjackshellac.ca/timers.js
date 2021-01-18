@@ -259,7 +259,7 @@ class Timers extends Array {
     if (tdupe !== undefined) {
       if (tdupe.running) {
         // original timer is running, notify user
-        tdupe.notify(tdupe.name, _("Duplicate timer is already running"));
+        tdupe.notify(_("Duplicate timer is already running"));
         return undefined;
       }
       // found a duplicate, just return the dupe
@@ -385,6 +385,10 @@ class Timer {
 
   automatic_name(hms) {
     return hms.toName();
+  }
+
+  end_time() {
+    return new Date(this._end).toLocaleTimeString();
   }
 
   set name(name) {
@@ -539,26 +543,37 @@ class Timer {
   }
 
   stop_callback(now) {
-    var early = now < this._end;
+    var tdiff = now - this._end;
+    var early = tdiff < 0;
+    var late = tdiff > 2000;
 
     // shouldn't be necessary, but we'll make sure
     if (early) {
       this.reset = true;
+      tdiff = -tdiff;
     } else {
       this.expired = true;
     }
 
-    this.logger.info('Timer has ended state=%d', this._state);
+    this.logger.info('Timer has ended %s: state=%d', early ? "early" : (late ? "late" : "on time"), this._state);
     Utils.clearInterval(this._interval_id);
     this._interval_id = undefined;
 
-    // TODO Notifications and play sounds
-    var reason = early ? _("stopped early at") : _("completed at");
-    var timer_string = _('Timer');
+    var stdiff = early || late ? new HMS(tdiff/1000).toString(true) : "";
+    var reason;
+    var text = "%s due at %s".format(this.name, this.end_time())
+    if (early) {
+      reason = _("Timer stopped %s early at").format(stdiff);
+    } else if (late) {
+      reason = _("Timer completed %s late at").format(stdiff);
+    } else {
+      text = this.name;
+      reason = _("Timer completed on time at");
+    }
 
     var time=new Date(now).toLocaleTimeString();
 
-    timersInstance.notifier.notify(this, "%s %s %s", timer_string, reason, time);
+    timersInstance.notifier.notify(this, text, "%s %s", reason, time);
     var hms = new HMS(this.duration);
 
     this.label_progress(hms);
@@ -645,7 +660,7 @@ class Timer {
   }
 
   notify(msg, ...args) {
-    timersInstance.notifier.notify(this, msg, ...args);
+    timersInstance.notifier.notify(this, this.name, msg, ...args);
   }
 
   delete() {

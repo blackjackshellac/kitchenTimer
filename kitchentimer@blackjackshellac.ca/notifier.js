@@ -40,20 +40,25 @@ class Annoyer {
   constructor(timers) {
     this._settings = timers.settings;
     this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+
+    //var policy = new MessageTray.NotificationPolicy({'show-in-lock-screen': true, 'details-in-lock-screen': true});
+    //this._source.policy = policy;
+
     Main.messageTray.add(this._source);
   }
 
-  notify(timer, fmt=undefined, ...args) {
+  notify(timer, text, fmt=undefined, ...args) {
 
     let details = fmt.undefined ? fmt : fmt.format(...args);
 
     var notifier = new KitchenTimerNotifier(timer,
                                               this.source,
-                                              timer.name,
+                                              text,
                                               details,
                                               { gicon: timer.timers.indicator.gicon });
 
     notifier.setTransient(false);
+    //notifier.setPrivacyScope(MessageTray.PrivacyScope.SYSTEM);
 
     if (this.notification) {
       this.source.showNotification(notifier);

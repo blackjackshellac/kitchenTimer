@@ -80,7 +80,6 @@ TODO	kitchentimer@blackjackshellac.ca/prefs.js	/^      \/\/ TODO fix this duplic
 TODO	kitchentimer@blackjackshellac.ca/settings.js	/^        \/\/ TODO what if it's empty?$/;"	T
 TODO	kitchentimer@blackjackshellac.ca/settings.js	/^      \/\/ TODO what if it's empty?$/;"	T
 TODO	kitchentimer@blackjackshellac.ca/timers.js	/^        \/\/ TODO prompt to reset$/;"	T
-TODO	kitchentimer@blackjackshellac.ca/timers.js	/^    \/\/ TODO Notifications and play sounds$/;"	T
 Timer	kitchentimer@blackjackshellac.ca/timers.js	/^class Timer {$/;"	C
 TimerState	kitchentimer@blackjackshellac.ca/timers.js	/^var TimerState = {$/;"	O
 Timers	kitchentimer@blackjackshellac.ca/timers.js	/^class Timers extends Array {$/;"	C
@@ -183,6 +182,7 @@ duration_ms	kitchentimer@blackjackshellac.ca/timers.js	/^  duration_ms() {$/;"	M
 enable	kitchentimer@blackjackshellac.ca/extension.js	/^    enable() {$/;"	M
 enabled	kitchentimer@blackjackshellac.ca/timers.js	/^  get enabled() {$/;"	M
 enabled	kitchentimer@blackjackshellac.ca/timers.js	/^  set enabled(bool) {$/;"	M
+end_time	kitchentimer@blackjackshellac.ca/timers.js	/^  end_time() {$/;"	M
 error	kitchentimer@blackjackshellac.ca/logger.js	/^    error(format, ...args) {$/;"	M
 expired	kitchentimer@blackjackshellac.ca/timers.js	/^  get expired() {$/;"	M
 expired	kitchentimer@blackjackshellac.ca/timers.js	/^  set expired(bool) {$/;"	M
@@ -282,7 +282,7 @@ notification	kitchentimer@blackjackshellac.ca/settings.js	/^    get notification
 notification	kitchentimer@blackjackshellac.ca/settings.js	/^    set notification(bool) {$/;"	M
 notifier	kitchentimer@blackjackshellac.ca/notifier.js	/^    var notifier = new KitchenTimerNotifier(timer,$/;"	V
 notifier	kitchentimer@blackjackshellac.ca/timers.js	/^  get notifier() {$/;"	M
-notify	kitchentimer@blackjackshellac.ca/notifier.js	/^  notify(timer, fmt=undefined, ...args) {$/;"	M
+notify	kitchentimer@blackjackshellac.ca/notifier.js	/^  notify(timer, text, fmt=undefined, ...args) {$/;"	M
 notify	kitchentimer@blackjackshellac.ca/timers.js	/^  notify(msg, ...args) {$/;"	M
 now	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^    var now=new Date();$/;"	V
 null	kitchentimer@blackjackshellac.ca/prefs.js	/^                null,$/;"	V
@@ -327,6 +327,7 @@ re_hms	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_hms(parse) {$/
 re_name_hms	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_name_hms(parse) {$/;"	M
 re_nan	kitchentimer@blackjackshellac.ca/menus.js	/^    var re_nan=\/[^0-9]\/$/;"	V
 re_wildcard	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_wildcard(parse) {$/;"	M
+reason	kitchentimer@blackjackshellac.ca/timers.js	/^    var reason;$/;"	V
 rebuild_menu	kitchentimer@blackjackshellac.ca/indicator.js	/^    rebuild_menu() {$/;"	M
 refresh	kitchentimer@blackjackshellac.ca/timers.js	/^  refresh() {$/;"	M
 refresh_with	kitchentimer@blackjackshellac.ca/timers.js	/^  refresh_with(settings_timer) {$/;"	M
@@ -399,6 +400,8 @@ subject	kitchentimer@blackjackshellac.ca/utils.js	/^            subject: subject
 switch	kitchentimer@blackjackshellac.ca/settings.js	/^        switch(key) {$/;"	M
 tbid	kitchentimer@blackjackshellac.ca/timers.js	/^    var tbid = this.filter(timer => timer.id == id);$/;"	F
 text	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var text="%s %02d:%02d:%02d".format(this._name, this._hslider.value, this._mslider.value, this._sslider.value);$/;"	V
+text	kitchentimer@blackjackshellac.ca/notifier.js	/^                                              text,$/;"	V
+text	kitchentimer@blackjackshellac.ca/timers.js	/^    var text = "%s due at %s".format(this.name, this.end_time())$/;"	V
 time	kitchentimer@blackjackshellac.ca/timers.js	/^    var time=new Date(now).toLocaleTimeString();$/;"	V
 time_number	kitchentimer@blackjackshellac.ca/menus.js	/^  time_number(text) {$/;"	M
 timer	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var timer = new Timer(result.name, result.hms.toSeconds());$/;"	V
