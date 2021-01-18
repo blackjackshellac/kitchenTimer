@@ -1,0 +1,444 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+.kitchentimer-menu-box 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-menu-box {$/;"	c
+.kitchentimer-menu-delete-icon 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-menu-delete-icon {$/;"	c
+.kitchentimer-menu-icon 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-menu-icon {$/;"	c
+.kitchentimer-menu-label 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-menu-label {$/;"	c
+.kitchentimer-menu-name 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-menu-name {$/;"	c
+.kitchentimer-panel-box 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-panel-box {$/;"	c
+.kitchentimer-panel-label 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-panel-label {$/;"	c
+.kitchentimer-panel-name 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-panel-name {$/;"	c
+.kitchentimer-quick-layout 	kitchentimer@blackjackshellac.ca/stylesheet.css	/^.kitchentimer-quick-layout {$/;"	c
+0	kitchentimer@blackjackshellac.ca/timers.js	/^    0$/;"	V
+AM	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  AM: 1,$/;"	P
+AlarmTimer	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^class AlarmTimer {$/;"	C
+AmPm	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^var AmPm = {$/;"	O
+Annoyer	kitchentimer@blackjackshellac.ca/notifier.js	/^class Annoyer {$/;"	C
+Clutter	kitchentimer@blackjackshellac.ca/extension.js	/^const { GObject, St, Clutter } = imports.gi;$/;"	V
+Clutter	kitchentimer@blackjackshellac.ca/indicator.js	/^const { GObject, St, Clutter, Gio } = imports.gi;$/;"	V
+Clutter	kitchentimer@blackjackshellac.ca/menuitem.js	/^const { Clutter, GObject, St, Gio } = imports.gi;$/;"	V
+Clutter	kitchentimer@blackjackshellac.ca/menus.js	/^const { St, Clutter } = imports.gi;$/;"	V
+Clutter	kitchentimer@blackjackshellac.ca/timers.js	/^const {GLib, St, Clutter} = imports.gi;$/;"	V
+DURATION	kitchentimer@blackjackshellac.ca/prefs.js	/^  DURATION: 2,$/;"	P
+ENABLED	kitchentimer@blackjackshellac.ca/prefs.js	/^  ENABLED: 3,$/;"	P
+EXPIRED	kitchentimer@blackjackshellac.ca/timers.js	/^  EXPIRED: 3$/;"	P
+Extension	kitchentimer@blackjackshellac.ca/extension.js	/^class Extension {$/;"	C
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/extension.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/indicator.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/menus.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/notifier.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/prefs.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/settings.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/timers.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GETTEXT_DOMAIN	kitchentimer@blackjackshellac.ca/utils.js	/^const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';$/;"	V
+GLib	kitchentimer@blackjackshellac.ca/notifier.js	/^const { GLib, GObject } = imports.gi;$/;"	V
+GLib	kitchentimer@blackjackshellac.ca/prefs.js	/^const { Gio, Gtk, GLib } = imports.gi;$/;"	V
+GLib	kitchentimer@blackjackshellac.ca/timers.js	/^const {GLib, St, Clutter} = imports.gi;$/;"	V
+GObject	kitchentimer@blackjackshellac.ca/extension.js	/^const { GObject, St, Clutter } = imports.gi;$/;"	V
+GObject	kitchentimer@blackjackshellac.ca/indicator.js	/^const { GObject, St, Clutter, Gio } = imports.gi;$/;"	V
+GObject	kitchentimer@blackjackshellac.ca/menuitem.js	/^const { Clutter, GObject, St, Gio } = imports.gi;$/;"	V
+GObject	kitchentimer@blackjackshellac.ca/notifier.js	/^const { GLib, GObject } = imports.gi;$/;"	V
+Gio	kitchentimer@blackjackshellac.ca/indicator.js	/^const { GObject, St, Clutter, Gio } = imports.gi;$/;"	V
+Gio	kitchentimer@blackjackshellac.ca/menuitem.js	/^const { Clutter, GObject, St, Gio } = imports.gi;$/;"	V
+Gio	kitchentimer@blackjackshellac.ca/prefs.js	/^const { Gio, Gtk, GLib } = imports.gi;$/;"	V
+Gtk	kitchentimer@blackjackshellac.ca/prefs.js	/^const { Gio, Gtk, GLib } = imports.gi;$/;"	V
+H24	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  H24: 0,$/;"	P
+HMS	kitchentimer@blackjackshellac.ca/hms.js	/^class HMS {$/;"	C
+ID	kitchentimer@blackjackshellac.ca/prefs.js	/^  ID: 1,$/;"	P
+INIT	kitchentimer@blackjackshellac.ca/timers.js	/^  INIT: 0,$/;"	P
+KTTypes	kitchentimer@blackjackshellac.ca/menuitem.js	/^var KTTypes = {$/;"	O
+KitchenTimerControlButton	kitchentimer@blackjackshellac.ca/menuitem.js	/^class KitchenTimerControlButton extends St.Button {$/;"	C
+KitchenTimerCreatePreset	kitchentimer@blackjackshellac.ca/menuitem.js	/^class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {$/;"	C
+KitchenTimerIndicator	kitchentimer@blackjackshellac.ca/indicator.js	/^class KitchenTimerIndicator extends PanelMenu.Button {$/;"	C
+KitchenTimerMenuItem	kitchentimer@blackjackshellac.ca/menuitem.js	/^class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {$/;"	C
+KitchenTimerNotifier	kitchentimer@blackjackshellac.ca/notifier.js	/^class KitchenTimerNotifier extends MessageTray.Notification {$/;"	C
+KitchenTimerQuickItem	kitchentimer@blackjackshellac.ca/menuitem.js	/^class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {$/;"	C
+KitchenTimerTimeSliderItem	kitchentimer@blackjackshellac.ca/menuitem.js	/^class KitchenTimerTimeSliderItem extends PopupMenu.PopupMenuItem {$/;"	C
+LOGID	kitchentimer@blackjackshellac.ca/logger.js	/^const LOGID = 'logger';$/;"	V
+Logger	kitchentimer@blackjackshellac.ca/logger.js	/^class Logger {$/;"	C
+Model	kitchentimer@blackjackshellac.ca/prefs.js	/^const Model = {$/;"	O
+NAME	kitchentimer@blackjackshellac.ca/prefs.js	/^  NAME: 0,$/;"	P
+PM	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  PM: 2$/;"	P
+PanelMenuBuilder	kitchentimer@blackjackshellac.ca/menus.js	/^class PanelMenuBuilder {$/;"	C
+PreferencesBuilder	kitchentimer@blackjackshellac.ca/prefs.js	/^class PreferencesBuilder {$/;"	C
+QUICK	kitchentimer@blackjackshellac.ca/prefs.js	/^  QUICK: 4$/;"	P
+RESET	kitchentimer@blackjackshellac.ca/timers.js	/^  RESET: 1,$/;"	P
+RUNNING	kitchentimer@blackjackshellac.ca/timers.js	/^  RUNNING: 2,$/;"	P
+Settings	kitchentimer@blackjackshellac.ca/settings.js	/^class Settings {$/;"	C
+St	kitchentimer@blackjackshellac.ca/extension.js	/^const { GObject, St, Clutter } = imports.gi;$/;"	V
+St	kitchentimer@blackjackshellac.ca/indicator.js	/^const { GObject, St, Clutter, Gio } = imports.gi;$/;"	V
+St	kitchentimer@blackjackshellac.ca/menuitem.js	/^const { Clutter, GObject, St, Gio } = imports.gi;$/;"	V
+St	kitchentimer@blackjackshellac.ca/menus.js	/^const { St, Clutter } = imports.gi;$/;"	V
+St	kitchentimer@blackjackshellac.ca/timers.js	/^const {GLib, St, Clutter} = imports.gi;$/;"	V
+TODO	kitchentimer@blackjackshellac.ca/menus.js	/^  \/\/ TODO figure out how to reset timer$/;"	T
+TODO	kitchentimer@blackjackshellac.ca/prefs.js	/^        \/\/ TODO update with initial value$/;"	T
+TODO	kitchentimer@blackjackshellac.ca/prefs.js	/^      \/\/ TODO fix this duplication$/;"	T
+TODO	kitchentimer@blackjackshellac.ca/settings.js	/^        \/\/ TODO what if it's empty?$/;"	T
+TODO	kitchentimer@blackjackshellac.ca/settings.js	/^      \/\/ TODO what if it's empty?$/;"	T
+TODO	kitchentimer@blackjackshellac.ca/timers.js	/^        \/\/ TODO prompt to reset$/;"	T
+TODO	kitchentimer@blackjackshellac.ca/timers.js	/^    \/\/ TODO Notifications and play sounds$/;"	T
+Timer	kitchentimer@blackjackshellac.ca/timers.js	/^class Timer {$/;"	C
+TimerState	kitchentimer@blackjackshellac.ca/timers.js	/^var TimerState = {$/;"	O
+Timers	kitchentimer@blackjackshellac.ca/timers.js	/^class Timers extends Array {$/;"	C
+_addItem	kitchentimer@blackjackshellac.ca/menus.js	/^  _addItem(text, menu=undefined) {$/;"	M
+_addSeparator	kitchentimer@blackjackshellac.ca/menus.js	/^  _addSeparator(menu=undefined) {$/;"	M
+_addSubMenu	kitchentimer@blackjackshellac.ca/menus.js	/^  _addSubMenu(text, menu=undefined) {$/;"	M
+_addSwitch	kitchentimer@blackjackshellac.ca/menus.js	/^  _addSwitch(text, on=false, menu=undefined) {$/;"	M
+_bind	kitchentimer@blackjackshellac.ca/prefs.js	/^    _bind() {$/;"	M
+_bo	kitchentimer@blackjackshellac.ca/prefs.js	/^    _bo(id) {$/;"	M
+_connectSignal	kitchentimer@blackjackshellac.ca/utils.js	/^    prototype._connectSignal = function (subject, signal_name, method) {$/;"	M
+_disconnectSignals	kitchentimer@blackjackshellac.ca/utils.js	/^    prototype._disconnectSignals = function () {$/;"	M
+_getMenu	kitchentimer@blackjackshellac.ca/menus.js	/^  _getMenu(menu) {$/;"	M
+_get_active_liststore_entry	kitchentimer@blackjackshellac.ca/prefs.js	/^    _get_active_liststore_entry() {$/;"	M
+_init	kitchentimer@blackjackshellac.ca/indicator.js	/^    _init() {$/;"	M
+_init	kitchentimer@blackjackshellac.ca/menuitem.js	/^    _init(timer, type) {$/;"	M
+_init	kitchentimer@blackjackshellac.ca/menuitem.js	/^  _init(menu, timers) {$/;"	M
+_init	kitchentimer@blackjackshellac.ca/menuitem.js	/^  _init(parent, suffix, min, max) {$/;"	M
+_init	kitchentimer@blackjackshellac.ca/menuitem.js	/^  _init(timer, menu) {$/;"	M
+_init	kitchentimer@blackjackshellac.ca/notifier.js	/^  _init(timer, source, title, banner, params) {$/;"	M
+_initPlayer	kitchentimer@blackjackshellac.ca/notifier.js	/^  _initPlayer() {$/;"	M
+_log	kitchentimer@blackjackshellac.ca/logger.js	/^    _log(level, format, ...args) {$/;"	M
+_lookup	kitchentimer@blackjackshellac.ca/timers.js	/^    this._lookup = {};$/;"	P
+_populate_liststore	kitchentimer@blackjackshellac.ca/prefs.js	/^    _populate_liststore() {$/;"	M
+_progressIconsDegrees	kitchentimer@blackjackshellac.ca/indicator.js	/^        this._progressIconsDegrees = {};$/;"	P
+_reset_timer	kitchentimer@blackjackshellac.ca/menus.js	/^  _reset_timer() {$/;"	M
+_run_timer	kitchentimer@blackjackshellac.ca/menus.js	/^  _run_timer() {$/;"	M
+_save_liststore	kitchentimer@blackjackshellac.ca/prefs.js	/^    _save_liststore(pack=true) {$/;"	M
+_ssb	kitchentimer@blackjackshellac.ca/prefs.js	/^    _ssb(key, object, property, flags=Gio.SettingsBindFlags.DEFAULT) {$/;"	M
+_update_active_listore_entry	kitchentimer@blackjackshellac.ca/prefs.js	/^    _update_active_listore_entry(timer) {$/;"	M
+_update_active_liststore_from_tab	kitchentimer@blackjackshellac.ca/prefs.js	/^    _update_active_liststore_from_tab() {$/;"	M
+_update_combo_model_entry	kitchentimer@blackjackshellac.ca/prefs.js	/^    _update_combo_model_entry(combo, iter, entry) {$/;"	M
+_update_spinners	kitchentimer@blackjackshellac.ca/prefs.js	/^    _update_spinners(hms) {$/;"	M
+_update_timers_tab_from_model	kitchentimer@blackjackshellac.ca/prefs.js	/^    _update_timers_tab_from_model(timers_combo, entry=undefined) {$/;"	M
+action	kitchentimer@blackjackshellac.ca/timers.js	/^    var action;$/;"	V
+activate_go	kitchentimer@blackjackshellac.ca/menuitem.js	/^  activate_go() {$/;"	M
+add	kitchentimer@blackjackshellac.ca/timers.js	/^  add(timer) {$/;"	M
+addSignalsHelperMethods	kitchentimer@blackjackshellac.ca/utils.js	/^function addSignalsHelperMethods(prototype) {$/;"	F
+addTimerStart	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static addTimerStart(result, timers) {$/;"	M
+add_check_dupes	kitchentimer@blackjackshellac.ca/timers.js	/^  add_check_dupes(timer) {$/;"	M
+adjust	kitchentimer@blackjackshellac.ca/hms.js	/^  adjust() {$/;"	M
+adjust_minutes	kitchentimer@blackjackshellac.ca/hms.js	/^  adjust_minutes(mins) {$/;"	M
+adjust_seconds	kitchentimer@blackjackshellac.ca/hms.js	/^  adjust_seconds(secs) {$/;"	M
+alarm_date	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^    var alarm_date=new Date($/;"	V
+alarm_timer	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^    var alarm_timer = new AlarmTimer();$/;"	V
+alarm_timer	kitchentimer@blackjackshellac.ca/menuitem.js	/^      alarm_timer: undefined$/;"	P
+alarm_timer	kitchentimer@blackjackshellac.ca/timers.js	/^  get alarm_timer() {$/;"	M
+alarm_timer	kitchentimer@blackjackshellac.ca/timers.js	/^  set alarm_timer(val) {$/;"	M
+ampm	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  get ampm() { return this._ampm; }$/;"	M
+ampm	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  set ampm(val) {$/;"	M
+atimers	kitchentimer@blackjackshellac.ca/settings.js	/^        var atimers = [];$/;"	A
+atimers	kitchentimer@blackjackshellac.ca/settings.js	/^      var atimers = [];$/;"	A
+attach	kitchentimer@blackjackshellac.ca/timers.js	/^  static attach(indicator) {$/;"	M
+automatic_name	kitchentimer@blackjackshellac.ca/timers.js	/^  automatic_name(hms) {$/;"	M
+bin	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var bin = new St.Bin({ x_expand: false, x_align: St.Align.START });$/;"	V
+bin	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var bin = new St.Bin({ x_expand: true, x_align: St.Align.START });$/;"	V
+box	kitchentimer@blackjackshellac.ca/menuitem.js	/^      var box = new St.BoxLayout({$/;"	V
+box	kitchentimer@blackjackshellac.ca/timers.js	/^  get box() {$/;"	M
+build	kitchentimer@blackjackshellac.ca/menus.js	/^  build() {$/;"	M
+build	kitchentimer@blackjackshellac.ca/prefs.js	/^    build() {$/;"	M
+buildPrefsWidget	kitchentimer@blackjackshellac.ca/prefs.js	/^function buildPrefsWidget() {$/;"	F
+clearInterval	kitchentimer@blackjackshellac.ca/utils.js	/^var clearTimeout, clearInterval;$/;"	V
+clearTimeout	kitchentimer@blackjackshellac.ca/utils.js	/^var clearTimeout, clearInterval;$/;"	V
+constructor	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  constructor(debug=false) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/extension.js	/^    constructor(uuid) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/hms.js	/^  constructor(secs=0) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/logger.js	/^    constructor(logid=undefined, debug=false) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/menus.js	/^  constructor(menu, indicator) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/notifier.js	/^  constructor(timers) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/prefs.js	/^    constructor() {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/settings.js	/^    constructor() {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/timers.js	/^  constructor(...args) {$/;"	M
+constructor	kitchentimer@blackjackshellac.ca/timers.js	/^  constructor(name, duration_secs, id=undefined) {$/;"	M
+control_button	kitchentimer@blackjackshellac.ca/menuitem.js	/^      var control_button;$/;"	V
+create	kitchentimer@blackjackshellac.ca/hms.js	/^  static create(h,m,s) {$/;"	M
+create_folders	kitchentimer@blackjackshellac.ca/prefs.js	/^        create_folders: true$/;"	P
+create_icon	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static create_icon(indicator) {$/;"	M
+create_icon	kitchentimer@blackjackshellac.ca/menus.js	/^  create_icon() {$/;"	M
+date_options	kitchentimer@blackjackshellac.ca/timers.js	/^const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };$/;"	O
+debug	kitchentimer@blackjackshellac.ca/logger.js	/^    debug(format, ...args) {$/;"	M
+debug	kitchentimer@blackjackshellac.ca/settings.js	/^    get debug() {$/;"	M
+debug	kitchentimer@blackjackshellac.ca/settings.js	/^    set debug(bool) {$/;"	M
+debugging	kitchentimer@blackjackshellac.ca/logger.js	/^    get debugging() {$/;"	M
+debugging	kitchentimer@blackjackshellac.ca/logger.js	/^    set debugging(bool) {$/;"	M
+default_timer	kitchentimer@blackjackshellac.ca/settings.js	/^    get default_timer() {$/;"	M
+default_timer	kitchentimer@blackjackshellac.ca/settings.js	/^    set default_timer(val) {$/;"	M
+degree_progress	kitchentimer@blackjackshellac.ca/timers.js	/^  degree_progress(chunk=15) {$/;"	M
+delete	kitchentimer@blackjackshellac.ca/menuitem.js	/^    delete() {$/;"	M
+delete	kitchentimer@blackjackshellac.ca/timers.js	/^  delete() {$/;"	M
+detach	kitchentimer@blackjackshellac.ca/timers.js	/^  static detach() {$/;"	M
+details	kitchentimer@blackjackshellac.ca/notifier.js	/^                                              details,$/;"	V
+detect_dupes	kitchentimer@blackjackshellac.ca/settings.js	/^    get detect_dupes() {$/;"	M
+detect_dupes	kitchentimer@blackjackshellac.ca/settings.js	/^    set detect_dupes(bool) {$/;"	M
+dict	kitchentimer@blackjackshellac.ca/settings.js	/^      var dict = {};$/;"	O
+die	install_local.sh	/^die() {$/;"	f
+disable	kitchentimer@blackjackshellac.ca/extension.js	/^    disable() {$/;"	M
+disable	kitchentimer@blackjackshellac.ca/timers.js	/^  disable() {$/;"	M
+duration	kitchentimer@blackjackshellac.ca/timers.js	/^  get duration() {$/;"	M
+duration	kitchentimer@blackjackshellac.ca/timers.js	/^  set duration(duration) {$/;"	M
+duration_ms	kitchentimer@blackjackshellac.ca/timers.js	/^  duration_ms() {$/;"	M
+enable	kitchentimer@blackjackshellac.ca/extension.js	/^    enable() {$/;"	M
+enabled	kitchentimer@blackjackshellac.ca/timers.js	/^  get enabled() {$/;"	M
+enabled	kitchentimer@blackjackshellac.ca/timers.js	/^  set enabled(bool) {$/;"	M
+error	kitchentimer@blackjackshellac.ca/logger.js	/^    error(format, ...args) {$/;"	M
+expired	kitchentimer@blackjackshellac.ca/timers.js	/^  get expired() {$/;"	M
+expired	kitchentimer@blackjackshellac.ca/timers.js	/^  set expired(bool) {$/;"	M
+export_json	kitchentimer@blackjackshellac.ca/settings.js	/^    export_json() {$/;"	M
+export_settings	kitchentimer@blackjackshellac.ca/prefs.js	/^    export_settings() {$/;"	M
+false	kitchentimer@blackjackshellac.ca/prefs.js	/^                false,$/;"	V
+file_dialog	kitchentimer@blackjackshellac.ca/prefs.js	/^      var file_dialog = new Gtk.FileChooserDialog( {$/;"	V
+format	kitchentimer@blackjackshellac.ca/menuitem.js	/^  format(val) {$/;"	M
+fromRegexGroups	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  fromRegexGroups(g) {$/;"	M
+fromResult	kitchentimer@blackjackshellac.ca/timers.js	/^  static fromResult(result) {$/;"	M
+fromSettingsTimer	kitchentimer@blackjackshellac.ca/timers.js	/^  static fromSettingsTimer(settings_timer) {$/;"	M
+get_default	kitchentimer@blackjackshellac.ca/settings.js	/^    get_default(key) {$/;"	M
+get_dupe	kitchentimer@blackjackshellac.ca/timers.js	/^  get_dupe(timer) {$/;"	M
+gicon	kitchentimer@blackjackshellac.ca/indicator.js	/^    get gicon() {$/;"	M
+gicon	kitchentimer@blackjackshellac.ca/timers.js	/^        gicon: gicon,$/;"	P
+go	kitchentimer@blackjackshellac.ca/timers.js	/^  go(start=undefined) {$/;"	M
+h	kitchentimer@blackjackshellac.ca/settings.js	/^      var h={$/;"	O
+h	kitchentimer@blackjackshellac.ca/settings.js	/^      var h={};$/;"	O
+h2s	kitchentimer@blackjackshellac.ca/hms.js	/^  h2s() {$/;"	M
+has_name	kitchentimer@blackjackshellac.ca/timers.js	/^  get has_name() {$/;"	M
+has_time	kitchentimer@blackjackshellac.ca/menuitem.js	/^      has_time: false,$/;"	P
+hms	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^    var hms = new HMS(duration_ms\/1000);$/;"	V
+hms	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  hms() {$/;"	M
+hms	kitchentimer@blackjackshellac.ca/hms.js	/^    var hms = new HMS(secs);$/;"	V
+hms	kitchentimer@blackjackshellac.ca/hms.js	/^    var hms = new HMS(this.toSeconds());$/;"	V
+hms	kitchentimer@blackjackshellac.ca/menuitem.js	/^      hms: null,$/;"	P
+hms	kitchentimer@blackjackshellac.ca/prefs.js	/^          var hms = new HMS();$/;"	V
+hms	kitchentimer@blackjackshellac.ca/prefs.js	/^        var hms = new HMS(duration);$/;"	V
+hms	kitchentimer@blackjackshellac.ca/timers.js	/^    var hms = new HMS(delta);$/;"	V
+hms	kitchentimer@blackjackshellac.ca/timers.js	/^    var hms = new HMS(this.duration);$/;"	V
+hour	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  get hour() { return this._hour; }$/;"	M
+hour	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  set hour(h) {$/;"	M
+hours	kitchentimer@blackjackshellac.ca/hms.js	/^  get hours() {$/;"	M
+hours	kitchentimer@blackjackshellac.ca/hms.js	/^  set hours(hours) {$/;"	M
+hours	kitchentimer@blackjackshellac.ca/menuitem.js	/^      hours: 0,$/;"	P
+hover	kitchentimer@blackjackshellac.ca/menuitem.js	/^      hover: false,$/;"	P
+icon	kitchentimer@blackjackshellac.ca/indicator.js	/^        var icon = new St.Icon({$/;"	V
+icon	kitchentimer@blackjackshellac.ca/menuitem.js	/^        var icon = new St.Icon({$/;"	V
+icon	kitchentimer@blackjackshellac.ca/menuitem.js	/^    get icon() {$/;"	M
+icon	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var icon = new St.Icon({$/;"	V
+icon	kitchentimer@blackjackshellac.ca/menus.js	/^    var icon = new St.Icon({$/;"	V
+icon	kitchentimer@blackjackshellac.ca/timers.js	/^		  var icon = new St.Icon({$/;"	V
+icon_name	kitchentimer@blackjackshellac.ca/indicator.js	/^          var icon_name="\/icons\/kitchen-timer-"+deg+".svg";$/;"	V
+icon_progress	kitchentimer@blackjackshellac.ca/timers.js	/^  icon_progress() {$/;"	M
+id	kitchentimer@blackjackshellac.ca/timers.js	/^  get id() {$/;"	M
+import_json	kitchentimer@blackjackshellac.ca/settings.js	/^    import_json(json) {$/;"	M
+import_settings	kitchentimer@blackjackshellac.ca/prefs.js	/^    import_settings() {$/;"	M
+indicator	kitchentimer@blackjackshellac.ca/timers.js	/^  get indicator() {$/;"	M
+indicator	kitchentimer@blackjackshellac.ca/timers.js	/^  set indicator(indicator) {$/;"	M
+info	bin/git_tag.sh	/^info() {$/;"	f
+info	install_local.sh	/^info() {$/;"	f
+info	kitchentimer@blackjackshellac.ca/logger.js	/^    info(format, ...args) {$/;"	M
+init	kitchentimer@blackjackshellac.ca/extension.js	/^function init(meta) {$/;"	F
+init	kitchentimer@blackjackshellac.ca/prefs.js	/^function init() {$/;"	F
+isDebugModeEnabled	kitchentimer@blackjackshellac.ca/utils.js	/^function isDebugModeEnabled() {$/;"	F
+isEmpty	kitchentimer@blackjackshellac.ca/timers.js	/^  isEmpty() {$/;"	M
+is_dupe	kitchentimer@blackjackshellac.ca/timers.js	/^  is_dupe(timer) {$/;"	M
+item	kitchentimer@blackjackshellac.ca/menus.js	/^    var item = new PopupMenu.PopupMenuItem(text)$/;"	V
+item	kitchentimer@blackjackshellac.ca/menus.js	/^    var item = new PopupMenu.PopupSwitchMenuItem(text, on);$/;"	V
+iter	kitchentimer@blackjackshellac.ca/prefs.js	/^          var [ ok, iter ] = combo.get_active_iter();$/;"	V
+iter	kitchentimer@blackjackshellac.ca/prefs.js	/^          var [ ok, iter ] = model.iter_nth_child(null, index-1);$/;"	V
+iter	kitchentimer@blackjackshellac.ca/prefs.js	/^          var [ ok, iter ] = this.timers_combo.get_active_iter();$/;"	V
+iter	kitchentimer@blackjackshellac.ca/prefs.js	/^      var [ ok, iter ] = this.timers_combo.get_active_iter();$/;"	V
+iter	kitchentimer@blackjackshellac.ca/prefs.js	/^      var [ ok, iter ] = timers_combo.get_active_iter();$/;"	V
+iter	kitchentimer@blackjackshellac.ca/prefs.js	/^      var [ok, iter] = model.get_iter_first();$/;"	V
+label	kitchentimer@blackjackshellac.ca/timers.js	/^  get label() {$/;"	M
+label	kitchentimer@blackjackshellac.ca/timers.js	/^  set label(label) {$/;"	M
+label_progress	kitchentimer@blackjackshellac.ca/timers.js	/^  label_progress(hms, now=0) {$/;"	M
+layout	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var layout = new St.BoxLayout({$/;"	V
+local_only	kitchentimer@blackjackshellac.ca/prefs.js	/^        local_only: false,$/;"	P
+log	install_local.sh	/^log() {$/;"	f
+logObjectPretty	kitchentimer@blackjackshellac.ca/utils.js	/^function logObjectPretty(obj) {$/;"	F
+logger	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^var logger = new Logger('kt alarm timer');$/;"	V
+logger	kitchentimer@blackjackshellac.ca/indicator.js	/^	  get logger() {$/;"	M
+logger	kitchentimer@blackjackshellac.ca/menuitem.js	/^var logger = new Logger('kt menuitem');$/;"	V
+lookup	kitchentimer@blackjackshellac.ca/timers.js	/^  lookup(id) {$/;"	M
+m2s	kitchentimer@blackjackshellac.ca/hms.js	/^  m2s() {$/;"	M
+matchRegex	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  static matchRegex(entry) {$/;"	M
+minute	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  get minute() { return this._minute; }$/;"	M
+minute	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  set minute(m) {$/;"	M
+minutes	kitchentimer@blackjackshellac.ca/hms.js	/^  get minutes() {$/;"	M
+minutes	kitchentimer@blackjackshellac.ca/hms.js	/^  set minutes(minutes) {$/;"	M
+minutes	kitchentimer@blackjackshellac.ca/menuitem.js	/^      minutes: 0,$/;"	P
+modal_notification	kitchentimer@blackjackshellac.ca/settings.js	/^    get modal_notification() {$/;"	M
+modal_notification	kitchentimer@blackjackshellac.ca/settings.js	/^    set modal_notification(bool) {$/;"	M
+ms	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  get ms() { return this._ms; }$/;"	M
+ms	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  set ms(msecs) {$/;"	M
+name	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  get name() { return this._name; }$/;"	M
+name	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  set name(val) {$/;"	M
+name	kitchentimer@blackjackshellac.ca/menuitem.js	/^      name: "",$/;"	P
+name	kitchentimer@blackjackshellac.ca/menuitem.js	/^      var name = new St.Label({$/;"	V
+name	kitchentimer@blackjackshellac.ca/timers.js	/^  get name() {$/;"	M
+name	kitchentimer@blackjackshellac.ca/timers.js	/^  set name(name) {$/;"	M
+name_item	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var name_item = new PopupMenu.PopupMenuItem("", { reactive: false } );$/;"	V
+notification	kitchentimer@blackjackshellac.ca/notifier.js	/^  get notification() {$/;"	M
+notification	kitchentimer@blackjackshellac.ca/settings.js	/^    get notification() {$/;"	M
+notification	kitchentimer@blackjackshellac.ca/settings.js	/^    set notification(bool) {$/;"	M
+notifier	kitchentimer@blackjackshellac.ca/notifier.js	/^    var notifier = new KitchenTimerNotifier(timer,$/;"	V
+notifier	kitchentimer@blackjackshellac.ca/timers.js	/^  get notifier() {$/;"	M
+notify	kitchentimer@blackjackshellac.ca/notifier.js	/^  notify(timer, fmt=undefined, ...args) {$/;"	M
+notify	kitchentimer@blackjackshellac.ca/timers.js	/^  notify(msg, ...args) {$/;"	M
+now	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^    var now=new Date();$/;"	V
+null	kitchentimer@blackjackshellac.ca/prefs.js	/^                null,$/;"	V
+null	kitchentimer@blackjackshellac.ca/utils.js	/^        null$/;"	V
+null	kitchentimer@blackjackshellac.ca/utils.js	/^        null,$/;"	V
+ok	kitchentimer@blackjackshellac.ca/prefs.js	/^          var [ ok, iter ] = combo.get_active_iter();$/;"	V
+ok	kitchentimer@blackjackshellac.ca/prefs.js	/^          var [ ok, iter ] = model.iter_nth_child(null, index-1);$/;"	V
+ok	kitchentimer@blackjackshellac.ca/prefs.js	/^          var [ ok, iter ] = this.timers_combo.get_active_iter();$/;"	V
+ok	kitchentimer@blackjackshellac.ca/prefs.js	/^      var [ ok, iter ] = this.timers_combo.get_active_iter();$/;"	V
+ok	kitchentimer@blackjackshellac.ca/prefs.js	/^      var [ ok, iter ] = timers_combo.get_active_iter();$/;"	V
+ok	kitchentimer@blackjackshellac.ca/prefs.js	/^      var [ok, iter] = model.get_iter_first();$/;"	V
+pack_preset_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    pack_preset_timers(timers) {$/;"	M
+pack_quick_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    pack_quick_timers(timers) {$/;"	M
+pack_start	kitchentimer@blackjackshellac.ca/menuitem.js	/^        pack_start: true,$/;"	P
+pack_timer	kitchentimer@blackjackshellac.ca/settings.js	/^    pack_timer(timer, quick) {$/;"	M
+pack_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    pack_timers(timers) {$/;"	M
+panel_label	kitchentimer@blackjackshellac.ca/timers.js	/^  get panel_label() {$/;"	M
+panel_name	kitchentimer@blackjackshellac.ca/timers.js	/^  get panel_name() {$/;"	M
+parse	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var parse = {$/;"	O
+parseTimerEntry	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static parseTimerEntry(entry, quick) {$/;"	M
+pending	kitchentimer@blackjackshellac.ca/notifier.js	/^    var [ rv, state, pending ] = ktn._player.get_state(500000);$/;"	V
+pid	kitchentimer@blackjackshellac.ca/utils.js	/^    var [status, pid] = GLib.spawn_async($/;"	V
+playSound_callback	kitchentimer@blackjackshellac.ca/notifier.js	/^	playSound_callback(ktn) {$/;"	M
+play_sound	kitchentimer@blackjackshellac.ca/settings.js	/^    get play_sound() {$/;"	M
+play_sound	kitchentimer@blackjackshellac.ca/settings.js	/^    set play_sound(bool) {$/;"	M
+popup	kitchentimer@blackjackshellac.ca/menus.js	/^    var popup = new PopupMenu.PopupSubMenuMenuItem(text);$/;"	V
+preferencesBuilder	kitchentimer@blackjackshellac.ca/prefs.js	/^  var preferencesBuilder = new PreferencesBuilder();$/;"	V
+presets_item	kitchentimer@blackjackshellac.ca/menus.js	/^            var presets_item = new PopupMenu.PopupMenuItem(preset_timers_label, { reactive: false } );$/;"	V
+pretty	kitchentimer@blackjackshellac.ca/hms.js	/^  pretty() {$/;"	M
+progress_gicon	kitchentimer@blackjackshellac.ca/indicator.js	/^    progress_gicon(degrees) {$/;"	M
+puts	install_local.sh	/^puts() {$/;"	f
+quick	kitchentimer@blackjackshellac.ca/menuitem.js	/^      quick: quick,$/;"	P
+quick	kitchentimer@blackjackshellac.ca/timers.js	/^  get quick() {$/;"	M
+quick	kitchentimer@blackjackshellac.ca/timers.js	/^  set quick(bool) {$/;"	M
+quick_item	kitchentimer@blackjackshellac.ca/menus.js	/^            var quick_item = new PopupMenu.PopupMenuItem(quick_timers_label, { reactive: false } );$/;"	V
+re	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^    var re = \/^(?<name>[^@]+)?@\\s*(?<h>\\d+):?(?<m>\\d+)?:?(?<s>\\d+)?[.]?(?<ms>\\d+)?\\s*(?<ampm>a\\.?m\\.?|p\\.?m\\.?)?$\/i;$/;"	V
+re	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var re = \/(?<name>([^\\s]+\\s)*?)?(?<t1>\\d+)?\\s*:?\\s*(?<t2>[\\d]+)?\\s*:?\\s*(?<t3>\\d+)?$\/;$/;"	V
+re	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var re = \/^(?<name>.*?)\\s+(?<t1>\\d+):(?<t2>[\\d]+):(?<t3>\\d+)$\/;$/;"	V
+re	kitchentimer@blackjackshellac.ca/menuitem.js	/^   var re = \/^((?<t1>\\d+):)?((?<t2>\\d+):)?(?<t3>\\d+)$\/;$/;"	V
+re_alarm	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_alarm(parse) {$/;"	M
+re_hms	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_hms(parse) {$/;"	M
+re_name_hms	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_name_hms(parse) {$/;"	M
+re_nan	kitchentimer@blackjackshellac.ca/menus.js	/^    var re_nan=\/[^0-9]\/$/;"	V
+re_wildcard	kitchentimer@blackjackshellac.ca/menuitem.js	/^  static re_wildcard(parse) {$/;"	M
+rebuild_menu	kitchentimer@blackjackshellac.ca/indicator.js	/^    rebuild_menu() {$/;"	M
+refresh	kitchentimer@blackjackshellac.ca/timers.js	/^  refresh() {$/;"	M
+refresh_with	kitchentimer@blackjackshellac.ca/timers.js	/^  refresh_with(settings_timer) {$/;"	M
+remove	kitchentimer@blackjackshellac.ca/timers.js	/^  remove(timer, i=undefined) {$/;"	M
+reset	kitchentimer@blackjackshellac.ca/timers.js	/^  get reset() {$/;"	M
+reset	kitchentimer@blackjackshellac.ca/timers.js	/^  set reset(bool) {$/;"	M
+restoreRunningTimers	kitchentimer@blackjackshellac.ca/timers.js	/^  restoreRunningTimers() {$/;"	M
+run	install_local.sh	/^run() {$/;"	f
+run_state	kitchentimer@blackjackshellac.ca/timers.js	/^        var run_state = {$/;"	O
+running	kitchentimer@blackjackshellac.ca/settings.js	/^    get running() {$/;"	M
+running	kitchentimer@blackjackshellac.ca/settings.js	/^    set running(json) {$/;"	M
+running	kitchentimer@blackjackshellac.ca/timers.js	/^    var running=[];$/;"	A
+running	kitchentimer@blackjackshellac.ca/timers.js	/^  get running() {$/;"	M
+running	kitchentimer@blackjackshellac.ca/timers.js	/^  set running(bool) {$/;"	M
+running_item	kitchentimer@blackjackshellac.ca/menus.js	/^    var running_item;$/;"	V
+running_timers	kitchentimer@blackjackshellac.ca/timers.js	/^    var running_timers = [...this].filter(timer => timer.running);$/;"	A
+running_timers	kitchentimer@blackjackshellac.ca/timers.js	/^    var running_timers = [...this].filter(timer => timer.running);$/;"	F
+rv	kitchentimer@blackjackshellac.ca/notifier.js	/^    var [ rv, state, pending ] = ktn._player.get_state(500000);$/;"	V
+s2s	kitchentimer@blackjackshellac.ca/hms.js	/^  s2s() {$/;"	M
+saveRunningTimers	kitchentimer@blackjackshellac.ca/timers.js	/^  saveRunningTimers() {$/;"	M
+save_quick_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    get save_quick_timers() {$/;"	M
+save_quick_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    set save_quick_timers(bool) {$/;"	M
+second	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  get second() { return this._second; }$/;"	M
+second	kitchentimer@blackjackshellac.ca/alarm_timer.js	/^  set second(s) {$/;"	M
+seconds	kitchentimer@blackjackshellac.ca/hms.js	/^  get seconds() {$/;"	M
+seconds	kitchentimer@blackjackshellac.ca/hms.js	/^  set seconds(seconds) {$/;"	M
+seconds	kitchentimer@blackjackshellac.ca/menuitem.js	/^      seconds: 0,$/;"	P
+setInterval	kitchentimer@blackjackshellac.ca/utils.js	/^function setInterval(func, delay, ...args) {$/;"	F
+setTimeout	kitchentimer@blackjackshellac.ca/utils.js	/^function setTimeout(func, delay, ...args) {$/;"	F
+set_panel_label	kitchentimer@blackjackshellac.ca/timers.js	/^  set_panel_label(text) {$/;"	M
+set_panel_name	kitchentimer@blackjackshellac.ca/timers.js	/^  set_panel_name(text, has_name=true) {$/;"	M
+settings	kitchentimer@blackjackshellac.ca/indicator.js	/^	  get settings() {$/;"	M
+settings	kitchentimer@blackjackshellac.ca/timers.js	/^  get settings() {$/;"	M
+settings_json	kitchentimer@blackjackshellac.ca/prefs.js	/^      let settings_json = 'kitchen_timer_settings.json' ;$/;"	V
+settings_json	kitchentimer@blackjackshellac.ca/prefs.js	/^      let settings_json = 'kitchen_timer_settings.json';$/;"	V
+show_label	kitchentimer@blackjackshellac.ca/settings.js	/^    get show_label() {$/;"	M
+show_label	kitchentimer@blackjackshellac.ca/settings.js	/^    set show_label(bool) {$/;"	M
+show_progress	kitchentimer@blackjackshellac.ca/settings.js	/^    get show_progress() {$/;"	M
+show_progress	kitchentimer@blackjackshellac.ca/settings.js	/^    set show_progress(bool) {$/;"	M
+show_time	kitchentimer@blackjackshellac.ca/settings.js	/^    get show_time() {$/;"	M
+show_time	kitchentimer@blackjackshellac.ca/settings.js	/^    set show_time(bool) {$/;"	M
+signal_id	kitchentimer@blackjackshellac.ca/utils.js	/^            signal_id: signal_id$/;"	P
+sort_by_duration	kitchentimer@blackjackshellac.ca/settings.js	/^    get sort_by_duration() {$/;"	M
+sort_by_duration	kitchentimer@blackjackshellac.ca/settings.js	/^    set sort_by_duration(bool) {$/;"	M
+sort_by_duration	kitchentimer@blackjackshellac.ca/timers.js	/^  get sort_by_duration() {$/;"	M
+sort_by_running	kitchentimer@blackjackshellac.ca/timers.js	/^  sort_by_running() {$/;"	M
+sort_descending	kitchentimer@blackjackshellac.ca/settings.js	/^    get sort_descending() {$/;"	M
+sort_descending	kitchentimer@blackjackshellac.ca/settings.js	/^    set sort_descending(bool) {$/;"	M
+sort_descending	kitchentimer@blackjackshellac.ca/timers.js	/^  get sort_descending() {$/;"	M
+sorted	kitchentimer@blackjackshellac.ca/timers.js	/^  sorted(params={running:true}) {$/;"	M
+sound_enabled	kitchentimer@blackjackshellac.ca/notifier.js	/^  get sound_enabled() {$/;"	M
+sound_file	kitchentimer@blackjackshellac.ca/notifier.js	/^  get sound_file() {$/;"	M
+sound_file	kitchentimer@blackjackshellac.ca/settings.js	/^    get sound_file() {$/;"	M
+sound_file	kitchentimer@blackjackshellac.ca/settings.js	/^    set sound_file(path) {$/;"	M
+sound_loops	kitchentimer@blackjackshellac.ca/notifier.js	/^  get sound_loops() {$/;"	M
+sound_loops	kitchentimer@blackjackshellac.ca/settings.js	/^    get sound_loops() {$/;"	M
+sound_loops	kitchentimer@blackjackshellac.ca/settings.js	/^    set sound_loops(loops) {$/;"	M
+source	kitchentimer@blackjackshellac.ca/notifier.js	/^  get source() {$/;"	M
+spawn	kitchentimer@blackjackshellac.ca/utils.js	/^function spawn(command, callback) {$/;"	F
+start	kitchentimer@blackjackshellac.ca/timers.js	/^  start() {$/;"	M
+state	kitchentimer@blackjackshellac.ca/notifier.js	/^    var [ rv, state, pending ] = ktn._player.get_state(500000);$/;"	V
+status	kitchentimer@blackjackshellac.ca/utils.js	/^    var [status, pid] = GLib.spawn_async($/;"	V
+still_valid	kitchentimer@blackjackshellac.ca/timers.js	/^  still_valid(settings_timers) {$/;"	M
+stop	kitchentimer@blackjackshellac.ca/menuitem.js	/^    stop() {$/;"	M
+stop	kitchentimer@blackjackshellac.ca/timers.js	/^  stop() {$/;"	M
+stop_callback	kitchentimer@blackjackshellac.ca/timers.js	/^  stop_callback(now) {$/;"	M
+stop_player	kitchentimer@blackjackshellac.ca/notifier.js	/^  stop_player() {$/;"	M
+style_class	kitchentimer@blackjackshellac.ca/menuitem.js	/^      style_class: null$/;"	P
+subject	kitchentimer@blackjackshellac.ca/utils.js	/^            subject: subject,$/;"	P
+switch	kitchentimer@blackjackshellac.ca/settings.js	/^        switch(key) {$/;"	M
+tbid	kitchentimer@blackjackshellac.ca/timers.js	/^    var tbid = this.filter(timer => timer.id == id);$/;"	F
+text	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var text="%s %02d:%02d:%02d".format(this._name, this._hslider.value, this._mslider.value, this._sslider.value);$/;"	V
+time	kitchentimer@blackjackshellac.ca/timers.js	/^    var time=new Date(now).toLocaleTimeString();$/;"	V
+time_number	kitchentimer@blackjackshellac.ca/menus.js	/^  time_number(text) {$/;"	M
+timer	kitchentimer@blackjackshellac.ca/menuitem.js	/^    var timer = new Timer(result.name, result.hms.toSeconds());$/;"	V
+timer	kitchentimer@blackjackshellac.ca/menuitem.js	/^  get timer() {$/;"	M
+timer	kitchentimer@blackjackshellac.ca/prefs.js	/^        var timer={};$/;"	O
+timer	kitchentimer@blackjackshellac.ca/prefs.js	/^      var timer = {}$/;"	O
+timer	kitchentimer@blackjackshellac.ca/timers.js	/^    var timer = new Timer(result.name, result.hms.toSeconds());$/;"	V
+timer	kitchentimer@blackjackshellac.ca/timers.js	/^    var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);$/;"	V
+timer_by_id	kitchentimer@blackjackshellac.ca/timers.js	/^  timer_by_id(id) {$/;"	M
+timer_callback	kitchentimer@blackjackshellac.ca/timers.js	/^  timer_callback(timer) {$/;"	M
+timer_icon	kitchentimer@blackjackshellac.ca/menuitem.js	/^      var timer_icon = new St.Icon({$/;"	V
+timer_item	kitchentimer@blackjackshellac.ca/menus.js	/^      var timer_item = new Mitem.KitchenTimerMenuItem(timer, this._menu);$/;"	V
+timers	kitchentimer@blackjackshellac.ca/indicator.js	/^	  get timers() {$/;"	M
+timers	kitchentimer@blackjackshellac.ca/menus.js	/^  get timers() {$/;"	M
+timers	kitchentimer@blackjackshellac.ca/prefs.js	/^      var timers = [];$/;"	A
+timers	kitchentimer@blackjackshellac.ca/settings.js	/^    get timers() {$/;"	M
+timers	kitchentimer@blackjackshellac.ca/timers.js	/^  get timers() {$/;"	M
+timersInstance	kitchentimer@blackjackshellac.ca/timers.js	/^var timersInstance = new Timers();$/;"	V
+timers_array	kitchentimer@blackjackshellac.ca/timers.js	/^    var timers_array = [...this];$/;"	A
+toName	kitchentimer@blackjackshellac.ca/hms.js	/^  toName() {$/;"	M
+toSeconds	kitchentimer@blackjackshellac.ca/hms.js	/^  toSeconds() {$/;"	M
+toString	kitchentimer@blackjackshellac.ca/hms.js	/^  toString(compact) {$/;"	M
+toString	kitchentimer@blackjackshellac.ca/timers.js	/^  toString() {$/;"	M
+to_s	kitchentimer@blackjackshellac.ca/hms.js	/^  static to_s(v) {$/;"	M
+unpack_preset_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    unpack_preset_timers(settings_timers=[]) {$/;"	M
+unpack_quick_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    unpack_quick_timers(settings_timers=[]) {$/;"	M
+unpack_timer	kitchentimer@blackjackshellac.ca/settings.js	/^    unpack_timer(timer_settings, quick) {$/;"	M
+unpack_timers	kitchentimer@blackjackshellac.ca/settings.js	/^    unpack_timers() {$/;"	M
+update_time	kitchentimer@blackjackshellac.ca/menuitem.js	/^  update_time() {$/;"	M
+uuid	kitchentimer@blackjackshellac.ca/utils.js	/^function uuid(id=undefined) {$/;"	F
+validate_integer	kitchentimer@blackjackshellac.ca/menus.js	/^  validate_integer(text, min=0) {$/;"	M
+value	kitchentimer@blackjackshellac.ca/menuitem.js	/^      slider.value = (this._value-this._min)\/this._max;$/;"	M
+value	kitchentimer@blackjackshellac.ca/menuitem.js	/^    this._slider.value = (val-this._min)\/this._max;$/;"	M
+value	kitchentimer@blackjackshellac.ca/menuitem.js	/^  get value() {$/;"	M
+value	kitchentimer@blackjackshellac.ca/menuitem.js	/^  set value(val) {$/;"	M
+warn	install_local.sh	/^warn() {$/;"	f
+warn	kitchentimer@blackjackshellac.ca/logger.js	/^    warn(format, ...args) {$/;"	M
+wrappedFunc	kitchentimer@blackjackshellac.ca/utils.js	/^    const wrappedFunc = () => {$/;"	F
+x_expand	kitchentimer@blackjackshellac.ca/menuitem.js	/^        x_expand: false,$/;"	P
+x_expand	kitchentimer@blackjackshellac.ca/menuitem.js	/^        x_expand: true,$/;"	P
+x_expand	kitchentimer@blackjackshellac.ca/menuitem.js	/^      x_expand: true$/;"	P
+x_expand	kitchentimer@blackjackshellac.ca/menuitem.js	/^      x_expand: true,$/;"	P
+y_expand	kitchentimer@blackjackshellac.ca/indicator.js	/^          y_expand: false,$/;"	P
