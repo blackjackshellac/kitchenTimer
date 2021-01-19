@@ -23,6 +23,8 @@ const _ = Gettext.gettext;
 String.prototype.format = imports.format.format;
 
 const GLib = imports.gi.GLib;
+const ByteArray = imports.byteArray;
+
 var clearTimeout, clearInterval;
 clearTimeout = clearInterval = GLib.Source.remove;
 
@@ -55,6 +57,23 @@ function spawn(command, callback) {
 
     if (callback)
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
+}
+
+function execute(cmdargs) {
+  var [ok, stdout, stderr, exit_status] = GLib.spawn_sync(
+    null, // working directory
+    cmdargs,  // string array
+    null,     // envp
+    GLib.SpawnFlags.SEARCH_PATH,
+    null    // child setup function
+  );
+  //log(`ok=${ok} exit_status=${exit_status} stdout=${stdout}`);
+  if (ok) {
+    if (exit_status === 0) {
+      return ByteArray.toString(stdout);
+    }
+  }
+  return undefined;
 }
 
 function uuid(id=undefined) {

@@ -24,13 +24,14 @@ const Params = imports.misc.params;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const { GLib, GObject } = imports.gi;
+const { GLib, GObject, Gio } = imports.gi;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 
 // szm - from tea-time
 imports.gi.versions.Gst = '1.0';
 const Gst = imports.gi.Gst;
+//const GstAudio = imports.gi.GstAudio;
 
 // for setInterval()
 const Utils = Me.imports.utils;
@@ -39,23 +40,59 @@ const Logger = Me.imports.logger.Logger;
 class Annoyer {
   constructor(timers) {
     this._settings = timers.settings;
-    this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+    this._source = this._createSource();
 
     //var policy = new MessageTray.NotificationPolicy({'show-in-lock-screen': true, 'details-in-lock-screen': true});
     //this._source.policy = policy;
 
-    Main.messageTray.add(this._source);
+    this.logger = new Logger('kt notifier', this._settings.debug);
+
+    this._gicon = Gio.icon_new_for_string('dialog-warning');
+
+    this._source.connect('destroy', (source) => {
+      this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+      Main.messageTray.add(this._source);
+    });
+  }
+
+  _createSource() {
+    var source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+    Main.messageTray.add(source);
+
+    source.connect('destroy', (source) => {
+      this.logger.debug("Kitchen Timer messageTray source destroyed, recreating");
+      this._source = this._createSource();
+    });
+
+    return source;
+  }
+
+  warning(timer, text, fmt=undefined, ...args) {
+    var source = this._createSource();
+
+    let details = fmt === undefined ? "" : fmt.format(...args);
+
+    var notifier = new KitchenTimerNotifier(timer,
+                                              source,
+                                              "Timer Warning: "+text,
+                                              details,
+                                              false,    // no sound
+                                              { gicon: timer.timers.indicator.gicon, bannerMarkup: true,
+                                              secondaryGIcon: this._gicon });
+
+    source.showNotification(notifier);
   }
 
   notify(timer, text, fmt=undefined, ...args) {
 
-    let details = fmt.undefined ? fmt : fmt.format(...args);
+    let details = fmt===undefined ? "" : fmt.format(...args);
 
     var notifier = new KitchenTimerNotifier(timer,
                                               this.source,
                                               text,
                                               details,
-                                              { gicon: timer.timers.indicator.gicon });
+                                              true,   // sound
+                                              { gicon: timer.timers.indicator.gicon, bannerMarkup: false });
 
     notifier.setTransient(false);
     //notifier.setPrivacyScope(MessageTray.PrivacyScope.SYSTEM);
@@ -78,6 +115,77 @@ class Annoyer {
     return this._settings.notification;
   }
 
+  get_channels(output) {
+    var channels=[];
+    var re=/^\s*Playback channels:\s*([^-]+)+-(.*)$/mg;
+    var m = re.exec(output);
+    if (m) {
+      this.logger.debug("channels=%d", m.length);
+      for (var i=1; i < m.length; i++) {
+        var channel=m[i].trim();
+        this.logger.debug("channel %d: %s", i, channel);
+        channels.push(channel);
+      }
+    }
+    return channels;
+  }
+
+  get_channel_volume(channels, line) {
+    for (var i=0; i < channels.length; i++) {
+      if (line.startsWith(channels[i]+":")) {
+        // Front Left: Playback 65536 [100%] [on]
+        var re=/Playback\s*(\d+)\s*\[(.*?)%\]\s*\[(.*?)\]/
+        var m = re.exec(line);
+        if (m) {
+          var channel_volume = {
+            channel: channels[i],
+            level: Number(m[1]),
+            percent: Number(m[2]),
+            on: m[3]
+          }
+          return channel_volume;
+        }
+      }
+    }
+    return undefined;
+  }
+
+  check_volume(min_percent=25) {
+    var output = Utils.execute([ 'amixer', 'get', 'Master' ]);
+    if (output === undefined) {
+      this.logger.error("Failed to check volume levels with amixer");
+      return;
+    }
+    this.logger.debug("output=%s", output);
+    // Simple mixer control 'Master',0
+    // Capabilities: pvolume pswitch pswitch-joined
+    // Playback channels: Front Left - Front Right
+    // Limits: Playback 0 - 65536
+    // Mono:
+    // Front Left: Playback 65536 [100%] [on]
+    // Front Right: Playback 65536 [100%] [on]
+
+    var channels = this.get_channels(output);
+    if (channels.length == 0) {
+      this.logger.debug("No output channels found");
+    }
+
+    var channel_volumes = [];
+
+    var lines=output.split(/\r?\n/);
+    lines.forEach( (line) => {
+      line=line.trim();
+      var channel_volume = this.get_channel_volume(channels, line);
+      if (channel_volume !== undefined) {
+        if (channel_volume.percent < min_percent) {
+          channel_volumes.push(channel_volume);
+          this.logger.warn("Low volume detected for channel %s: %s%% [line]", channel_volume.channel, channel_volume.percent, line);
+        }
+      }
+    });
+
+    return channel_volumes.length == 0 ? undefined : channel_volumes;
+  }
 }
 
 // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/master/js/ui/messageTray.js
@@ -174,7 +282,7 @@ class Annoyer {
 
 var KitchenTimerNotifier = GObject.registerClass(
 class KitchenTimerNotifier extends MessageTray.Notification {
-  _init(timer, source, title, banner, params) {
+  _init(timer, source, title, banner, play_sound, params) {
     super._init(source, title, banner, params);
 
     this.logger = new Logger('kt notifier', timer.timers.settings.debug);
@@ -184,7 +292,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this._loops = 0;
 
     this.logger.debug('timer is %s', timer.expired ? "expired" : "not expired");
-    if (timer.expired && this.sound_enabled) {
+    if (play_sound && timer.expired && this.sound_enabled) {
       this._initPlayer();
 
       // call callback manually to play a sound without waiting for the given interval to end
@@ -248,6 +356,9 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this.logger.debug("initPlayer with uri=%s", this._uri);
     Gst.init(null);
     this._player  = Gst.ElementFactory.make("playbin","player");
+    //let vol = this._player.get_volume(GstAudio.StreamVolumeFormat.LINEAR) *100;
+    //this.logger.debug("linear volume is %f", vol);
+
     this.playBus = this._player.get_bus();
     this.playBus.add_signal_watch();
     this.playBus.connect('message', (playBus, message) => {

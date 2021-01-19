@@ -622,6 +622,18 @@ class Timer {
     var quick=this._quick ? ' quick ' : ' ';
     this.logger.info("%s%stimer at %d", action, quick, this._start);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
+
+    if (timersInstance.settings.play_sound) {
+      // array of { channel, level, percent, on }
+      var msg="";
+      var channel_volumes = timersInstance.notifier.check_volume(25);
+      if (channel_volumes) {
+        channel_volumes.forEach( (channel_volume) => {
+          msg += "<b>%s</b> channel volume low <i>%d%s</i>\r\n".format(channel_volume.channel, channel_volume.percent, "%%");
+        });
+        timersInstance.notifier.warning(this, this.name, msg);
+      }
+    }
     return true;
   }
 
