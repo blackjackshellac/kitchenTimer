@@ -134,14 +134,13 @@ class Annoyer {
     for (var i=0; i < channels.length; i++) {
       if (line.startsWith(channels[i]+":")) {
         // Front Left: Playback 65536 [100%] [on]
-        var re=/Playback\s*(\d+)\s*\[(.*?)%\]\s*\[(.*?)\]/
+        var re=/Playback\s*(\d+)\s*\[(.*?)%\].*$/
         var m = re.exec(line);
         if (m) {
           var channel_volume = {
             channel: channels[i],
             level: Number(m[1]),
-            percent: Number(m[2]),
-            on: m[3]
+            percent: Number(m[2])
           }
           return channel_volume;
         }
