@@ -119,7 +119,7 @@ class AlarmTimer {
     // second g4
     // ms g5
     // ampm g6
-    var re= /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
+    var re= /^([^@]+)?@\s*(\d+):?(\d+)?:?(?<s>\d+)?[.]?(\d+)?\s*(a\.?m\.?|p\.?m\.?)?$/i;
     var m=re.exec(entry);
     if (!m) {
       return undefined;
