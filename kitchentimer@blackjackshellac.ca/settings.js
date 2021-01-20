@@ -34,6 +34,14 @@ class Settings {
     constructor() {
         this.settings = ExtensionUtils.getSettings();
         this.logger = new Logger('kt settings', this.debug)
+
+        this._timer_defaults = {
+          name: "",
+          id: "",
+          duration: 120,
+          enabled: true,
+          quick: false
+        }
     }
 
     unpack_preset_timers(settings_timers=[]) {
@@ -69,6 +77,13 @@ class Settings {
         h[key]=value.unpack();
       }
       h.quick = quick;
+
+      for (const [key, value] of Object.entries(this._timer_defaults)) {
+        if (h[key] === undefined) {
+          h[key] = value;
+        }
+      }
+
       return h;
     }
 

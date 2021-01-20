@@ -77,7 +77,7 @@ function execute(cmdargs) {
 }
 
 function uuid(id=undefined) {
-  return id == undefined ? GLib.uuid_string_random() : id;
+  return id === undefined || id.length === 0 ? GLib.uuid_string_random() : id;
 }
 
 function isDebugModeEnabled() {
