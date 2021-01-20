@@ -555,7 +555,12 @@ class PreferencesBuilder {
         return false;
       }
       var model = timers_combo.get_model();
-      var [ ok, iter ] = timers_combo.get_active_iter();
+      var [ ok, iter ] = model.get_iter_first();
+      if (!ok) {
+        // model is empty
+        return true;
+      }
+      [ ok, iter ] = timers_combo.get_active_iter();
       if (ok && iter) {
         this.allow_updates = false;
         var name = model.get_value(iter, Model.NAME);
