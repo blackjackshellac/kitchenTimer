@@ -26,7 +26,8 @@ const HMS = Me.imports.hms.HMS;
 var AmPm = {
   H24: 0,
   AM: 1,
-  PM: 2
+  PM: 2,
+  RE: /p\.?m\.?/i
 }
 
 var logger = new Logger('kt alarm timer');
@@ -111,20 +112,39 @@ class AlarmTimer {
   }
 
   static matchRegex(entry) {
-    var re = /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
+    //var named_re = /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
+    // name g1
+    // hour g2
+    // minute g3
+    // second g4
+    // ms g5
+    // ampm g6
+    var re= /^(?<name>[^@]+)?@\s*(?<h>\d+):?(?<m>\d+)?:?(?<s>\d+)?[.]?(?<ms>\d+)?\s*(?<ampm>a\.?m\.?|p\.?m\.?)?$/i;
     var m=re.exec(entry);
     if (!m) {
       return undefined;
     }
 
     var alarm_timer = new AlarmTimer();
-    alarm_timer.fromRegexGroups(m.groups);
+    //alarm_timer.fromRegexNamedGroups(m.groups);
+    alarm_timer.fromRegexMatches(m);
     return alarm_timer;
   }
 
-  fromRegexGroups(g) {
+  fromRegexMatches(m) {
+    this.name = m[1];
+    this.hour = m[2];
+    this.minute = m[3];
+    this.second = m[4];
+    this.ms = m[5];
+    if (m[6]) {
+      this.ampm = m[6].match(AmPm.RE) ? AmPm.PM : AmPm.AM;
+    }
+  }
+
+  fromRegexNamedGroups(g) {
     if (g.ampm) {
-      this.ampm = g.ampm.match(/p\.?m\.?/i) ? AmPm.PM : AmPm.AM;
+      this.ampm = g.ampm.match(AmPm.RE) ? AmPm.PM : AmPm.AM;
     }
     this.name = g.name;
     this.hour = g.h;
