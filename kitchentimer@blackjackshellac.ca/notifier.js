@@ -115,16 +115,19 @@ class Annoyer {
     return this._settings.notification;
   }
 
-  get_channels(output) {
+  get_channels(lines) {
     var channels=[];
-    var re=/^\s*Playback channels:\s*([^-]+)+-(.*)$/mg;
-    var m = re.exec(output);
-    if (m) {
-      this.logger.debug("channels=%d", m.length);
-      for (var i=1; i < m.length; i++) {
-        var channel=m[i].trim();
-        this.logger.debug("channel %d: %s", i, channel);
-        channels.push(channel);
+    var re=/^\s*Playback channels:\s*([^-]+)+-?(.*)$/;
+    for (var i=0; i < lines.length; i++) {
+      var output=lines[i].trim();
+      var m = re.exec(output);
+      if (m) {
+        this.logger.debug("channels=%d", m.length);
+        for (var i=1; i < m.length; i++) {
+          var channel=m[i].trim();
+          this.logger.debug("channel %d: %s", i, channel);
+          channels.push(channel);
+        }
       }
     }
     return channels;
@@ -164,14 +167,15 @@ class Annoyer {
     // Front Left: Playback 65536 [100%] [on]
     // Front Right: Playback 65536 [100%] [on]
 
-    var channels = this.get_channels(output);
+    var lines=output.split(/\r?\n/);
+
+    var channels = this.get_channels(lines);
     if (channels.length == 0) {
       this.logger.debug("No output channels found");
     }
 
     var channel_volumes = [];
 
-    var lines=output.split(/\r?\n/);
     lines.forEach( (line) => {
       line=line.trim();
       var channel_volume = this.get_channel_volume(channels, line);
