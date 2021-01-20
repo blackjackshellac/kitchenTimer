@@ -410,8 +410,8 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         parse.hours=m[2];
         parse.minutes=m[4];
         parse.seconds=m[5];
-      } else if (m[3] && m[5]) {
-        parse.minutes=m[3];
+      } else if (m[2] && m[5]) {
+        parse.minutes=m[2];
         parse.seconds=m[5];
       } else if (m[5]) {
         parse.seconds=m[5];

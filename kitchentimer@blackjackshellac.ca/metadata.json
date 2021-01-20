@@ -3,6 +3,7 @@
   "description": "General purpose timer extension for Gnome Shell",
   "uuid": "kitchentimer@blackjackshellac.ca",
   "shell-version": [
+    "3.36",
     "3.38"
   ],
   "gettext-domain": "kitchen-timer-blackjackshellac",
