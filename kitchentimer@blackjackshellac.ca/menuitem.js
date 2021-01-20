@@ -389,22 +389,32 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
   // hms, ms or s
   static re_hms(parse) {
-   var re = /^((?<t1>\d+):)?((?<t2>\d+):)?(?<t3>\d+)$/;
+    // t1 = m[1], t2 = m[2], t3 = m[3]
+    //var re = /^((?<t1>\d+):)?((?<t2>\d+):)?(?<t3>\d+)$/;
+
+    // m0 "0:0:120",
+    // m1 "0:",
+    // h m2 "0",
+    // m3 "0:",
+    // m m4 "0",
+    // s m5 "120"
+
+    var re = /^((\d+):)?((\d+):)?(\d+)$/;
     var m = re.exec(parse.entry);
     if (m) {
       logger.debug("matched in re_hms");
-      var g=m.groups;
-      //Utils.logObjectPretty(g);
+      //var g=m.groups;
+      Utils.logObjectPretty(m);
       parse.has_time = true;
-      if (g.t3 && g.t2 && g.t1) {
-        parse.hours=g.t1;
-        parse.minutes=g.t2;
-        parse.seconds=g.t3;
-      } else if (g.t1 && g.t3) {
-        parse.minutes=g.t1;
-        parse.seconds=g.t3;
-      } else if (g.t3) {
-        parse.seconds=g.t3;
+      if (m[2] && m[4] && m[5]) {
+        parse.hours=m[2];
+        parse.minutes=m[4];
+        parse.seconds=m[5];
+      } else if (m[3] && m[5]) {
+        parse.minutes=m[3];
+        parse.seconds=m[5];
+      } else if (m[5]) {
+        parse.seconds=m[5];
       } else {
         parse.has_time = false;
       }
@@ -415,17 +425,18 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
   // well formed, name HH:MM:SS
   static re_name_hms(parse) {
-    var re = /^(?<name>.*?)\s+(?<t1>\d+):(?<t2>[\d]+):(?<t3>\d+)$/;
+    //var re = /^(?<name>.*?)\s+(?<t1>\d+):(?<t2>[\d]+):(?<t3>\d+)$/;
+    var re = /^(.*?)\s+(\d+):(\d+):(\d+)$/;
     var m = re.exec(parse.entry);
     if (m) {
       logger.debug("matched in re_name_hms");
-      var g=m.groups;
+      //var g=m.groups;
       //Utils.logObjectPretty(g);
 
-      parse.name = g.name;
-      parse.hours = g.t1;
-      parse.minutes = g.t2;
-      parse.seconds = g.t3;
+      parse.name = m[1];
+      parse.hours = m[2];
+      parse.minutes = m[3];
+      parse.seconds = m[4];
       parse.has_time = true;
       return true;
     }
@@ -437,26 +448,57 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
   // name? SS
   // name
   static re_wildcard(parse) {
-    var re = /(?<name>([^\s]+\s)*?)?(?<t1>\d+)?\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
+    //var re = /(?<name>([^\s]+\s)*?)?(?<t1>\d+)?\s*:?\s*(?<t2>[\d]+)?\s*:?\s*(?<t3>\d+)?$/;
+    var re = /(([^\s]+\s)*?)?(\d+)?\s*:?\s*([\d]+)?\s*:?\s*(\d+)?$/;
     var m=re.exec(parse.entry+' ');
     if (m) {
-      var g=m.groups;
-      if (g.name) {
-        parse.name=g.name.trim();
+      //var g=m.groups;
+      // if (g.name) {
+      //   parse.name=g.name.trim();
+      // }
+      // parse.has_time = true;
+      // if (g.t3 && g.t2 && g.t1) {
+      //   parse.hours=g.t1;
+      //   parse.minutes=g.t2;
+      //   parse.seconds=g.t3;
+      // } else if (g.t2 && g.t1) {
+      //   parse.minutes=g.t1;
+      //   parse.seconds=g.t2;
+      // } else if (g.t1) {
+      //   parse.seconds=g.t1;
+      // } else {
+      //   parse.has_time = false;
+      // }
+
+      if (m[1]) {
+        parse.name = m[1];
       }
       parse.has_time = true;
-      if (g.t3 && g.t2 && g.t1) {
-        parse.hours=g.t1;
-        parse.minutes=g.t2;
-        parse.seconds=g.t3;
-      } else if (g.t2 && g.t1) {
-        parse.minutes=g.t1;
-        parse.seconds=g.t2;
-      } else if (g.t1) {
-        parse.seconds=g.t1;
+      if (m[1] && m[3] && m[4] && m[5]) {
+        // gjs> m=re.exec("name of thing 00:12:24")
+        // name of thing 00:12:24,name of thing ,thing ,00,12,24
+        parse.hours = m[3];
+        parse.minutes = m[4];
+        parse.seconds = m[5];
+      } else if (m[1] && m[3] && m[4]) {
+        // gjs> m=re.exec("name of thing 1:2")
+        // name of thing 1:2,name of thing ,thing ,1,2,
+        parse.minutes = m[3];
+        parse.seconds = m[4];
+      } else if (m[1] && m[3]) {
+        // gjs> m=re.exec("name of thing 59")
+        // name of thing 59,name of thing ,thing ,59,,
+        parse.seconds = m[3];
       } else {
         parse.has_time = false;
       }
+
+      // gjs> m=re.exec("name of thing")
+      // ,,,,,
+      // gjs> m=re.exec("name of thing 0")
+
+      Utils.logObjectPretty(m);
+
       return true;
     }
     return false;
@@ -491,7 +533,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     }
 
     parse.hms = HMS.create(parse.hours, parse.minutes, parse.seconds);
-    //Utils.logObjectPretty(parse);
+    Utils.logObjectPretty(parse);
     return parse;
   }
 });
@@ -539,7 +581,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
         this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
         var timer = KitchenTimerMenuItem.addTimerStart(result, this._timers);
         if (timer === undefined) {
-          this._gogo.setToggledState(false);
+          this._gogo.set_active(false);
         } else {
           this._menu.close();
         }
