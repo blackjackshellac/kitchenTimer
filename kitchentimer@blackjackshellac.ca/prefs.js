@@ -554,7 +554,6 @@ class PreferencesBuilder {
       if (!this.allow_updates) {
         return false;
       }
-      // TODO fix this duplication
       var model = timers_combo.get_model();
       var [ ok, iter ] = timers_combo.get_active_iter();
       if (iter) {

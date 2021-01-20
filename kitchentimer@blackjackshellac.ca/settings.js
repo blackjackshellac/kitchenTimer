@@ -81,7 +81,6 @@ class Settings {
           atimers.push(atimer);
         }
       });
-      // TODO what if it's empty?
       var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
       var pack = GLib.Variant.new_array(glvtype, atimers);
       this.settings.set_value('timers', pack);
@@ -97,7 +96,6 @@ class Settings {
           atimers.push(atimer);
         }
       });
-      // TODO what if it's empty?
       var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
       var pack = GLib.Variant.new_array(glvtype, atimers);
       this.settings.set_value('quick-timers', pack);
@@ -114,7 +112,6 @@ class Settings {
           atimers.push(atimer);
         }
       });
-      // TODO what if it's empty?
       var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
       var pack = GLib.Variant.new_array(glvtype, atimers);
       this.settings.set_value('timers', pack);
@@ -129,7 +126,6 @@ class Settings {
             atimers.push(atimer);
           }
         });
-        // TODO what if it's empty?
         var glvtype = atimers.length == 0 ? GLib.Variant.new('a{sv}').get_type() : atimers[0].get_type();
         var pack = GLib.Variant.new_array(glvtype, atimers);
         this.settings.set_value('quick-timers', pack);

@@ -199,14 +199,4 @@ class PanelMenuBuilder {
     menu.addMenuItem(item);
     return item;
   }
-
-  // TODO figure out how to reset timer
-  _reset_timer() {
-    this.logger.info("_reset_timer");
-  }
-
-  _run_timer() {
-    this.logger.info("_run_timer");
-  }
-
 }

@@ -595,7 +595,6 @@ class Timer {
     if (this._enabled || this._quick) {
       if (this.running) {
         this.logger.info(`Timer is already running, resetting`);
-        // TODO prompt to reset
         this.reset = true;
         return false;
       }
