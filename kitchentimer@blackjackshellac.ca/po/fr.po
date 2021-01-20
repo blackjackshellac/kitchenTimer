@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-19 13:46-0500\n"
+"POT-Creation-Date: 2021-01-20 12:06-0500\n"
 "PO-Revision-Date: 2021-01-18 12:59-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -302,7 +302,7 @@ msgstr "Les paramètres ont été importés du %s"
 msgid "Create Preset"
 msgstr "Créer un préréglage"
 
-#: ../menuitem.js:52 ../menuitem.js:523
+#: ../menuitem.js:52 ../menuitem.js:561
 msgid "Name 00:00:00"
 msgstr "Nom 00:00:00"
 
@@ -310,11 +310,11 @@ msgstr "Nom 00:00:00"
 msgid "Create"
 msgstr "Créer"
 
-#: ../menuitem.js:502
+#: ../menuitem.js:540
 msgid "Quick"
 msgstr "Pratique"
 
-#: ../menuitem.js:526
+#: ../menuitem.js:564
 msgid "Go"
 msgstr "Go"
 
