@@ -158,7 +158,7 @@ class Annoyer {
       this.logger.error("Failed to check volume levels with amixer");
       return;
     }
-    this.logger.debug("output=%s", output);
+    //this.logger.debug("output=%s", output);
     // Simple mixer control 'Master',0
     // Capabilities: pvolume pswitch pswitch-joined
     // Playback channels: Front Left - Front Right

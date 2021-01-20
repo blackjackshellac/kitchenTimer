@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-19 13:46-0500\n"
-"PO-Revision-Date: 2021-01-19 13:46-0500\n"
+"POT-Creation-Date: 2021-01-20 12:04-0500\n"
+"PO-Revision-Date: 2021-01-20 12:04-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -40,7 +40,7 @@ msgid "Create Preset"
 msgstr ""
 
 #: menuitem.js:51 menuitem.js:52 menuitem.js:182 menuitem.js:184
-#: menuitem.js:430 menuitem.js:523 menus.js:251
+#: menuitem.js:430 menuitem.js:523 menuitem.js:561 menus.js:251
 msgid "Name 00:00:00"
 msgstr ""
 
@@ -55,11 +55,13 @@ msgid "Create"
 msgstr ""
 
 #: menuitem.js:161 menuitem.js:163 menuitem.js:409 menuitem.js:502
+#: menuitem.js:540
 msgid "Quick"
 msgstr ""
 
-#: menuitem.js:185 menuitem.js:187 menuitem.js:433 menuitem.js:526 menus.js:209
-#: menus.js:235 menus.js:243 menus.js:246 menus.js:247 menus.js:254
+#: menuitem.js:185 menuitem.js:187 menuitem.js:433 menuitem.js:526
+#: menuitem.js:564 menus.js:209 menus.js:235 menus.js:243 menus.js:246
+#: menus.js:247 menus.js:254
 msgid "Go"
 msgstr ""
 

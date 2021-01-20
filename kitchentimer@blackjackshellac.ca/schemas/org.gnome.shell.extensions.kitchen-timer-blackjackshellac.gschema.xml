@@ -61,7 +61,7 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <summary>Play sound notifications</summary>
     </key>
     <key name="sound-loops" type="i">
-      <default>5</default>
+      <default>2</default>
       <summary>Number of times to ring alarm sound, 0 is no sound, -1 is infinite</summary>
     </key>
     <key name="sound-file" type="s">

@@ -404,7 +404,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     if (m) {
       logger.debug("matched in re_hms");
       //var g=m.groups;
-      Utils.logObjectPretty(m);
+      //Utils.logObjectPretty(m);
       parse.has_time = true;
       if (m[2] && m[4] && m[5]) {
         parse.hours=m[2];
@@ -493,11 +493,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         parse.has_time = false;
       }
 
-      // gjs> m=re.exec("name of thing")
-      // ,,,,,
-      // gjs> m=re.exec("name of thing 0")
-
-      Utils.logObjectPretty(m);
+      //Utils.logObjectPretty(m);
 
       return true;
     }
@@ -533,7 +529,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     }
 
     parse.hms = HMS.create(parse.hours, parse.minutes, parse.seconds);
-    Utils.logObjectPretty(parse);
+    //Utils.logObjectPretty(parse);
     return parse;
   }
 });
