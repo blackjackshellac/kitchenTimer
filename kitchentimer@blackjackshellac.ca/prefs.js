@@ -556,7 +556,7 @@ class PreferencesBuilder {
       }
       var model = timers_combo.get_model();
       var [ ok, iter ] = timers_combo.get_active_iter();
-      if (iter) {
+      if (ok && iter) {
         this.allow_updates = false;
         var name = model.get_value(iter, Model.NAME);
         if (entry !== undefined && entry !== name) {
