@@ -107,7 +107,7 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     </key>
     <key name="volume-threshold" type="i">
       <default>25</default>
-      <summary>Volume threshold in percent, when checking if system volume is turned down too low</summary>
+      <summary>Low volume threshold in percent</summary>
     </key>
     <key name="debug" type="b">
       <default>false</default>
