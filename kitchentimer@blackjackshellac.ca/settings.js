@@ -329,6 +329,13 @@ class Settings {
       this.settings.set_string('running', json);
     }
 
+    get volume_threshold() {
+      var vt = this.settings.get_int('volume-threshold');
+      if (vt < 0) { vt = 0; }
+      else if (vt > 100) { vt = 100; }
+      return vt;
+    }
+
     get debug() {
       return this.settings.get_boolean('debug');
     }

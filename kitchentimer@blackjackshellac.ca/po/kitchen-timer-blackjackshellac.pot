@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 12:04-0500\n"
-"PO-Revision-Date: 2021-01-20 12:04-0500\n"
+"POT-Creation-Date: 2021-01-20 17:02-0500\n"
+"PO-Revision-Date: 2021-01-20 17:02-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -238,6 +238,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:106
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:107
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:110
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:114
 msgid "Turn on debugging"
 msgstr ""
 
@@ -247,6 +248,12 @@ msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:106
 msgid "State of running timers as json string"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:110
+msgid ""
+"Volume threshold in percent, when checking if system volume is turned down "
+"too low"
 msgstr ""
 
 #: settings.ui:55 settings.ui:184 settings.ui:192 settings.ui:194

@@ -625,7 +625,8 @@ class Timer {
     if (timersInstance.settings.play_sound) {
       // array of { channel, level, percent, on }
       var msg="";
-      var channel_volumes = timersInstance.notifier.check_volume(25);
+      var volume_threshold = timersInstance.settings.volume_threshold;
+      var channel_volumes = timersInstance.notifier.check_volume(volume_threshold);
       if (channel_volumes) {
         channel_volumes.forEach( (channel_volume) => {
           msg += "<b>%s</b> channel volume low <i>%d%s</i>\r\n".format(channel_volume.channel, channel_volume.percent, "%%");

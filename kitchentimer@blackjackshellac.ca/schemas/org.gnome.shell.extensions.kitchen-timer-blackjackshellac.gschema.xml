@@ -105,6 +105,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>'[]'</default>
       <summary>State of running timers as json string</summary>
     </key>
+    <key name="volume-threshold" type="i">
+      <default>25</default>
+      <summary>Volume threshold in percent, when checking if system volume is turned down too low</summary>
+    </key>
     <key name="debug" type="b">
       <default>false</default>
       <summary>Turn on debugging</summary>

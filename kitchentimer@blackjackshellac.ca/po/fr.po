@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 12:06-0500\n"
+"POT-Creation-Date: 2021-01-20 20:54-0500\n"
 "PO-Revision-Date: 2021-01-18 12:59-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -421,6 +421,12 @@ msgid "State of running timers as json string"
 msgstr "État des minuteries en cours d'exécution comme json"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:110
+msgid ""
+"Volume threshold in percent, when checking if system volume is turned down "
+"too low"
+msgstr ""
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:114
 msgid "Turn on debugging"
 msgstr "Activer le débogage"
 
