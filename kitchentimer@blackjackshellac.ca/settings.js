@@ -329,11 +329,20 @@ class Settings {
       this.settings.set_string('running', json);
     }
 
+    get volume_level_warn() {
+      this.settings.get_boolean('volume-level-warn');
+    }
+
+    set volume_level_warn(bool) {
+      this.settings.set_boolean('volume-level-warn', bool);
+    }
+
     get volume_threshold() {
-      var vt = this.settings.get_int('volume-threshold');
-      if (vt < 0) { vt = 0; }
-      else if (vt > 100) { vt = 100; }
-      return vt;
+      return this.settings.get_int('volume-threshold');
+    }
+
+    set volume_threshold(val) {
+      this.settings.set_int('volume-threshold', val);
     }
 
     get debug() {

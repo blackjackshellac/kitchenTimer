@@ -622,7 +622,7 @@ class Timer {
     this.logger.info("%s%stimer at %d", action, quick, this._start);
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
 
-    if (timersInstance.settings.play_sound) {
+    if (timersInstance.settings.play_sound || timersInstance.settings.volume_level_warn) {
       // array of { channel, level, percent, on }
       var msg="";
       var volume_threshold = timersInstance.settings.volume_threshold;

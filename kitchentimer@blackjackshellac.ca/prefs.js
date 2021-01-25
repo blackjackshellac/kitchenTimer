@@ -622,6 +622,7 @@ class PreferencesBuilder {
 
       let play_sound = this._bo('play_sound');
       this._ssb('play-sound', play_sound, 'active');
+      this._ssb('play-sound', this._bo('play_sound2'), 'active');
 
       let sound_loops = this._bo('sound_loops');
       this._ssb('sound-loops', sound_loops, 'value');
@@ -637,6 +638,13 @@ class PreferencesBuilder {
 
       let detect_dupes = this._bo('detect_dupes');
       this._ssb('detect-dupes', detect_dupes, 'active');
+
+      let volume_level_warn = this._bo('volume_level_warn');
+      this._ssb('volume-level-warn', volume_level_warn, 'active');
+
+      let volume_threshold = this._bo('volume_threshold');
+      this._ssb('volume-threshold', volume_threshold, 'value');
+
     }
 }
 
