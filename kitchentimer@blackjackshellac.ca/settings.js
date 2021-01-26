@@ -122,7 +122,7 @@ class Settings {
       var atimers = [];
       timers.forEach( (timer) => {
         if (!timer.quick && timer.duration > 0) {
-          this.logger.debug(`Saving preset timer ${timer.name}}`);
+          this.logger.debug("Saving preset timer %s:%s", timer.name, timer.id);
           var atimer = GLib.Variant.new('a{sv}', this.pack_timer(timer, false));
           atimers.push(atimer);
         }

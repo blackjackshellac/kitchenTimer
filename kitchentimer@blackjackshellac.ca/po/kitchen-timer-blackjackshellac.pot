@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-25 14:28-0500\n"
-"PO-Revision-Date: 2021-01-25 14:28-0500\n"
+"POT-Creation-Date: 2021-01-26 16:25-0500\n"
+"PO-Revision-Date: 2021-01-26 16:25-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -679,16 +679,16 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-#: timers.js:566
+#: timers.js:566 timers.js:573
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
-#: timers.js:568
+#: timers.js:568 timers.js:575
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
-#: timers.js:571
+#: timers.js:571 timers.js:578
 msgid "Timer completed on time at"
 msgstr ""

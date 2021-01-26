@@ -124,8 +124,9 @@ class Timers extends Array {
             timer.name,
             (timer.running ? "running" : "not running"));
       } else {
-        this.logger.debug(`Timer ${settings_timer.name} not found`);
+        this.logger.debug("Timer [%s] not found, id=%s", settings_timer.name, settings_timer.id);
         timer = Timer.fromSettingsTimer(settings_timer);
+        settings_timer.id = timer.id;
         this.add(timer);
       }
     });
@@ -167,10 +168,14 @@ class Timers extends Array {
   }
 
   lookup(id) {
+    if (id === undefined || id.length === 0) {
+      // new timer, not in lookup yet
+      return undefined;
+    }
     if (this._lookup[id] !== undefined) {
       return this._lookup[id];
     }
-    this.logger.debug("timer %s not found in lookup table", id);
+    this.logger.debug("timer %s not found in lookup table - shouldn't happen", id);
 
     // this shouldn't happen
 
@@ -182,6 +187,7 @@ class Timers extends Array {
         return t;
       }
     }
+    this.logger.error("Timer id=[%s] not found", id);
     return undefined;
   }
 
@@ -278,11 +284,12 @@ class Timers extends Array {
       return false;
     }
 
-    this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
+    //this.logger.info(`Adding timer ${timer.name} of duration ${timer.duration} seconds quick=${timer.quick}`);
+    this.logger.info("Adding timer [%s] of duration %d seconds [%s], quick=%s", timer.name, timer.duration, timer.id, timer.quick);
     this.push(timer);
+    this._lookup[timer.id] = timer;
 
     this._settings.pack_timers(this);
-    this._lookup[timer.id] = timer;
     return true;
   }
 
@@ -640,6 +647,7 @@ class Timer {
   static fromSettingsTimer(settings_timer) {
     var timer = new Timer(settings_timer.name, settings_timer.duration, settings_timer.id);
     timer.quick = settings_timer.quick;
+    settings_timer.id = timer.id;
     return timer;
   }
 
