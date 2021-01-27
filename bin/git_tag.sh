@@ -20,8 +20,8 @@ cd $MD/../kitchentimer@blackjackshellac.ca
 info Working in $(pwd)
 
 gsv=$(gnome-shell --version | cut -f1,2 -d'.' | sed 's/[a-z ]//gi')
-
-ver=$(cat metadata.json | grep '"version"' | cut -f2 -d':')
+gsv=$(cat metadata.json | ruby -rjson -e 'puts JSON.parse(STDIN.read)["shell-version"].join("_").gsub(/[.]/,"_")')
+ver=$(cat metadata.json | ruby -rjson -e 'puts JSON.parse(STDIN.read)["version"]')
 ver=$(echo -n $ver)
 
 msg="Kitchen Timer ver$ver for Gnome Shell $gsv"
