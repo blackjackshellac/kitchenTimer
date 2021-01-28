@@ -77,7 +77,7 @@ class Annoyer {
                                               "Timer Warning: "+text,
                                               details,
                                               false,    // no sound
-                                              { gicon: timer.timers.indicator.gicon, bannerMarkup: true,
+                                              { gicon: timer.timers.fullIcon, bannerMarkup: true,
                                               secondaryGIcon: this._gicon });
 
     source.showNotification(notifier);
@@ -92,7 +92,7 @@ class Annoyer {
                                               text,
                                               details,
                                               true,   // sound
-                                              { gicon: timer.timers.indicator.gicon, bannerMarkup: false });
+                                              { gicon: timer.timers.fullIcon, bannerMarkup: false });
 
     notifier.setTransient(false);
     //notifier.setPrivacyScope(MessageTray.PrivacyScope.SYSTEM);
@@ -373,6 +373,10 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 		    }
 	    } // message handler
     });
+  }
+
+  get timer() {
+    return this._timer;
   }
 
   get sound_enabled() {

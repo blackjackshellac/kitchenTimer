@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-26 16:25-0500\n"
+"POT-Creation-Date: 2021-01-28 13:56-0500\n"
 "PO-Revision-Date: 2021-01-26 16:31-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -114,46 +114,6 @@ msgstr "minutes"
 #: ../hms.js:121
 msgid "hours"
 msgstr "heures"
-
-#: ../indicator.js:47 ../settings.ui:870
-msgid "Kitchen Timer"
-msgstr "Kitchen Timer"
-
-#: ../menuitem.js:43
-msgid "Create Preset"
-msgstr "Créer un préréglage"
-
-#: ../menuitem.js:52 ../menuitem.js:561
-msgid "Name 00:00:00"
-msgstr "Nom 00:00:00"
-
-#: ../menuitem.js:68
-msgid "Create"
-msgstr "Créer"
-
-#: ../menuitem.js:540
-msgid "Quick"
-msgstr "Pratique"
-
-#: ../menuitem.js:564
-msgid "Go"
-msgstr "Go"
-
-#: ../menus.js:109
-msgid "Running timers"
-msgstr "Minuteries en cours"
-
-#: ../menus.js:120
-msgid "Quick timers"
-msgstr "Minuteries pratiques"
-
-#: ../menus.js:144
-msgid "Preset timers"
-msgstr "Minuteries préréglées"
-
-#: ../menus.js:166
-msgid "Preferences…"
-msgstr "Préférences…"
 
 #: ../prefs.js:225
 msgid "New timer"
@@ -407,6 +367,10 @@ msgstr "Boucles pour lire le son de notification du minuteur"
 msgid "Sound"
 msgstr "Son"
 
+#: ../settings.ui:870 ../indicator.js:47
+msgid "Kitchen Timer"
+msgstr "Kitchen Timer"
+
 #: ../settings.ui:942
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr "Copyright © 2021, Steeve McCauley"
@@ -432,23 +396,59 @@ msgctxt "about"
 msgid "About"
 msgstr "À propos"
 
-#: ../timers.js:268
+#: ../timers.js:293
 msgid "Duplicate timer is already running"
 msgstr "Une minuterie en double est déjà en cours d'exécution"
 
-#: ../timers.js:573
+#: ../timers.js:613
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr "La minuterie s'est arrêtée %s plus tôt à"
 
-#: ../timers.js:575
+#: ../timers.js:615
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr "La minuterie a terminé avec %s de retard à"
 
-#: ../timers.js:578
+#: ../timers.js:618
 msgid "Timer completed on time at"
 msgstr "Minuterie terminée à temps à"
+
+#: ../menus.js:107
+msgid "Running timers"
+msgstr "Minuteries en cours"
+
+#: ../menus.js:118
+msgid "Quick timers"
+msgstr "Minuteries pratiques"
+
+#: ../menus.js:142
+msgid "Preset timers"
+msgstr "Minuteries préréglées"
+
+#: ../menus.js:164
+msgid "Preferences…"
+msgstr "Préférences…"
+
+#: ../menuitem.js:43
+msgid "Create Preset"
+msgstr "Créer un préréglage"
+
+#: ../menuitem.js:52 ../menuitem.js:563
+msgid "Name 00:00:00"
+msgstr "Nom 00:00:00"
+
+#: ../menuitem.js:68
+msgid "Create"
+msgstr "Créer"
+
+#: ../menuitem.js:542
+msgid "Quick"
+msgstr "Pratique"
+
+#: ../menuitem.js:566
+msgid "Go"
+msgstr "Go"
 
 #~ msgid "Sound loops"
 #~ msgstr "Boucles sonores"

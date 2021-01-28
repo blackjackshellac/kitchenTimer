@@ -36,15 +36,13 @@ const HMS = Me.imports.hms.HMS;
 const Mitem = Me.imports.menuitem;
 
 class PanelMenuBuilder {
-  constructor(menu, indicator) {
+  constructor(menu, timers) {
     log("");
     this._menu = menu;
-    this._indicator = indicator;
     this._create_timer_menu = undefined;
-    this._settings = indicator.settings;
-    this._timers = indicator.timers;
+    this._timers = timers;
 
-    this.logger = new Logger('kt menu', indicator.settings.debug);
+    this.logger = new Logger('kt menu', timers.settings.debug);
 
     this._menu.connect('open-state-changed', (self,open) => {
       if (open) {
@@ -58,12 +56,12 @@ class PanelMenuBuilder {
   }
 
   get timers() {
-    return this._indicator.timers;
+    return this._timers;
   }
 
   create_icon() {
     var icon = new St.Icon({
-            gicon: this._indicator.progress_gicon(0),
+            gicon: this._timers.progress_gicon(0),
             style_class: 'system-status-icon',
         });
     icon.set_icon_size(16);

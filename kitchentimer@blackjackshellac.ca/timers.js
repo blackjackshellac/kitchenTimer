@@ -23,11 +23,12 @@ const _ = Gettext.gettext;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const {GLib, St, Clutter} = imports.gi;
+const {GLib, St, Clutter, Gio} = imports.gi;
 const Main = imports.ui.main;
 const PopupMenu = imports.ui.popupMenu;
 
 const Utils = Me.imports.utils;
+const Settings = Me.imports.settings.Settings;
 const Notifier = Me.imports.notifier;
 const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
@@ -42,7 +43,21 @@ class Timers extends Array {
     // id => timer
     this._lookup = {};
 
-    this.logger = new Logger('kt timers', true);
+    this._settings = new Settings();
+    this.logger = new Logger('kt timers', this.settings.debug);
+
+    this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
+    this._progressIconsDegrees = {};
+    for (var deg = 0; deg <= 345; deg += 15) {
+      // load icon as a gicon and store in the hash
+      var icon_name="/icons/kitchen-timer-"+deg+".svg";
+      var gicon = Gio.icon_new_for_string(Me.path+icon_name);
+      this._progressIconsDegrees[deg] = gicon;
+      this.logger.debug(`Loaded progress icon ${icon_name} for ${deg} degrees`);
+    }
+
+    // requires this._settings
+    this._notifier = new Notifier.Annoyer(this);
   }
 
   static attach(indicator) {
@@ -50,9 +65,8 @@ class Timers extends Array {
     timersInstance.logger.info("Attaching indicator");
 
     timersInstance.indicator = indicator;
-    timersInstance._settings = indicator._settings;
     timersInstance.logger = new Logger('kt timers', timersInstance.settings.debug);
-    timersInstance._notifier = new Notifier.Annoyer(timersInstance);
+    //timersInstance._notifier = new Notifier.Annoyer(timersInstance);
 
     timersInstance.refresh();
 
@@ -72,6 +86,19 @@ class Timers extends Array {
 
   set indicator(indicator) {
     this._indicator = indicator;
+  }
+
+  progress_gicon(degrees) {
+    var icon = this._progressIconsDegrees[degrees];
+    if (icon === undefined) {
+      this.logger.error(`Failed to get icon for degrees=${degrees}`);
+      icon=this._progressIconsDegrees[0];
+    }
+    return icon;
+  }
+
+  get fullIcon() {
+    return this._fullIcon;
   }
 
   get notifier() {
@@ -110,7 +137,7 @@ class Timers extends Array {
 
   refresh() {
     this.logger.debug("Timers refresh");
-    var settings_timers = this._settings.unpack_timers();
+    var settings_timers = this.settings.unpack_timers();
     settings_timers.forEach( (settings_timer) => {
       var id=settings_timer.id;
       var timer = this.lookup(id);
@@ -120,10 +147,6 @@ class Timers extends Array {
             (timer.quick ? "quick" : "preset"),
             timer.name,
             (timer.running ? "running" : "not running"));
-        if (timer.alarm_timer && timer.running) {
-          timer._end = Date.now() + timer.duration_ms();
-          this.logger.debug("Alarm timer (%s) running for another %d seconds: end=%d", timer.alarm_timer.toString(), timer.duration, timer._end);
-        }
       } else {
         this.logger.debug("Timer [%s] not found, id=%s", settings_timer.name, settings_timer.id);
         timer = Timer.fromSettingsTimer(settings_timer);
@@ -198,11 +221,11 @@ class Timers extends Array {
   }
 
   get sort_by_duration() {
-    return this._settings.sort_by_duration;
+    return this.settings.sort_by_duration;
   }
 
   get sort_descending() {
-    return this._settings.sort_descending;
+    return this.settings.sort_descending;
   }
 
   // list of enabled timers sorted according to the sort properties
@@ -291,7 +314,7 @@ class Timers extends Array {
     this.push(timer);
     this._lookup[timer.id] = timer;
 
-    this._settings.pack_timers(this);
+    this.settings.pack_timers(this);
     return true;
   }
 
@@ -492,7 +515,7 @@ class Timer {
       return;
     }
     var key = this.degree_progress();
-    var gicon = timersInstance.indicator.progress_gicon(key);
+    var gicon = timersInstance.progress_gicon(key);
     if (gicon !== this._gicon) {
       this._gicon = gicon;
 		  var icon = new St.Icon({
@@ -518,8 +541,8 @@ class Timer {
       timer.expired = true;
     }
     if (timer.expired || timer.reset) {
-      if (timer.expired) timer.logger.debug("timer expired stop_callback now=%d end=%d expired=%s", now, end);
-      if (timer.reset) timer.logger.debug("timer reset stop_callback")
+      //if (timer.expired) timer.logger.debug("timer expired stop_callback now=%d end=%d expired=%s", now, end);
+      //if (timer.reset) timer.logger.debug("timer reset stop_callback")
       return timer.stop_callback(now);
     }
 
@@ -680,7 +703,10 @@ class Timer {
       this._quick = settings_timer.quick;
 
       this._alarm_timer = AlarmTimer.matchRegex(this._name);
-
+      if (this._alarm_timer && this.running) {
+        this._end = Date.now() + this.duration_ms();
+        //this.logger.debug("Alarm timer (%s) running for another %d seconds: end=%d", timer.alarm_timer.toString(), timer.duration, timer._end);
+      }
       return true;
     }
     return false;

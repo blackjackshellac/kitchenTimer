@@ -51,7 +51,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
     });
     this._entry.set_hint_text(_("Name 00:00:00"));
     this._entry.get_clutter_text().set_activatable(true);
-    this._entry.set_primary_icon(KitchenTimerCreatePreset.create_icon(this._timers.indicator));
+    this._entry.set_primary_icon(KitchenTimerCreatePreset.create_icon(this._timers));
 
     var name_item = new PopupMenu.PopupMenuItem("", { reactive: false } );
     var bin = new St.Bin({ x_expand: true, x_align: St.Align.START });
@@ -65,7 +65,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
     this._mslider = new KitchenTimerTimeSliderItem(this, "m", 0, 59);
     this._sslider = new KitchenTimerTimeSliderItem(this, "s", 0, 59);
 
-    this._go = new PopupMenu.PopupImageMenuItem(_("Create"), this._timers.indicator.progress_gicon(0));
+    this._go = new PopupMenu.PopupImageMenuItem(_("Create"), this._timers.progress_gicon(0));
     this._go.label.set_y_align( Clutter.ActorAlign.CENTER );
 -   this._go.label.set_y_expand(true);
 
@@ -118,9 +118,9 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
     }
   }
 
-  static create_icon(indicator) {
+  static create_icon(timers) {
     var icon = new St.Icon({
-            gicon: indicator.progress_gicon(0),
+            gicon: timers.progress_gicon(0),
             style_class: 'system-status-icon',
         });
     icon.set_icon_size(16);
@@ -236,7 +236,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       var timer_icon = new St.Icon({
         x_align: St.Align.END,
         x_expand: false,
-        gicon: timer.timers.indicator.progress_gicon(key),
+        gicon: timer.timers.progress_gicon(key),
         style_class: 'kitchentimer-menu-icon'
       });
       timer_icon.set_icon_size(20);
@@ -321,6 +321,8 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
     parse.minutes = parse.hms.minutes;
     parse.seconds = parse.hms.seconds;
     parse.has_time = true;
+
+    logger.debug("matched in re_alarm");
 
     return true;
 

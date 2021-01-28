@@ -40,7 +40,7 @@ var logger = new Logger('kt alarm timer');
 //   ampm: undefined|am|pm
 // }
 class AlarmTimer {
-  constructor(debug=false) {
+  constructor(debug=true) {
     logger.debugging = debug;
 
     this._name = "";
@@ -119,6 +119,7 @@ class AlarmTimer {
     // second g4
     // ms g5
     // ampm g6
+    //         name?  @    HH  :? MM?  :? SS?  .?  ms?       (a.?m.?|p.?m.?)?
     var re= /^([^@]+)?@\s*(\d+):?(\d+)?:?(\d+)?[.]?(\d+)?\s*(a\.?m\.?|p\.?m\.?)?$/i;
     var m=re.exec(entry);
     if (!m) {
@@ -132,7 +133,8 @@ class AlarmTimer {
   }
 
   fromRegexMatches(m) {
-    this.name = m[1];
+    logger.debug("match = %s", JSON.stringify(m));
+    this.name = m[1] === null ? m[0] : m[1];
     this.hour = m[2];
     this.minute = m[3];
     this.second = m[4];
