@@ -153,6 +153,10 @@ class AlarmTimer {
     this.ms = g.ms;
   }
 
+  toString() {
+    return "%02d:%02d:%02d.%03d".format(this.hour, this.minute, this.second, this.ms);
+  }
+
   hms() {
     var now=new Date();
     var alarm_date=new Date(

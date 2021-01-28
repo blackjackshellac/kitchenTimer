@@ -47,12 +47,12 @@ class Timers extends Array {
 
   static attach(indicator) {
 
+    timersInstance.logger.info("Attaching indicator");
+
     timersInstance.indicator = indicator;
     timersInstance._settings = indicator._settings;
     timersInstance.logger = new Logger('kt timers', timersInstance.settings.debug);
     timersInstance._notifier = new Notifier.Annoyer(timersInstance);
-
-    //timersInstance.logger.info("Attaching indicator "+indicator);
 
     timersInstance.refresh();
 
@@ -108,11 +108,8 @@ class Timers extends Array {
     }
   }
 
-  // remove_by_id(id) {
-  //   this.logger.debug("Removing timer %s", id);
-  // }
-
   refresh() {
+    this.logger.debug("Timers refresh");
     var settings_timers = this._settings.unpack_timers();
     settings_timers.forEach( (settings_timer) => {
       var id=settings_timer.id;
@@ -123,6 +120,10 @@ class Timers extends Array {
             (timer.quick ? "quick" : "preset"),
             timer.name,
             (timer.running ? "running" : "not running"));
+        if (timer.alarm_timer && timer.running) {
+          timer._end = Date.now() + timer.duration_ms();
+          this.logger.debug("Alarm timer (%s) running for another %d seconds: end=%d", timer.alarm_timer.toString(), timer.duration, timer._end);
+        }
       } else {
         this.logger.debug("Timer [%s] not found, id=%s", settings_timer.name, settings_timer.id);
         timer = Timer.fromSettingsTimer(settings_timer);
@@ -161,7 +162,8 @@ class Timers extends Array {
     var running = JSON.parse(json);
     running.forEach( (run_state) => {
       var timer = this.lookup(run_state.id);
-      if (timer) {
+      if (timer && !timer.running) {
+        this.logger.debug("restore %s", timer.toString());
         timer.go(run_state.start);
       }
     });
@@ -347,7 +349,14 @@ class Timer {
   }
 
   toString() {
-    return `name=${this._name} state=${this._state} start=${this._start} end=${this._end} duration=${this._duration_secs} iid=${this._interval_id}`;
+    return "[%s:%s] state=%d start=%d end=%d dur=%d iid=%d".format(
+      this._name, this._id,
+      this._state,
+      this._start,
+      this._end,
+      this._duration_secs,
+      this._interval_id
+    );
   }
 
   static fromResult(result) {
@@ -410,7 +419,8 @@ class Timer {
 
   get duration() {
     if (this.alarm_timer) {
-      return this.alarm_timer.hms().toSeconds();
+      var hms = this.alarm_timer.hms();
+      return hms.toSeconds();
     }
     return this._duration_secs;
   }
@@ -462,10 +472,13 @@ class Timer {
   */
   degree_progress(chunk=15) {
     if (this.running) {
+      // 360/15 = 24
       var chunks = Math.floor(360 / chunk);
       var delta = Date.now() - this._start;
-      //this.logger.info(`chunk=${chunk} chunks=${chunks} delta=${delta} duration=${this.duration_ms()}`);
       var progress = Math.floor(delta / this.duration_ms() * chunks);
+      if (progress >= chunks) {
+        progress = chunks-1;
+      }
       return (progress)*chunk;
     }
     return 0;
@@ -505,23 +518,27 @@ class Timer {
       timer.expired = true;
     }
     if (timer.expired || timer.reset) {
+      if (timer.expired) timer.logger.debug("timer expired stop_callback now=%d end=%d expired=%s", now, end);
+      if (timer.reset) timer.logger.debug("timer reset stop_callback")
       return timer.stop_callback(now);
     }
 
     var delta = Math.ceil((end-now) / 1000);
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
     var hms = new HMS(delta);
-      timer.label_progress(hms, now);
 
-      var running_timers = timersInstance.sort_by_running();
-      if (running_timers.length > 0 && running_timers[0] == timer) {
-        timer.icon_progress();
+    // if (timer.alarm_timer) {
+    //   timersInstance.logger.debug("Timer %s has not ended: end=%d now=%d delta=%d hms=%s", timer.name, end, now, delta, hms.toString());
+    // }
+    timer.label_progress(hms, now);
 
-        timersInstance.set_panel_name(timer.name, timer.has_name);
-        timersInstance.set_panel_label(hms.toString(true));
+    var running_timers = timersInstance.sort_by_running();
+    if (running_timers.length > 0 && running_timers[0] == timer) {
+      timer.icon_progress();
 
-        timersInstance._active_timer = timer;
-      }
+      timersInstance.set_panel_name(timer.name, timer.has_name);
+      timersInstance.set_panel_label(hms.toString(true));
+    }
     return true;
   }
 
@@ -620,6 +637,10 @@ class Timer {
       this._start = start;
       action="Restarting";
     }
+    // if (this.alarm_timer) {
+    //   this.logger.debug("%s Timer is alarm timer: %s", action, this.alarm_timer.toString());
+    //   this.logger.debug("Alarm timer %s", this.toString());
+    // }
     this._end = this._start + this.duration_ms();
     this._state = TimerState.RUNNING;
 
