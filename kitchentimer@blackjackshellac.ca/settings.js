@@ -30,7 +30,7 @@ const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
 
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
-class Settings {
+var Settings = class Settings {
     constructor() {
         this.settings = ExtensionUtils.getSettings();
         this.logger = new Logger('kt settings', this.debug)
@@ -176,6 +176,8 @@ class Settings {
         sort_descending: this.sort_descending,
         sound_file: this.sound_file,
         sound_loops: this.sound_loops,
+        volume_level_warn: this.volume_level_warn,
+        volume_threshold: this.volume_threshold,
         quick_timers: this.unpack_quick_timers([]),
         timers: this.unpack_preset_timers([])
       }
@@ -185,7 +187,7 @@ class Settings {
     import_json(json) {
       this.logger.info("Import json to settings");
       var obj = JSON.parse(json.replace( /[\r\n]+/gm, " "));
-      for (var [key, value] of Object.entries(obj)) {
+      for (let [key, value] of Object.entries(obj)) {
         this.logger.info("Import setting %s=%s (%s)", key, value, value.constructor.name);
         switch(key) {
           case "timers":

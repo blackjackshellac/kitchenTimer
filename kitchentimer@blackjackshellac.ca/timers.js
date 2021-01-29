@@ -36,7 +36,7 @@ const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 
-class Timers extends Array {
+var Timers = class Timers extends Array {
   constructor(...args) {
     super(...args);
 
@@ -48,7 +48,7 @@ class Timers extends Array {
 
     this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
     this._progressIconsDegrees = {};
-    for (var deg = 0; deg <= 345; deg += 15) {
+    for (let deg = 0; deg <= 345; deg += 15) {
       // load icon as a gicon and store in the hash
       var icon_name="/icons/kitchen-timer-"+deg+".svg";
       var gicon = Gio.icon_new_for_string(Me.path+icon_name);
@@ -154,7 +154,7 @@ class Timers extends Array {
         this.add(timer);
       }
     });
-    for (var i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++) {
       var timer=this[i];
       if (timer.still_valid(settings_timers)) {
         continue;
@@ -204,15 +204,15 @@ class Timers extends Array {
 
     // this shouldn't happen
 
-    for (var i=0; i < this.length; i++) {
+    for (let i=0; i < this.length; i++) {
       var t=this[i];
       if (t.id == id) {
-        this.logger.debug("adding timer to lookup hash %s:%s", t.name, t.id);
+        this.logger.warning("adding timer to lookup hash %s:%s", t.name, t.id);
         this._lookup[id] = t;
         return t;
       }
     }
-    this.logger.error("Timer id=[%s] not found", id);
+    this.logger.debug("Timer id=[%s] not found", id);
     return undefined;
   }
 
@@ -268,7 +268,7 @@ class Timers extends Array {
     if (!this.settings.detect_dupes) {
       return undefined;
     }
-    for (var i=0; i < this.length; i++) {
+    for (let i=0; i < this.length; i++) {
       var t=this[i];
       if (timer.duration == t.duration && timer.quick == t.quick && timer.name == t.name) {
         return t;
@@ -347,7 +347,7 @@ var TimerState = {
   EXPIRED: 3
 }
 
-class Timer {
+var Timer = class Timer {
 
   constructor(name, duration_secs, id=undefined) {
     var debug = timersInstance.settings.debug;
@@ -716,7 +716,7 @@ class Timer {
     if (this.running || this.quick) {
       return true;
     }
-    for (var i=0; i < settings_timers.length; i++) {
+    for (let i=0; i < settings_timers.length; i++) {
       var settings_timer = settings_timers[i];
       if (this._id == settings_timer.id) {
         return true;

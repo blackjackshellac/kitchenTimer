@@ -20,7 +20,7 @@ const LOGID = 'logger';
 
 String.prototype.format = imports.format.format;
 
-class Logger {
+var Logger = class Logger {
     constructor(logid=undefined, debug=false) {
         this._logid = logid === undefined ? LOGID : logid;
         this._debugging = debug;

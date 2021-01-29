@@ -37,7 +37,7 @@ const Gst = imports.gi.Gst;
 const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
 
-class Annoyer {
+var Annoyer = class Annoyer {
   constructor(timers) {
     this._settings = timers.settings;
     this._source = this._createSource();
@@ -118,14 +118,14 @@ class Annoyer {
   get_channels(lines) {
     var channels=[];
     var re=/^\s*Playback channels:\s*([^-]+)+-?(.*)$/;
-    for (var i=0; i < lines.length; i++) {
+    for (let i=0; i < lines.length; i++) {
       var output=lines[i].trim();
       var m = re.exec(output);
       if (m) {
         this.logger.debug("channels=%d", m.length);
-        for (var i=1; i < m.length; i++) {
-          var channel=m[i].trim();
-          this.logger.debug("channel %d: %s", i, channel);
+        for (let j=1; j < m.length; j++) {
+          var channel=m[j].trim();
+          this.logger.debug("channel %d: %s", j, channel);
           channels.push(channel);
         }
       }
@@ -134,7 +134,7 @@ class Annoyer {
   }
 
   get_channel_volume(channels, line) {
-    for (var i=0; i < channels.length; i++) {
+    for (let i=0; i < channels.length; i++) {
       if (line.startsWith(channels[i]+":")) {
         // Front Left: Playback 65536 [100%] [on]
         var re=/Playback\s*(\d+)\s*\[(.*?)%\].*$/

@@ -35,7 +35,7 @@ const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
 const Mitem = Me.imports.menuitem;
 
-class PanelMenuBuilder {
+var PanelMenuBuilder = class PanelMenuBuilder {
   constructor(menu, timers) {
     log("");
     this._menu = menu;
@@ -93,7 +93,7 @@ class PanelMenuBuilder {
   }
 
   build() {
-    this.logger.info("Building the popup menu");
+    this.logger.debug("Building the popup menu");
 
     this._menu.removeAll();
     this.timers.refresh();

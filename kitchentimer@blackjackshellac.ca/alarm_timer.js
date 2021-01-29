@@ -39,16 +39,19 @@ var logger = new Logger('kt alarm timer');
 //   ms: 0,
 //   ampm: undefined|am|pm
 // }
-class AlarmTimer {
-  constructor(debug=true) {
-    logger.debugging = debug;
 
+var AlarmTimer = class AlarmTimer {
+  constructor() {
     this._name = "";
     this._hour = 0;
     this._minute = 0;
     this._second = 0;
     this._ms = 0;
     this._ampm = AmPm.H24;
+  }
+
+  set debug(bool) {
+    logger.debugging = bool;
   }
 
   get hour() { return this._hour; }

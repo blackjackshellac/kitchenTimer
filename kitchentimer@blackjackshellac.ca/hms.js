@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-class HMS {
+var HMS = class HMS {
   constructor(secs=0) {
     this._secs = Number(secs);
     this._hours = Math.floor(secs / 3600);
