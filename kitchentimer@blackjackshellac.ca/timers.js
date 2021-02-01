@@ -44,6 +44,8 @@ var Timers = class Timers extends Array {
     this._lookup = {};
 
     this._settings = new Settings();
+    this._attached = false;
+
     this.logger = new Logger('kt timers', this.settings.debug);
 
     this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
@@ -72,11 +74,14 @@ var Timers = class Timers extends Array {
 
     timersInstance.restoreRunningTimers();
 
+    timersInstance.attached = true;
+
     return timersInstance;
   }
 
   static detach() {
     timersInstance.logger.info("Detaching indicator from timers");
+    timersInstance.attached = false;
     timersInstance.indicator = undefined;
   }
 
@@ -86,6 +91,14 @@ var Timers = class Timers extends Array {
 
   set indicator(indicator) {
     this._indicator = indicator;
+  }
+
+  get attached() {
+    return this._attached;
+  }
+
+  set attached(bool) {
+    this._attached = bool;
   }
 
   progress_gicon(degrees) {
@@ -148,7 +161,7 @@ var Timers = class Timers extends Array {
             timer.name,
             (timer.running ? "running" : "not running"));
       } else {
-        this.logger.debug("Timer [%s] not found, id=%s", settings_timer.name, settings_timer.id);
+        //this.logger.debug("Timer [%s] not found, id=%s", settings_timer.name, settings_timer.id);
         timer = Timer.fromSettingsTimer(settings_timer);
         settings_timer.id = timer.id;
         this.add(timer);
@@ -200,7 +213,9 @@ var Timers = class Timers extends Array {
     if (this._lookup[id] !== undefined) {
       return this._lookup[id];
     }
-    this.logger.debug("timer %s not found in lookup table - shouldn't happen", id);
+    if (this.attached) {
+      this.logger.debug("timer %s not found in lookup table - shouldn't happen", id);
+    }
 
     // this shouldn't happen
 
@@ -212,7 +227,9 @@ var Timers = class Timers extends Array {
         return t;
       }
     }
-    this.logger.debug("Timer id=[%s] not found", id);
+    if (this.attached) {
+      this.logger.debug("Timer id=[%s] not found", id);
+    }
     return undefined;
   }
 
@@ -314,7 +331,10 @@ var Timers = class Timers extends Array {
     this.push(timer);
     this._lookup[timer.id] = timer;
 
-    this.settings.pack_timers(this);
+    if (this.attached) {
+      // don't pack timers if the indicator is attaching and refreshing timers from settings
+      this.settings.pack_timers(this);
+    }
     return true;
   }
 

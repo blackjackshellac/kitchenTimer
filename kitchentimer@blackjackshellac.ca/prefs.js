@@ -607,9 +607,15 @@ class PreferencesBuilder {
       }
     }
 
+    _bo_ssb(id, property, flags=Gio.SettingsBindFlags.DEFAULT) {
+      let object = this._bo(id);
+      let key=id.replace(/_/g, '-');
+      this._ssb(key, object, property, flags);
+    }
+
     _bind() {
-      let notification = this._bo('notification');
-      this._ssb('notification', notification, 'active');
+      this._bo_ssb('notification', 'active');
+      this._bo_ssb('notification_sticky', 'active');
 
       let show_time = this._bo('show_time');
       this._ssb('show-time', show_time, 'active');

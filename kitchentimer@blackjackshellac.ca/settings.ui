@@ -523,34 +523,6 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="modal_notification">
-                    <property name="label" translatable="yes" context="annoy_text">Annoy</property>
-                    <property name="sensitive">False</property>
-                    <property name="can-focus">False</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="model-notifiation">System model notificaiton</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="play_sound">
-                    <property name="label" translatable="yes" context="play-sound">Play sound</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="play-sound">Play the sound when the timer is done</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkCheckButton" id="save_quick_timers">
                     <property name="label" translatable="yes" context="save-quick-timers">Save quick timers</property>
                     <property name="visible">True</property>
@@ -593,20 +565,6 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="show_progress">
-                    <property name="label" translatable="yes" context="show_progress">Show progress icon</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Animate progress icon in the panel menu</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkCheckButton" id="show_time">
                     <property name="label" translatable="yes" context="show_time">Show time</property>
                     <property name="visible">True</property>
@@ -621,10 +579,53 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkCheckButton" id="notification_sticky">
+                    <property name="label" translatable="yes" context="notification_sticky">Sticky notification</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="notification-sticky-tooltip">Notification waits for input</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="show_progress">
+                    <property name="label" translatable="yes" context="animate_progress_icon">Animate progress icon</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Animate progress icon in the panel menu</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="play_sound">
+                    <property name="label" translatable="yes" context="play-sound">Play sound</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="play-sound">Play the sound when the timer is done</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
+                <child>
                   <!-- n-columns=1 n-rows=3 -->
                   <object class="GtkGrid">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="halign">center</property>
                     <property name="margin-top">10</property>
                     <child>
                       <object class="GtkButton" id="json_file_chooser_button">
@@ -681,19 +682,6 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkOverlay">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
                       <object class="GtkLabel" id="import_export_msg">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -705,7 +693,8 @@ Author: Steeve McCauley
                         <property name="lines">4</property>
                       </object>
                       <packing>
-                        <property name="index">-1</property>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
                       </packing>
                     </child>
                   </object>
@@ -714,6 +703,9 @@ Author: Steeve McCauley
                     <property name="top-attach">6</property>
                     <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <placeholder/>

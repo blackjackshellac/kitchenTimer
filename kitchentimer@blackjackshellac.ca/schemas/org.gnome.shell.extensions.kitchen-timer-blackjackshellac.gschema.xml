@@ -40,9 +40,9 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>true</default>
       <summary>Show a notification when a timer ends</summary>
     </key>
-    <key name="modal-notification" type="b">
+    <key name="notification-sticky" type="b">
       <default>false</default>
-      <summary>Make the notification system modal</summary>
+      <summary>Make the notification wait for input</summary>
     </key>
     <key name="show-time" type="b">
       <default>true</default>

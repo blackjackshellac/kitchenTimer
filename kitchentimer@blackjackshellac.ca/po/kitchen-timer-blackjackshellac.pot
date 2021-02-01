@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-28 13:56-0500\n"
-"PO-Revision-Date: 2021-01-28 13:56-0500\n"
+"POT-Creation-Date: 2021-02-01 14:17-0500\n"
+"PO-Revision-Date: 2021-02-01 14:17-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -31,7 +31,8 @@ msgstr ""
 
 #: indicator.js:46 indicator.js:47 indicator.js:74 settings.ui:639
 #: settings.ui:641 settings.ui:654 settings.ui:679 settings.ui:680
-#: settings.ui:778 settings.ui:784 settings.ui:830 settings.ui:870
+#: settings.ui:778 settings.ui:784 settings.ui:830 settings.ui:862
+#: settings.ui:870
 msgid "Kitchen Timer"
 msgstr ""
 
@@ -120,6 +121,15 @@ msgstr ""
 msgid "Name for timer"
 msgstr ""
 
+#: notifier.js:322 notifier.js:324
+#, javascript-format
+msgid "Restart timer %s"
+msgstr ""
+
+#: notifier.js:327 notifier.js:329
+msgid "Dismiss"
+msgstr ""
+
 #: prefs.js:225 prefs.js:230 prefs.js:231 prefs.js:232 prefs.js:234
 #: prefs.js:241 prefs.js:245 prefs.js:246
 msgid "New timer"
@@ -149,6 +159,10 @@ msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
 msgid "Make the notification system modal"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
+msgid "Make the notification wait for input"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:49
@@ -374,14 +388,14 @@ msgstr ""
 
 #: settings.ui:402 settings.ui:413 settings.ui:415 settings.ui:440
 #: settings.ui:441 settings.ui:551 settings.ui:559 settings.ui:561
-#: settings.ui:606 settings.ui:611
+#: settings.ui:569 settings.ui:606 settings.ui:611
 msgctxt "show_time"
 msgid "Show time"
 msgstr ""
 
 #: settings.ui:406 settings.ui:417 settings.ui:419 settings.ui:444
 #: settings.ui:445 settings.ui:555 settings.ui:563 settings.ui:565
-#: settings.ui:610 settings.ui:615
+#: settings.ui:573 settings.ui:610 settings.ui:615
 msgctxt "show-time"
 msgid "Show remaining time for running timers in the panel"
 msgstr ""
@@ -442,14 +456,15 @@ msgstr ""
 
 #: settings.ui:477 settings.ui:481 settings.ui:488 settings.ui:489
 #: settings.ui:490 settings.ui:491 settings.ui:515 settings.ui:516
-#: settings.ui:536 settings.ui:541 settings.ui:801
+#: settings.ui:536 settings.ui:541 settings.ui:611 settings.ui:793
+#: settings.ui:801
 msgctxt "play-sound"
 msgid "Play sound"
 msgstr ""
 
 #: settings.ui:481 settings.ui:485 settings.ui:492 settings.ui:493
 #: settings.ui:494 settings.ui:495 settings.ui:519 settings.ui:520
-#: settings.ui:540 settings.ui:545
+#: settings.ui:540 settings.ui:545 settings.ui:615
 msgctxt "play-sound"
 msgid "Play the sound when the timer is done"
 msgstr ""
@@ -459,28 +474,28 @@ msgid "checkbutton"
 msgstr ""
 
 #: settings.ui:495 settings.ui:502 settings.ui:503 settings.ui:504
-#: settings.ui:505 settings.ui:529 settings.ui:530 settings.ui:550
-#: settings.ui:555
+#: settings.ui:505 settings.ui:527 settings.ui:529 settings.ui:530
+#: settings.ui:550 settings.ui:555
 msgctxt "save-quick-timers"
 msgid "Save quick timers"
 msgstr ""
 
 #: settings.ui:499 settings.ui:506 settings.ui:507 settings.ui:508
-#: settings.ui:509 settings.ui:533 settings.ui:534 settings.ui:554
-#: settings.ui:559
+#: settings.ui:509 settings.ui:531 settings.ui:533 settings.ui:534
+#: settings.ui:554 settings.ui:559
 msgctxt "save-quick-timers-tooltip"
 msgid "If selected, quick timers are also saved"
 msgstr ""
 
-#: settings.ui:509 settings.ui:517 settings.ui:519 settings.ui:564
-#: settings.ui:569
+#: settings.ui:509 settings.ui:517 settings.ui:519 settings.ui:541
+#: settings.ui:564 settings.ui:569
 msgctxt "show_label"
 msgid "Show name"
 msgstr ""
 
 #: settings.ui:513 settings.ui:520 settings.ui:521 settings.ui:522
-#: settings.ui:523 settings.ui:547 settings.ui:548 settings.ui:568
-#: settings.ui:573
+#: settings.ui:523 settings.ui:545 settings.ui:547 settings.ui:548
+#: settings.ui:568 settings.ui:573
 msgctxt "show_timer_name"
 msgid "Show timer name in the panel menu"
 msgstr ""
@@ -491,21 +506,21 @@ msgctxt "show_label"
 msgid "Show label"
 msgstr ""
 
-#: settings.ui:523 settings.ui:531 settings.ui:533 settings.ui:557
-#: settings.ui:578 settings.ui:583
+#: settings.ui:523 settings.ui:531 settings.ui:533 settings.ui:555
+#: settings.ui:557 settings.ui:578 settings.ui:583
 msgctxt "detect-dupes"
 msgid "Detect dupes"
 msgstr ""
 
-#: settings.ui:527 settings.ui:535 settings.ui:537 settings.ui:561
-#: settings.ui:582 settings.ui:587
+#: settings.ui:527 settings.ui:535 settings.ui:537 settings.ui:559
+#: settings.ui:561 settings.ui:582 settings.ui:587
 msgctxt "detect-dupes-tooltip"
 msgid "Prevent timers with the same duration, name and type"
 msgstr ""
 
 #: settings.ui:532 settings.ui:534 settings.ui:547 settings.ui:572
-#: settings.ui:573 settings.ui:671 settings.ui:673 settings.ui:719
-#: settings.ui:724
+#: settings.ui:573 settings.ui:671 settings.ui:673 settings.ui:716
+#: settings.ui:719 settings.ui:724
 msgid "Options"
 msgstr ""
 
@@ -538,7 +553,7 @@ msgstr ""
 
 #: settings.ui:567 settings.ui:569 settings.ui:582 settings.ui:607
 #: settings.ui:608 settings.ui:706 settings.ui:709 settings.ui:755
-#: settings.ui:817
+#: settings.ui:809 settings.ui:817
 msgctxt "sound_loops_tooltip"
 msgid "Loops to play timer notification sound"
 msgstr ""
@@ -554,13 +569,35 @@ msgid "Settings ..."
 msgstr ""
 
 #: settings.ui:579 settings.ui:581 settings.ui:626 settings.ui:631
+#: settings.ui:632
 msgctxt "json_file_chooser_button"
 msgid "Settings…"
 msgstr ""
 
 #: settings.ui:583 settings.ui:585 settings.ui:630 settings.ui:635
+#: settings.ui:636
 msgctxt "json_file_chooser_tooltip"
 msgid "Export timer settings, or import them into the program"
+msgstr ""
+
+#: settings.ui:583
+msgctxt "notification_sticky"
+msgid "Sticky notification"
+msgstr ""
+
+#: settings.ui:583
+msgctxt "sticky_notification"
+msgid "Sticky notification"
+msgstr ""
+
+#: settings.ui:587
+msgctxt "notification-sticky-tooltip"
+msgid "Notification waits for input"
+msgstr ""
+
+#: settings.ui:587
+msgctxt "sticky-notification-tooltip"
+msgid "Notification waits for input"
 msgstr ""
 
 #: settings.ui:590 settings.ui:592 settings.ui:605 settings.ui:630
@@ -578,8 +615,14 @@ msgid "Sound file"
 msgstr ""
 
 #: settings.ui:596 settings.ui:598 settings.ui:643 settings.ui:648
+#: settings.ui:649
 msgctxt "export-settings-radio"
 msgid "Export"
+msgstr ""
+
+#: settings.ui:597
+msgctxt "animate_progress_icon"
+msgid "Animate progress icon"
 msgstr ""
 
 #: settings.ui:607 settings.ui:609 settings.ui:622 settings.ui:647
@@ -590,31 +633,32 @@ msgid "Sound file"
 msgstr ""
 
 #: settings.ui:611 settings.ui:613 settings.ui:658 settings.ui:663
+#: settings.ui:664
 msgctxt "import-settings-radio"
 msgid "Import"
 msgstr ""
 
 #: settings.ui:617 settings.ui:619 settings.ui:632 settings.ui:657
 #: settings.ui:658 settings.ui:756 settings.ui:759 settings.ui:805
-#: settings.ui:845
+#: settings.ui:837 settings.ui:845
 msgid "Sound"
 msgstr ""
 
 #: settings.ui:673 settings.ui:680 settings.ui:682 settings.ui:695
 #: settings.ui:720 settings.ui:721 settings.ui:751 settings.ui:850
-#: settings.ui:856 settings.ui:902 settings.ui:942
+#: settings.ui:856 settings.ui:902 settings.ui:934 settings.ui:942
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr ""
 
 #: settings.ui:687 settings.ui:694 settings.ui:696 settings.ui:709
 #: settings.ui:734 settings.ui:735 settings.ui:765 settings.ui:864
-#: settings.ui:870 settings.ui:916 settings.ui:956
+#: settings.ui:870 settings.ui:916 settings.ui:948 settings.ui:956
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr ""
 
 #: settings.ui:705 settings.ui:712 settings.ui:714 settings.ui:727
 #: settings.ui:752 settings.ui:753 settings.ui:783 settings.ui:882
-#: settings.ui:888 settings.ui:934 settings.ui:974
+#: settings.ui:888 settings.ui:934 settings.ui:966 settings.ui:974
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -624,17 +668,17 @@ msgstr ""
 
 #: settings.ui:727 settings.ui:734 settings.ui:736 settings.ui:749
 #: settings.ui:774 settings.ui:775 settings.ui:805 settings.ui:904
-#: settings.ui:910 settings.ui:956 settings.ui:996
+#: settings.ui:910 settings.ui:956 settings.ui:988 settings.ui:996
 msgctxt "about"
 msgid "About"
 msgstr ""
 
-#: settings.ui:771
+#: settings.ui:763 settings.ui:771
 msgctxt "warn-volume-level"
 msgid "Warn low volume"
 msgstr ""
 
-#: settings.ui:787
+#: settings.ui:779 settings.ui:787
 msgctxt "low-volume-threshold-percent"
 msgid "Low volume threshold percent"
 msgstr ""
@@ -655,7 +699,7 @@ msgid "Duplicate timer [%s] is already running"
 msgstr ""
 
 #: timers.js:221 timers.js:222 timers.js:223 timers.js:258 timers.js:262
-#: timers.js:268 timers.js:293
+#: timers.js:268 timers.js:293 timers.js:310
 msgid "Duplicate timer is already running"
 msgstr ""
 
@@ -680,16 +724,16 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-#: timers.js:566 timers.js:573 timers.js:613
+#: timers.js:566 timers.js:573 timers.js:613 timers.js:633
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
-#: timers.js:568 timers.js:575 timers.js:615
+#: timers.js:568 timers.js:575 timers.js:615 timers.js:635
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
-#: timers.js:571 timers.js:578 timers.js:618
+#: timers.js:571 timers.js:578 timers.js:618 timers.js:638
 msgid "Timer completed on time at"
 msgstr ""

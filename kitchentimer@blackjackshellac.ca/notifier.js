@@ -27,6 +27,7 @@ const Me = ExtensionUtils.getCurrentExtension();
 const { GLib, GObject, Gio } = imports.gi;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
+const NotificationDestroyedReason = MessageTray.NotificationDestroyedReason;
 
 // szm - from tea-time
 imports.gi.versions.Gst = '1.0';
@@ -49,15 +50,18 @@ var Annoyer = class Annoyer {
 
     this._gicon = Gio.icon_new_for_string('dialog-warning');
 
-    this._source.connect('destroy', (source) => {
-      this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
-      Main.messageTray.add(this._source);
-    });
+    this._source = this._createSource();
+
+    // this._source.connect('destroy', (source) => {
+    //   this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
+    //   Main.messageTray.add(this._source);
+    // });
   }
 
   _createSource() {
     var source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
     Main.messageTray.add(source);
+    Main.messageTray._useLongerNotificationLeftTimeout = true;
 
     source.connect('destroy', (source) => {
       this.logger.debug("Kitchen Timer messageTray source destroyed, recreating");
@@ -94,7 +98,6 @@ var Annoyer = class Annoyer {
                                               true,   // sound
                                               { gicon: timer.timers.fullIcon, bannerMarkup: false });
 
-    notifier.setTransient(false);
     //notifier.setPrivacyScope(MessageTray.PrivacyScope.SYSTEM);
 
     if (this.notification) {
@@ -295,38 +298,60 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this._loops = 0;
 
     this.logger.debug('timer is %s', timer.expired ? "expired" : "not expired");
-    if (play_sound && timer.expired && this.sound_enabled) {
-      this._initPlayer();
+    if (timer.expired) {
+      if (this._settings.notification_sticky) {
+        this.urgency = MessageTray.Urgency.CRITICAL;
+      }
+      if (play_sound && this.sound_enabled) {
+        this._initPlayer();
 
-      // call callback manually to play a sound without waiting for the given interval to end
-      this.playSound_callback(this);
-      this._interval_id = Utils.setInterval(this.playSound_callback, 500, this);
+        // call callback manually to play a sound without waiting for the given interval to end
+        this.playSound_callback(this);
+        this._interval_id = Utils.setInterval(this.playSound_callback, 500, this);
+      }
+      this._addActions();
     }
   }
 
-	playSound_callback(ktn) {
-	  //ktn.logger.debug("Entering playSound_callback after %d of %d loops", ktn._loops, ktn.sound_loops);
+  _addActions() {
+    this.logger.debug("Adding notification actions");
+    this.setForFeedback(true);
+    this.setTransient(false);
+    this.acknowledged = false;
 
-    var [ rv, state, pending ] = ktn._player.get_state(500000);
-    //ktn.logger.debug("state=%s %s %s", ""+rv, ""+state, ""+pending)
+    this.addAction(_("Restart timer %s").format(this.timer.name), () => {
+      this.logger.debug("Restart timer");
+      this.acknowledged = true;
+      this.timer.start();
+    });
+    this.addAction(_("Dismiss"), () => {
+      this.logger.debug("Dismiss");
+      this.acknowledged = true;
+    });
+
+  }
+
+	playSound_callback(ktNotifier) {
+	  //ktNotifier.logger.debug("Entering playSound_callback after %d of %d loops", ktNotifier._loops, ktNotifier.sound_loops);
+
+    var [ rv, state, pending ] = ktNotifier._player.get_state(500000);
+    //ktNotifier.logger.debug("state=%s %s %s", ""+rv, ""+state, ""+pending)
 
     if (rv === Gst.StateChangeReturn.SUCCESS && state === Gst.State. PLAYING) {
-      //ktn.logger.debug("Already playing, wait for the stream to end")
+      //ktNotifier.logger.debug("Already playing, wait for the stream to end")
       return true;
     }
 
-    ktn._player.set_property('uri', ktn._uri);
-    ktn._player.set_state(Gst.State.PLAYING);
+    ktNotifier._player.set_property('uri', ktNotifier._uri);
+    ktNotifier._player.set_state(Gst.State.PLAYING);
 
-    //ktn.logger.debug("player gst state=%s", ""+ktn._player.get_state());
+    //ktNotifier.logger.debug("player gst state=%s", ""+ktNotifier._player.get_state());
 
-	  ktn._loops++;
-	  if (ktn._loops >= ktn.sound_loops) {
-	    //ktn.logger.debug("exiting callback after %d loops", ktn._loops);
-      return ktn.stop_player();
+	  ktNotifier._loops++;
+	  if (ktNotifier._loops >= ktNotifier.sound_loops) {
+	    //ktNotifier.logger.debug("exiting callback after %d loops", ktNotifier._loops);
+      return ktNotifier.stop_player();
 	  }
-
-
 	  return true;
 	}
 
@@ -389,5 +414,14 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 
   get sound_file() {
     return this._settings.sound_file
+  }
+
+  destroy(reason = NotificationDestroyedReason.DISMISSED) {
+    if (!this.acknowledged) {
+      this.logger.debug("Not acknowledged yet");
+      return;
+    }
+    this.logger.debug("Acknowledged notification will be destroyed");
+    super.destroy(reason);
   }
 });

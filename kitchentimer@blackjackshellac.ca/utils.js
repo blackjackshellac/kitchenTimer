@@ -67,6 +67,7 @@ function execute(cmdargs) {
     GLib.SpawnFlags.SEARCH_PATH,
     null    // child setup function
   );
+  //log("exec "+cmdargs.join(" "));
   //log(`ok=${ok} exit_status=${exit_status} stdout=${stdout}`);
   if (ok) {
     if (exit_status === 0) {

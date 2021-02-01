@@ -181,4 +181,5 @@ var AlarmTimer = class AlarmTimer {
     var hms = new HMS(duration_ms/1000);
     return hms;
   }
-}
+};
+

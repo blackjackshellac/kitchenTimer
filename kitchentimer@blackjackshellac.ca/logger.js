@@ -56,5 +56,5 @@ var Logger = class Logger {
     error(format, ...args) {
       return this._log("ERROR", format, ...args);
     }
-}
+};
 
