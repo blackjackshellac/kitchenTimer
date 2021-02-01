@@ -46,7 +46,7 @@ var Annoyer = class Annoyer {
     //var policy = new MessageTray.NotificationPolicy({'show-in-lock-screen': true, 'details-in-lock-screen': true});
     //this._source.policy = policy;
 
-    this.logger = new Logger('kt notifier', this._settings.debug);
+    this.logger = new Logger('kt notifier', this._settings);
 
     this._gicon = Gio.icon_new_for_string('dialog-warning');
 
@@ -291,7 +291,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
   _init(timer, source, title, banner, play_sound, params) {
     super._init(source, title, banner, params);
 
-    this.logger = new Logger('kt notifier', timer.timers.settings.debug);
+    this.logger = new Logger('kt notifier', timer.timers.settings);
 
     this._settings = timer.timers.settings;
     this._timer = timer;

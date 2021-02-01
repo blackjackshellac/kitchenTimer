@@ -46,7 +46,7 @@ var Timers = class Timers extends Array {
     this._settings = new Settings();
     this._attached = false;
 
-    this.logger = new Logger('kt timers', this.settings.debug);
+    this.logger = new Logger('kt timers', this.settings);
 
     this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
     this._progressIconsDegrees = {};
@@ -67,8 +67,6 @@ var Timers = class Timers extends Array {
     timersInstance.logger.info("Attaching indicator");
 
     timersInstance.indicator = indicator;
-    timersInstance.logger = new Logger('kt timers', timersInstance.settings.debug);
-    //timersInstance._notifier = new Notifier.Annoyer(timersInstance);
 
     timersInstance.refresh();
 
@@ -386,7 +384,7 @@ var Timer = class Timer {
 
     // this calls the setter
     this.name = name;
-    this.logger = new Logger(`kt timer: ${this.name}`, debug);
+    this.logger = new Logger(`kt timer: ${this.name}`, timersInstance.settings);
     this.logger.info(`Create timer [${this.name}] duration=[${duration_secs}]`);
 
   }

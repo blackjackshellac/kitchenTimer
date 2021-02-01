@@ -50,8 +50,8 @@ var AlarmTimer = class AlarmTimer {
     this._ampm = AmPm.H24;
   }
 
-  set debug(bool) {
-    logger.debugging = bool;
+  set debug(settings) {
+    logger.settings = settings;
   }
 
   get hour() { return this._hour; }

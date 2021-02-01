@@ -42,7 +42,7 @@ class PreferencesBuilder {
     constructor() {
         this._settings = new Settings();
         this._builder = new Gtk.Builder();
-        this.logger = new Logger('kt prefs', this._settings.debug);
+        this.logger = new Logger('kt prefs', this._settings);
     }
 
     build() {

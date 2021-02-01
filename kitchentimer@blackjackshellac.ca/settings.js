@@ -40,7 +40,7 @@ var Settings = class Settings {
     }
 
     this.settings = ExtensionUtils.getSettings();
-    this.logger = new Logger('kt settings', this.debug);
+    this.logger = new Logger('kt settings', this.settings);
 
     this._timer_defaults = {
       name: "",

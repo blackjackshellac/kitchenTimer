@@ -68,10 +68,13 @@ function execute(cmdargs) {
     null    // child setup function
   );
   //log("exec "+cmdargs.join(" "));
-  //log(`ok=${ok} exit_status=${exit_status} stdout=${stdout}`);
+
   if (ok) {
+    stdout = ByteArray.toString(stdout);
+    //stderr = ByteArray.toString(stderr);
+    //log(`ok=${ok} exit_status=${exit_status} stdout=${stdout} stderr=${stderr}`);
     if (exit_status === 0) {
-      return ByteArray.toString(stdout);
+      return stdout;
     }
   }
   return undefined;

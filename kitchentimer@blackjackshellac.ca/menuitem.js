@@ -42,6 +42,8 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
   _init(menu, timers) {
     super._init(_("Create Preset"));
     this._timers = timers;
+    logger.settings = timers.settings;
+
     menu.addMenuItem(this);
 
     this._entry = new St.Entry( {
@@ -209,7 +211,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
       this._timer = timer;
 
-      logger.debugging = timer.timers.settings.debug;
+      logger.settings = timer.timers.settings;
 
       var box = new St.BoxLayout({
         x_expand: true,
@@ -546,7 +548,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
 
     menu.addMenuItem(this);
 
-    logger.debugging = timers.settings.debug;
+    logger.settings = timers.settings;
 
     var layout = new St.BoxLayout({
       style_class: 'kitchentimer-quick-menu',

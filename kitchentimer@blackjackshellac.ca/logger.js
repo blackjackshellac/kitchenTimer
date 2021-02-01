@@ -21,9 +21,9 @@ const LOGID = 'logger';
 String.prototype.format = imports.format.format;
 
 var Logger = class Logger {
-    constructor(logid=undefined, debug=false) {
+    constructor(logid=undefined, settings=undefined) {
         this._logid = logid === undefined ? LOGID : logid;
-        this._debugging = debug;
+        this._settings = settings;
     }
 
     _log(level, format, ...args) {
@@ -32,16 +32,20 @@ var Logger = class Logger {
       return msg;
     }
 
-    get debugging() {
-      return this._debugging;
+    get settings() {
+      return this._settings;
     }
 
-    set debugging(bool) {
-      this._debugging = bool;
+    set settings(settings) {
+      this._settings = settings;
+    }
+
+    get debugging() {
+      return this.settings === undefined ? false : this.settings.debug;
     }
 
     debug(format, ...args) {
-     if (!this._debugging) return;
+      if (!this.debugging) return;
       return this._log("DEBUG", format, ...args);
     }
 

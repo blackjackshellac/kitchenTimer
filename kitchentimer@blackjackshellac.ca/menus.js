@@ -42,7 +42,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
     this._create_timer_menu = undefined;
     this._timers = timers;
 
-    this.logger = new Logger('kt menu', timers.settings.debug);
+    this.logger = new Logger('kt menu', timers.settings);
 
     this._menu.connect('open-state-changed', (self,open) => {
       if (open) {
