@@ -44,6 +44,11 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>false</default>
       <summary>Make the notification wait for input</summary>
     </key>
+    <key name="notification-longtimeout" type="i">
+      <default>30000</default>
+      <range min="1000" max="3600000"/>
+      <summary>Long timeout for sticky notifications, default is 30 seconds</summary>
+    </key>
     <key name="show-time" type="b">
       <default>true</default>
       <summary>Show time remaining in panel menu</summary>
@@ -62,7 +67,8 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     </key>
     <key name="sound-loops" type="i">
       <default>2</default>
-      <summary>Number of times to ring alarm sound, 0 is no sound, -1 is infinite</summary>
+      <range min="0" max="1000"/>
+      <summary>Number of times to ring alarm sound, 0 is no sound</summary>
     </key>
     <key name="sound-file" type="s">
       <default>"kitchen_timer.ogg"</default>
@@ -70,6 +76,7 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     </key>
     <key name="default-timer" type="i">
       <default>300</default>
+      <range min="1" max="3600"/>
       <summary>Default length of timer in seconds</summary>
     </key>
    <key name="timers" type="aa{sv}">
@@ -107,6 +114,7 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     </key>
     <key name="volume-threshold" type="i">
       <default>25</default>
+      <range min="1" max="100"/>
       <summary>Low volume threshold in percent</summary>
     </key>
     <key name='volume-level-warn' type='b'>

@@ -156,10 +156,10 @@ var Annoyer = class Annoyer {
   }
 
   check_volume(min_percent=25) {
-    var output = Utils.execute([ 'amixer', 'get', 'Master' ]);
-    if (output === undefined) {
+    var [ exit_status, output ] = Utils.execute([ 'amixer', 'get', 'Master' ]);
+    if (exit_status !== 0) {
       this.logger.error("Failed to check volume levels with amixer");
-      return;
+      return undefined;
     }
     //this.logger.debug("output=%s", output);
     // Simple mixer control 'Master',0
@@ -299,7 +299,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 
     this.logger.debug('timer is %s', timer.expired ? "expired" : "not expired");
     if (timer.expired) {
-      if (this._settings.notification_sticky) {
+      if (this.settings.notification_sticky) {
         this.urgency = MessageTray.Urgency.CRITICAL;
       }
       if (play_sound && this.sound_enabled) {
@@ -319,16 +319,25 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this.setTransient(false);
     this.acknowledged = false;
 
+    this._long_timeout = Utils.setTimeout(this.longTimeout_callback, this.settings.notification_longtimeout, this);
+
     this.addAction(_("Restart timer %s").format(this.timer.name), () => {
       this.logger.debug("Restart timer");
       this.acknowledged = true;
       this.timer.start();
     });
-    this.addAction(_("Dismiss"), () => {
-      this.logger.debug("Dismiss");
-      this.acknowledged = true;
-    });
+    // this.addAction(_("Dismiss"), () => {
+    //   this.logger.debug("Dismiss");
+    //   this.acknowledged = true;
+    // });
 
+  }
+
+  longTimeout_callback(ktNotifier) {
+    ktNotifier.acknowledged = true;
+    ktNotifier.destroy();
+    Utils.clearTimeout(ktNotifier._long_timeout);
+    return false;
   }
 
 	playSound_callback(ktNotifier) {
@@ -376,7 +385,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       var base = GLib.path_get_basename(this.sound_file);
       if (base !== this.sound_file) {
         this.logger.error("Sound file not found, use default");
-        base = this._settings.get_default('sound-file');
+        base = this.settings.get_default('sound-file');
       }
       this._uri += GLib.build_filenamev([ Me.path, base ]);
     }
@@ -400,20 +409,24 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     });
   }
 
+  get settings() {
+    return this._settings;
+  }
+
   get timer() {
     return this._timer;
   }
 
   get sound_enabled() {
-    return this._settings.play_sound;
+    return this.settings.play_sound;
   }
 
   get sound_loops() {
-    return this._settings.sound_loops;
+    return this.settings.sound_loops;
   }
 
   get sound_file() {
-    return this._settings.sound_file
+    return this.settings.sound_file
   }
 
   destroy(reason = NotificationDestroyedReason.DISMISSED) {

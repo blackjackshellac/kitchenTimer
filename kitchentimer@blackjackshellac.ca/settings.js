@@ -34,13 +34,16 @@ var Settings = class Settings {
   constructor() {
     // try to recompile the schema
     let compile_schemas = [ Me.path+"/bin/compile_schemas.sh" ];
-    let res = Utils.execute(compile_schemas);
-    if (res !== undefined) {
-      log(res);
-    }
+    let [ exit_status, stdout, stderr ] = Utils.execute(compile_schemas);
 
     this.settings = ExtensionUtils.getSettings();
     this.logger = new Logger('kt settings', this.settings);
+
+    if (exit_status !== 0) {
+      this.logger.warn("Failed to compile schemas: %s\n%s", stdout, stderr);
+    } else {
+      this.logger.debug("compile_schemas: %s", stdout);
+    }
 
     this._timer_defaults = {
       name: "",
@@ -174,6 +177,7 @@ var Settings = class Settings {
       detect_dupes: this.detect_dupes,
       notification_sticky: this.notification_sticky,
       notification: this.notification,
+      notification_longtimeout: this.notification_longtimeout,
       play_sound: this.play_sound,
       save_quick_timers: this.save_quick_timers,
       show_label: this.show_label,
@@ -195,22 +199,21 @@ var Settings = class Settings {
     this.logger.info("Import json to settings");
     var obj = JSON.parse(json.replace( /[\r\n]+/gm, " "));
     for (let [key, value] of Object.entries(obj)) {
+      key=key.replace(/_/g, '-');
       this.logger.info("Import setting %s=%s (%s)", key, value, value.constructor.name);
       switch(key) {
         case "timers":
           this.pack_preset_timers(value);
           break;
-        case "quick_timers":
+        case "quick-timers":
           this.pack_quick_timers(value);
           break;
-        case "sound_loopes":
-          this.settings.sound_loops = value;
-          break;
-        case "sound_file":
-          this.settings.sound_file = value;
+        case "sound-loops":
+        case "sound-file":
+        case "notification-longtimeout":
+          this.settings.set_int(key, value);
           break;
         default:
-          key=key.replace(/_/g, '-');
           this.settings.set_boolean(key, value);
           break;
       }
@@ -236,6 +239,14 @@ var Settings = class Settings {
 
   set notification_sticky(bool) {
     this.settings.set_boolean(bool);
+  }
+
+  get notification_longtimeout() {
+    return this.settings.get_int('notification-longtimeout');
+  }
+
+  set notification_longtimeout(val) {
+    this.settings.set_int('notification-longtimeout', val);
   }
 
   get show_time() {

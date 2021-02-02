@@ -63,6 +63,8 @@ var Timers = class Timers extends Array {
   }
 
   static attach(indicator) {
+    // reload settings
+    timersInstance._settings = new Settings();
 
     timersInstance.logger.info("Attaching indicator");
 

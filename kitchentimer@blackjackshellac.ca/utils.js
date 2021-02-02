@@ -33,51 +33,64 @@ function logObjectPretty(obj) {
 }
 
 function setTimeout(func, delay, ...args) {
-    const wrappedFunc = () => {
-        return func.apply(this, args);
-    };
-    return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
+  const wrappedFunc = () => {
+    func.apply(this, args);
+    // never continue timeout
+    return false;
+  };
+  return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
 }
 
 function setInterval(func, delay, ...args) {
-    const wrappedFunc = () => {
-        return func.apply(this, args);
-    };
-    return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
+  const wrappedFunc = () => {
+    // continue timeout until func returns false
+    return func.apply(this, args);
+  };
+  return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
 }
 
 function spawn(command, callback) {
-    var [status, pid] = GLib.spawn_async(
-        null,
-        ['/usr/bin/env', 'bash', '-c', command],
-        null,
-        GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-        null
-    );
+  var [status, pid] = GLib.spawn_async(
+      null,
+      ['/usr/bin/env', 'bash', '-c', command],
+      null,
+      GLib.SpawnFlags.SEARCH_PATH | GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+      null
+  );
 
-    if (callback)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
+  if (callback) {
+    GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, callback);
+  }
 }
 
-function execute(cmdargs) {
+/**
+ * execute the given cmdargs [ cmd, arg0, arg1, ... ] synchronously
+ *
+ * Return [ exit_value, output ]
+ *
+ * - if it fails return [ -1, undefined, undefined ]
+ * - otherwise return [ exit_status, stdout, stderr ]
+ *
+ * Normally if exit_status is 0 stderr will be empty
+ *
+ */
+function execute(cmdargs, params={ wdir: null, envp: null, flags: GLib.SpawnFlags.SEARCH_PATH }) {
   var [ok, stdout, stderr, exit_status] = GLib.spawn_sync(
-    null, // working directory
+    params.wdir, // working directory
     cmdargs,  // string array
-    null,     // envp
-    GLib.SpawnFlags.SEARCH_PATH,
+    params.envp,     // envp
+    params.flags,
     null    // child setup function
   );
-  //log("exec "+cmdargs.join(" "));
 
   if (ok) {
     stdout = ByteArray.toString(stdout);
-    //stderr = ByteArray.toString(stderr);
+    stderr = ByteArray.toString(stderr);
     //log(`ok=${ok} exit_status=${exit_status} stdout=${stdout} stderr=${stderr}`);
-    if (exit_status === 0) {
-      return stdout;
-    }
+    return [ exit_status, stdout, stderr ];
   }
-  return undefined;
+  // fatal
+  return [ -1, undefined, "execute failed: %s".format(cmdargs.join(" ")) ];
 }
 
 function uuid(id=undefined) {
