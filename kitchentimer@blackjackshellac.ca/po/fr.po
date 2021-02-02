@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 11:13-0500\n"
-"PO-Revision-Date: 2021-02-01 14:26-0500\n"
+"POT-Creation-Date: 2021-02-02 14:55-0500\n"
+"PO-Revision-Date: 2021-02-02 14:55-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
 "Language: fr\n"
@@ -164,7 +164,7 @@ msgstr ""
 #: ../settings.ui:583
 msgctxt "notification_sticky"
 msgid "Sticky notification"
-msgstr "Notification collante"
+msgstr "Notification persistente"
 
 #: ../settings.ui:587
 msgctxt "notification-sticky-tooltip"
@@ -361,6 +361,8 @@ msgstr "Faire attendre la notification pour l'entrée de l'utilisateur"
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:50
 msgid "Long timeout for sticky notifications, default is 30 seconds"
 msgstr ""
+"Long délai d'attente pour les notifications persistantes, la valeur par "
+"défaut est de 30 secondes"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:54
 msgid "Show time remaining in panel menu"
@@ -380,7 +382,7 @@ msgstr "Jouer les sons de notification"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:71
 msgid "Number of times to ring alarm sound, 0 is no sound"
-msgstr ""
+msgstr "Nombre de sonneries d'alarme"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:75
 msgid "Path to sound file"
