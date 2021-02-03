@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 11:13-0500\n"
-"PO-Revision-Date: 2021-02-02 11:13-0500\n"
+"POT-Creation-Date: 2021-02-03 16:34-0500\n"
+"PO-Revision-Date: 2021-02-03 16:34-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -746,7 +746,7 @@ msgid "Duplicate timer [%s] is already running"
 msgstr ""
 
 #: timers.js:221 timers.js:222 timers.js:223 timers.js:258 timers.js:262
-#: timers.js:268 timers.js:293 timers.js:310
+#: timers.js:268 timers.js:293 timers.js:310 timers.js:321
 msgid "Duplicate timer is already running"
 msgstr ""
 
@@ -771,16 +771,16 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-#: timers.js:566 timers.js:573 timers.js:613 timers.js:633
+#: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:644
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
-#: timers.js:568 timers.js:575 timers.js:615 timers.js:635
+#: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:646
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
-#: timers.js:571 timers.js:578 timers.js:618 timers.js:638
+#: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:649
 msgid "Timer completed on time at"
 msgstr ""

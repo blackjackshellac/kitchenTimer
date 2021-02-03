@@ -114,6 +114,8 @@ var PanelMenuBuilder = class PanelMenuBuilder {
       this._addSeparator();
     }
 
+    let prefer_presets = (this.timers.prefer_presets >= 0);
+
     this._quick_timer_menu = undefined;
     var quick_timers_label = _("Quick timers");
     var timers=this.timers.sorted({running:false})
@@ -121,7 +123,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
       if (timer.quick && timer.enabled) {
         if (this._quick_timer_menu === undefined) {
           // found quick timer, add the sub menu if running timers
-          if (running_item === undefined) {
+          if (!prefer_presets) {
             var quick_item = new PopupMenu.PopupMenuItem(quick_timers_label, { reactive: false } );
             this._menu.addMenuItem(quick_item);
             this._quick_timer_menu = this._menu;
@@ -144,7 +146,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
       if (!timer.quick && timer.enabled) {
         if (this._presets_timer_menu === undefined) {
           // found presets, add the sub menu if quick timers
-          if (running_item === undefined && this._quick_timer_menu === undefined) {
+          if (prefer_presets || this._quick_timer_menu === undefined) {
             var presets_item = new PopupMenu.PopupMenuItem(preset_timers_label, { reactive: false } );
             this._menu.addMenuItem(presets_item);
             this._presets_timer_menu = this._menu;

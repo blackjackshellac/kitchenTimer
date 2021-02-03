@@ -60,6 +60,8 @@ var Timers = class Timers extends Array {
 
     // requires this._settings
     this._notifier = new Notifier.Annoyer(this);
+
+    this._prefer_presets = 0;
   }
 
   static attach(indicator) {
@@ -121,6 +123,15 @@ var Timers = class Timers extends Array {
 
   get settings() {
     return this._settings;
+  }
+
+  get prefer_presets() {
+    return this._prefer_presets;
+  }
+
+  inc_prefer_presets(inc) {
+    this._prefer_presets += inc;
+    this.logger.debug("prefer_presets=%d", this._prefer_presets);
   }
 
   get box() {
@@ -690,8 +701,10 @@ var Timer = class Timer {
 
     timersInstance.saveRunningTimers();
 
-    var quick=this._quick ? ' quick ' : ' ';
+    let quick=this._quick ? ' quick ' : ' ';
     this.logger.info("%s%stimer at %d", action, quick, this._start);
+    timersInstance.inc_prefer_presets(this._quick ? -1 : 1);
+
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
 
     if (timersInstance.settings.play_sound || timersInstance.settings.volume_level_warn) {
