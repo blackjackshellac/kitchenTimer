@@ -114,7 +114,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
       this._addSeparator();
     }
 
-    let prefer_presets = (this.timers.prefer_presets >= 0);
+    let prefer_presets = (this.timers.prefer_presets > 0);
 
     this._quick_timer_menu = undefined;
     var quick_timers_label = _("Quick timers");

@@ -24,10 +24,11 @@ const Params = imports.misc.params;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const { GLib, GObject, Gio } = imports.gi;
+const { GLib, GObject, Gio, St } = imports.gi;
 const Main = imports.ui.main;
 const MessageTray = imports.ui.messageTray;
 const NotificationDestroyedReason = MessageTray.NotificationDestroyedReason;
+const PopupMenu = imports.ui.popupMenu;
 
 // szm - from tea-time
 imports.gi.versions.Gst = '1.0';
@@ -37,6 +38,7 @@ const Gst = imports.gi.Gst;
 // for setInterval()
 const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
+const HMS = Me.imports.hms.HMS;
 
 var Annoyer = class Annoyer {
   constructor(timers) {
@@ -52,10 +54,6 @@ var Annoyer = class Annoyer {
 
     this._source = this._createSource();
 
-    // this._source.connect('destroy', (source) => {
-    //   this._source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
-    //   Main.messageTray.add(this._source);
-    // });
   }
 
   _createSource() {
@@ -297,6 +295,10 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this._timer = timer;
     this._loops = 0;
 
+    this.setResident(true);
+
+    this._banner = new KitchenTimerNotifierBanner(this);
+
     this.logger.debug('timer is %s', timer.expired ? "expired" : "not expired");
     if (timer.expired) {
       if (this.settings.notification_sticky) {
@@ -311,6 +313,11 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       }
       this._addActions();
     }
+
+    this._banner.connect('clicked', (banner) => {
+      this.logger.debug("Clicked!");
+      banner.notifier.destroy();
+    });
   }
 
   _addActions() {
@@ -321,16 +328,44 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 
     this._long_timeout = Utils.setTimeout(this.longTimeout_callback, this.settings.notification_longtimeout, this);
 
-    this.addAction(_("Restart timer %s").format(this.timer.name), () => {
+    this._banner.addAction(_("Restart timer %s").format(this.timer.name), () => {
       this.logger.debug("Restart timer");
       this.acknowledged = true;
       this.timer.start();
+      this.destroy();
     });
-    // this.addAction(_("Dismiss"), () => {
-    //   this.logger.debug("Dismiss");
+
+    // let snooze = Math.floor(this.timer.duration * 25 / 100);
+    // this._banner.addAction(_("Snooze %s").format(new HMS(snooze).toString()), (snooze) => {
+    //   this.logger.debug("Snooze");
     //   this.acknowledged = true;
+    //   this.timer.snooze(snooze);
     // });
 
+    this._banner.addSnooze(this.timer, 25, (secs) => {
+      this.logger.debug("Snooze");
+      this.acknowledged = true;
+      this.timer.snooze(secs);
+      this.destroy();
+    });
+
+    this._banner.addSnooze(this.timer, 10, (secs) => {
+      this.logger.debug("Snooze");
+      this.acknowledged = true;
+      this.timer.snooze(secs);
+      this.destroy();
+    });
+
+    this._banner.addSnooze(this.timer, 5, (secs) => {
+      this.logger.debug("Snooze");
+      this.acknowledged = true;
+      this.timer.snooze(secs);
+      this.destroy();
+    });
+  }
+
+  createBanner() {
+    return this._banner;
   }
 
   longTimeout_callback(ktNotifier) {
@@ -434,7 +469,222 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       this.logger.debug("Not acknowledged yet");
       return;
     }
-    this.logger.debug("Acknowledged notification will be destroyed");
-    super.destroy(reason);
+    if (!this._destroyed) {
+      this._destroyed = true;
+      this.logger.debug("Acknowledged notification will be destroyed");
+      super.destroy(reason);
+    }
   }
 });
+
+var KitchenTimerNotifierBanner = GObject.registerClass(
+class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
+  _init(notifier) {
+    this.logger = new Logger('kt notifierbanner', notifier.timer.timers.settings);
+    this.logger.debug("constructor");
+
+    super._init(notifier);
+
+    super.notification = this.notifier = notifier;
+  }
+
+  get notifier() {
+    return this._notifier;
+  }
+
+  set notifier(n) {
+    this._notifier = n;
+  }
+
+  // copied from MessageTray.NotificationBanner
+  addButton(button) {
+    // should call the layoutbox _buttonBox
+    if (!this._buttonBox) {
+        this._buttonBox = new St.BoxLayout({ style_class: 'notification-actions',
+                                             x_expand: true });
+        this.setActionArea(this._buttonBox);
+        global.focus_manager.add_group(this._buttonBox);
+    }
+
+    if (this._buttonBox.get_n_children() >= 3 /* MAX_NOTIFICATION_BUTTONS */)
+        return null;
+
+    this._buttonBox.add(button);
+
+    return button;
+  }
+
+  // copied from MessageTray.NotificationBanner
+  addAction(label, callback) {
+    this.logger.debug("Create button %s", label);
+    let button = new St.Button({ style_class: 'notification-button',
+                                 label,
+                                 x_expand: true,
+                                 can_focus: true });
+
+    if (this.addButton(button)) {
+      button.connect('clicked', () => {
+        callback();
+
+        // if (!this.notification.resident) {
+          // We don't hide a resident notification when the user invokes one of its actions,
+          // because it is common for such notifications to update themselves with new
+          // information based on the action. We'd like to display the updated information
+          // in place, rather than pop-up a new notification.
+        //   this.emit('done-displaying');
+        //   this.notification.destroy();
+        // }
+      });
+    }
+  }
+
+  addSnooze(timer, percent, callback) {
+    let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
+    let label = _("Snooze %d seconds").format(snooze);
+    this.logger.debug("Create snooze button menu %s", label);
+    let button = new St.Button({ style_class: 'notification-button',
+                                 label,
+                                 x_expand: true,
+                                 can_focus: true });
+
+    if (this.addButton(button)) {
+      button.snooze = snooze;
+      button.connect('clicked', (button) => {
+
+        callback(button.snooze);
+
+        // if (!this.notification.resident) {
+          // We don't hide a resident notification when the user invokes one of its actions,
+          // because it is common for such notifications to update themselves with new
+          // information based on the action. We'd like to display the updated information
+          // in place, rather than pop-up a new notification.
+        //   this.emit('done-displaying');
+        //   this.notification.destroy();
+        // }
+      });
+    }
+  }
+});
+
+// var PopupMenuExample =  GObject.registerClass(
+// class KitchenTimerNotifierBannerSnooze extends PanelMenu.Button {
+
+	// Constructor
+// 	_init: function() {
+// 		/*
+// 		This is calling the parent constructor
+// 		1 is the menu alignment (1 is left, 0 is right, 0.5 is centered)
+// 		`PopupMenuExample` is the name
+// 		true if you want to create a menu automatically, otherwise false
+// 		*/
+// 		this.parent(1, 'PopupMenuExample', false);
+
+		// We are creating a box layout with shell toolkit
+// 		let box = new St.BoxLayout();
+
+// 		/*
+// 		A new icon 'system-search-symbolic'.symbolic
+// 		All icons are found in `/usr/share/icons/theme-being-used`
+// 		In other tutorials we will teach you how to use your own icons
+
+// 		The class 'system-status-icon` is very useful, remove it and restart the shell then you will see why it is useful here
+// 		*/
+// 		let icon =  new St.Icon({ icon_name: 'system-search-symbolic', style_class: 'system-status-icon'});
+
+		// A label expanded and center aligned in the y-axis
+// 		let toplabel = new St.Label({ text: ' Menu ',
+// 			y_expand: true,
+// 			y_align: Clutter.ActorAlign.CENTER });
+
+		// We add the icon, the label and a arrow icon to the box
+// 		box.add(icon);
+// 		box.add(toplabel);
+// 		box.add(PopupMenu.arrowIcon(St.Side.BOTTOM));
+
+		// We add the box to the button
+		// It will be showed in the Top Panel
+// 		this.actor.add_child(box);
+
+		// This is an example of PopupSubMenuMenuItem, a menu expander
+// 		let popupMenuExpander = new PopupMenu.PopupSubMenuMenuItem('PopupSubMenuMenuItem');
+
+		// This is an example of PopupMenuItem, a menu item. We will use this to add as a submenu
+// 		let submenu = new PopupMenu.PopupMenuItem('PopupMenuItem');
+
+		// A new label
+// 		let label = new St.Label({text:'Item 1'});
+
+		// Add the label and submenu to the menu expander
+// 		popupMenuExpander.menu.addMenuItem(submenu);
+// 		popupMenuExpander.menu.box.add(label);
+
+		// The CSS from our file is automatically imported
+		// You can add custom styles like this
+		// REMOVE THIS AND SEE WHAT HAPPENS
+// 		popupMenuExpander.menu.box.style_class = 'PopupSubMenuMenuItemStyle';
+
+		// Other standard menu items
+// 		let menuitem = new PopupMenu.PopupMenuItem('PopupMenuItem');
+// 		let switchmenuitem = new PopupMenu.PopupSwitchMenuItem('PopupSwitchMenuItem');
+// 		let imagemenuitem = new PopupMenu.PopupImageMenuItem('PopupImageMenuItem', 'system-search-symbolic');
+
+		// Assemble all menu items
+// 		this.menu.addMenuItem(popupMenuExpander);
+		// This is a menu separator
+// 		this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+// 		this.menu.addMenuItem(menuitem);
+// 		this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+// 		this.menu.addMenuItem(switchmenuitem);
+// 		this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+// 		this.menu.addMenuItem(imagemenuitem);
+
+
+// /*
+// The following three object.connect(`signal`, Lang.bind(this, callback) are special functions
+// `signal`: there are many signals, you will see more in other tutorials
+// Lang.bin(this, callback): You will always need to include this
+// 	callback is the function being called when `signal` is fired
+// 		by default the first paramenter is the object that fired the signal
+// */
+// 		/*
+// 		With PopupSwitchMenuItem you can use the signal `toggled` and do interesting stuff with it
+// 		- function(object, value)
+// 			object is the object sending the signal
+// 			value is either true or false, depending on the switch
+// 		*/
+// 		switchmenuitem.connect('toggled', Lang.bind(this, function(object, value){
+			// We will just change the text content of the label
+// 			if(value) {
+// 				label.set_text('On');
+// 			} else {
+// 				label.set_text('Off');
+// 			}
+// 		}));
+
+// 		/*
+// 		With Popup*MenuItem you can use the signal `activate`, it is fired when the user clicks over a menu item
+// 		*/
+// 		imagemenuitem.connect('activate', Lang.bind(this, function(){
+// 			toplabel.set_text('Changed');
+// 		}));
+
+// 		/*
+// 		With 'open-state-changed' on a popupmenu we can know if the menu is being shown
+// 		We will just show the submenu menu items automatically, (by default it is not shown)
+// 		*/
+// 		this.menu.connect('open-state-changed', Lang.bind(this, function(){
+// 			popupMenuExpander.setSubmenuShown(true);
+// 		}));
+
+// 	},
+
+// 	/*
+// 	We destroy the button
+// 	*/
+// 	destroy: function() {
+// 		/*
+// 		This call the parent destroy function
+// 		*/
+// 		this.parent();
+// 	}
+// });

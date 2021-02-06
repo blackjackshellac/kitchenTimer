@@ -189,6 +189,7 @@ var Settings = class Settings {
       sound_loops: this.sound_loops,
       volume_level_warn: this.volume_level_warn,
       volume_threshold: this.volume_threshold,
+      prefer_presets: this.prefer_presets,
       quick_timers: this.unpack_quick_timers([]),
       timers: this.unpack_preset_timers([])
     }
@@ -211,6 +212,7 @@ var Settings = class Settings {
         case "sound-loops":
         case "sound-file":
         case "notification-longtimeout":
+        case "prefer-presets":
           this.settings.set_int(key, value);
           break;
         default:
@@ -363,6 +365,14 @@ var Settings = class Settings {
 
   set volume_threshold(val) {
     this.settings.set_int('volume-threshold', val);
+  }
+
+  get prefer_presets() {
+    return this.settings.get_int('prefer-presets');
+  }
+
+  set prefer_presets(val) {
+    this.settings.set_int('prefer-presets', val);
   }
 
   get debug() {

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 16:34-0500\n"
-"PO-Revision-Date: 2021-02-03 16:34-0500\n"
+"POT-Creation-Date: 2021-02-06 11:57-0500\n"
+"PO-Revision-Date: 2021-02-06 11:57-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -122,13 +122,18 @@ msgstr ""
 msgid "Name for timer"
 msgstr ""
 
-#: notifier.js:322 notifier.js:324
+#: notifier.js:322 notifier.js:324 notifier.js:331
 #, javascript-format
 msgid "Restart timer %s"
 msgstr ""
 
 #: notifier.js:327 notifier.js:329
 msgid "Dismiss"
+msgstr ""
+
+#: notifier.js:543
+#, javascript-format
+msgid "Snooze %d seconds"
 msgstr ""
 
 #: prefs.js:225 prefs.js:230 prefs.js:231 prefs.js:232 prefs.js:234
@@ -294,6 +299,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:118
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:122
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:126
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:131
 msgid "Turn on debugging"
 msgstr ""
 
@@ -324,7 +330,13 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:114
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:118
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:122
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:127
 msgid "Warn if volume levels are below threshold"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:123
+msgid ""
+"Heuristic counter to prefer displaying the quick or preset menus expanded"
 msgstr ""
 
 #: settings.ui:55 settings.ui:184 settings.ui:192 settings.ui:194
@@ -746,7 +758,8 @@ msgid "Duplicate timer [%s] is already running"
 msgstr ""
 
 #: timers.js:221 timers.js:222 timers.js:223 timers.js:258 timers.js:262
-#: timers.js:268 timers.js:293 timers.js:310 timers.js:321
+#: timers.js:268 timers.js:293 timers.js:310 timers.js:316 timers.js:321
+#: timers.js:322
 msgid "Duplicate timer is already running"
 msgstr ""
 
@@ -771,16 +784,19 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-#: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:644
+#: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:639
+#: timers.js:644 timers.js:645
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
-#: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:646
+#: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:641
+#: timers.js:646 timers.js:647
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
-#: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:649
+#: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:644
+#: timers.js:649 timers.js:650
 msgid "Timer completed on time at"
 msgstr ""

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-02 14:55-0500\n"
-"PO-Revision-Date: 2021-02-02 14:55-0500\n"
+"POT-Creation-Date: 2021-02-06 11:57-0500\n"
+"PO-Revision-Date: 2021-02-06 12:02-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
 "Language: fr\n"
@@ -320,21 +320,21 @@ msgstr "Pratique"
 msgid "Go"
 msgstr "Go"
 
-#: ../timers.js:310
+#: ../timers.js:316
 msgid "Duplicate timer is already running"
 msgstr "Une minuterie en double est déjà en cours d'exécution"
 
-#: ../timers.js:633
+#: ../timers.js:639
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr "La minuterie s'est arrêtée %s plus tôt à"
 
-#: ../timers.js:635
+#: ../timers.js:641
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr "La minuterie a terminé avec %s de retard à"
 
-#: ../timers.js:638
+#: ../timers.js:644
 msgid "Timer completed on time at"
 msgstr "Minuterie terminée à temps à"
 
@@ -432,32 +432,43 @@ msgstr "État des minuteries en cours d'exécution comme json"
 msgid "Low volume threshold in percent"
 msgstr "Limite de volume faible en pourcentage"
 
-#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:122
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:123
+msgid ""
+"Heuristic counter to prefer displaying the quick or preset menus expanded"
+msgstr ""
+"Compteur heuristique pour préférer afficher les menus rapides ou préréglées"
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:127
 msgid "Warn if volume levels are below threshold"
 msgstr "Avertir si les niveaux de volume sont inférieurs au seuil"
 
-#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:126
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:131
 msgid "Turn on debugging"
 msgstr "Activer le débogage"
 
-#: ../notifier.js:324
+#: ../notifier.js:331
 #, javascript-format
 msgid "Restart timer %s"
 msgstr "Redémarrer la minuterie %s"
+
+#: ../notifier.js:543
+#, javascript-format
+msgid "Snooze %d seconds"
+msgstr "Prolonger %d secondes"
 
 #: ../menus.js:107
 msgid "Running timers"
 msgstr "Minuteries en cours"
 
-#: ../menus.js:118
+#: ../menus.js:120
 msgid "Quick timers"
 msgstr "Minuteries pratiques"
 
-#: ../menus.js:142
+#: ../menus.js:144
 msgid "Preset timers"
 msgstr "Minuteries préréglées"
 
-#: ../menus.js:164
+#: ../menus.js:166
 msgid "Preferences…"
 msgstr "Préférences…"
 

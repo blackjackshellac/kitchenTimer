@@ -117,6 +117,11 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <range min="1" max="100"/>
       <summary>Low volume threshold in percent</summary>
     </key>
+    <key name="prefer-presets" type="i">
+      <default>0</default>
+      <range min="-10" max="10"/>
+      <summary>Heuristic counter to prefer displaying the quick or preset menus expanded</summary>
+    </key>
     <key name='volume-level-warn' type='b'>
       <default>true</default>
       <summary>Warn if volume levels are below threshold</summary>

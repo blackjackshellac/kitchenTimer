@@ -60,8 +60,6 @@ var Timers = class Timers extends Array {
 
     // requires this._settings
     this._notifier = new Notifier.Annoyer(this);
-
-    this._prefer_presets = 0;
   }
 
   static attach(indicator) {
@@ -125,13 +123,9 @@ var Timers = class Timers extends Array {
     return this._settings;
   }
 
-  get prefer_presets() {
-    return this._prefer_presets;
-  }
-
   inc_prefer_presets(inc) {
-    this._prefer_presets += inc;
-    this.logger.debug("prefer_presets=%d", this._prefer_presets);
+    this.settings.prefer_presets += inc;
+    this.logger.debug("prefer_presets=%d", this.settings.prefer_presets);
   }
 
   get box() {
@@ -683,6 +677,14 @@ var Timer = class Timer {
     return false;
   }
 
+  snooze(secs) {
+    // the time it took to click snooze button
+    let dt = Date.now() - this._end;
+    this._start += secs*1000+dt;
+    // reset duration taking the new end into account
+    this.go(this._start);
+  }
+
   go(start=undefined) {
     var action;
     if (start === undefined) {
@@ -692,10 +694,7 @@ var Timer = class Timer {
       this._start = start;
       action="Restarting";
     }
-    // if (this.alarm_timer) {
-    //   this.logger.debug("%s Timer is alarm timer: %s", action, this.alarm_timer.toString());
-    //   this.logger.debug("Alarm timer %s", this.toString());
-    // }
+
     this._end = this._start + this.duration_ms();
     this._state = TimerState.RUNNING;
 
