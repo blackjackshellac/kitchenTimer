@@ -179,6 +179,7 @@ var Settings = class Settings {
       notification: this.notification,
       notification_longtimeout: this.notification_longtimeout,
       play_sound: this.play_sound,
+      prefer_presets: this.prefer_presets,
       save_quick_timers: this.save_quick_timers,
       show_label: this.show_label,
       show_progress: this.show_progress,
@@ -189,7 +190,6 @@ var Settings = class Settings {
       sound_loops: this.sound_loops,
       volume_level_warn: this.volume_level_warn,
       volume_threshold: this.volume_threshold,
-      prefer_presets: this.prefer_presets,
       quick_timers: this.unpack_quick_timers([]),
       timers: this.unpack_preset_timers([])
     }
@@ -372,6 +372,8 @@ var Settings = class Settings {
   }
 
   set prefer_presets(val) {
+    if (val > 10) { val = 10; }
+    else if (val < -10) { val = -10; }
     this.settings.set_int('prefer-presets', val);
   }
 

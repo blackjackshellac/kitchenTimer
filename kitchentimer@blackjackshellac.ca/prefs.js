@@ -29,13 +29,15 @@ const Settings = Me.imports.settings.Settings;
 const Utils = Me.imports.utils;
 const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
+const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
 
 const Model = {
   NAME: 0,
   ID: 1,
   DURATION: 2,
   ENABLED: 3,
-  QUICK: 4
+  QUICK: 4,
+  HMS: 5
 }
 
 class PreferencesBuilder {
@@ -91,6 +93,94 @@ class PreferencesBuilder {
         this.timers_remove = this._bo('timers_remove');
         this.timer_enabled = this._bo('timer_enabled');
         this.timer_icon = this._bo('timer_icon');
+
+        this.tv_timers = this._bo('tv_timers');
+        this.tvs_timers = this._bo('tvs_timers');
+
+        this.tvs_timers.connect('changed', (select) => {
+          let [ ok, model, iter ] = select.get_selected();
+          if (ok) {
+            this.logger.debug("tree view select changed");
+            this.timers_combo.set_active_iter(iter);
+          }
+        });
+
+        this.tvcr_enabled = this._bo('tvcr_enabled');
+        this.tvcr_enabled.set_activatable(true);
+        this.tvcr_enabled.connect('toggled', (toggle, path) => {
+          var active = toggle.get_active();
+          this.logger.debug("toggled=%s path=%s", active, path);
+          //toggle.set_active(!toggle.get_active());
+          var model = this.tv_timers.get_model();
+          var [ ok, iter ] = model.get_iter_from_string(path);
+          if (ok) {
+            model.set_value(iter, Model.ENABLED, !active);
+            this._save_liststore();
+            this._update_timers_tab_from_model(this.timers_combo);
+          }
+
+        });
+
+        this.tvcr_name = this._bo('tvcr_name');
+        this.tvcr_name.editable = true;
+        this.tvcr_name.connect('edited', (text, path, new_text) => {
+          this.logger.debug("path=%s new_text=%s", path, new_text);
+          var model = this.tv_timers.get_model();
+          var [ ok, iter ] = model.get_iter_from_string(path);
+          if (ok) {
+            model.set_value(iter, Model.NAME, new_text);
+            var alarm_timer = AlarmTimer.matchRegex(new_text);
+            if (alarm_timer) {
+              var hms = alarm_timer.hms();
+              model.set_value(iter, Model.DURATION, hms.toSeconds());
+              model.set_value(iter, Model.HMS, hms.toString());
+            }
+            this._save_liststore();
+            this._update_timers_tab_from_model(this.timers_combo);
+          }
+        });
+
+        this.tvcr_hms = this._bo('tvcr_hms');
+        this.tvcr_hms.editable = true;
+        this.tvcr_hms.connect('edited', (text, path, new_text) => {
+          this.logger.debug("path=%s new_text=%s", path, new_text);
+          var model = this.tv_timers.get_model();
+          var [ ok, iter ] = model.get_iter_from_string(path);
+          if (ok) {
+            var duration = model.get_value(iter, Model.DURATION);
+            var hms_text = model.get_value(iter, Model.HMS);
+            this.logger.debug("duration=%d hms=%s new=%s", duration, hms_text, new_text);
+            var hms = HMS.fromString(new_text);
+            if (hms) {
+              model.set_value(iter, Model.DURATION, hms.toSeconds());
+              model.set_value(iter, Model.HMS, hms.toString());
+              this._save_liststore();
+              this._update_timers_tab_from_model(this.timers_combo);
+            }
+
+          }
+        });
+
+        this.tvcr_duration = this._bo('tvcr_duration');
+        this.tvcr_duration.editable = true;
+        this.tvcr_duration.connect('edited', (text, path, new_text) => {
+          this.logger.debug("path=%s new_text=%s", path, new_text);
+          var model = this.tv_timers.get_model();
+          var [ ok, iter ] = model.get_iter_from_string(path);
+          if (ok) {
+            var duration = model.get_value(iter, Model.DURATION);
+            var hms_text = model.get_value(iter, Model.HMS);
+            this.logger.debug("duration=%d hms=%s new=%s", duration, hms_text, new_text);
+            var hms = new HMS(new_text);
+            if (hms) {
+              model.set_value(iter, Model.DURATION, hms.toSeconds());
+              model.set_value(iter, Model.HMS, hms.toString());
+              this._save_liststore();
+              this._update_timers_tab_from_model(this.timers_combo);
+            }
+
+          }
+        });
 
         // TODO update with initial value
         this._hms = new HMS(0);
@@ -285,6 +375,7 @@ class PreferencesBuilder {
         this.timers_liststore.set_value(iter, Model.DURATION, timer.duration);
         this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
         this.timers_liststore.set_value(iter, Model.QUICK, timer.quick);
+        this.timers_liststore.set_value(iter, Model.HMS, new HMS(timer.duration).toString());
       });
 
       this.timers_combo.set_active(0);
@@ -509,6 +600,11 @@ class PreferencesBuilder {
             this.logger.debug(`quick changed to ${quick}`);
             ok = true;
             model.set_value(iter, Model.QUICK, quick);
+          }
+          if (model.get_value(iter, Model.HMS) !== hms.toString()) {
+            this.logger.debug("HMS changed to %s", hms.toString());
+            ok = true;
+            model.set_value(iter, Model.HMS, hms.toString());
           }
           if (ok) {
             this.logger.debug(`Updating liststore for ${name} entry`);

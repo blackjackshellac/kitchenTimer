@@ -18,16 +18,44 @@
 
 var HMS = class HMS {
   constructor(secs=0) {
+    if (isNaN(secs)) {
+    }
     this._secs = Number(secs);
     this._hours = Math.floor(secs / 3600);
     this._minutes = Math.floor(secs % 3600 / 60);
     this._seconds = Math.floor(secs % 3600 % 60);
   }
 
+  static fromString(hms_text) {
+    var array = hms_text.split(/:/);
+    var h=0;
+    var m=0;
+    var s=0;
+    if (array.length == 3) {
+      h = array[0];
+      m = array[1];
+      s = array[2];
+    } else if (array.length == 2) {
+      m = array[0];
+      s = array[1];
+    } else if (array.length == 1) {
+      s = array[1];
+    } else {
+      return undefined;
+    }
+    if (isNaN(h) || isNaN(m) || isNaN(s)) {
+      throw 'Parameter to HMS.fromString(%s) is not a valid time %s:%s:%s'.format(hms_text, h, m, s);
+    }
+    return HMS.create(h, m, s);
+  }
+
   static create(h,m,s) {
     if (!h) { h=0; }
     if (!m) { m=0; }
     if (!s) { s=0; }
+    if (isNaN(h) || isNaN(m) || isNaN(s)) {
+      throw 'Parameter to HMS.create(%s,%s,%s) is not a number'.format(h, m, s);
+    }
     return new HMS(Number(h)*3600+Number(m)*60+Number(s));
   }
 
