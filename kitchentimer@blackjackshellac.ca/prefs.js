@@ -37,7 +37,8 @@ const Model = {
   DURATION: 2,
   ENABLED: 3,
   QUICK: 4,
-  HMS: 5
+  HMS: 5,
+  TRASH: 6
 }
 
 class PreferencesBuilder {
@@ -118,6 +119,11 @@ class PreferencesBuilder {
             this._save_liststore();
             this._update_timers_tab_from_model(this.timers_combo);
           }
+
+        });
+
+        this.tvcr_trash = this._bo('tvcr_trash');
+        this.tvcr_trash.connect('toggled', (toggle, path) => {
 
         });
 
@@ -376,6 +382,7 @@ class PreferencesBuilder {
         this.timers_liststore.set_value(iter, Model.ENABLED, timer.enabled);
         this.timers_liststore.set_value(iter, Model.QUICK, timer.quick);
         this.timers_liststore.set_value(iter, Model.HMS, new HMS(timer.duration).toString());
+        this.timers_liststore.set_value(iter, Model.TRASH, false);
       });
 
       this.timers_combo.set_active(0);
