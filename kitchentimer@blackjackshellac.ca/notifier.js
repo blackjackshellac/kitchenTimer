@@ -473,6 +473,9 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       this._destroyed = true;
       this.stop_player();
       super.destroy(reason);
+
+      this.timer.uninhibit();
+
     }
   }
 });

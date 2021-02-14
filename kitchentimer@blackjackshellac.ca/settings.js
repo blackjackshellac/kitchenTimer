@@ -175,6 +175,7 @@ var Settings = class Settings {
     var h={
       debug: this.debug,
       detect_dupes: this.detect_dupes,
+      inhibit: this.inhibit,
       notification_sticky: this.notification_sticky,
       notification: this.notification,
       notification_longtimeout: this.notification_longtimeout,
@@ -213,6 +214,7 @@ var Settings = class Settings {
         case "sound-file":
         case "notification-longtimeout":
         case "prefer-presets":
+        case "inhibit":
           this.settings.set_int(key, value);
           break;
         default:
@@ -225,6 +227,14 @@ var Settings = class Settings {
 
   get_default(key) {
     return this.settings.get_default_value(key);
+  }
+
+  get inhibit() {
+    return this.settings.get_int('inhibit');
+  }
+
+  set inhibit(val) {
+    this.settings.set_int('inhibit', val);
   }
 
   get notification() {

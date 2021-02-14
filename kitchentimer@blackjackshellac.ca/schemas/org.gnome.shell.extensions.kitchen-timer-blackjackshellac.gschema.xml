@@ -40,6 +40,18 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>true</default>
       <summary>Show a notification when a timer ends</summary>
     </key>
+    <key name="inhibit" type="i">
+      <default>0</default>
+      <range min="0" max="15"/>
+      <summary>Inhibit screen lock</summary>
+      <description>
+        0 - off
+        1 - Inhibit logging out
+        2 - Inhibit user switching
+        4 - Inhibit suspending the session or computer
+        8 - Inhibit the session being marked as idle
+     </description>
+    </key>
     <key name="notification-sticky" type="b">
       <default>false</default>
       <summary>Make the notification wait for input</summary>

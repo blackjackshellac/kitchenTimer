@@ -450,7 +450,7 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkBox" id="timer_box">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
@@ -510,45 +510,10 @@ Author: Steeve McCauley
                     </child>
                     <child>
                       <!-- n-columns=6 n-rows=2 -->
-                      <object class="GtkGrid">
+                      <object class="GtkGrid" id="scale_grid">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <child>
-                          <object class="GtkSpinButton" id="spin_hour">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="adjustment">adjust_hours</property>
-                            <property name="numeric">True</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin_minute">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="adjustment">adjust_mins</property>
-                            <property name="numeric">True</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">2</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin_second">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="adjustment">adjust_secs</property>
-                            <property name="numeric">True</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">3</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
+                        <property name="column-homogeneous">True</property>
                         <child>
                           <object class="GtkLabel">
                             <property name="visible">True</property>
@@ -580,6 +545,45 @@ Author: Steeve McCauley
                           <packing>
                             <property name="left-attach">3</property>
                             <property name="top-attach">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="scale_hour">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="adjustment">adjust_hours</property>
+                            <property name="round-digits">0</property>
+                            <property name="digits">0</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">1</property>
+                            <property name="top-attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="adjustment">adjust_mins</property>
+                            <property name="round-digits">0</property>
+                            <property name="digits">0</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">2</property>
+                            <property name="top-attach">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScale">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="adjustment">adjust_secs</property>
+                            <property name="round-digits">0</property>
+                            <property name="digits">0</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">3</property>
+                            <property name="top-attach">1</property>
                           </packing>
                         </child>
                         <child>
@@ -960,7 +964,18 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkCheckButton" id="inhibit">
+                    <property name="label" translatable="yes" context="inhibit">Inhibit screen lock</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="inhibit-tooltip">Inhibit screen lock when timers are running</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">2</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>

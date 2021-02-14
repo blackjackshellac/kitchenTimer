@@ -66,7 +66,11 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
                                                        '/org/gnome/SessionManager');
     this._cookies = {};
 
-    this.settings = settings;
+    this._settings = settings;
+  }
+
+  get_cookie(app_id) {
+    return this._cookies[app_id];
   }
 
   /*
@@ -77,7 +81,16 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
     4: Inhibit suspending the session or computer
     8: Inhibit the session being marked as idle
   */
-  inhibit(app_id, reason, flags=12) {
+  inhibit(app_id, reason) {
+    let cookie = this.get_cookie(app_id);
+    if (cookie) {
+      this.logger.warn("cookie exists for %s: cookie=%d", app_id, cookie);
+      uninhibit(app_id);
+    }
+    let flags = this.settings.inhibit;
+    if (flags <= 0) {
+      return false;
+    }
     this._sessionManager.InhibitRemote(app_id,
       0, reason, flags,
       cookie => {
@@ -85,17 +98,18 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
         this._cookies[app_id] = cookie;
       }
     );
-    return this._cookies[app_id];
+    return this.get_cookie(app_id);
   }
 
   uninhibit(app_id) {
-    let cookie = this._cookies[app_id];
+    let cookie = this.get_cookie(app_id);
     if (cookie) {
       this.logger.debug("Uninhibit id=%s: cookie=%d", app_id, cookie);
-      this._sessionManager.UninhibitRemote(this._cookies[app_id]);
-    } else {
-      this.logger.warn("No cookie found for app_id=%s", app_id);
+      this._sessionManager.UninhibitRemote(cookie);
+      return delete this._cookies[app_id];
     }
+    this.logger.debug("No cookie found for app_id=%s", app_id);
+    return false;
   }
 
   get settings() {

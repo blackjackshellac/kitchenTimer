@@ -665,11 +665,6 @@ var Timer = class Timer {
     timersInstance.set_panel_label("");
     timersInstance.saveRunningTimers();
 
-    if (!this.alarm_timer) {
-      timersInstance.inhibitor.uninhibit(this.id);
-    }
-
-
     // return with false to stop interval callback loop
     return false;
   }
@@ -783,6 +778,10 @@ var Timer = class Timer {
 
   delete() {
     this.timers.remove(this);
+  }
+
+  uninhibit() {
+    timersInstance.inhibitor.uninhibit(this.id);
   }
 }
 

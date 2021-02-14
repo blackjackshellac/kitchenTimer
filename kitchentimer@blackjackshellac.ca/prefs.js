@@ -48,6 +48,13 @@ class PreferencesBuilder {
         this.logger = new Logger('kt prefs', this._settings);
     }
 
+    show() {
+      this._widget.show_all();
+      this.tv_timers.hide();
+      this._bo('timer_box').hide();
+      this._bo('scale_grid').hide();
+    }
+
     build() {
         this._builder.add_from_file(Me.path + '/settings.ui');
         this._settingsBox = this._builder.get_object('kitchenTimer_settings');
@@ -360,6 +367,17 @@ class PreferencesBuilder {
             this.import_settings();
           }
         });
+
+        this.inhibit = this._bo('inhibit');
+        this.inhibit.connect('toggled', (check) => {
+          let val=0;
+          if (check.get_active()) {
+            val = 12;
+          }
+          this._settings.inhibit = val;
+        });
+        this.inhibit.set_active(this._settings.inhibit > 0);
+
         this._bind();
 
         return this._widget;
@@ -771,7 +789,9 @@ function buildPrefsWidget() {
   if (window) {
     window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
   }
-  widget.show_all();
+
+  preferencesBuilder.show();
+
 
   return widget;
 }
