@@ -543,7 +543,7 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
 
   addSnooze(timer, percent, callback) {
     let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
-    if (snooze < 10) {
+    if (snooze < 30) {
       return false;
     }
     let hms = new HMS(snooze);
