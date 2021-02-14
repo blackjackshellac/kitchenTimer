@@ -1,0 +1,110 @@
+/*
+ * Kitchen Timer: Gnome Shell Kitchen Timer Extension
+ * Copyright (C) 2021 Steeve McCauley
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+const { Gio, Gtk, GLib } = imports.gi;
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+const Logger = Me.imports.logger.Logger;
+
+const DBusSessionManagerIface = `
+<node>
+  <interface name="org.gnome.SessionManager">
+    <method name="Inhibit">
+        <arg type="s" direction="in" />
+        <arg type="u" direction="in" />
+        <arg type="s" direction="in" />
+        <arg type="u" direction="in" />
+        <arg type="u" direction="out" />
+    </method>
+    <method name="Uninhibit">
+        <arg type="u" direction="in" />
+    </method>
+       <method name="GetInhibitors">
+           <arg type="ao" direction="out" />
+       </method>
+    <signal name="InhibitorAdded">
+        <arg type="o" direction="out" />
+    </signal>
+    <signal name="InhibitorRemoved">
+        <arg type="o" direction="out" />
+    </signal>
+  </interface>
+</node>
+`.trim();
+
+const DBusSessionManagerProxy = Gio.DBusProxy.makeProxyWrapper(DBusSessionManagerIface);
+
+// const DBusSessionManagerInhibitorIface = `<node>
+//   <interface name="org.gnome.SessionManager.Inhibitor">
+//     <method name="GetAppId">
+//         <arg type="s" direction="out" />
+//     </method>
+//   </interface>
+// </node>
+// `.trim();
+
+var SessionManagerInhibitor = class SessionManagerInhibitor {
+  constructor(settings) {
+    this.logger = new Logger('kt-inhibitor', settings);
+    this._sessionManager = new DBusSessionManagerProxy(Gio.DBus.session,
+                                                       'org.gnome.SessionManager',
+                                                       '/org/gnome/SessionManager');
+    this._cookies = {};
+
+    this.settings = settings;
+  }
+
+  /*
+    The flags parameter must include at least one of the following:
+
+    1: Inhibit logging out
+    2: Inhibit user switching
+    4: Inhibit suspending the session or computer
+    8: Inhibit the session being marked as idle
+  */
+  inhibit(app_id, reason, flags=12) {
+    this._sessionManager.InhibitRemote(app_id,
+      0, reason, flags,
+      cookie => {
+        this.logger.debug("Inhibit id=%s [%s]: cookie=%d", app_id, reason, cookie);
+        this._cookies[app_id] = cookie;
+      }
+    );
+    return this._cookies[app_id];
+  }
+
+  uninhibit(app_id) {
+    let cookie = this._cookies[app_id];
+    if (cookie) {
+      this.logger.debug("Uninhibit id=%s: cookie=%d", app_id, cookie);
+      this._sessionManager.UninhibitRemote(this._cookies[app_id]);
+    } else {
+      this.logger.warn("No cookie found for app_id=%s", app_id);
+    }
+  }
+
+  get settings() {
+    return this._settings;
+  }
+
+  set settings(val) {
+    this._settings = val;
+  }
+
+};
+

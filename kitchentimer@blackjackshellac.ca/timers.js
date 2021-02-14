@@ -33,6 +33,7 @@ const Notifier = Me.imports.notifier;
 const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
 const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
+const SessionManagerInhibitor = Me.imports.inhibitor.SessionManagerInhibitor;
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 
@@ -60,11 +61,14 @@ var Timers = class Timers extends Array {
 
     // requires this._settings
     this._notifier = new Notifier.Annoyer(this);
+    this._inhibitor = new SessionManagerInhibitor(this.settings);
   }
 
   static attach(indicator) {
     // reload settings
     timersInstance._settings = new Settings();
+    timersInstance._inhibitor.settings = timersInstance._settings;
+
     timersInstance.logger.settings = timersInstance._settings;
 
     timersInstance.logger.info("Attaching indicator");
@@ -117,6 +121,10 @@ var Timers = class Timers extends Array {
 
   get notifier() {
     return this._notifier;
+  }
+
+  get inhibitor() {
+    return this._inhibitor;
   }
 
   get settings() {
@@ -388,6 +396,7 @@ var Timer = class Timer {
     this._start = 0;
     this._end = 0;
 
+    // will be undefined if it's not an alarm timer
     this._alarm_timer = AlarmTimer.matchRegex(name);
 
     // this calls the setter
@@ -656,6 +665,11 @@ var Timer = class Timer {
     timersInstance.set_panel_label("");
     timersInstance.saveRunningTimers();
 
+    if (!this.alarm_timer) {
+      timersInstance.inhibitor.uninhibit(this.id);
+    }
+
+
     // return with false to stop interval callback loop
     return false;
   }
@@ -693,6 +707,10 @@ var Timer = class Timer {
     } else {
       this._start = start;
       action="Restarting";
+    }
+
+    if (!this.alarm_timer) {
+      timersInstance.inhibitor.inhibit(this.id, "Inhibit %s".format(this.name));
     }
 
     this._end = this._start + this.duration_ms();
