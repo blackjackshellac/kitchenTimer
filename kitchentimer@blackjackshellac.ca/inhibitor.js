@@ -85,7 +85,7 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
     let cookie = this.get_cookie(app_id);
     if (cookie) {
       this.logger.warn("cookie exists for %s: cookie=%d", app_id, cookie);
-      uninhibit(app_id);
+      this.uninhibit(app_id);
     }
     let flags = this.settings.inhibit;
     if (flags <= 0) {
