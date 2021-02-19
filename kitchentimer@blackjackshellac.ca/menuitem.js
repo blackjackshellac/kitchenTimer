@@ -32,7 +32,9 @@ const Logger = Me.imports.logger.Logger;
 
 var KTTypes = {
   "stop": 'media-playback-stop-symbolic',
-  "delete" : 'edit-delete-symbolic'
+  "delete" : 'edit-delete-symbolic',
+  "reduce" : 'media-seek-backward-symbolic',
+  "extend" : 'media-seek-forward-symbolic'
 }
 
 var logger = new Logger('kt menuitem');
@@ -243,26 +245,12 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       });
       timer_icon.set_icon_size(20);
 
-      var control_button;
       if (timer.running) {
-        control_button = new KitchenTimerControlButton(timer, "stop");
-        control_button.connect('clicked', (cb) => {
-          cb.stop();
-          //menu.close();
-          this._timer.timers.indicator.rebuild_menu();
-        });
+        box.add_child(new KitchenTimerControlButton(timer, "extend"));
+        box.add_child(new KitchenTimerControlButton(timer, "stop"));
+        box.add_child(new KitchenTimerControlButton(timer, "reduce"));
       } else {
-        control_button = new KitchenTimerControlButton(timer, "delete");
-        control_button.connect('clicked', (cb) => {
-          cb.delete();
-          this._timer.timers.indicator.rebuild_menu();
-        });
-
-      }
-
-      if (control_button) {
-        //logger.debug("Adding control icon button");
-        box.add_child(control_button);
+        box.add_child(new KitchenTimerControlButton(timer, "delete"));
       }
 
       box.add_child(timer.label);
@@ -624,6 +612,9 @@ class KitchenTimerControlButton extends St.Button {
     _init(timer, type) {
         super._init();
 
+        this._type = type;
+        this._timer = timer;
+
         // 'media-playback-stop-symbolic'
         // 'edit-delete-symbolic'
         var icon = new St.Icon({
@@ -634,19 +625,52 @@ class KitchenTimerControlButton extends St.Button {
 
         this.child = icon;
 
-        this._timer = timer;
+        this.connect_type();
     }
 
-    delete() {
-      this._timer.delete();
+    connect_type() {
+        switch(this.type) {
+        case "stop":
+          this.connect('clicked', (cb) => {
+            this.timer.stop();
+            this.rebuild();
+          });
+          break;
+        case "delete":
+          this.connect('clicked', (cb) => {
+            this.timer.delete();
+            this.rebuild();
+          });
+          break;
+        case "extend":
+          this.connect('clicked', (cb) => {
+            this.timer.extend();
+            this.rebuild();
+          });
+          break;
+        case "reduce":
+          this.connect('clicked', (cb) => {
+            this.timer.reduce();
+            this.rebuild();
+          });
+          break;
+        }
+    }
+
+    get timer() {
+      return this._timer;
+    }
+
+    get type() {
+      return this._type;
     }
 
     get icon() {
       return this.child;
     }
 
-    stop() {
-      this._timer.stop();
+    rebuilt() {
+      this.timer.timers.indicator.rebuild_menu();
     }
 });
 

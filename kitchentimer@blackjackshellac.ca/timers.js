@@ -780,6 +780,14 @@ var Timer = class Timer {
     this.timers.remove(this);
   }
 
+  reduce() {
+    this._end -= 30*1000;
+  }
+
+  extend() {
+    this._end += 30*1000;
+  }
+
   uninhibit() {
     timersInstance.inhibitor.uninhibit(this.id);
   }
