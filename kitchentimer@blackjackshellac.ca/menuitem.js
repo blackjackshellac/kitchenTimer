@@ -33,8 +33,8 @@ const Logger = Me.imports.logger.Logger;
 var KTTypes = {
   "stop": 'media-playback-stop-symbolic',
   "delete" : 'edit-delete-symbolic',
-  "reduce" : 'media-seek-backward-symbolic',
-  "extend" : 'media-seek-forward-symbolic'
+  "reduce" : 'list-remove-symbolic',
+  "extend" : 'list-add-symbolic'
 }
 
 var logger = new Logger('kt menuitem');
@@ -669,7 +669,7 @@ class KitchenTimerControlButton extends St.Button {
       return this.child;
     }
 
-    rebuilt() {
+    rebuild() {
       this.timer.timers.indicator.rebuild_menu();
     }
 });
