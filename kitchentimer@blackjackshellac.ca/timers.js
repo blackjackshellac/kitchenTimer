@@ -533,7 +533,7 @@ var Timer = class Timer {
       // 360/15 = 24
       var chunks = Math.floor(360 / chunk);
       var delta = Date.now() - this._start;
-      var progress = Math.floor(delta / this.duration_ms() * chunks);
+      var progress = Math.floor(delta / (this._end-this._start) * chunks);
       if (progress >= chunks) {
         progress = chunks-1;
       }
@@ -557,7 +557,7 @@ var Timer = class Timer {
         gicon: gicon,
         style_class: 'system-status-icon'
       });
-		  //icon.set_icon_size(16);
+		  icon.set_icon_size(20);
 		  var panel_box = timersInstance.box;
 		  if (panel_box) {
         var current = panel_box.get_child_at_index(0);
