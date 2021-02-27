@@ -52,6 +52,12 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
         8 - Inhibit the session being marked as idle
      </description>
     </key>
+    <key name="inhibit-max" type="i">
+      <default>1800</default>
+      <summary>Maximum amount of time to inhibit screen lock, in seconds</summary>
+      <description>0 is no maximum, positive integer specifies the number of seconds</description>
+      <range min="0" max="86400"/>
+    </key>
     <key name="notification-sticky" type="b">
       <default>false</default>
       <summary>Make the notification wait for input</summary>

@@ -510,6 +510,14 @@ var Timer = class Timer {
     this._alarm_timer = val;
   }
 
+  get remaining_secs() {
+    if (!this.running) {
+      return 0;
+    }
+
+    return Math.floor((this._end - Date.now()) / 1000);
+  }
+
   label_progress(hms, now=0) {
     if (!this.label) {
       return;
@@ -567,39 +575,6 @@ var Timer = class Timer {
     }
   }
 
-  timer_callback(timer) {
-    var now = Date.now();
-    var end = timer._end;
-
-    //timer.logger.debug(`test end=${end} at ${now}`);
-    if (now > end) {
-      timer.expired = true;
-    }
-    if (timer.expired || timer.reset) {
-      //if (timer.expired) timer.logger.debug("timer expired stop_callback now=%d end=%d expired=%s", now, end);
-      //if (timer.reset) timer.logger.debug("timer reset stop_callback")
-      return timer.stop_callback(now);
-    }
-
-    var delta = Math.ceil((end-now) / 1000);
-    //log(`Timer [${timer._name}] has not ended: ${delta}`);
-    var hms = new HMS(delta);
-
-    // if (timer.alarm_timer) {
-    //   timersInstance.logger.debug("Timer %s has not ended: end=%d now=%d delta=%d hms=%s", timer.name, end, now, delta, hms.toString());
-    // }
-    timer.label_progress(hms, now);
-
-    var running_timers = timersInstance.sort_by_running();
-    if (running_timers.length > 0 && running_timers[0] == timer) {
-      timer.icon_progress();
-
-      timersInstance.set_panel_name(timer.name, timer.has_name);
-      timersInstance.set_panel_label(hms.toString(true));
-    }
-    return true;
-  }
-
   get running() {
     return (this._state === TimerState.RUNNING);
   }
@@ -622,6 +597,41 @@ var Timer = class Timer {
 
   set reset(bool) {
     if (bool) { this._state = TimerState.RESET; }
+  }
+
+  timer_callback(timer) {
+    var now = Date.now();
+    var end = timer._end;
+
+    //timer.logger.debug(`test end=${end} at ${now}`);
+    if (now > end) {
+      timer.expired = true;
+    }
+    if (timer.expired || timer.reset) {
+      //if (timer.expired) timer.logger.debug("timer expired stop_callback now=%d end=%d expired=%s", now, end);
+      //if (timer.reset) timer.logger.debug("timer reset stop_callback")
+      return timer.stop_callback(now);
+    }
+
+    timersInstance.inhibitor.inhibit_timer(timer);
+
+    var delta = Math.ceil((end-now) / 1000);
+    //log(`Timer [${timer._name}] has not ended: ${delta}`);
+    var hms = new HMS(delta);
+
+    // if (timer.alarm_timer) {
+    //   timersInstance.logger.debug("Timer %s has not ended: end=%d now=%d delta=%d hms=%s", timer.name, end, now, delta, hms.toString());
+    // }
+    timer.label_progress(hms, now);
+
+    var running_timers = timersInstance.sort_by_running();
+    if (running_timers.length > 0 && running_timers[0] == timer) {
+      timer.icon_progress();
+
+      timersInstance.set_panel_name(timer.name, timer.has_name);
+      timersInstance.set_panel_label(hms.toString(true));
+    }
+    return true;
   }
 
   stop_callback(now) {
@@ -704,12 +714,10 @@ var Timer = class Timer {
       action="Restarting";
     }
 
-    if (!this.alarm_timer) {
-      timersInstance.inhibitor.inhibit(this.id, "Inhibit %s".format(this.name));
-    }
-
     this._end = this._start + this.duration_ms();
     this._state = TimerState.RUNNING;
+
+    timersInstance.inhibitor.inhibit_timer(this);
 
     timersInstance.saveRunningTimers();
 

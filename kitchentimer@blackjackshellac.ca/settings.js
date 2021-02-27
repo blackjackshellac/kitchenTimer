@@ -176,6 +176,7 @@ var Settings = class Settings {
       debug: this.debug,
       detect_dupes: this.detect_dupes,
       inhibit: this.inhibit,
+      inhibit_max: this.inhibit_max,
       notification_sticky: this.notification_sticky,
       notification: this.notification,
       notification_longtimeout: this.notification_longtimeout,
@@ -204,17 +205,18 @@ var Settings = class Settings {
       key=key.replace(/_/g, '-');
       this.logger.info("Import setting %s=%s (%s)", key, value, value.constructor.name);
       switch(key) {
-        case "timers":
+        case 'timers':
           this.pack_preset_timers(value);
           break;
-        case "quick-timers":
+        case 'quick-timers':
           this.pack_quick_timers(value);
           break;
-        case "sound-loops":
-        case "sound-file":
-        case "notification-longtimeout":
-        case "prefer-presets":
-        case "inhibit":
+        case 'sound-loops':
+        case 'sound-file':
+        case 'notification-longtimeout':
+        case 'prefer-presets':
+        case 'inhibit':
+        case 'inhibit-max':
           this.settings.set_int(key, value);
           break;
         default:
@@ -235,6 +237,14 @@ var Settings = class Settings {
 
   set inhibit(val) {
     this.settings.set_int('inhibit', val);
+  }
+
+  get inhibit_max() {
+    return this.settings.get_int('inhibit-max');
+  }
+
+  set inhibit_max(val) {
+    this.settings.set_int('inhibit-max', val);
   }
 
   get notification() {

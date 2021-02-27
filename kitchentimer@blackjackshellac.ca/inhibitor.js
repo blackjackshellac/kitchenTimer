@@ -73,6 +73,15 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
     return this._cookies[app_id];
   }
 
+  inhibit_timer(timer) {
+    let inhibit_max = this.settings.inhibit_max;
+    if (inhibit_max == 0 || timer.remaining_secs < inhibit_max) {
+      return this.inhibit(timer.id, "Inhibit %s".format(timer.name));
+    }
+    //this.logger.debug("Don't inhibit %d < %d", timer.remaining_secs, inhibit_max);
+    return false;
+  }
+
   /*
     The flags parameter must include at least one of the following:
 
@@ -84,11 +93,12 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
   inhibit(app_id, reason) {
     let cookie = this.get_cookie(app_id);
     if (cookie) {
-      this.logger.warn("cookie exists for %s: cookie=%d", app_id, cookie);
-      this.uninhibit(app_id);
+      // app_id already inhibited
+      return cookie;
     }
     let flags = this.settings.inhibit;
     if (flags <= 0) {
+      this.uninhibit(app_id);
       return false;
     }
     this._sessionManager.InhibitRemote(app_id,

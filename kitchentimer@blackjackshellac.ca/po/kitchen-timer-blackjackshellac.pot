@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-15 13:49-0500\n"
-"PO-Revision-Date: 2021-02-15 13:49-0500\n"
+"POT-Creation-Date: 2021-02-27 13:25-0500\n"
+"PO-Revision-Date: 2021-02-27 13:25-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -37,13 +37,13 @@ msgstr ""
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menuitem.js:42 menuitem.js:43
+#: menuitem.js:42 menuitem.js:43 menuitem.js:45
 msgid "Create Preset"
 msgstr ""
 
-#: menuitem.js:51 menuitem.js:52 menuitem.js:54 menuitem.js:182 menuitem.js:184
-#: menuitem.js:430 menuitem.js:523 menuitem.js:561 menuitem.js:563
-#: menuitem.js:565 menus.js:251
+#: menuitem.js:51 menuitem.js:52 menuitem.js:54 menuitem.js:56 menuitem.js:182
+#: menuitem.js:184 menuitem.js:430 menuitem.js:523 menuitem.js:553
+#: menuitem.js:561 menuitem.js:563 menuitem.js:565 menus.js:251
 msgid "Name 00:00:00"
 msgstr ""
 
@@ -51,20 +51,20 @@ msgstr ""
 msgid "unnamed"
 msgstr ""
 
-#: menuitem.js:68 menuitem.js:70 menuitem.js:71 menus.js:204 menus.js:208
-#: menus.js:251 menus.js:388 menus.js:402 menus.js:406 menus.js:408
-#: menus.js:409 menus.js:434 menus.js:461
+#: menuitem.js:68 menuitem.js:70 menuitem.js:71 menuitem.js:72 menus.js:204
+#: menus.js:208 menus.js:251 menus.js:388 menus.js:402 menus.js:406
+#: menus.js:408 menus.js:409 menus.js:434 menus.js:461
 msgid "Create"
 msgstr ""
 
 #: menuitem.js:161 menuitem.js:163 menuitem.js:409 menuitem.js:502
-#: menuitem.js:540 menuitem.js:542 menuitem.js:544
+#: menuitem.js:532 menuitem.js:540 menuitem.js:542 menuitem.js:544
 msgid "Quick"
 msgstr ""
 
 #: menuitem.js:185 menuitem.js:187 menuitem.js:433 menuitem.js:526
-#: menuitem.js:564 menuitem.js:566 menuitem.js:568 menus.js:209 menus.js:235
-#: menus.js:243 menus.js:246 menus.js:247 menus.js:254
+#: menuitem.js:556 menuitem.js:564 menuitem.js:566 menuitem.js:568 menus.js:209
+#: menus.js:235 menus.js:243 menus.js:246 menus.js:247 menus.js:254
 msgid "Go"
 msgstr ""
 
@@ -188,6 +188,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:45
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:56
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:63
 msgid "Make the notification wait for input"
 msgstr ""
 
@@ -203,6 +204,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:50
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:62
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:68
 msgid "Long timeout for sticky notifications, default is 30 seconds"
 msgstr ""
 
@@ -211,6 +213,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:54
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:65
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:66
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:72
 msgid "Show time remaining in panel menu"
 msgstr ""
 
@@ -219,7 +222,16 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:58
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:69
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:70
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:76
 msgid "Show timer progress in panel menu"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
+msgid "Maximum amount of time to inhibit"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
+msgid "Maximum amount of time to inhibit screen lock, in seconds"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:57
@@ -227,7 +239,12 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:62
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:73
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:74
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:80
 msgid "Show timer name in panel menu"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:58
+msgid "0 is no maximum, positive integer specifies the number of seconds"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:61
@@ -235,6 +252,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:66
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:77
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:78
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:84
 msgid "Play sound notifications"
 msgstr ""
 
@@ -248,12 +266,14 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:75
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:86
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:87
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:93
 msgid "Path to sound file"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:71
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:82
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:83
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:89
 msgid "Number of times to ring alarm sound, 0 is no sound"
 msgstr ""
 
@@ -262,6 +282,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:80
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:91
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:92
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:98
 msgid "Default length of timer in seconds"
 msgstr ""
 
@@ -271,6 +292,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:84
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:95
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:96
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:102
 msgid "Array of Timer descriptions"
 msgstr ""
 
@@ -290,6 +312,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:88
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:99
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:100
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:106
 msgid "Array of Quick Timer descriptions"
 msgstr ""
 
@@ -304,6 +327,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:92
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:103
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:104
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:110
 msgid "timers configuration stored as json"
 msgstr ""
 
@@ -314,6 +338,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:93
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:104
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:105
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:111
 msgid "Experimental feature for storing timer data"
 msgstr ""
 
@@ -324,6 +349,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:97
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:108
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:109
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:115
 msgid "Sort list of timers by duration"
 msgstr ""
 
@@ -334,6 +360,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:101
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:112
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:113
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:119
 msgid "Sort from longest to shortest"
 msgstr ""
 
@@ -344,6 +371,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:105
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:116
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:117
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:123
 msgid "Save quick timers between sessions if enabled"
 msgstr ""
 
@@ -360,6 +388,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:131
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:142
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:143
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:149
 msgid "Turn on debugging"
 msgstr ""
 
@@ -368,6 +397,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:109
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:120
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:121
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:127
 msgid "Prevent creation of duplicate timers of the same type"
 msgstr ""
 
@@ -376,6 +406,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:113
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:124
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:125
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:131
 msgid "State of running timers as json string"
 msgstr ""
 
@@ -384,6 +415,7 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:118
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:129
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:130
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:136
 msgid "Low volume threshold in percent"
 msgstr ""
 
@@ -399,12 +431,14 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:127
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:138
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:139
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:145
 msgid "Warn if volume levels are below threshold"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:123
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:134
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:135
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:141
 msgid ""
 "Heuristic counter to prefer displaying the quick or preset menus expanded"
 msgstr ""
@@ -968,18 +1002,18 @@ msgid "Timer"
 msgstr ""
 
 #: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:639
-#: timers.js:644 timers.js:645 timers.js:648
+#: timers.js:644 timers.js:645 timers.js:648 timers.js:658
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
 #: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:641
-#: timers.js:646 timers.js:647 timers.js:650
+#: timers.js:646 timers.js:647 timers.js:650 timers.js:660
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
 #: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:644
-#: timers.js:649 timers.js:650 timers.js:653
+#: timers.js:649 timers.js:650 timers.js:653 timers.js:663
 msgid "Timer completed on time at"
 msgstr ""
