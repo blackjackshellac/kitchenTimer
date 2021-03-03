@@ -334,29 +334,22 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       this.destroy();
     });
 
-    // let snooze = Math.floor(this.timer.duration * 25 / 100);
-    // this._banner.addAction(_("Snooze %s").format(new HMS(snooze).toString()), (snooze) => {
-    //   this.logger.debug("Snooze");
-    //   this.acknowledged = true;
-    //   this.timer.snooze(snooze);
-    // });
-
     this._banner.addSnooze(this.timer, 25, (secs) => {
-      this.logger.debug("Snooze");
+      this.logger.debug("💤 %d seconds", secs);
       this.acknowledged = true;
       this.timer.snooze(secs);
       this.destroy();
     });
 
     this._banner.addSnooze(this.timer, 12, (secs) => {
-      this.logger.debug("Snooze");
+      this.logger.debug("💤 %d seconds", secs);
       this.acknowledged = true;
       this.timer.snooze(secs);
       this.destroy();
     });
 
     this._banner.addSnooze(this.timer, 6, (secs) => {
-      this.logger.debug("Snooze");
+      this.logger.debug("💤 %d seconds", secs);
       this.acknowledged = true;
       this.timer.snooze(secs);
       this.destroy();
@@ -547,7 +540,7 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
       return false;
     }
     let hms = new HMS(snooze);
-    let label = _("Snooze %s").format(hms.toString(true));
+    let label = _("💤 %s").format(hms.toString(true));
     this.logger.debug("Create snooze button menu %s", label);
     let button = new St.Button({ style_class: 'notification-button',
                                  label,

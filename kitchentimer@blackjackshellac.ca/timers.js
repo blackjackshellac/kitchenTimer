@@ -698,13 +698,14 @@ var Timer = class Timer {
 
   snooze(secs) {
     // the time it took to click snooze button
-    let dt = Date.now() - this._end;
-    this._start += secs*1000+dt;
+    let dt = (Date.now() - this._end) + secs*1000;
+    this._start += dt;
+    this._end += dt;
     // reset duration taking the new end into account
-    this.go(this._start);
+    this.go(this._start, this._end);
   }
 
-  go(start=undefined) {
+  go(start=undefined, end=undefined) {
     var action;
     if (start === undefined) {
       this._start = Date.now();
@@ -714,7 +715,7 @@ var Timer = class Timer {
       action="Restarting";
     }
 
-    this._end = this._start + this.duration_ms();
+    this._end = end === undefined ? this._start + this.duration_ms() : end;
     this._state = TimerState.RUNNING;
 
     timersInstance.inhibitor.inhibit_timer(this);
@@ -790,6 +791,7 @@ var Timer = class Timer {
 
   reduce() {
     this._end -= 30*1000;
+    //this._start += 30*1000;
   }
 
   extend() {
