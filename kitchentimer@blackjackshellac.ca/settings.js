@@ -183,6 +183,7 @@ var Settings = class Settings {
       play_sound: this.play_sound,
       prefer_presets: this.prefer_presets,
       save_quick_timers: this.save_quick_timers,
+      show_endtime: this.show_endtime,
       show_label: this.show_label,
       show_progress: this.show_progress,
       show_time: this.show_time,
@@ -277,6 +278,14 @@ var Settings = class Settings {
 
   set show_time(bool) {
     this.settings.set_boolean('show-time', bool);
+  }
+
+  get show_endtime() {
+    return this.settings.get_boolean('show-endtime');
+  }
+
+  set show_endtime(bool) {
+    this.settings.set_boolean('show-endtime', bool);
   }
 
   get show_label() {

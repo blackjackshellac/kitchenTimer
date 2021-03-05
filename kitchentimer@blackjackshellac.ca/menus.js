@@ -99,6 +99,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
     this.timers.refresh();
 
     new Mitem.KitchenTimerQuickItem(this._menu, this.timers);
+    new Mitem.KitchenTimerEndTime(this._menu, this.timers);
 
     var running_item;
 

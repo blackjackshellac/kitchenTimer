@@ -629,7 +629,13 @@ var Timer = class Timer {
       timer.icon_progress();
 
       timersInstance.set_panel_name(timer.name, timer.has_name);
-      timersInstance.set_panel_label(hms.toString(true));
+      var panel_label;
+      if (timersInstance.settings.show_endtime) {
+        panel_label=new Date(timer._end+1000).toLocaleTimeString();
+      } else {
+        panel_label = hms.toString(true);
+      }
+      timersInstance.set_panel_label(panel_label);
     }
     return true;
   }

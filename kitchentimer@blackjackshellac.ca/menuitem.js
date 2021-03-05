@@ -526,6 +526,51 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
   }
 });
 
+var KitchenTimerEndTime = GObject.registerClass(
+class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
+  _init(menu, timers) {
+    super._init(_("Show end time"), { reactive: false });
+
+    this._menu = menu;
+    this._timers = timers;
+
+    menu.addMenuItem(this);
+
+    var layout = new St.BoxLayout({
+      style_class: 'kitchentimer-quick-menu',
+      x_expand: true,
+      y_expand: true
+    });
+
+    this.add(layout);
+
+    var label = new St.Label({
+      style_class: 'kitchentimer-menu-name',
+      x_expand: true,
+      x_align: St.Align.START,
+      y_align: Clutter.ActorAlign.CENTER
+    });
+    //label.set_text(_("Show end time"));
+
+    var show_endtime = this._timers.settings.show_endtime;
+    Utils.logObjectPretty(this._timers.settings);
+    log("show_endtime=%s - %s".format(show_endtime, this._timers.settings));
+    this._gogo = new PopupMenu.PopupSwitchMenuItem("", show_endtime, {
+      hover: false,
+      style_class: null
+    });
+
+    layout.add_child(label);
+    layout.add_child(this._gogo);
+
+    this._gogo.connect('toggled', (go) => {
+      // go.state
+      this._timers.settings.show_endtime = go.state;
+    });
+  }
+
+});
+
 var KitchenTimerQuickItem = GObject.registerClass(
 class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
   _init(menu, timers) {

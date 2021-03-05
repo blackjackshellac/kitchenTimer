@@ -67,6 +67,10 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <range min="1000" max="3600000"/>
       <summary>Long timeout for sticky notifications, default is 30 seconds</summary>
     </key>
+    <key name="show-endtime" type="b">
+      <default>false</default>
+      <summary>Show the time when the timer will expire rather than the countdown</summary>
+    </key>
     <key name="show-time" type="b">
       <default>true</default>
       <summary>Show time remaining in panel menu</summary>
