@@ -553,8 +553,8 @@ class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
     //label.set_text(_("Show end time"));
 
     var show_endtime = this._timers.settings.show_endtime;
-    Utils.logObjectPretty(this._timers.settings);
-    log("show_endtime=%s - %s".format(show_endtime, this._timers.settings));
+
+    //log("show_endtime=%s - %s".format(show_endtime, this._timers.settings));
     this._gogo = new PopupMenu.PopupSwitchMenuItem("", show_endtime, {
       hover: false,
       style_class: null

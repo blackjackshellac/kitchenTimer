@@ -334,26 +334,38 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       this.destroy();
     });
 
-    this._banner.addSnooze(this.timer, 25, (secs) => {
-      this.logger.debug("💤 %d seconds", secs);
-      this.acknowledged = true;
-      this.timer.snooze(secs);
-      this.destroy();
-    });
+    let round=30;
+    if (this.timer.duration < round*2) {
+      return;
+    }
 
-    this._banner.addSnooze(this.timer, 12, (secs) => {
-      this.logger.debug("💤 %d seconds", secs);
-      this.acknowledged = true;
-      this.timer.snooze(secs);
-      this.destroy();
-    });
+    if (!this.addSnoozeButtons(round)) {
+      // add a 30 second snooze
+      this.logger.debug("Add default snooze of %d seconds", round);
+      this._banner.addSnoozeSecs(round, this.snoozeCallback);
+    }
+  }
 
-    this._banner.addSnooze(this.timer, 6, (secs) => {
-      this.logger.debug("💤 %d seconds", secs);
-      this.acknowledged = true;
-      this.timer.snooze(secs);
-      this.destroy();
-    });
+  snoozeCallback(notifier, secs) {
+    notifier.logger.debug("💤 %d seconds", secs);
+    notifier.acknowledged = true;
+    notifier.timer.snooze(secs);
+    notifier.destroy();
+  }
+
+  addSnoozeButtons(round) {
+    let ssecs;
+
+    // timer.duration_secs * 25%, 10% and 5%
+    let percentages = [ 25, 10, 5 ];
+    for (let i=0; i < percentages.length; i++) {
+      ssecs = this._banner.addSnoozePercent(percentages[i], round, this.snoozeCallback);
+      if (ssecs <= round) {
+        this.logger.debug("Won't create snooze for ssecs=%d", ssecs);
+        break;
+      }
+    }
+    return ssecs == 0 ? false : true;
   }
 
   createBanner() {
@@ -534,13 +546,9 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
     }
   }
 
-  addSnooze(timer, percent, callback) {
-    let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
-    if (snooze < 30) {
-      return false;
-    }
+  addSnoozeSecs(snooze, callback) {
     let hms = new HMS(snooze);
-    let label = _("💤 %s").format(hms.toString(true));
+    let label = "💤 %s".format(hms.toString(true));
     this.logger.debug("Create snooze button menu %s", label);
     let button = new St.Button({ style_class: 'notification-button',
                                  label,
@@ -551,7 +559,7 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
       button.snooze = snooze;
       button.connect('clicked', (button) => {
 
-        callback(button.snooze);
+        callback(this.notifier, button.snooze);
 
         // if (!this.notification.resident) {
           // We don't hide a resident notification when the user invokes one of its actions,
@@ -562,9 +570,20 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
         //   this.notification.destroy();
         // }
       });
-      return true;
+      return snooze;
     }
-    return false;
+    return 0;
+  }
+
+  addSnoozePercent(percent, round, callback) {
+    let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
+    if (snooze < round) {
+      return 0;
+    }
+
+    // snooze to the next nearest 30 seconds
+    snooze = Math.ceil(snooze/round)*round;
+    return this.addSnoozeSecs(snooze, callback);
   }
 });
 

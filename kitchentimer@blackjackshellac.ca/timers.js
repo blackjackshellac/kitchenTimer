@@ -109,7 +109,7 @@ var Timers = class Timers extends Array {
   progress_gicon(degrees) {
     var icon = this._progressIconsDegrees[degrees];
     if (icon === undefined) {
-      this.logger.error(`Failed to get icon for degrees=${degrees}`);
+      //this.logger.debug(`Failed to get icon for degrees=${degrees}`);
       icon=this._progressIconsDegrees[0];
     }
     return icon;
