@@ -31,6 +31,7 @@ const Menus = Me.imports.menus;
 const Timers = Me.imports.timers.Timers;
 const Timer = Me.imports.timers.Timer;
 const Logger = Me.imports.logger.Logger;
+const KeyboardShortcuts = Me.imports.keyboard_shortcuts.KeyboardShortcuts;
 
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
@@ -41,8 +42,14 @@ class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
       // settings now lives in Timers singleton
       this._timers = Timers.attach(this);
-      this._logger = new Logger('kt indicator', this.settings);
+      this.logger = new Logger('kt indicator', this.settings);
       this.logger.info('Initializing extension');
+
+      this.accel = new KeyboardShortcuts(this.settings);
+      this.accel.listenFor("<ctrl><super>T", () => {
+        this.logger.debug("Toggling show endtime");
+        this._timers.settings.show_endtime = !this._timers.settings.show_endtime;
+      });
 
       super._init(0.0, _('Kitchen Timer'));
 
@@ -94,10 +101,6 @@ class KitchenTimerIndicator extends PanelMenu.Button {
 
 	  get timers() {
 	    return this._timers;
-	  }
-
-	  get logger() {
-	    return this._logger;
 	  }
 
     rebuild_menu() {
