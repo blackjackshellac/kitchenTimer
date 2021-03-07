@@ -118,7 +118,7 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
       this._sessionManager.UninhibitRemote(cookie);
       return delete this._cookies[app_id];
     }
-    this.logger.debug("No cookie found for app_id=%s", app_id);
+    this.logger.debug("No cookie found for app_id=%s (already uninhibited)", app_id);
     return false;
   }
 

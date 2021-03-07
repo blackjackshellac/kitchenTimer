@@ -687,6 +687,7 @@ var Timer = class Timer {
 
   stop() {
     this.reset = true;
+    this.uninhibit();
   }
 
   start() {

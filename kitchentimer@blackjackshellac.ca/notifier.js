@@ -311,6 +311,8 @@ class KitchenTimerNotifier extends MessageTray.Notification {
         this._interval_id = Utils.setInterval(this.playSound_callback, 500, this);
       }
       this._addActions();
+    } else {
+      timer.uninhibit();
     }
 
     this._banner.connect('clicked', (banner) => {
