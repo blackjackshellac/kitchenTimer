@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-06 12:21-0500\n"
-"PO-Revision-Date: 2021-03-06 12:21-0500\n"
+"POT-Creation-Date: 2021-03-07 11:37-0500\n"
+"PO-Revision-Date: 2021-03-07 11:37-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -29,11 +29,11 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: indicator.js:46 indicator.js:47 indicator.js:74 settings.ui:639
-#: settings.ui:641 settings.ui:654 settings.ui:679 settings.ui:680
-#: settings.ui:778 settings.ui:784 settings.ui:830 settings.ui:862
-#: settings.ui:870 settings.ui:942 settings.ui:947 settings.ui:1117
-#: settings.ui:1121 settings.ui:1132
+#: indicator.js:46 indicator.js:47 indicator.js:54 indicator.js:60
+#: indicator.js:74 settings.ui:639 settings.ui:641 settings.ui:654
+#: settings.ui:679 settings.ui:680 settings.ui:778 settings.ui:784
+#: settings.ui:830 settings.ui:862 settings.ui:870 settings.ui:942
+#: settings.ui:947 settings.ui:1117 settings.ui:1121 settings.ui:1132
 msgid "Kitchen Timer"
 msgstr ""
 
@@ -132,6 +132,7 @@ msgid "Name for timer"
 msgstr ""
 
 #: notifier.js:322 notifier.js:324 notifier.js:330 notifier.js:331
+#: notifier.js:332
 #, javascript-format
 msgid "Restart timer %s"
 msgstr ""
@@ -477,6 +478,14 @@ msgstr ""
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:145
 msgid ""
 "Heuristic counter to prefer displaying the quick or preset menus expanded"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:157
+msgid "Keyboard shortcut for toggling show-end-time setting"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:161
+msgid "Keyboard shortcut to stop the next timer to expire"
 msgstr ""
 
 #: settings.ui:55 settings.ui:184 settings.ui:192 settings.ui:194
@@ -1012,7 +1021,7 @@ msgstr ""
 
 #: timers.js:221 timers.js:222 timers.js:223 timers.js:258 timers.js:262
 #: timers.js:268 timers.js:293 timers.js:310 timers.js:316 timers.js:321
-#: timers.js:322 timers.js:324
+#: timers.js:322 timers.js:324 timers.js:333
 msgid "Duplicate timer is already running"
 msgstr ""
 
@@ -1039,17 +1048,20 @@ msgstr ""
 
 #: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:639
 #: timers.js:644 timers.js:645 timers.js:648 timers.js:658 timers.js:664
+#: timers.js:673
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
 #: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:641
 #: timers.js:646 timers.js:647 timers.js:650 timers.js:660 timers.js:666
+#: timers.js:675
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
 #: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:644
 #: timers.js:649 timers.js:650 timers.js:653 timers.js:663 timers.js:669
+#: timers.js:678
 msgid "Timer completed on time at"
 msgstr ""

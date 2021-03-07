@@ -286,6 +286,16 @@ var Timers = class Timers extends Array {
     });
   }
 
+  stop_next() {
+    let timer=this.sort_by_running()[0];
+    if (timer) {
+      this.logger.debug("Stopping timer %s", timer.name);
+      timer.stop();
+    } else {
+      this.logger.debug("No running timers");
+    }
+  }
+
   timer_by_id(id) {
     var tbid = this.filter(timer => timer.id == id);
     return tbid.length == 0 ? null : tbid[0];

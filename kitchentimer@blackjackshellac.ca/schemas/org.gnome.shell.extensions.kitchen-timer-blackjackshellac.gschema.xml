@@ -152,5 +152,13 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
       <default>false</default>
       <summary>Turn on debugging</summary>
     </key>
+    <key name="accel-show-endtime" type="s">
+      <default><![CDATA['<ctrl><super>T']]></default>
+      <summary>Keyboard shortcut for toggling show-end-time setting</summary>
+    </key>
+    <key name="accel-stop-next" type="s">
+      <default><![CDATA['<ctrl><super>K']]></default>
+      <summary>Keyboard shortcut to stop the next timer to expire</summary>
+    </key>
   </schema>
 </schemalist>

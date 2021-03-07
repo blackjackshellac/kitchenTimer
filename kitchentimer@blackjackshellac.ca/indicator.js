@@ -46,9 +46,14 @@ class KitchenTimerIndicator extends PanelMenu.Button {
       this.logger.info('Initializing extension');
 
       this.accel = new KeyboardShortcuts(this.settings);
-      this.accel.listenFor("<ctrl><super>T", () => {
-        this.logger.debug("Toggling show endtime");
-        this._timers.settings.show_endtime = !this._timers.settings.show_endtime;
+      this.accel.listenFor(this.settings.accel_show_endtime, () => {
+        let set=!this._timers.settings.show_endtime;
+        this.logger.debug("Toggling show endtime to %s", set);
+        this._timers.settings.show_endtime = set;
+      });
+
+      this.accel.listenFor(this.settings.accel_stop_next, () => {
+        this._timers.stop_next();
       });
 
       super._init(0.0, _('Kitchen Timer'));

@@ -232,6 +232,22 @@ var Settings = class Settings {
     return this.settings.get_default_value(key);
   }
 
+  get accel_show_endtime() {
+    return this.settings.get_string('accel-show-endtime');
+  }
+
+  set accel_show_endtime(val) {
+    this.settings.set_string('accel-show-endtime', val);
+  }
+
+  get accel_stop_next() {
+    return this.settings.get_string('accel-stop-next');
+  }
+
+  set accel_stop_next(val) {
+    this.settings.set_string('accel-stop-next', val);
+  }
+
   get inhibit() {
     return this.settings.get_int('inhibit');
   }

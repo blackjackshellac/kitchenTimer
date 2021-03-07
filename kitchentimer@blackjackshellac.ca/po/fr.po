@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-06 12:21-0500\n"
+"POT-Creation-Date: 2021-03-07 11:53-0500\n"
 "PO-Revision-Date: 2021-02-27 13:31-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -300,7 +300,7 @@ msgstr "Boucles pour lire le son de notification du minuteur"
 msgid "Sound"
 msgstr "Son"
 
-#: ../settings.ui:1132 ../indicator.js:47
+#: ../settings.ui:1132 ../indicator.js:59
 msgid "Kitchen Timer"
 msgstr "Kitchen Timer"
 
@@ -375,21 +375,21 @@ msgstr "Pratique"
 msgid "Go"
 msgstr "Go"
 
-#: ../timers.js:324
+#: ../timers.js:334
 msgid "Duplicate timer is already running"
 msgstr "Une minuterie en double est déjà en cours d'exécution"
 
-#: ../timers.js:664
+#: ../timers.js:674
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr "La minuterie s'est arrêtée %s plus tôt à"
 
-#: ../timers.js:666
+#: ../timers.js:676
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr "La minuterie a terminé avec %s de retard à"
 
-#: ../timers.js:669
+#: ../timers.js:679
 msgid "Timer completed on time at"
 msgstr "Minuterie terminée à temps à"
 
@@ -528,7 +528,15 @@ msgstr "Avertir si les niveaux de volume sont inférieurs au seuil"
 msgid "Turn on debugging"
 msgstr "Activer le débogage"
 
-#: ../notifier.js:330
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:157
+msgid "Keyboard shortcut for toggling show-end-time setting"
+msgstr ""
+
+#: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:161
+msgid "Keyboard shortcut to stop the next timer to expire"
+msgstr ""
+
+#: ../notifier.js:332
 #, javascript-format
 msgid "Restart timer %s"
 msgstr "Redémarrer la minuterie %s"
