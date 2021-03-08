@@ -46,15 +46,15 @@ class KitchenTimerIndicator extends PanelMenu.Button {
       this.logger.info('Initializing extension');
 
       this.accel = new KeyboardShortcuts(this.settings);
-      this.accel.listenFor(this.settings.accel_show_endtime, () => {
-        let set=!this._timers.settings.show_endtime;
-        this.logger.debug("Toggling show endtime to %s", set);
-        this._timers.settings.show_endtime = set;
+
+      this.settings.settings.connect('changed::accel-enable', () => {
+        this.logger.debug('accel-enable has changed');
+        this.toggle_keyboard_shortcuts();
       });
 
-      this.accel.listenFor(this.settings.accel_stop_next, () => {
-        this._timers.stop_next();
-      });
+      if (this.settings.accel_enable) {
+        this.enable_keyboard_shortcuts();
+      }
 
       super._init(0.0, _('Kitchen Timer'));
 
@@ -98,6 +98,31 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         this._box = undefined;
         Timers.detach();
       });
+    }
+
+    toggle_keyboard_shortcuts() {
+      if (this.settings.accel_enable) {
+        this.enable_keyboard_shortcuts();
+      } else {
+        this.disable_keyboard_shortcuts();
+      }
+    }
+
+    enable_keyboard_shortcuts() {
+      this.accel.listenFor(this.settings.accel_show_endtime, () => {
+        let set=!this._timers.settings.show_endtime;
+        this.logger.debug("Toggling show endtime to %s", set);
+        this._timers.settings.show_endtime = set;
+      });
+
+      this.accel.listenFor(this.settings.accel_stop_next, () => {
+        this._timers.stop_next();
+      });
+    }
+
+    disable_keyboard_shortcuts() {
+      this.accel.remove(this.settings.accel_show_endtime);
+      this.accel.remove(this.settings.accel_stop_next);
     }
 
 	  get settings() {

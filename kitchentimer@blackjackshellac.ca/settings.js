@@ -173,6 +173,7 @@ var Settings = class Settings {
   export_json() {
     this.logger.info("Export settings to json");
     var h={
+      accel_enable: this.accel_enable,
       accel_show_endtime: this.accel_show_endtime,
       accel_stop_next: this.accel_stop_next,
       debug: this.debug,
@@ -236,6 +237,14 @@ var Settings = class Settings {
 
   get_default(key) {
     return this.settings.get_default_value(key);
+  }
+
+  get accel_enable() {
+    return this.settings.get_boolean('accel-enable');
+  }
+
+  set accel_enable(bool) {
+    this.settings.set_boolean('accel-enable', bool);
   }
 
   get accel_show_endtime() {

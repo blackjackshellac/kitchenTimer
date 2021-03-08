@@ -28,14 +28,15 @@ const Logger = Me.imports.logger.Logger;
 
 var KeyboardShortcuts = class KeyboardShortcuts {
   constructor(settings) {
+    this._settings = settings;
     this._grabbers = {};
 
     this.logger = new Logger('kt kbshortcuts', settings);
 
     global.display.connect('accelerator-activated', (display, action, deviceId, timestamp) => {
       this.logger.debug("Accelerator Activated: [display=%s, action=%s, deviceId=%s, timestamp=%s]",
-        display, action, deviceId, timestamp)
-      this._onAccelerator(action)
+        display, action, deviceId, timestamp);
+      this._onAccelerator(action);
     });
   }
 
@@ -48,19 +49,43 @@ var KeyboardShortcuts = class KeyboardShortcuts {
       return;
     }
 
-    this.logger.debug('Grabbed accelerator [action={}]', action);
+    this.logger.debug('Grabbed accelerator [action=%s]', action);
     let name = Meta.external_binding_name_for_action(action);
-    this.logger.debug('Received binding name for action [name=%s, action=%s]',
-        name, action)
+    this.logger.debug('Received binding name for action [name=%s, action=%s]', name, action);
 
-    this.logger.debug('Requesting WM to allow binding [name=%s]', name)
-    Main.wm.allowKeybinding(name, Shell.ActionMode.ALL)
+    this.logger.debug('Requesting WM to allow binding [name=%s]', name);
+    Main.wm.allowKeybinding(name, Shell.ActionMode.ALL);
 
     this._grabbers[action]={
       name: name,
       accelerator: accelerator,
       callback: callback
     };
+  }
+
+  lookupGrabber(accelerator) {
+    for (const [key, value] of Object.entries(this._grabbers)) {
+      if (value.accelerator === accelerator) {
+        return [ key, value ];
+      }
+    }
+    return [ undefined, undefined ];
+  }
+
+  remove(accelerator) {
+    let [ action, grabber ] = this.lookupGrabber(accelerator);
+
+    if (grabber) {
+      let name=grabber.name;
+      if (name) {
+        this.logger.debug('Requesting WM to remove binding [name=%s] accelerator=%s', name, accelerator);
+        global.display.ungrab_accelerator(action);
+        Main.wm.allowKeybinding(name, Shell.ActionMode.NONE);
+        delete this._grabbers[action];
+      }
+    } else {
+      this.logger.debug('grabber not found for accelerator=%s', accelerator);
+    }
   }
 
   _onAccelerator(action) {

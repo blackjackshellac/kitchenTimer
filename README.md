@@ -20,6 +20,19 @@ and then restart gnome shell to enable (Alt-F2 'r') or logout/login.
 
 ![quick timer demo](https://raw.githubusercontent.com/blackjackshellac/kitchenTimer/main/img/quick_timers_panel_menu_stop_delete.webm)
 
+## Keyboard Shortcuts
+
+There are currently two global keyboard shortcuts, which can be enabled in Preferences/Options,
+
+* <ctrl><super>T - show end time in panel
+* <ctrl><super>K - stop next timer to expire
+
+It is possible to edit the shortcuts in dconf-editor, or with the following script,
+
+```
+$ kitchentimer@blackjackshellac.ca/bin/dconf-editor.sh
+```
+
 ## Alarm timers
 
 You can also specify alarms as timers with the syntax,

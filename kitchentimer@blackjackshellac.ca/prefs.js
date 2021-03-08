@@ -735,6 +735,8 @@ class PreferencesBuilder {
     }
 
     _bind() {
+      this._bo_ssb('accel_enable', 'active');
+
       this._bo_ssb('notification', 'active');
       this._bo_ssb('notification_sticky', 'active');
 

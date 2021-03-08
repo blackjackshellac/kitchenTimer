@@ -977,7 +977,18 @@ Author: Steeve McCauley
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkCheckButton" id="accel_enable">
+                    <property name="label" translatable="yes" context="accel-enable">Keyboard shortcuts</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="tooltip-text" translatable="yes" context="accel-enable-tooltip">Click to enable global keyboard shortcuts</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
                 </child>
               </object>
               <packing>

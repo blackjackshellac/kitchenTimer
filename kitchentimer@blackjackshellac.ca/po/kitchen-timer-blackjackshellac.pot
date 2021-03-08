@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-08 07:45-0500\n"
-"PO-Revision-Date: 2021-03-08 07:45-0500\n"
+"POT-Creation-Date: 2021-03-08 14:51-0500\n"
+"PO-Revision-Date: 2021-03-08 14:51-0500\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -34,7 +34,7 @@ msgstr ""
 #: settings.ui:654 settings.ui:679 settings.ui:680 settings.ui:778
 #: settings.ui:784 settings.ui:830 settings.ui:862 settings.ui:870
 #: settings.ui:942 settings.ui:947 settings.ui:1117 settings.ui:1121
-#: settings.ui:1131 settings.ui:1132
+#: settings.ui:1131 settings.ui:1132 settings.ui:1142
 msgid "Kitchen Timer"
 msgstr ""
 
@@ -133,7 +133,7 @@ msgid "Name for timer"
 msgstr ""
 
 #: notifier.js:322 notifier.js:324 notifier.js:330 notifier.js:331
-#: notifier.js:332 notifier.js:333 notifier.js:335
+#: notifier.js:332 notifier.js:333 notifier.js:335 notifier.js:338
 #, javascript-format
 msgid "Restart timer %s"
 msgstr ""
@@ -492,10 +492,16 @@ msgid ""
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:157
+msgid "Enable keyboard shortcuts"
+msgstr ""
+
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:157
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:161
 msgid "Keyboard shortcut for toggling show-end-time setting"
 msgstr ""
 
 #: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:161
+#: schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:165
 msgid "Keyboard shortcut to stop the next timer to expire"
 msgstr ""
 
@@ -701,6 +707,7 @@ msgstr ""
 #: settings.ui:696 settings.ui:793 settings.ui:801 settings.ui:866
 #: settings.ui:869 settings.ui:870 settings.ui:873 settings.ui:878
 #: settings.ui:1048 settings.ui:1052 settings.ui:1062 settings.ui:1063
+#: settings.ui:1073
 msgctxt "play-sound"
 msgid "Play sound"
 msgstr ""
@@ -814,6 +821,7 @@ msgstr ""
 #: settings.ui:573 settings.ui:671 settings.ui:673 settings.ui:716
 #: settings.ui:719 settings.ui:724 settings.ui:796 settings.ui:801
 #: settings.ui:971 settings.ui:975 settings.ui:985 settings.ui:986
+#: settings.ui:996
 msgid "Options"
 msgstr ""
 
@@ -907,7 +915,7 @@ msgstr ""
 #: settings.ui:590 settings.ui:592 settings.ui:605 settings.ui:630
 #: settings.ui:631 settings.ui:729 settings.ui:732 settings.ui:740
 #: settings.ui:778 settings.ui:812 settings.ui:817 settings.ui:987
-#: settings.ui:991 settings.ui:1001 settings.ui:1002
+#: settings.ui:991 settings.ui:1001 settings.ui:1002 settings.ui:1012
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
@@ -915,7 +923,7 @@ msgstr ""
 #: settings.ui:593 settings.ui:595 settings.ui:608 settings.ui:633
 #: settings.ui:634 settings.ui:732 settings.ui:735 settings.ui:743
 #: settings.ui:781 settings.ui:815 settings.ui:820 settings.ui:990
-#: settings.ui:994 settings.ui:1004 settings.ui:1005
+#: settings.ui:994 settings.ui:1004 settings.ui:1005 settings.ui:1015
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
@@ -936,7 +944,7 @@ msgstr ""
 #: settings.ui:607 settings.ui:609 settings.ui:622 settings.ui:647
 #: settings.ui:648 settings.ui:746 settings.ui:749 settings.ui:757
 #: settings.ui:795 settings.ui:829 settings.ui:834 settings.ui:1004
-#: settings.ui:1008 settings.ui:1018 settings.ui:1019
+#: settings.ui:1008 settings.ui:1018 settings.ui:1019 settings.ui:1029
 msgctxt "path_to_sound_file"
 msgid "Sound file"
 msgstr ""
@@ -952,6 +960,7 @@ msgstr ""
 #: settings.ui:658 settings.ui:756 settings.ui:759 settings.ui:805
 #: settings.ui:837 settings.ui:845 settings.ui:917 settings.ui:922
 #: settings.ui:1092 settings.ui:1096 settings.ui:1106 settings.ui:1107
+#: settings.ui:1117
 msgid "Sound"
 msgstr ""
 
@@ -959,7 +968,7 @@ msgstr ""
 #: settings.ui:720 settings.ui:721 settings.ui:751 settings.ui:850
 #: settings.ui:856 settings.ui:902 settings.ui:934 settings.ui:942
 #: settings.ui:1014 settings.ui:1019 settings.ui:1189 settings.ui:1193
-#: settings.ui:1203 settings.ui:1204
+#: settings.ui:1203 settings.ui:1204 settings.ui:1214
 msgid "Copyright © 2021, Steeve McCauley"
 msgstr ""
 
@@ -967,7 +976,7 @@ msgstr ""
 #: settings.ui:734 settings.ui:735 settings.ui:765 settings.ui:864
 #: settings.ui:870 settings.ui:916 settings.ui:948 settings.ui:956
 #: settings.ui:1028 settings.ui:1033 settings.ui:1203 settings.ui:1207
-#: settings.ui:1217 settings.ui:1218
+#: settings.ui:1217 settings.ui:1218 settings.ui:1228
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr ""
 
@@ -979,7 +988,7 @@ msgstr ""
 #: settings.ui:752 settings.ui:753 settings.ui:783 settings.ui:882
 #: settings.ui:888 settings.ui:934 settings.ui:966 settings.ui:974
 #: settings.ui:1046 settings.ui:1051 settings.ui:1221 settings.ui:1225
-#: settings.ui:1235 settings.ui:1236
+#: settings.ui:1235 settings.ui:1236 settings.ui:1246
 msgid ""
 "<span size='smaller' style='italic'>This program comes with absolutely no "
 "warranty.\n"
@@ -991,19 +1000,21 @@ msgstr ""
 #: settings.ui:774 settings.ui:775 settings.ui:805 settings.ui:904
 #: settings.ui:910 settings.ui:956 settings.ui:988 settings.ui:996
 #: settings.ui:1068 settings.ui:1073 settings.ui:1243 settings.ui:1247
-#: settings.ui:1257 settings.ui:1258
+#: settings.ui:1257 settings.ui:1258 settings.ui:1268
 msgctxt "about"
 msgid "About"
 msgstr ""
 
 #: settings.ui:763 settings.ui:771 settings.ui:843 settings.ui:848
 #: settings.ui:1018 settings.ui:1022 settings.ui:1032 settings.ui:1033
+#: settings.ui:1043
 msgctxt "warn-volume-level"
 msgid "Warn low volume"
 msgstr ""
 
 #: settings.ui:779 settings.ui:787 settings.ui:859 settings.ui:864
 #: settings.ui:1034 settings.ui:1038 settings.ui:1048 settings.ui:1049
+#: settings.ui:1059
 msgctxt "low-volume-threshold-percent"
 msgid "Low volume threshold percent"
 msgstr ""
@@ -1018,7 +1029,17 @@ msgctxt "inhibit-tooltip"
 msgid "Inhibit screen lock when timers are running"
 msgstr ""
 
-#: settings.ui:1078
+#: settings.ui:981
+msgctxt "accel-enable"
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: settings.ui:985
+msgctxt "accel-enable-tooltip"
+msgid "Click to enable global keyboard shortcuts"
+msgstr ""
+
+#: settings.ui:1078 settings.ui:1089
 msgctxt "sound_loops_tooltip"
 msgid ""
 "Loops to play timer notification sound, 0 plays for the duration of the "

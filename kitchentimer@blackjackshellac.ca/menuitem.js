@@ -25,7 +25,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
 const Timer = Me.imports.timers.Timer;
-const AlarmTimer = Me.imports.timers.AlarmTimer;
+const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
 const Utils = Me.imports.utils;
 const HMS = Me.imports.hms.HMS;
 const Logger = Me.imports.logger.Logger;
