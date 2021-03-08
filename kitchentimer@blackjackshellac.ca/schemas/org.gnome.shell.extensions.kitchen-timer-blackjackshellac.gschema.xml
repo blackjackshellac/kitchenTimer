@@ -89,8 +89,8 @@ https://developer.gnome.org/glib/stable/gvariant-text.html
     </key>
     <key name="sound-loops" type="i">
       <default>2</default>
-      <range min="0" max="1000"/>
-      <summary>Number of times to ring alarm sound, 0 is no sound</summary>
+      <range min="0" max="100"/>
+      <summary>Number of times to ring alarm sound, 0 is the duration of notification</summary>
     </key>
     <key name="sound-file" type="s">
       <default>"kitchen_timer.ogg"</default>

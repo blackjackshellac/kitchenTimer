@@ -294,6 +294,12 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this._settings = timer.timers.settings;
     this._timer = timer;
     this._loops = 0;
+    this._sound_loops = this.settings.sound_loops;
+
+    if (this.settings.notification === false && this._sound_loops == 0) {
+      // prevent infinite sound loops if notification dialog is turned off
+      this._sound_loops = 2;
+    }
 
     this._banner = new KitchenTimerNotifierBanner(this);
 
@@ -392,16 +398,17 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       return true;
     }
 
-    ktNotifier._player.set_property('uri', ktNotifier._uri);
-    ktNotifier._player.set_state(Gst.State.PLAYING);
-
-    //ktNotifier.logger.debug("player gst state=%s", ""+ktNotifier._player.get_state());
-
-	  ktNotifier._loops++;
-	  if (ktNotifier._loops >= ktNotifier.sound_loops) {
+    // if sound_loops == 0, play for duration of notification
+	  if (ktNotifier.sound_loops > 0 && ktNotifier._loops >= ktNotifier.sound_loops) {
 	    //ktNotifier.logger.debug("exiting callback after %d loops", ktNotifier._loops);
       return ktNotifier.stop_player();
 	  }
+
+    // play it (again), Sam
+    ktNotifier._player.set_property('uri', ktNotifier._uri);
+    ktNotifier._player.set_state(Gst.State.PLAYING);
+	  ktNotifier._loops++;
+
 	  return true;
 	}
 
@@ -463,7 +470,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
   }
 
   get sound_loops() {
-    return this.settings.sound_loops;
+    return this._sound_loops;
   }
 
   get sound_file() {

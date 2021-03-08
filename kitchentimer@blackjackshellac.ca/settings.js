@@ -173,6 +173,8 @@ var Settings = class Settings {
   export_json() {
     this.logger.info("Export settings to json");
     var h={
+      accel_show_endtime: this.accel_show_endtime,
+      accel_stop_next: this.accel_stop_next,
       debug: this.debug,
       detect_dupes: this.detect_dupes,
       inhibit: this.inhibit,
@@ -212,8 +214,12 @@ var Settings = class Settings {
         case 'quick-timers':
           this.pack_quick_timers(value);
           break;
-        case 'sound-loops':
+        case 'accel-show-endtime':
+        case 'accel-stop-next':
         case 'sound-file':
+          this.settings.set_string(key, value);
+          break;
+        case 'sound-loops':
         case 'notification-longtimeout':
         case 'prefer-presets':
         case 'inhibit':
