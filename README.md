@@ -24,8 +24,8 @@ and then restart gnome shell to enable (Alt-F2 'r') or logout/login.
 
 There are currently two global keyboard shortcuts, which can be enabled in Preferences/Options,
 
-* <ctrl><super>T - show end time in panel
-* <ctrl><super>K - stop next timer to expire
+* `<ctrl><super>T` - show end time in panel
+* `<ctrl><super>K` - stop next timer to expire
 
 It is possible to edit the shortcuts in dconf-editor, or with the following script,
 
