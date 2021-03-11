@@ -55,6 +55,12 @@ Author: Steeve McCauley
     <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
     <property name="icon-name">list-add</property>
   </object>
+  <object class="GtkImage" id="img_bmac">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">10</property>
+    <property name="pixbuf">icons/bmc_logo_wordmark.svg</property>
+  </object>
   <object class="GtkImage" id="img_kitchentimer_symbolic">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -1254,6 +1260,22 @@ See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 Lice
                         <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLinkButton" id="bmc">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">img_bmac</property>
+                        <property name="relief">none</property>
+                        <property name="always-show-image">True</property>
+                        <property name="uri">https://www.buymeacoffee.com/blckjackshellac</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">7</property>
                       </packing>
                     </child>
                   </object>
