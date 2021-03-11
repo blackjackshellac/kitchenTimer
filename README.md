@@ -56,6 +56,9 @@ for example, to create an alarm timer that goes off at 5am tomorrow,
 
 ![taxi @ 5am running](https://github.com/blackjackshellac/kitchenTimer/blob/main/img/taxi_at_5am_running.png)
 
+## Support
+
+Feel free to support this effort if you can [![Buy Me a Coffee](https://raw.githubusercontent.com/blackjackshellac/kitchenTimer/main/img/bmc_logo_wordmark_25.png)](https://www.buymeacoffee.com/blckjackshellac)
 
 ## References
 
