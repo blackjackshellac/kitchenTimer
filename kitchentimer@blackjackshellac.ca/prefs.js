@@ -52,7 +52,6 @@ class PreferencesBuilder {
       this._widget.show_all();
       this.tv_timers.hide();
       this._bo('timer_box').hide();
-      this._bo('scale_grid').hide();
     }
 
     build() {
