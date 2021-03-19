@@ -27,7 +27,7 @@ var AmPm = {
   H24: 0,
   AM: 1,
   PM: 2,
-  RE: /p\.?m\.?/i
+  RE: /(p\.?m\.?)|(a\.?m\.?)/i
 }
 
 var logger = new Logger('kt alarm timer');
@@ -60,11 +60,24 @@ var AlarmTimer = class AlarmTimer {
     if (h === undefined) { return; }
     this._hour = Number(h);
     if (this.ampm == AmPm.PM) {
-      this._hour += 12;
+      // 12pm is 12h00 (noon)
+      //  1pm is 13h00
+      if (this._hour < 12) {
+        this._hour += 12;
+      } else if (this._hour > 12) {
+        throw 'PM hour is greater than 12 (noon)';
+      }
+    } else if (this.ampm == AmPm.AM) {
+      // 12am is 0h00 (midnight)
+      if (this._hour == 12) {
+        this._hour = 0;
+      } else if (this._hour > 12) {
+        throw 'AM hour is greater than 12 (midnight)';
+      }
     }
+    this.ampm = AmPm.H24;
     if (this._hour > 23) {
-      logger.warn("AlarmTimer hour %d > 23", this._hour);
-      this._hour = 23;
+      throw 'hour is greater than 23: '+this._hour;
     }
   }
 
@@ -124,32 +137,51 @@ var AlarmTimer = class AlarmTimer {
     // ampm g6
     //         name?  @    HH  :? MM?  :? SS?  .?  ms?       (a.?m.?|p.?m.?)?
     var re= /^([^@]+)?@\s*(\d+):?(\d+)?:?(\d+)?[.]?(\d+)?\s*(a\.?m\.?|p\.?m\.?)?$/i;
-    var m=re.exec(entry);
+    let m=re.exec(entry);
     if (!m) {
       return undefined;
     }
 
     var alarm_timer = new AlarmTimer();
-    //alarm_timer.fromRegexNamedGroups(m.groups);
-    alarm_timer.fromRegexMatches(m);
+
+    try {
+      //alarm_timer.fromRegexNamedGroups(m.groups);
+      alarm_timer.fromRegexMatches(m);
+    } catch (e) {
+      logger.error("%s: %s", e, entry);
+      return undefined;
+    }
     return alarm_timer;
+  }
+
+  matchAmPm(ampm) {
+    let m = AmPm.RE.exec(ampm);
+    if (m) {
+      if (m[1]) {
+        return AmPm.PM;
+      }
+      if (m[2]) {
+        return AmPm.AM;
+      }
+    }
+    throw 'Invalid AM PM spec: '+ampm;
   }
 
   fromRegexMatches(m) {
     logger.debug("match = %s", JSON.stringify(m));
+    if (m[6]) {
+      this.ampm = this.matchAmPm(m[6]);
+    }
     this.name = m[1] === null ? m[0] : m[1];
     this.hour = m[2];
     this.minute = m[3];
     this.second = m[4];
     this.ms = m[5];
-    if (m[6]) {
-      this.ampm = m[6].match(AmPm.RE) ? AmPm.PM : AmPm.AM;
-    }
   }
 
   fromRegexNamedGroups(g) {
     if (g.ampm) {
-      this.ampm = g.ampm.match(AmPm.RE) ? AmPm.PM : AmPm.AM;
+      this.ampm = this.matchAmPm(g.ampm);
     }
     this.name = g.name;
     this.hour = g.h;
