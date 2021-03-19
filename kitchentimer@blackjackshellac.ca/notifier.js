@@ -347,7 +347,12 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       return;
     }
 
-    if (!this.addSnoozeButtons(round)) {
+    var snoozeLimits = {
+      25: 900,
+      10: 360,
+       5: 180
+    };
+    if (!this.addSnoozeButtons(round, snoozeLimits)) {
       // add a 30 second snooze
       this.logger.debug("Add default snooze of %d seconds", round);
       this._banner.addSnoozeSecs(round, this.snoozeCallback);
@@ -361,13 +366,20 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     notifier.destroy();
   }
 
-  addSnoozeButtons(round) {
+  addSnoozeButtons(round, snoozeLimits) {
     let ssecs;
 
+    // sort snooze limits by percentage from large to small
+    let percentages=Object.keys(snoozeLimits).
+      sort( (k1,k2) => {
+        return k2-k1;
+      });
+
     // timer.duration_secs * 25%, 10% and 5%
-    let percentages = [ 25, 10, 5 ];
     for (let i=0; i < percentages.length; i++) {
-      ssecs = this._banner.addSnoozePercent(percentages[i], round, this.snoozeCallback);
+      let percentage = percentages[i];
+      let limit = snoozeLimits[percentage];
+      ssecs = this._banner.addSnoozePercent(percentage, limit, round, this.snoozeCallback);
       if (ssecs <= round) {
         this.logger.debug("Won't create snooze for ssecs=%d", ssecs);
         break;
@@ -584,10 +596,13 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
     return 0;
   }
 
-  addSnoozePercent(percent, round, callback) {
+  addSnoozePercent(percent, limit, round, callback) {
     let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
     if (snooze < round) {
       return 0;
+    }
+    if (snooze > limit) {
+      snooze = limit;
     }
 
     // snooze to the next nearest 30 seconds
