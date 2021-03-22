@@ -136,7 +136,7 @@ var AlarmTimer = class AlarmTimer {
     // ms g5
     // ampm g6
     //         name?  @    HH  :? MM?  :? SS?  .?  ms?       (a.?m.?|p.?m.?)?
-    var re= /^([^@]+)?@\s*(\d+):?(\d+)?:?(\d+)?[.]?(\d+)?\s*(a\.?m\.?|p\.?m\.?)?$/i;
+    var re= /^([^@]+)?@\s*(\d+)[:h]?(\d+)?[m:]?(\d+)?[.]?(\d+)?\s*(a\.?m\.?|p\.?m\.?)?$/i;
     let m=re.exec(entry);
     if (!m) {
       return undefined;
@@ -194,6 +194,10 @@ var AlarmTimer = class AlarmTimer {
     return "%02d:%02d:%02d.%03d".format(this.hour, this.minute, this.second, this.ms);
   }
 
+  name_at_hms() {
+    return "%s @ %02dh%02dm%02d".format(this.name, this.hour, this.minute, this.second);
+  }
+
   hms() {
     var now=new Date();
     var alarm_date=new Date(
@@ -212,6 +216,20 @@ var AlarmTimer = class AlarmTimer {
     }
     var hms = new HMS(duration_ms/1000);
     return hms;
+  }
+
+  forward(end, delta) {
+    logger.debug("alarm timer end=%d (delta=%d)", end, delta);
+    end += delta*1000;
+    let dend = new Date(end);
+    this._hour = dend.getHours();
+    this._minute = dend.getMinutes();
+    this._second = dend.getSeconds();
+    return end;
+  }
+
+  backward(end, delta) {
+    return this.forward(end, -delta);
   }
 };
 

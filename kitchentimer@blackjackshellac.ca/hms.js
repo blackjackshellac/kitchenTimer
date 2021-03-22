@@ -59,10 +59,6 @@ var HMS = class HMS {
     return new HMS(Number(h)*3600+Number(m)*60+Number(s));
   }
 
-  get hours() {
-    return this._hours;
-  }
-
   static to_s(v) {
     if (v == 0) {
       return "00";
@@ -106,6 +102,10 @@ var HMS = class HMS {
     this._seconds = hms.seconds;
     this._minutes = hms.minutes;
     this._hours = hms.hours;
+  }
+
+  get hours() {
+    return this._hours;
   }
 
   set hours(hours) {

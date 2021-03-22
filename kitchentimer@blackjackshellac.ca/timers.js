@@ -408,6 +408,9 @@ var Timer = class Timer {
 
     // will be undefined if it's not an alarm timer
     this._alarm_timer = AlarmTimer.matchRegex(name);
+    if (this._alarm_timer) {
+      this._alarm_timer.debug = timersInstance.settings;
+    }
 
     // this calls the setter
     this.name = name;
@@ -528,7 +531,7 @@ var Timer = class Timer {
     return Math.floor((this._end - Date.now()) / 1000);
   }
 
-  label_progress(hms, now=0) {
+  label_progress(hms) {
     if (!this.label) {
       return;
     }
@@ -625,14 +628,11 @@ var Timer = class Timer {
 
     timersInstance.inhibitor.inhibit_timer(timer);
 
-    var delta = Math.ceil((end-now) / 1000);
+    //var delta = Math.ceil((end-now) / 1000);
     //log(`Timer [${timer._name}] has not ended: ${delta}`);
-    var hms = new HMS(delta);
+    let hms = timer.remaining_hms(now);
 
-    // if (timer.alarm_timer) {
-    //   timersInstance.logger.debug("Timer %s has not ended: end=%d now=%d delta=%d hms=%s", timer.name, end, now, delta, hms.toString());
-    // }
-    timer.label_progress(hms, now);
+    timer.label_progress(hms);
 
     var running_timers = timersInstance.sort_by_running();
     if (running_timers.length > 0 && running_timers[0] == timer) {
@@ -648,6 +648,19 @@ var Timer = class Timer {
       timersInstance.set_panel_label(panel_label);
     }
     return true;
+  }
+
+  remaining_hms(now=undefined) {
+    let delta;
+    if (this.running) {
+      if (now === undefined) {
+        now = Date.now();
+      }
+      delta = Math.ceil((this._end-now) / 1000);
+    } else {
+      delta = this.duration;
+    }
+    return new HMS(delta < 0 ? 0 : delta);
   }
 
   stop_callback(now) {
@@ -807,12 +820,37 @@ var Timer = class Timer {
   }
 
   reduce() {
-    this._end -= 30*1000;
-    //this._start += 30*1000;
+    let secs=30;
+    if (this.alarm_timer) {
+      //this.alarm_timer.reduce(secs);
+      // don't reduce alarm timers
+      return;
+    }
+    this._end -= secs*1000;
   }
 
   extend() {
+    if (this.alarm_timer) {
+      // don't extend alarm timers
+      return;
+    }
     this._end += 30*1000;
+  }
+
+  forward() {
+    if (this.alarm_timer) {
+      this._end = this.alarm_timer.forward(this._end, 1800);
+      this.name = this.alarm_timer.name_at_hms();
+      timersInstance.settings.pack_timers(timersInstance);
+    }
+  }
+
+  backward() {
+    if (this.alarm_timer) {
+      this._end = this.alarm_timer.backward(this._end, 1800);
+      this.name = this.alarm_timer.name_at_hms();
+      timersInstance.settings.pack_timers(timersInstance);
+    }
   }
 
   uninhibit() {

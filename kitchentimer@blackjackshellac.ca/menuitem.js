@@ -31,10 +31,12 @@ const HMS = Me.imports.hms.HMS;
 const Logger = Me.imports.logger.Logger;
 
 var KTTypes = {
-  "stop": 'media-playback-stop-symbolic',
-  "delete" : 'edit-delete-symbolic',
-  "reduce" : 'list-remove-symbolic',
-  "extend" : 'list-add-symbolic'
+  'stop': 'media-playback-stop-symbolic',
+  'delete' : 'edit-delete-symbolic',
+  'reduce' : 'list-remove-symbolic',
+  'extend' : 'list-add-symbolic',
+  'backward' : 'media-seek-backward-symbolic',
+  'forward' : 'media-seek-forward-symbolic'
 }
 
 var logger = new Logger('kt menuitem');
@@ -246,11 +248,17 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       timer_icon.set_icon_size(20);
 
       if (timer.running) {
-        box.add_child(new KitchenTimerControlButton(timer, "extend"));
-        box.add_child(new KitchenTimerControlButton(timer, "stop"));
-        box.add_child(new KitchenTimerControlButton(timer, "reduce"));
+        if (timer.alarm_timer) {
+          box.add_child(new KitchenTimerControlButton(timer, 'forward'));
+          box.add_child(new KitchenTimerControlButton(timer, 'stop'));
+          box.add_child(new KitchenTimerControlButton(timer, 'backward'));
+        } else {
+          box.add_child(new KitchenTimerControlButton(timer, 'extend'));
+          box.add_child(new KitchenTimerControlButton(timer, 'stop'));
+          box.add_child(new KitchenTimerControlButton(timer, 'reduce'));
+        }
       } else {
-        box.add_child(new KitchenTimerControlButton(timer, "delete"));
+        box.add_child(new KitchenTimerControlButton(timer, 'delete'));
       }
 
       box.add_child(timer.label);
@@ -263,7 +271,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         }
       });
 
-      var hms = timer.alarm_timer ? timer.alarm_timer.hms() : new HMS(timer.duration);
+      var hms = timer.alarm_timer ? timer.alarm_timer.hms() : timer.remaining_hms();
       timer.label_progress(hms);
 
       menu.addMenuItem(this);
@@ -574,7 +582,7 @@ class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
 var KitchenTimerQuickItem = GObject.registerClass(
 class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
   _init(menu, timers) {
-    super._init(_("Quick"), { reactive: false });
+    super._init(_("Quick"), { reactive: false, can_focus: false });
 
     this._menu = menu;
     this._timers = timers;
@@ -592,11 +600,13 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
 
     this._entry = new St.Entry( {
       x_expand: true,
+      can_focus: true,
       x_align: St.Align.START,
       y_align: Clutter.ActorAlign.CENTER
     });
     this._entry.set_hint_text(_("Name 00:00:00"));
     this._entry.get_clutter_text().set_activatable(true);
+    this._entry.get_clutter_text().set_editable(true);
 
     this._gogo = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
       hover: false,
@@ -623,10 +633,12 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
 
     this._entry.get_clutter_text().connect('key-focus-out', (e) => {
       var entry = e.get_text();
-      logger.debug('key out hours: '+entry);
-      var result = KitchenTimerMenuItem.parseTimerEntry(entry, true);
-      if (result) {
-        this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
+      if (entry.length > 0) {
+        logger.debug('key out hours: '+entry);
+        var result = KitchenTimerMenuItem.parseTimerEntry(entry, true);
+        if (result) {
+          this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
+        }
       }
     });
 
@@ -649,6 +661,12 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
         }
       }
     });
+
+  }
+
+  grab_key_focus() {
+    logger.debug("grab key focus")
+    this._entry.grab_key_focus();
   }
 });
 
@@ -697,6 +715,16 @@ class KitchenTimerControlButton extends St.Button {
           this.connect('clicked', (cb) => {
             this.timer.reduce();
             this.rebuild();
+          });
+          break;
+        case "forward":
+          this.connect('clicked', (cb) => {
+            this.timer.forward();
+          });
+          break;
+        case "backward":
+          this.connect('clicked', (cb) => {
+            this.timer.backward();
           });
           break;
         }

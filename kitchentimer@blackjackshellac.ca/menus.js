@@ -47,6 +47,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
     this._menu.connect('open-state-changed', (self,open) => {
       if (open) {
         this.build();
+        this._quick.grab_key_focus();
       } else {
         this.timers.forEach( (timer) => {
           timer.label = null;
@@ -98,8 +99,7 @@ var PanelMenuBuilder = class PanelMenuBuilder {
     this._menu.removeAll();
     this.timers.refresh();
 
-    new Mitem.KitchenTimerQuickItem(this._menu, this.timers);
-    //new Mitem.KitchenTimerEndTime(this._menu, this.timers);
+    this._quick = new Mitem.KitchenTimerQuickItem(this._menu, this.timers);
 
     var running_item;
 
