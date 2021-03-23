@@ -324,67 +324,6 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
     return true;
 
-    //e=new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHour(), d.getMinute(), d.getSeconds(), d.getMilliseconds())
-
-    // var alarm_time={
-    //   hour: Number(g.h),
-    //   minute: 0,
-    //   second: 0,
-    //   ms: 0,
-    //   ampm: g.ampm !== undefined
-    // }
-    // Utils.logObjectPretty(alarm_time);
-    // if (alarm_time.ampm) {
-    //   if (g.ampm.match(/p\.?m\.?/i)) {
-    //     alarm_time.hour += 12;
-    //     if (alarm_time.hour > 24) {
-    //       logger.warn("hour is greater than 24: %s h=%d", parse.entry, alarm_time.hour);
-    //     }
-    //   }
-    // }
-    // if (g.m) {
-    //   alarm_time.minute = Number(g.m);
-    //   if (alarm_time.minute > 59) {
-    //     logger.warn("minute is greater than 59");
-    //     alarm_time.minute = 59;
-    //   }
-    // }
-    // if (g.s) {
-    //   alarm_time.second = Number(g.s);
-    //   if (alarm_time.second > 59) {
-    //     logger.warn("second is greater than 59");
-    //     alarm_time.second = 59;
-    //   }
-    // }
-    // if (g.ms) {
-    //   alarm_time.ms=Number(g.ms);
-    //   if (alarm_time.ms > 1000) {
-    //     logger.warn("ms is greater than 999");
-    //     alarm_time.ms = 999;
-    //   }
-    // }
-
-    // var now=new Date();
-    // var alarm_date=new Date(
-    //   now.getFullYear(),
-    //   now.getMonth(),
-    //   now.getDate(),
-    //   alarm_time.hour,
-    //   alarm_time.minute,
-    //   alarm_time.second,
-    //   alarm_time.ms
-    // );
-    // var duration_ms = alarm_date.getTime() - now.getTime();
-    // if (duration_ms < 0) {
-    //   duration_ms += 86400000;
-    // }
-    // parse.hms = new HMS(duration_ms/1000);
-    // parse.hours = parse.hms.hours;
-    // parse.minutes = parse.hms.minutes;
-    // parse.seconds = parse.hms.seconds;
-    // parse.has_time = true;
-
-    // return true;
   }
 
   // hms, ms or s

@@ -48,6 +48,7 @@ var AlarmTimer = class AlarmTimer {
     this._second = 0;
     this._ms = 0;
     this._ampm = AmPm.H24;
+    this._alarm_date = undefined;
   }
 
   set debug(settings) {
@@ -199,24 +200,34 @@ var AlarmTimer = class AlarmTimer {
   }
 
   hms() {
-    var now=new Date();
-    var alarm_date=new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      this.hour,
-      this.minute,
-      this.second,
-      this.ms
-    );
-
-    var duration_ms = alarm_date.getTime() - now.getTime();
-    if (duration_ms < 0) {
-      duration_ms += 86400000;
+    let duration_ms;
+    let now=new Date();
+    if (this._alarm_date === undefined) {
+      this._alarm_date=new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        this.hour,
+        this.minute,
+        this.second,
+        this.ms
+      );
+      duration_ms = this._alarm_date.getTime() - now.getTime();
+      if (duration_ms < 0) {
+        // must be for tomorrow
+        this._alarm_date.setDate(this._alarm_date.getDate()+1);
+      }
     }
+
+    duration_ms = this._alarm_date.getTime() - now.getTime();
+
     var hms = new HMS(duration_ms/1000);
     return hms;
   }
+
+//  end() {
+//    return this._alarm_date.getTime();
+//  }
 
   forward(end, delta) {
     logger.debug("alarm timer end=%d (delta=%d)", end, delta);
