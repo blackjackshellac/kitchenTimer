@@ -656,7 +656,8 @@ var Timer = class Timer {
       if (now === undefined) {
         now = Date.now();
       }
-      delta = Math.ceil((this._end-now) / 1000);
+      let end = this.alarm_timer ? this.alarm_timer.end() : this._end;
+      delta = Math.ceil((end-now) / 1000);
     } else {
       delta = this.duration;
     }
@@ -728,10 +729,16 @@ var Timer = class Timer {
 
   snooze(secs) {
     // the time it took to click snooze button
-    let dt = (Date.now() - this._end) + secs*1000;
-    this._start += dt;
-    this._end += dt;
-    // reset duration taking the new end into account
+    let dt = (Date.now() - this._end);
+    if (this.alarm_timer) {
+      this.alarm_timer.snooze(secs);
+      this._end = this.alarm_timer.end() + dt;
+    } else {
+      dt += secs*1000;
+      this._start += dt;
+      this._end += dt;
+      // reset duration taking the new end into account
+    }
     this.go(this._start, this._end);
   }
 

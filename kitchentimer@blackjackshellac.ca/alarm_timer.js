@@ -48,6 +48,7 @@ var AlarmTimer = class AlarmTimer {
     this._second = 0;
     this._ms = 0;
     this._ampm = AmPm.H24;
+    this._snooze_ms = 0;
     this._alarm_date = undefined;
   }
 
@@ -195,8 +196,15 @@ var AlarmTimer = class AlarmTimer {
     return "%02d:%02d:%02d.%03d".format(this.hour, this.minute, this.second, this.ms);
   }
 
+  toCompact() {
+    if (this.second == 0) {
+      return "%d:%02d".format(this.hour, this.minute);
+    }
+    return "%d:%02d:%02d".format(this.hour, this.minute, this.second);
+  }
+
   name_at_hms() {
-    return "%s @ %02dh%02dm%02d".format(this.name, this.hour, this.minute, this.second);
+    return "%s@%s".format(this.name, this.toCompact());
   }
 
   hms() {
@@ -219,24 +227,32 @@ var AlarmTimer = class AlarmTimer {
       }
     }
 
-    duration_ms = this._alarm_date.getTime() - now.getTime();
+    duration_ms = this.end() - now.getTime();
 
     var hms = new HMS(duration_ms/1000);
     return hms;
   }
 
-//  end() {
-//    return this._alarm_date.getTime();
-//  }
+  snooze(secs) {
+    this._snooze_ms += secs * 1000;
+  }
+
+  end() {
+    return this._alarm_date.getTime() + this._snooze_ms;
+  }
+
+  reset() {
+    this._alarm_date = undefined;
+    this._snooze_ms = 0;
+  }
 
   forward(end, delta) {
     logger.debug("alarm timer end=%d (delta=%d)", end, delta);
-    end += delta*1000;
-    let dend = new Date(end);
-    this._hour = dend.getHours();
-    this._minute = dend.getMinutes();
-    this._second = dend.getSeconds();
-    return end;
+    this._alarm_date.setTime(this.end()+delta*1000);
+    this._hour = this._alarm_date.getHours();
+    this._minute = this._alarm_date.getMinutes();
+    this._second = this._alarm_date.getSeconds();
+    return this.end();
   }
 
   backward(end, delta) {

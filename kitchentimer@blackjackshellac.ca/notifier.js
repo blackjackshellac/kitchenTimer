@@ -343,15 +343,21 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     });
 
     let round=30;
-    if (this.timer.duration < round*2) {
+    // TODO add to settings eventually
+    let snoozeLimits = {
+      25: 900,
+      10: 600,
+       5: 180
+    };
+
+    if (this.timer.alarm_timer) {
+      this._banner.addSnoozeSecs(snoozeLimits[25], this.snoozeCallback);
+      this._banner.addSnoozeSecs(snoozeLimits[10], this.snoozeCallback);
+      return;
+    } else if (this.timer.duration < round*2) {
       return;
     }
 
-    var snoozeLimits = {
-      25: 900,
-      10: 360,
-       5: 180
-    };
     if (!this.addSnoozeButtons(round, snoozeLimits)) {
       // add a 30 second snooze
       this.logger.debug("Add default snooze of %d seconds", round);
@@ -598,11 +604,11 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
 
   addSnoozePercent(percent, limit, round, callback) {
     let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
-    if (snooze < round) {
-      return 0;
-    }
-    if (snooze > limit) {
+
+    if (this.notifier.timer.alarm_timer || snooze > limit) {
       snooze = limit;
+    } else {
+      return 0;
     }
 
     // snooze to the next nearest 30 seconds

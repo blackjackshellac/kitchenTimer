@@ -271,7 +271,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         }
       });
 
-      var hms = timer.alarm_timer ? timer.alarm_timer.hms() : timer.remaining_hms();
+      var hms = timer.remaining_hms();
       timer.label_progress(hms);
 
       menu.addMenuItem(this);
@@ -659,11 +659,13 @@ class KitchenTimerControlButton extends St.Button {
         case "forward":
           this.connect('clicked', (cb) => {
             this.timer.forward();
+            this.rebuild();
           });
           break;
         case "backward":
           this.connect('clicked', (cb) => {
             this.timer.backward();
+            this.rebuild();
           });
           break;
         }
