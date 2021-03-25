@@ -238,6 +238,10 @@ var AlarmTimer = class AlarmTimer {
   }
 
   end() {
+    if (!this._alarm_date) {
+      this.hms();
+    }
+    //logger.debug("end time=%d snooze=%d", this._alarm_date.getTime(), this._snooze_ms);
     return this._alarm_date.getTime() + this._snooze_ms;
   }
 
@@ -248,7 +252,7 @@ var AlarmTimer = class AlarmTimer {
 
   forward(end, delta) {
     logger.debug("alarm timer end=%d (delta=%d)", end, delta);
-    this._alarm_date.setTime(this.end()+delta*1000);
+    this._alarm_date.setTime(this._alarm_date.getTime()+delta*1000);
     this._hour = this._alarm_date.getHours();
     this._minute = this._alarm_date.getMinutes();
     this._second = this._alarm_date.getSeconds();

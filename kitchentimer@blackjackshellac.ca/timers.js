@@ -531,11 +531,14 @@ var Timer = class Timer {
     return Math.floor((this._end - Date.now()) / 1000);
   }
 
-  label_progress(hms) {
+  label_progress(hms=undefined) {
     if (!this.label) {
       return;
     }
 
+    if (hms === undefined) {
+      hms=this.remaining_hms();
+    }
     this.label.set_text(hms.toString());
   }
 
@@ -656,8 +659,10 @@ var Timer = class Timer {
       if (now === undefined) {
         now = Date.now();
       }
-      let end = this.alarm_timer ? this.alarm_timer.end() : this._end;
-      delta = Math.ceil((end-now) / 1000);
+      if (this.alarm_timer) {
+        this._end = this.alarm_timer.end();
+      }
+      delta = Math.ceil((this._end-now) / 1000);
     } else {
       delta = this.duration;
     }
@@ -790,13 +795,14 @@ var Timer = class Timer {
   refresh_with(settings_timer) {
     if (settings_timer.id == this.id) {
       this._name = settings_timer.name;
-      this._duration_secs = settings_timer.duration;
       this._enabled = settings_timer.enabled;
+      this._duration_secs = settings_timer.duration;
       this._quick = settings_timer.quick;
-
-      this._alarm_timer = AlarmTimer.matchRegex(this._name);
+      if (this._alarm_timer === undefined) {
+        this._alarm_timer = AlarmTimer.matchRegex(this._name);
+      }
       if (this._alarm_timer && this.running) {
-        this._end = Date.now() + this.duration_ms();
+        this._end = this._alarm_timer.end();
         //this.logger.debug("Alarm timer (%s) running for another %d seconds: end=%d", timer.alarm_timer.toString(), timer.duration, timer._end);
       }
       return true;

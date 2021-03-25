@@ -271,8 +271,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
         }
       });
 
-      var hms = timer.remaining_hms();
-      timer.label_progress(hms);
+      timer.label_progress();
 
       menu.addMenuItem(this);
   }
