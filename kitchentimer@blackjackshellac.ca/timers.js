@@ -201,6 +201,9 @@ var Timers = class Timers extends Array {
           id: timer.id,
           start: timer._start
         }
+        if (timer.alarm_timer) {
+          run_state.alarm_timer = timer.alarm_timer.save();
+        }
         running.push(run_state);
       }
     });
@@ -213,6 +216,7 @@ var Timers = class Timers extends Array {
     running.forEach( (run_state) => {
       var timer = this.lookup(run_state.id);
       if (timer && !timer.running) {
+        timer.alarm_timer = AlarmTimer.restore(run_state.alarm_timer);
         this.logger.debug("restore %s", timer.toString());
         timer.go(run_state.start);
       }
@@ -852,7 +856,7 @@ var Timer = class Timer {
 
   forward() {
     if (this.alarm_timer) {
-      this._end = this.alarm_timer.forward(this._end, 1800);
+      this._end = this.alarm_timer.forward(this._end, 900);
       this.name = this.alarm_timer.name_at_hms();
       timersInstance.settings.pack_timers(timersInstance);
     }
@@ -860,7 +864,7 @@ var Timer = class Timer {
 
   backward() {
     if (this.alarm_timer) {
-      this._end = this.alarm_timer.backward(this._end, 1800);
+      this._end = this.alarm_timer.backward(this._end, 900);
       this.name = this.alarm_timer.name_at_hms();
       timersInstance.settings.pack_timers(timersInstance);
     }

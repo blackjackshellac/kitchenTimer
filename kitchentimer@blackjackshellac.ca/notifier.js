@@ -347,7 +347,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     let snoozeLimits = {
       25: 900,
       10: 600,
-       5: 180
+       5: 300
     };
 
     if (this.timer.alarm_timer) {
@@ -607,7 +607,7 @@ class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
 
     if (this.notifier.timer.alarm_timer || snooze > limit) {
       snooze = limit;
-    } else {
+    } else if (snooze < 30) {
       return 0;
     }
 

@@ -149,6 +149,7 @@ var AlarmTimer = class AlarmTimer {
     try {
       //alarm_timer.fromRegexNamedGroups(m.groups);
       alarm_timer.fromRegexMatches(m);
+      alarm_timer.alarm_date();
     } catch (e) {
       logger.error("%s: %s", e, entry);
       return undefined;
@@ -207,10 +208,9 @@ var AlarmTimer = class AlarmTimer {
     return "%s@%s".format(this.name, this.toCompact());
   }
 
-  hms() {
-    let duration_ms;
-    let now=new Date();
+  get alarm_date() {
     if (this._alarm_date === undefined) {
+      let now=new Date();
       this._alarm_date=new Date(
         now.getFullYear(),
         now.getMonth(),
@@ -220,17 +220,19 @@ var AlarmTimer = class AlarmTimer {
         this.second,
         this.ms
       );
-      duration_ms = this._alarm_date.getTime() - now.getTime();
+      let duration_ms = this._alarm_date.getTime() - now.getTime();
       if (duration_ms < 0) {
         // must be for tomorrow
         this._alarm_date.setDate(this._alarm_date.getDate()+1);
       }
     }
+    return this._alarm_date;
+  }
 
-    duration_ms = this.end() - now.getTime();
-
-    var hms = new HMS(duration_ms/1000);
-    return hms;
+  hms() {
+    let now=new Date();
+    let duration_ms = this.end() - now.getTime();
+    return new HMS(duration_ms/1000);
   }
 
   snooze(secs) {
@@ -238,11 +240,8 @@ var AlarmTimer = class AlarmTimer {
   }
 
   end() {
-    if (!this._alarm_date) {
-      this.hms();
-    }
-    //logger.debug("end time=%d snooze=%d", this._alarm_date.getTime(), this._snooze_ms);
-    return this._alarm_date.getTime() + this._snooze_ms;
+    //logger.debug("end time=%d snooze=%d", this.alarm_date.getTime(), this._snooze_ms);
+    return this.alarm_date.getTime() + this._snooze_ms;
   }
 
   reset() {
@@ -250,12 +249,49 @@ var AlarmTimer = class AlarmTimer {
     this._snooze_ms = 0;
   }
 
+  // this._name = "";
+  // this._hour = 0;
+  // this._minute = 0;
+  // this._second = 0;
+  // this._ms = 0;
+  // this._ampm = AmPm.H24;
+  // this._snooze_ms = 0;
+  // this._alarm_date = undefined;
+  save() {
+    return {
+      name: this._name,
+      alarm_date: this.alarm_date.getTime(),
+      ampm: this._ampm,
+      snooze_ms: this._snooze_ms
+    }
+  }
+
+  static restore(state) {
+    if (state === undefined) {
+      return undefined;
+    }
+    let at = new AlarmTimer();
+
+    at._name = state.name;
+
+    at._alarm_date = new Date(state.alarm_date);
+    at._hour = at._alarm_date.getHours();
+    at._minute = at._alarm_date.getMinutes();
+    at._second = at._alarm_date.getSeconds();
+    at._ms = at._alarm_date.getMilliseconds();
+
+    at._ampm = state.ampm;
+    at._snooze_ms = state.snooze_ms;
+
+    return at;
+  }
+
   forward(end, delta) {
     logger.debug("alarm timer end=%d (delta=%d)", end, delta);
-    this._alarm_date.setTime(this._alarm_date.getTime()+delta*1000);
-    this._hour = this._alarm_date.getHours();
-    this._minute = this._alarm_date.getMinutes();
-    this._second = this._alarm_date.getSeconds();
+    this.alarm_date.setTime(this.alarm_date.getTime()+delta*1000);
+    this._hour = this.alarm_date.getHours();
+    this._minute = this.alarm_date.getMinutes();
+    this._second = this.alarm_date.getSeconds();
     return this.end();
   }
 
