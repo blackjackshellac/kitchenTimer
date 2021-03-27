@@ -149,7 +149,7 @@ var AlarmTimer = class AlarmTimer {
     try {
       //alarm_timer.fromRegexNamedGroups(m.groups);
       alarm_timer.fromRegexMatches(m);
-      alarm_timer.alarm_date();
+      alarm_timer.alarm_date;
     } catch (e) {
       logger.error("%s: %s", e, entry);
       return undefined;
