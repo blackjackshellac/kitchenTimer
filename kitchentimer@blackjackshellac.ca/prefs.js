@@ -48,6 +48,9 @@ const KitchenTimerPrefs = GObject.registerClass({
 
     _init(params = {}) {
         super._init(params);
+
+        this._settings = new Settings();
+        this.logger = new Logger('kt_prefs', this._settings);
     }
     
     _onButtonClicked(button) {
@@ -56,21 +59,21 @@ const KitchenTimerPrefs = GObject.registerClass({
 });
 
 function init() {
+  log(`Initialize translations for ${GETTEXT_DOMAIN}`);
   ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
 }
 
 function buildPrefsWidget() {
-  log("Create preferences widget and show it");
-
   var kitchenTimerPrefs = new KitchenTimerPrefs();
-  var widget = kitchenTimerPrefs.build();
-  var window = widget.get_parent_window();
-  if (window) {
-    window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
-  }
+  return kitchenTimerPrefs;
 
-  kitchenTimerPrefs.show();
+  // var widget = kitchenTimerPrefs.build();
+  // var window = widget.get_parent_window();
+  // if (window) {
+  //   window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
+  // }
 
+  // kitchenTimerPrefs.show();
 
   return widget;
 }
