@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Copyright (C) 2021, Steeve McCauley
+
+This file is part of Kitchen Timer.
+
+Kitchen Timer is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Kitchen Timer is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Kitchen Timer.  If not, see <http://www.gnu.org/licenses/>.
+
+Author: Steeve McCauley
+
+-->
+<interface domain="kitchen-timer-blackjackshellac">
+    <template class="KitchenTimerPrefs" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+            <object class="GtkButton" id="clickButton">
+                <property name="label" translatable="yes">Click Me!</property>
+                <signal name="clicked" handler="_onButtonClicked" swapped="no"/>
+            </object>
+        </child>
+    </template>
+</interface>
