@@ -49,7 +49,7 @@ class PreferencesBuilder {
     }
 
     show() {
-      this._widget.show_all();
+      //this._widget.show_all();
       this.tv_timers.hide();
       this._bo('timer_box').hide();
     }
@@ -59,13 +59,14 @@ class PreferencesBuilder {
         this._settingsBox = this._builder.get_object('kitchenTimer_settings');
 
         this._viewport = new Gtk.Viewport();
-        this._viewport.child(this._settingsBox);
+        this._viewport.set_child(this._settingsBox);
         this._widget = new Gtk.ScrolledWindow();
-        this._widget.child(this._viewport);
+        this._widget.set_child(this._viewport);
 
         this._bo('version').set_text("Version "+Me.metadata.version);
         this._bo('description').set_text(Me.metadata.description);
 
+		/*
         let file_chooser = this._bo('sound_path');
 
         if (file_chooser.current_folder == undefined) {
@@ -84,6 +85,7 @@ class PreferencesBuilder {
           this.logger.debug(Object.getOwnPropertyNames(user_data));
           this._settings.sound_file = user_data.get_filename();
         });
+		*/
 
         this.timers_liststore = this._bo('timers_liststore');
         this.timers_combo = this._bo('timers_combo');
@@ -241,11 +243,11 @@ class PreferencesBuilder {
           }
         });
 
-        this.timers_combo.connect('set-focus-child', (combo, child) => {
+        this.timers_combo.connect('changed', (combo, child) => {
           var [ ok, iter ] = combo.get_active_iter();
           this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
+          iter = ok ? iter : this._iter;
           if (child == null) {
-            iter = ok ? iter : this._iter;
             this.allow_updates=false;
             var entry = this.timers_combo_entry.get_text();
             this.logger.debug(`child lost focus, entry=${entry}`);
@@ -271,23 +273,6 @@ class PreferencesBuilder {
         });
 
         //this._current_iter = undefined;
-        this.timers_combo_entry.connect('focus-in-event', (combo_entry) => {
-          var [ ok, iter ] = this.timers_combo.get_active_iter();
-          this.logger.debug(`Got focus-in-event ${ok} ${iter}`);
-          if (ok) {
-            this._current_iter = iter;
-          }
-        });
-
-        this.timers_combo_entry.connect('focus-out-event', (combo_entry) => {
-          var [ ok, iter ] = this.timers_combo.get_active_iter();
-          this.logger.debug(`Got focus-out-event ${ok} ${iter} ${this._current_iter}`);
-          if (ok) {
-          } else if (this._current_iter) {
-          }
-          this._current_iter = undefined;
-        });
-
         this.timers_remove.connect('clicked', () => {
           var [ ok, iter ] = this.timers_combo.get_active_iter();
           if (ok) {
@@ -347,6 +332,7 @@ class PreferencesBuilder {
         });
 
         this._timer_icon_count = 0;
+/**
         this.timer_icon.connect('button-press-event', () => {
           if (this._timer_icon_count == 5) {
             var cmd = Me.path+"/bin/dconf-editor.sh";
@@ -357,7 +343,7 @@ class PreferencesBuilder {
             this._timer_icon_count++;
           }
         });
-
+*/
         this._json_file_chooser_button = this._bo('json_file_chooser_button');
         this._json_file_chooser_button.connect('clicked', (button) => {
           if (this._bo('export_settings_radio').get_active()) {
@@ -786,11 +772,12 @@ function buildPrefsWidget() {
 
   var preferencesBuilder = new PreferencesBuilder();
   var widget = preferencesBuilder.build();
+/*
   var window = widget.get_parent_window();
   if (window) {
     window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
   }
-
+*/
   preferencesBuilder.show();
 
 
