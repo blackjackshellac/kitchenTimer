@@ -127,7 +127,7 @@ Author: Steeve McCauley
           <object class="GtkStackSwitcher" id="stack_switcher">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-	    <!--<property name="homogeneous">True</property>-->
+            <!--<property name="homogeneous">True</property>-->
             <property name="stack">stack</property>
           </object>
           <!--<packing>
@@ -163,7 +163,7 @@ Author: Steeve McCauley
                         <property name="can-focus">False</property>
                         <property name="margin-start">55</property>
                         <property name="label-xalign">0</property>
-			<!--<property name="shadow-type">none</property>-->
+                        <!--<property name="shadow-type">none</property>-->
                         <child>
                           <object class="GtkBox">
                             <property name="visible">True</property>
@@ -177,7 +177,7 @@ Author: Steeve McCauley
                                 <property name="receives-default">False</property>
                                 <property name="margin-start">5</property>
                                 <property name="active">True</property>
-				<!--<property name="draw-indicator">True</property>-->
+                                <!--<property name="draw-indicator">True</property>-->
                               </object>
                               <!--<packing>
                                 <property name="expand">False</property>
@@ -193,7 +193,7 @@ Author: Steeve McCauley
                                 <property name="receives-default">False</property>
                                 <property name="margin-start">5</property>
                                 <property name="active">True</property>
-				<!--<property name="draw-indicator">True</property>-->
+                                <!--<property name="draw-indicator">True</property>-->
                                 <property name="group">preset_radio</property>
                               </object>
                               <!--<packing>
@@ -274,7 +274,7 @@ Author: Steeve McCauley
                             <property name="receives-default">True</property>
                             <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
                             <property name="icon-name">img_add</property>
-			    <!--<property name="always-show-image">True</property>-->
+                            <!--<property name="always-show-image">True</property>-->
                           </object>
                           <!--<packing>
                             <property name="expand">False</property>
@@ -289,7 +289,7 @@ Author: Steeve McCauley
                             <property name="receives-default">True</property>
                             <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
                             <property name="icon-name">img_remove</property>
-			    <!--<property name="always-show-image">True</property>-->
+                            <!--<property name="always-show-image">True</property>-->
                             <signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>
                           </object>
                           <!--<packing>
@@ -307,7 +307,7 @@ Author: Steeve McCauley
                             <property name="tooltip-text" translatable="yes" context="timer-enabled">Enable timer if checked</property>
                             <property name="halign">start</property>
                             <property name="hexpand">True</property>
-			    <!--<property name="draw-indicator">True</property>-->
+                            <!--<property name="draw-indicator">True</property>-->
                           </object>
                           <!--<packing>
                             <property name="expand">False</property>
@@ -347,7 +347,7 @@ Author: Steeve McCauley
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes" context="label-minutes">Minutes	</property>
+                            <property name="label" translatable="yes" context="label-minutes">Minutes        </property>
                           </object>
                           <!--<packing>
                             <property name="left-attach">1</property>
@@ -492,7 +492,7 @@ Author: Steeve McCauley
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
                             <property name="icon-name">img_timer_add</property>
-			    <!--<property name="always-show-image">True</property>-->
+                            <!--<property name="always-show-image">True</property>-->
                           </object>
                           <!--<packing>
                             <property name="expand">False</property>
@@ -651,7 +651,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="notification">Show a notification when the timer is done</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">0</property>
                       <property name="column">0</property>
@@ -669,7 +669,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="sort-by-duration">Sort timers by duration</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">0</property>
                       <property name="column">1</property>
@@ -687,7 +687,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="sort-descending">Sort timers by duration from longest to shortest</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">1</property>
                       <property name="column">1</property>
@@ -705,7 +705,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="save-quick-timers-tooltip">If selected, quick timers are also saved</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                   </object>
                   <!--<packing>
                     <property name="left-attach">1</property>
@@ -719,7 +719,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="show_timer_name">Show timer name in the panel menu</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">4</property>
                       <property name="column">0</property>
@@ -737,7 +737,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="detect-dupes-tooltip">Prevent timers with the same duration, name and type</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">4</property>
                       <property name="column">1</property>
@@ -755,7 +755,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="show-time">Show remaining time for running timers in the panel</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">3</property>
                       <property name="column">0</property>
@@ -773,7 +773,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="notification-sticky-tooltip">Notification waits for input</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">1</property>
                       <property name="column">0</property>
@@ -791,7 +791,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Animate progress icon in the panel menu</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">5</property>
                       <property name="column">0</property>
@@ -809,7 +809,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="play-sound">Play the sound when the timer is done</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">2</property>
                       <property name="column">0</property>
@@ -851,7 +851,7 @@ Author: Steeve McCauley
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
                             <property name="active">True</property>
-			    <!--<property name="draw-indicator">True</property>-->
+                            <!--<property name="draw-indicator">True</property>-->
                           </object>
                           <!--<packing>
                             <property name="expand">False</property>
@@ -866,7 +866,7 @@ Author: Steeve McCauley
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
                             <property name="active">True</property>
-			    <!--<property name="draw-indicator">True</property>-->
+                            <!--<property name="draw-indicator">True</property>-->
                             <property name="group">export_settings_radio</property>
                           </object>
                           <!--<packing>
@@ -914,7 +914,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="inhibit-tooltip">Inhibit screen lock when timers are running</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">2</property>
                       <property name="column">1</property>
@@ -932,7 +932,7 @@ Author: Steeve McCauley
                     <property name="can-focus">True</property>
                     <property name="receives-default">False</property>
                     <property name="tooltip-text" translatable="yes" context="accel-enable-tooltip">Click to enable global keyboard shortcuts</property>
-		    <!--<property name="draw-indicator">True</property>-->
+                    <!--<property name="draw-indicator">True</property>-->
                     <layout>
                       <property name="row">5</property>
                       <property name="column">1</property>
@@ -959,7 +959,7 @@ Author: Steeve McCauley
                 <property name="margin-end">20</property>
                 <property name="row-spacing">5</property>
                 <child>
-		<!--<object class="GtkFileChooserButton" id="sound_path">
+                <!--<object class="GtkFileChooserButton" id="sound_path">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="tooltip-text" translatable="yes" context="sound_file_tooltip">Timer notification sound file</property>
@@ -967,7 +967,7 @@ Author: Steeve McCauley
                     <property name="filter">audio_files_filter</property>
                     <property name="title" translatable="yes" context="sound_file">Sound file</property>
                     <signal name="file-set" handler="on_sound_path_file_set" swapped="no"/>
-		</object>-->
+                </object>-->
                   <!--<packing>
                     <property name="left-attach">0</property>
                     <property name="top-attach">2</property>
@@ -997,7 +997,7 @@ Author: Steeve McCauley
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
-			<!--<property name="draw-indicator">True</property>-->
+                        <!--<property name="draw-indicator">True</property>-->
                       </object>
                       <!--<packing>
                         <property name="left-attach">0</property>
@@ -1011,7 +1011,7 @@ Author: Steeve McCauley
                         <property name="can-focus">True</property>
                         <property name="tooltip-text" translatable="yes" context="low-volume-threshold-percent">Low volume threshold percent</property>
                         <property name="halign">end</property>
-			<!--<property name="caps-lock-warning">False</property>-->
+                        <!--<property name="caps-lock-warning">False</property>-->
                         <property name="adjustment">volume_threshold_percent</property>
                         <property name="numeric">True</property>
                         <property name="value">25</property>
@@ -1027,7 +1027,7 @@ Author: Steeve McCauley
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
-			<!--<property name="draw-indicator">True</property>-->
+                        <!--<property name="draw-indicator">True</property>-->
                       </object>
                       <!--<packing>
                         <property name="left-attach">0</property>
@@ -1041,7 +1041,7 @@ Author: Steeve McCauley
                         <property name="can-focus">True</property>
                         <property name="tooltip-text" translatable="yes" context="sound_loops_tooltip">Loops to play timer notification sound, 0 plays for the duration of the notification dialog</property>
                         <property name="halign">end</property>
-			<!--<property name="caps-lock-warning">False</property>-->
+                        <!--<property name="caps-lock-warning">False</property>-->
                         <property name="adjustment">sound_loops_adjustment</property>
                         <property name="numeric">True</property>
                         <property name="value">2</property>
@@ -1184,7 +1184,7 @@ Author: Steeve McCauley
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
                         <property name="icon-name">img_kitchentimer_symbolic</property>
-			<!--<property name="always-show-image">True</property>-->
+                        <!--<property name="always-show-image">True</property>-->
                         <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>
                       </object>
                       <!--<packing>
@@ -1202,7 +1202,7 @@ See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 Lice
                         <property name="use-markup">True</property>
                         <property name="justify">center</property>
                         <property name="wrap">True</property>
-			<!--<property name="track-visited-links">False</property>-->
+                        <!--<property name="track-visited-links">False</property>-->
                       </object>
                       <!--<packing>
                         <property name="expand">False</property>
@@ -1216,8 +1216,8 @@ See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 Lice
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <property name="icon-name">img_bmac</property>
-			<!--<property name="relief">none</property>-->
-			<!--<property name="always-show-image">True</property>-->
+                        <!--<property name="relief">none</property>-->
+                        <!--<property name="always-show-image">True</property>-->
                         <property name="uri">https://www.buymeacoffee.com/blckjackshellac</property>
                       </object>
                       <!--<packing>
