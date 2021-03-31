@@ -59,9 +59,9 @@ class PreferencesBuilder {
         this._settingsBox = this._builder.get_object('kitchenTimer_settings');
 
         this._viewport = new Gtk.Viewport();
-        this._viewport.add(this._settingsBox);
+        this._viewport.child(this._settingsBox);
         this._widget = new Gtk.ScrolledWindow();
-        this._widget.add(this._viewport);
+        this._widget.child(this._viewport);
 
         this._bo('version').set_text("Version "+Me.metadata.version);
         this._bo('description').set_text(Me.metadata.description);

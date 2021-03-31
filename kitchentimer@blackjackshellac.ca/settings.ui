@@ -294,7 +294,7 @@ Author: Steeve McCauley
                               <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
                               <property name="icon-name">img_remove</property>
                               <!--<property name="always-show-image">True</property>-->
-                              <signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>
+                              <!--<signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>-->
                             </object>
                             <!--<packing>
                               <property name="expand">False</property>
@@ -418,7 +418,7 @@ Author: Steeve McCauley
                               <property name="can-focus">True</property>
                               <property name="margin-top">5</property>
                               <property name="adjustment">adjust_hours</property>
-                              <signal name="value-changed" handler="on_spin_hours_value_changed" swapped="no"/>
+                              <!--<signal name="value-changed" handler="on_spin_hours_value_changed" swapped="no"/>-->
                             </object>
                             <!--<packing>
                               <property name="left-attach">0</property>
@@ -1061,7 +1061,7 @@ Author: Steeve McCauley
                           <property name="adjustment">sound_loops_adjustment</property>
                           <property name="numeric">True</property>
                           <property name="value">2</property>
-                          <signal name="value-changed" handler="on_sound_loops_spin_value_changed" swapped="no"/>
+                          <!--<signal name="value-changed" handler="on_sound_loops_spin_value_changed" swapped="no"/>-->
                         </object>
                         <!--<packing>
                           <property name="left-attach">1</property>
