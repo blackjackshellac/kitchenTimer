@@ -49,12 +49,13 @@ Author: Steeve McCauley
       <mime-type>*</mime-type>
     </mime-types>
   </object>
+  <!--
   <object class="GtkImage" id="img_add">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
     <property name="icon-name">list-add</property>
-  </object>
+  </object>-->
   <object class="GtkImage" id="img_bmac">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -66,12 +67,14 @@ Author: Steeve McCauley
     <property name="can-focus">False</property>
     <property name="file">icons/kitchen-timer-blackjackshellac-symbolic.svg</property>
   </object>
+  <!--
   <object class="GtkImage" id="img_remove">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
     <property name="icon-name">list-remove</property>
   </object>
+  -->
   <object class="GtkImage" id="img_timer_add">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -196,7 +199,7 @@ Author: Steeve McCauley
                                   <property name="can-focus">True</property>
                                   <property name="receives-default">False</property>
                                   <property name="margin-start">5</property>
-                                  <property name="active">True</property>
+                                  <property name="active">0</property>
                                   <!--<property name="draw-indicator">True</property>-->
                                   <property name="group">preset_radio</property>
                                 </object>
@@ -279,6 +282,14 @@ Author: Steeve McCauley
                               <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
                               <property name="icon-name">img_add</property>
                               <!--<property name="always-show-image">True</property>-->
+                              <child>
+                                <object class="GtkImage" id="img_add">
+                                  <property name="visible">True</property>
+                                  <property name="can-focus">False</property>
+                                  <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
+                                  <property name="icon-name">list-add</property>
+                                </object>
+                              </child>
                             </object>
                             <!--<packing>
                               <property name="expand">False</property>
@@ -292,7 +303,15 @@ Author: Steeve McCauley
                               <property name="can-focus">True</property>
                               <property name="receives-default">True</property>
                               <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
-                              <property name="icon-name">img_remove</property>
+                              <!--<property name="icon-name">img_remove</property>-->
+                              <child>
+                                <object class="GtkImage" id="img_remove">
+                                  <property name="visible">True</property>
+                                  <property name="can-focus">False</property>
+                                  <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
+                                  <property name="icon-name">list-remove</property>
+                                </object>
+                              </child>
                               <!--<property name="always-show-image">True</property>-->
                               <!--<signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>-->
                             </object>
@@ -903,7 +922,7 @@ Author: Steeve McCauley
                               <property name="label" translatable="yes" context="export-settings-radio">Export</property>
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
-                              <property name="receives-default">False</property>
+                              <!--<property name="receives-default">False</property>-->
                               <property name="active">True</property>
                               <!--<property name="draw-indicator">True</property>-->
                             </object>
@@ -918,8 +937,8 @@ Author: Steeve McCauley
                               <property name="label" translatable="yes" context="import-settings-radio">Import</property>
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
-                              <property name="receives-default">False</property>
-                              <property name="active">True</property>
+                              <!--<property name="receives-default">False</property>-->
+                              <property name="active">0</property>
                               <!--<property name="draw-indicator">True</property>-->
                               <property name="group">export_settings_radio</property>
                             </object>
