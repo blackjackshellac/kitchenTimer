@@ -56,17 +56,21 @@ Author: Steeve McCauley
     <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
     <property name="icon-name">list-add</property>
   </object>-->
+  <!--
   <object class="GtkImage" id="img_bmac">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="margin-top">10</property>
     <property name="file">icons/bmc_logo_wordmark.svg</property>
   </object>
+  -->
+  <!--
   <object class="GtkImage" id="img_kitchentimer_symbolic">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
     <property name="file">icons/kitchen-timer-blackjackshellac-symbolic.svg</property>
   </object>
+  -->
   <!--
   <object class="GtkImage" id="img_remove">
     <property name="visible">True</property>
@@ -149,7 +153,7 @@ Author: Steeve McCauley
             <property name="margin-bottom">10</property>
             <property name="transition-type">crossfade</property>
             <child>
-              <object class="GtkStackPage">
+              <object class="GtkStackPage"><!-- timers -->
                 <property name="name">timers</property>
                 <property name="title" translatable="yes">Timers</property>
                 <property name="child">
@@ -697,7 +701,7 @@ Author: Steeve McCauley
               </object>
             </child>
             <child>
-              <object class="GtkStackPage">
+              <object class="GtkStackPage"><!-- options -->
                 <property name="name">options</property>
                 <property name="title" translatable="yes">Options</property>
                 <property name="child">
@@ -1038,7 +1042,7 @@ Author: Steeve McCauley
               </object>
             </child>
             <child>
-              <object class="GtkStackPage">
+              <object class="GtkStackPage"><!-- sound -->
                 <property name="name">sound</property>
                 <property name="title" translatable="yes">Sound</property>
                 <property name="child">
@@ -1189,7 +1193,7 @@ Author: Steeve McCauley
               </object>
             </child>
             <child>
-              <object class="GtkStackPage">
+              <object class="GtkStackPage"><!-- about -->
                 <property name="name">about</property>
                 <property name="title" translatable="yes">About</property>
                 <property name="child">
@@ -1307,6 +1311,13 @@ Author: Steeve McCauley
                           <property name="icon-name">img_kitchentimer_symbolic</property>
                           <!--<property name="always-show-image">True</property>-->
                           <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>
+                          <child>
+                            <object class="GtkImage" id="img_kitchentimer_symbolic">
+                              <property name="visible">True</property>
+                              <property name="can-focus">False</property>
+                              <property name="file">icons/kitchen-timer-blackjackshellac-symbolic.svg</property>
+                            </object>
+                          </child>
                         </object>
                         <!--<packing>
                           <property name="expand">False</property>
@@ -1340,6 +1351,14 @@ Author: Steeve McCauley
                           <!--<property name="relief">none</property>-->
                           <!--<property name="always-show-image">True</property>-->
                           <property name="uri">https://www.buymeacoffee.com/blckjackshellac</property>
+                          <child>
+                            <object class="GtkImage" id="img_bmac">
+                              <property name="visible">True</property>
+                              <property name="can-focus">False</property>
+                              <property name="margin-top">10</property>
+                              <property name="file">icons/bmc_logo_wordmark.svg</property>
+                            </object>
+                          </child>
                         </object>
                         <!--<packing>
                           <property name="expand">False</property>
