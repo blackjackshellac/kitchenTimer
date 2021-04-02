@@ -340,6 +340,10 @@ Author: Steeve McCauley
                               <property name="can-focus">False</property>
                               <property name="halign">start</property>
                               <property name="label" translatable="yes" context="label-hour">Hours</property>
+                              <layout>
+                                <property name="row">0</property>
+                                <property name="column">1</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">1</property>
@@ -352,6 +356,10 @@ Author: Steeve McCauley
                               <property name="can-focus">False</property>
                               <property name="halign">start</property>
                               <property name="label" translatable="yes" context="label-minutes">Minutes        </property>
+                              <layout>
+                                <property name="row">1</property>
+                                <property name="column">1</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">1</property>
@@ -364,6 +372,10 @@ Author: Steeve McCauley
                               <property name="can-focus">False</property>
                               <property name="halign">start</property>
                               <property name="label" translatable="yes" context="label-seconds">Seconds</property>
+                              <layout>
+                                <property name="row">2</property>
+                                <property name="column">1</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">1</property>
@@ -378,6 +390,10 @@ Author: Steeve McCauley
                               <property name="adjustment">adjust_hours</property>
                               <property name="round-digits">0</property>
                               <property name="digits">0</property>
+                              <layout>
+                                <property name="row">0</property>
+                                <property name="column">2</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">2</property>
@@ -392,6 +408,10 @@ Author: Steeve McCauley
                               <property name="adjustment">adjust_mins</property>
                               <property name="round-digits">0</property>
                               <property name="digits">0</property>
+                              <layout>
+                                <property name="row">1</property>
+                                <property name="column">2</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">2</property>
@@ -406,6 +426,10 @@ Author: Steeve McCauley
                               <property name="adjustment">adjust_secs</property>
                               <property name="round-digits">0</property>
                               <property name="digits">0</property>
+                              <layout>
+                                <property name="row">2</property>
+                                <property name="column">2</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">2</property>
@@ -419,6 +443,10 @@ Author: Steeve McCauley
                               <property name="margin-top">5</property>
                               <property name="adjustment">adjust_hours</property>
                               <!--<signal name="value-changed" handler="on_spin_hours_value_changed" swapped="no"/>-->
+                              <layout>
+                                <property name="row">0</property>
+                                <property name="column">0</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">0</property>
@@ -433,6 +461,10 @@ Author: Steeve McCauley
                               <property name="text" translatable="yes">1</property>
                               <property name="adjustment">adjust_mins</property>
                               <property name="value">1</property>
+                              <layout>
+                                <property name="row">1</property>
+                                <property name="column">0</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">0</property>
@@ -445,6 +477,10 @@ Author: Steeve McCauley
                               <property name="can-focus">True</property>
                               <property name="text" translatable="yes">0</property>
                               <property name="adjustment">adjust_secs</property>
+                              <layout>
+                                <property name="row">2</property>
+                                <property name="column">0</property>
+                              </layout>
                             </object>
                             <!--<packing>
                               <property name="left-attach">0</property>
@@ -716,6 +752,10 @@ Author: Steeve McCauley
                       <property name="receives-default">False</property>
                       <property name="tooltip-text" translatable="yes" context="save-quick-timers-tooltip">If selected, quick timers are also saved</property>
                       <!--<property name="draw-indicator">True</property>-->
+                      <layout>
+                        <property name="row">3</property>
+                        <property name="column">1</property>
+                      </layout>
                     </object>
                     <!--<packing>
                       <property name="left-attach">1</property>
@@ -844,6 +884,10 @@ Author: Steeve McCauley
                           <property name="can-focus">True</property>
                           <property name="receives-default">True</property>
                           <property name="tooltip-text" translatable="yes" context="json_file_chooser_tooltip">Export timer settings, or import them into the program</property>
+                          <layout>
+                            <property name="row">1</property>
+                            <property name="column">0</property>
+                          </layout>
                         </object>
                         <!--<packing>
                           <property name="left-attach">0</property>
@@ -888,6 +932,10 @@ Author: Steeve McCauley
                           <style>
                             <class name="linked"/>
                           </style>
+                          <layout>
+                            <property name="row">0</property>
+                            <property name="column">0</property>
+                          </layout>
                         </object>
                         <!--<packing>
                           <property name="left-attach">0</property>
@@ -904,12 +952,20 @@ Author: Steeve McCauley
                           <property name="wrap">True</property>
                           <property name="ellipsize">middle</property>
                           <property name="lines">4</property>
+                          <layout>
+                            <property name="row">0</property>
+                            <property name="column">2</property>
+                          </layout>
                         </object>
                         <!--<packing>
                           <property name="left-attach">0</property>
                           <property name="top-attach">2</property>
                         </packing>-->
                       </child>
+                      <layout>
+                        <property name="row">6</property>
+                        <property name="column">0</property>
+                      </layout>
                     </object>
                     <!--<packing>
                       <property name="left-attach">0</property>
@@ -996,6 +1052,10 @@ Author: Steeve McCauley
                       <property name="halign">start</property>
                       <property name="margin-start">25</property>
                       <property name="label" translatable="yes" context="path_to_sound_file">Sound file</property>
+                      <layout>
+                        <property name="row">1</property>
+                        <property name="column">0</property>
+                      </layout>
                     </object>
                     <!--<packing>
                       <property name="left-attach">0</property>
@@ -1014,6 +1074,10 @@ Author: Steeve McCauley
                           <property name="can-focus">True</property>
                           <property name="receives-default">False</property>
                           <!--<property name="draw-indicator">True</property>-->
+                          <layout>
+                            <property name="row">0</property>
+                            <property name="column">0</property>
+                          </layout>
                         </object>
                         <!--<packing>
                           <property name="left-attach">0</property>
@@ -1031,6 +1095,10 @@ Author: Steeve McCauley
                           <property name="adjustment">volume_threshold_percent</property>
                           <property name="numeric">True</property>
                           <property name="value">25</property>
+                          <layout>
+                            <property name="row">0</property>
+                            <property name="column">1</property>
+                          </layout>
                         </object>
                         <!--<packing>
                           <property name="left-attach">1</property>
@@ -1044,6 +1112,10 @@ Author: Steeve McCauley
                           <property name="can-focus">True</property>
                           <property name="receives-default">False</property>
                           <!--<property name="draw-indicator">True</property>-->
+                          <layout>
+                            <property name="row">1</property>
+                            <property name="column">0</property>
+                          </layout>
                         </object>
                         <!--<packing>
                           <property name="left-attach">0</property>
@@ -1061,6 +1133,10 @@ Author: Steeve McCauley
                           <property name="adjustment">sound_loops_adjustment</property>
                           <property name="numeric">True</property>
                           <property name="value">2</property>
+                          <layout>
+                            <property name="row">1</property>
+                            <property name="column">1</property>
+                          </layout>
                           <!--<signal name="value-changed" handler="on_sound_loops_spin_value_changed" swapped="no"/>-->
                         </object>
                         <!--<packing>
@@ -1068,6 +1144,10 @@ Author: Steeve McCauley
                           <property name="top-attach">1</property>
                         </packing>-->
                       </child>
+                      <layout>
+                        <property name="row">0</property>
+                        <property name="column">0</property>
+                      </layout>
                     </object>
                     <!--<packing>
                       <property name="left-attach">0</property>

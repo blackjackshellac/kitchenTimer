@@ -31,6 +31,10 @@ const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
 const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
 
+const Config = imports.misc.config;
+const [major] = Config.PACKAGE_VERSION.split('.');
+const shellVersion = Number.parseInt(major);
+
 const Model = {
   NAME: 0,
   ID: 1,
