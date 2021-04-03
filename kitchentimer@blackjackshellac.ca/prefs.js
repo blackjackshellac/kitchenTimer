@@ -335,8 +335,8 @@ class PreferencesBuilder {
           }
         });
 
-        this._timer_icon_count = 0;
 /**
+        this._timer_icon_count = 0;
         this.timer_icon.connect('button-press-event', () => {
           if (this._timer_icon_count == 5) {
             var cmd = Me.path+"/bin/dconf-editor.sh";
@@ -366,6 +366,18 @@ class PreferencesBuilder {
           this._settings.inhibit = val;
         });
         this.inhibit.set_active(this._settings.inhibit > 0);
+
+		var picture = Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg");
+		//picture.set_can_shrink(true);
+		//picture.set_keep_aspect_ratio(true);
+		//picture.set_hexpand(false);
+		//picture.set_vexpand(false);
+		//picture.set_size_request(48,48);
+		this._bo('link_blackjackshellac').set_child(picture);
+		this.timer_icon.prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
+		this._bo('link_bmac').set_child(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/bmc_logo_wordmark.svg"));
+
+		this._bo('img_timer_box').prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
 
         this._bind();
 
