@@ -151,6 +151,7 @@ Author: Steeve McCauley
             <property name="margin-end">10</property>
             <property name="margin-top">10</property>
             <property name="margin-bottom">10</property>
+            <property name="hhomogeneous">True</property>
             <property name="transition-type">crossfade</property>
             <child>
               <object class="GtkStackPage"><!-- timers -->
@@ -181,7 +182,6 @@ Author: Steeve McCauley
                             <object class="GtkBox">
                               <property name="visible">True</property>
                               <property name="can-focus">False</property>
-                              <property name="orientation">vertical</property>
                               <child>
                                 <object class="GtkToggleButton" id="preset_radio">
                                   <property name="label" translatable="yes" context="preset_radio">Preset timers</property>
@@ -222,6 +222,7 @@ Author: Steeve McCauley
                               </style>
                             </object>
                           </child>
+                          <!--
                           <child type="label">
                             <object class="GtkLabel">
                               <property name="visible">True</property>
@@ -230,6 +231,7 @@ Author: Steeve McCauley
                               <property name="label" translatable="yes">Timer types</property>
                             </object>
                           </child>
+                          -->
                         <!-- </object> GtkFrame -->
                         <!--<packing>
                           <property name="expand">False</property>
@@ -906,6 +908,7 @@ Author: Steeve McCauley
                       <property name="can-focus">False</property>
                       <property name="halign">center</property>
                       <property name="margin-top">10</property>
+                      <!--
                       <child>
                         <object class="GtkButton" id="json_file_chooser_button">
                           <property name="label" translatable="yes" context="json_file_chooser_button">Settings…</property>
@@ -918,22 +921,22 @@ Author: Steeve McCauley
                             <property name="column">0</property>
                           </layout>
                         </object>
-                        <!--<packing>
+                        <packing>
                           <property name="left-attach">0</property>
                           <property name="top-attach">1</property>
-                        </packing>-->
+                        </packing>
                       </child>
+                      -->
                       <child>
                         <object class="GtkBox">
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
                           <child>
-                            <object class="GtkToggleButton" id="export_settings_radio">
+                            <object class="GtkButton" id="export_settings">
                               <property name="label" translatable="yes" context="export-settings-radio">Export</property>
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
                               <!--<property name="receives-default">False</property>-->
-                              <property name="active">True</property>
                               <!--<property name="draw-indicator">True</property>-->
                             </object>
                             <!--<packing>
@@ -943,14 +946,12 @@ Author: Steeve McCauley
                             </packing>-->
                           </child>
                           <child>
-                            <object class="GtkToggleButton" id="import_settings_radio">
+                            <object class="GtkButton" id="import_settings">
                               <property name="label" translatable="yes" context="import-settings-radio">Import</property>
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
                               <!--<property name="receives-default">False</property>-->
-                              <property name="active">0</property>
                               <!--<property name="draw-indicator">True</property>-->
-                              <property name="group">export_settings_radio</property>
                             </object>
                             <!--<packing>
                               <property name="expand">False</property>
@@ -958,9 +959,6 @@ Author: Steeve McCauley
                               <property name="position">1</property>
                             </packing>-->
                           </child>
-                          <style>
-                            <class name="linked"/>
-                          </style>
                           <layout>
                             <property name="row">0</property>
                             <property name="column">0</property>
@@ -982,8 +980,8 @@ Author: Steeve McCauley
                           <property name="ellipsize">middle</property>
                           <property name="lines">4</property>
                           <layout>
-                            <property name="row">0</property>
-                            <property name="column">2</property>
+                            <property name="row">2</property>
+                            <property name="column">0</property>
                           </layout>
                         </object>
                         <!--<packing>

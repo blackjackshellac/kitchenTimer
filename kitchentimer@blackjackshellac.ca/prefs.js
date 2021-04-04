@@ -348,6 +348,8 @@ class PreferencesBuilder {
           }
         });
 */
+
+			/**
         this._json_file_chooser_button = this._bo('json_file_chooser_button');
         this._json_file_chooser_button.connect('clicked', (button) => {
           if (this._bo('export_settings_radio').get_active()) {
@@ -356,6 +358,16 @@ class PreferencesBuilder {
             this.import_settings();
           }
         });
+			*/
+
+
+			this._bo('export_settings').connect('clicked', (button) => {
+				this.export_settings();
+			});
+
+			this._bo('import_settings').connect('clicked', (button) => {
+				this.import_settings();
+			});
 
         this.inhibit = this._bo('inhibit');
         this.inhibit.connect('toggled', (check) => {
@@ -449,7 +461,7 @@ class PreferencesBuilder {
       var file_dialog = new Gtk.FileChooserDialog( {
         title: _("Export"),
         action: Gtk.FileChooserAction.SAVE,
-        local_only: false,
+        //local_only: false,
         create_folders: true
       });
 
@@ -461,10 +473,10 @@ class PreferencesBuilder {
 
       this.logger.debug("json file=%s", settings_json);
       file_dialog.set_filter(this._bo('json_files_filter'));
-      file_dialog.set_current_folder(Me.path);
+      file_dialog.set_current_folder(Gio.File.new_for_path(Me.path));
       file_dialog.set_current_name(settings_json);
       file_dialog.title = _("Export");
-      file_dialog.set_do_overwrite_confirmation(true);
+      //file_dialog.set_do_overwrite_confirmation(true);
       file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
       file_dialog.add_button('Export', Gtk.ResponseType.OK);
       this.logger.debug("action=%s", ""+file_dialog.get_action());
@@ -474,14 +486,12 @@ class PreferencesBuilder {
            // outputs "-5"
             this.logger.debug("response_id=%d", response_id);
 
-            var filename = dialog.get_filename();
+            var file = dialog.get_file();
 
-            this.logger.debug(filename);
+            this.logger.debug(file.get_path());
 
             var json = this._settings.export_json();
             //this.logger.debug("json=%s", json);
-
-            var file = Gio.File.new_for_path(filename);
 
             file.replace_contents_bytes_async(
                 new GLib.Bytes(json),
@@ -494,13 +504,16 @@ class PreferencesBuilder {
                 (file, res) => {
                     try {
                         file.replace_contents_finish(res);
-                        this._bo('import_export_msg').set_text(_("Exported settings to %s".format(filename)));
+                        this._bo('import_export_msg').set_text(_("Exported settings to %s".format(file.get_path())));
                     } catch (e) {
-                        this.logger.debug("Failed to export settings to %s: %s", filename, e);
+                        this.logger.debug("Failed to export settings to %s: %s", file.get_path, e);
                     }
                 }
             );
-         }
+        } else {
+					this.logger.debug("response_id not handled: %d", response_id);
+				}
+
 
         // destroy the dialog regardless of the response when we're done.
         dialog.destroy();
@@ -513,7 +526,7 @@ class PreferencesBuilder {
       // import/export settings
       var file_dialog = new Gtk.FileChooserDialog( {
         action: Gtk.FileChooserAction.OPEN,
-        local_only: false,
+        //local_only: false,
         create_folders: true
       });
 
@@ -525,10 +538,10 @@ class PreferencesBuilder {
 
       this.logger.debug("json file=%s", settings_json);
       file_dialog.set_filter(this._bo('json_files_filter'));
-      file_dialog.set_current_folder(Me.path);
+      file_dialog.set_current_folder(Gio.File.new_for_path(Me.path));
       file_dialog.set_current_name(settings_json);
       file_dialog.title = _("Import");
-      file_dialog.set_do_overwrite_confirmation(true);
+      //file_dialog.set_do_overwrite_confirmation(true);
       file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
       file_dialog.add_button('Import', Gtk.ResponseType.OK);
       this.logger.debug("action=%s", ""+file_dialog.get_action());
@@ -538,11 +551,9 @@ class PreferencesBuilder {
             // outputs "-5"
             this.logger.debug("response_id=%d", response_id);
 
-            var filename = dialog.get_filename();
+            var file = dialog.get_file();
 
-            this.logger.debug(filename);
-
-            var file = Gio.File.new_for_path(filename);
+            this.logger.debug(file.get_path());
 
             file.read_async(GLib.PRIORITY_DEFAULT, null, (file, res) => {
               try {
@@ -552,7 +563,7 @@ class PreferencesBuilder {
                 var json = ByteArray.toString(data);
                 //this.logger.debug("json=%s", json);
                 this._settings.import_json(json);
-                this._bo('import_export_msg').set_text(_("Imported settings from %s".format(filename)));
+                this._bo('import_export_msg').set_text(_("Imported settings from %s".format(file.get_path())));
               } catch(e) {
                 logError(e, "Failed to read kitchen timer settings import file");
               }
