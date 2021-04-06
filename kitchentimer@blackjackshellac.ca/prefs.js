@@ -93,7 +93,8 @@ class PreferencesBuilder {
 
         this.timers_liststore = this._bo('timers_liststore');
         this.timers_combo = this._bo('timers_combo');
-        this.timers_combo_entry = this._bo('timers_combo_entry');
+        this.timers_combo_entry = this.timers_combo.get_child(); // this._bo('timers_combo_entry');
+
         //let entry_name = this._bo('entry_name');
         this.spin_hours = this._bo('spin_hours');
         this.spin_mins = this._bo('spin_mins');
@@ -211,17 +212,37 @@ class PreferencesBuilder {
         this._populate_liststore();
 
         this.timers_combo.connect('changed', (combo) => {
+
           var [ ok, iter ] = combo.get_active_iter();
           if (ok) {
             var model = combo.get_model();
             var name = model.get_value(iter, Model.NAME);
             var entry = this.timers_combo_entry.get_text();
-            this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
-            if (this.allow_updates) {
-              this._update_timers_tab_from_model(combo, entry);
-            }
+            this.logger.debug('combo changed: %s %s', name, entry);
+
+          } else {
+            this.logger.debug("No active combobox iter");
           }
         });
+
+        this.timers_combo_entry.connect('activate', (combo_entry) => {
+          var [ ok, iter ] = this.timers_combo.get_active_iter();
+          this.logger.debug(`Got activate ${ok}`);
+        });
+
+
+        // this.timers_combo.connect('changed', (combo) => {
+        //   var [ ok, iter ] = combo.get_active_iter();
+        //   if (ok) {
+        //     var model = combo.get_model();
+        //     var name = model.get_value(iter, Model.NAME);
+        //     var entry = this.timers_combo_entry.get_text();
+        //     this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
+        //     if (this.allow_updates) {
+        //       this._update_timers_tab_from_model(combo, entry);
+        //     }
+        //   }
+        // });
 
         this.spin_hours.connect('value-changed', (spin) => {
           if (this._update_active_liststore_from_tab()) {
@@ -247,34 +268,29 @@ class PreferencesBuilder {
           }
         });
 
-        this.timers_combo.connect('changed', (combo, child) => {
-          var [ ok, iter ] = combo.get_active_iter();
-          this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
-          iter = ok ? iter : this._iter;
-          if (child == null) {
-            this.allow_updates=false;
-            var entry = this.timers_combo_entry.get_text();
-            this.logger.debug(`child lost focus, entry=${entry}`);
-            this._update_combo_model_entry(combo, iter, entry);
-            combo.set_active_iter(iter);
+        // this.timers_combo.connect('changed', (combo, child) => {
+        //   var [ ok, iter ] = combo.get_active_iter();
+        //   this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
+        //   iter = ok ? iter : this._iter;
+        //   if (iter && child == null) {
+        //     this.allow_updates=false;
+        //     var entry = this.timers_combo_entry.get_text();
+        //     this.logger.debug(`child lost focus, entry=${entry}`);
+        //     this._update_combo_model_entry(combo, iter, entry);
+        //     combo.set_active_iter(iter);
             //this.timers_liststore.set_value(iter, Model.NAME, this.timers_combo_entry.get_text());
-            this.allow_updates=true;
-            if (this._update_active_liststore_from_tab()) {
-              this._save_liststore();
-            }
-          } else if (ok) {
-            this.logger.debug('combox box iter saved');
-            this._iter = iter;
-          } else {
-            this.logger.debug('combo box does not have an active iter: current='+this._iter);
-          }
+        //     this.allow_updates=true;
+        //     if (this._update_active_liststore_from_tab()) {
+        //       this._save_liststore();
+        //     }
+        //   } else if (ok) {
+        //     this.logger.debug('combox box iter saved');
+        //     this._iter = iter;
+        //   } else {
+        //     this.logger.debug('combo box does not have an active iter: current='+this._iter);
+        //   }
 
-        });
-
-        this.timers_combo_entry.connect('activate', (combo_entry) => {
-          var [ ok, iter ] = this.timers_combo.get_active_iter();
-          this.logger.debug(`Got activate ${ok}`);
-        });
+        // });
 
         //this._current_iter = undefined;
         this.timers_remove.connect('clicked', () => {
@@ -694,7 +710,7 @@ class PreferencesBuilder {
         return true;
       }
       [ ok, iter ] = timers_combo.get_active_iter();
-      if (ok && iter) {
+      if (ok) {
         this.allow_updates = false;
         var name = model.get_value(iter, Model.NAME);
         if (entry !== undefined && entry !== name) {
