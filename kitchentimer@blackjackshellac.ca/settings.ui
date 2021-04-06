@@ -272,7 +272,6 @@ Author: Steeve McCauley
                               <property name="margin-bottom">5</property>
                               <property name="model">timers_liststore</property>
                               <property name="has-entry">True</property>
-                              <property name="has-frame">True</property>
                               <property name="entry-text-column">0</property>
                               <child internal-child="entry">
                                 <object class="GtkEntry">
@@ -281,7 +280,6 @@ Author: Steeve McCauley
                                   <property name="placeholder-text" translatable="yes" context="timers-combo-entry">Timer name</property>
                                   <property name="show-emoji-icon">True</property>
                                   <property name="editable">True</property>
-                                  <property name="activates-default">True</property>
                                 </object>
                               </child>
                             </object>
@@ -295,7 +293,9 @@ Author: Steeve McCauley
                             <object class="GtkButton" id="timers_add">
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
-                              <property name="receives-default">True</property>
+                              <property name="receives-default">False</property>
+                              <property name="margin-top">5</property>
+                              <property name="margin-bottom">5</property>
                               <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
                               <property name="icon-name">img_add</property>
                               <!--<property name="always-show-image">True</property>-->
@@ -318,7 +318,9 @@ Author: Steeve McCauley
                             <object class="GtkButton" id="timers_remove">
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
-                              <property name="receives-default">True</property>
+                              <property name="receives-default">False</property>
+                              <property name="margin-top">5</property>
+                              <property name="margin-bottom">5</property>
                               <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
                               <!--<property name="icon-name">img_remove</property>-->
                               <child>
@@ -375,6 +377,8 @@ Author: Steeve McCauley
                               <property name="visible">True</property>
                               <property name="can-focus">False</property>
                               <property name="halign">start</property>
+                              <property name="margin-top">5</property>
+                              <property name="margin-start">5</property>
                               <property name="label" translatable="yes" context="label-hour">Hours</property>
                               <layout>
                                 <property name="row">0</property>
@@ -390,6 +394,8 @@ Author: Steeve McCauley
                             <object class="GtkLabel">
                               <property name="visible">True</property>
                               <property name="can-focus">False</property>
+                              <property name="margin-top">5</property>
+                              <property name="margin-start">5</property>
                               <property name="halign">start</property>
                               <property name="label" translatable="yes" context="label-minutes">Minutes        </property>
                               <layout>
@@ -408,6 +414,8 @@ Author: Steeve McCauley
                               <property name="can-focus">False</property>
                               <property name="halign">start</property>
                               <property name="label" translatable="yes" context="label-seconds">Seconds</property>
+                              <property name="margin-top">5</property>
+                              <property name="margin-start">5</property>
                               <layout>
                                 <property name="row">2</property>
                                 <property name="column">1</property>

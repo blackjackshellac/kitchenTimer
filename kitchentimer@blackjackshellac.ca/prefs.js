@@ -212,16 +212,22 @@ class PreferencesBuilder {
         this._populate_liststore();
 
         this.timers_combo.connect('changed', (combo) => {
+          let model = combo.get_model();
+          let entry = combo.get_child().get_text();
 
           var [ ok, iter ] = combo.get_active_iter();
           if (ok) {
-            var model = combo.get_model();
-            var name = model.get_value(iter, Model.NAME);
-            var entry = this.timers_combo_entry.get_text();
-            this.logger.debug('combo changed: %s %s', name, entry);
+            this._iter = iter;
 
+            var name = model.get_value(iter, Model.NAME);
+            this.logger.debug('combo changed active: %s %s', name, entry);
+            this._update_timers_tab_from_model(combo, entry);
+          } else if (this._iter) {
+            // editing entry when get_active_iter is not 'ok'?
+            this.logger.debug('combo changed entry: %s %s', name, entry);
+            this._update_combo_model_entry(combo, this._iter, entry);
           } else {
-            this.logger.debug("No active combobox iter");
+            this.logger.debug("combo changed: active iter unknown");
           }
         });
 
@@ -420,6 +426,7 @@ class PreferencesBuilder {
         return (a.duration-b.duration);
       });
 
+      this._iter = undefined;
       this.timers_liststore.clear();
       timer_settings.forEach( (timer) => {
         var iter = this.timers_liststore.append();
@@ -433,6 +440,11 @@ class PreferencesBuilder {
       });
 
       this.timers_combo.set_active(0);
+      let [ ok, iter ] = this.timers_combo.get_active_iter();
+      if (ok) {
+        this.logger.debug("Populate active iter %s", iter);
+        this._iter = iter;
+      }
       this._update_timers_tab_from_model(this.timers_combo);
     }
 
@@ -610,6 +622,10 @@ class PreferencesBuilder {
         return false;
       }
       var [ ok, iter ] = this.timers_combo.get_active_iter();
+      if (!ok && this._iter) {
+        iter = this._iter;
+        ok = true;
+      }
       if (ok) {
           this.allow_updates = false;
           var model = this.timers_combo.get_model();
