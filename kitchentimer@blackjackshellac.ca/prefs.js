@@ -70,26 +70,11 @@ class PreferencesBuilder {
         this._bo('version').set_text("Version "+Me.metadata.version);
         this._bo('description').set_text(Me.metadata.description);
 
-		/*
-        let file_chooser = this._bo('sound_path');
-
-        if (file_chooser.current_folder == undefined) {
-          file_chooser.current_folder = Me.path;
-        }
-        this.logger.debug("file chooser dir="+file_chooser.current_folder);
-        let sound_file = this._settings.sound_file;
-        if (GLib.basename(sound_file) == sound_file) {
-          sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
-        }
-        this.logger.debug("sound_file="+sound_file);
-        file_chooser.set_filename(sound_file);
-
-        file_chooser.connect('file-set', (user_data) => {
-          this.logger.debug("file-set happened: "+user_data.get_filename());
-          this.logger.debug(Object.getOwnPropertyNames(user_data));
-          this._settings.sound_file = user_data.get_filename();
+        this._bo('sound_path').connect('clicked', (btn) => {
+          this.sound_file_chooser();
         });
-		*/
+
+        this._bo('label_sound_file').set_label(GLib.basename(this._settings.sound_file));
 
         this.timers_liststore = this._bo('timers_liststore');
         this.timers_combo = this._bo('timers_combo');
@@ -231,24 +216,11 @@ class PreferencesBuilder {
           }
         });
 
+        // use to capture Enter
         this.timers_combo_entry.connect('activate', (combo_entry) => {
           var [ ok, iter ] = this.timers_combo.get_active_iter();
           this.logger.debug(`Got activate ${ok}`);
         });
-
-
-        // this.timers_combo.connect('changed', (combo) => {
-        //   var [ ok, iter ] = combo.get_active_iter();
-        //   if (ok) {
-        //     var model = combo.get_model();
-        //     var name = model.get_value(iter, Model.NAME);
-        //     var entry = this.timers_combo_entry.get_text();
-        //     this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
-        //     if (this.allow_updates) {
-        //       this._update_timers_tab_from_model(combo, entry);
-        //     }
-        //   }
-        // });
 
         this.spin_hours.connect('value-changed', (spin) => {
           if (this._update_active_liststore_from_tab()) {
@@ -273,30 +245,6 @@ class PreferencesBuilder {
             this._save_liststore();
           }
         });
-
-        // this.timers_combo.connect('changed', (combo, child) => {
-        //   var [ ok, iter ] = combo.get_active_iter();
-        //   this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
-        //   iter = ok ? iter : this._iter;
-        //   if (iter && child == null) {
-        //     this.allow_updates=false;
-        //     var entry = this.timers_combo_entry.get_text();
-        //     this.logger.debug(`child lost focus, entry=${entry}`);
-        //     this._update_combo_model_entry(combo, iter, entry);
-        //     combo.set_active_iter(iter);
-            //this.timers_liststore.set_value(iter, Model.NAME, this.timers_combo_entry.get_text());
-        //     this.allow_updates=true;
-        //     if (this._update_active_liststore_from_tab()) {
-        //       this._save_liststore();
-        //     }
-        //   } else if (ok) {
-        //     this.logger.debug('combox box iter saved');
-        //     this._iter = iter;
-        //   } else {
-        //     this.logger.debug('combo box does not have an active iter: current='+this._iter);
-        //   }
-
-        // });
 
         //this._current_iter = undefined;
         this.timers_remove.connect('clicked', () => {
@@ -371,18 +319,6 @@ class PreferencesBuilder {
         });
 */
 
-			/**
-        this._json_file_chooser_button = this._bo('json_file_chooser_button');
-        this._json_file_chooser_button.connect('clicked', (button) => {
-          if (this._bo('export_settings_radio').get_active()) {
-            this.export_settings();
-          } else {
-            this.import_settings();
-          }
-        });
-			*/
-
-
 			this._bo('export_settings').connect('clicked', (button) => {
 				this.export_settings();
 			});
@@ -401,17 +337,17 @@ class PreferencesBuilder {
         });
         this.inhibit.set_active(this._settings.inhibit > 0);
 
-		var picture = Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg");
-		//picture.set_can_shrink(true);
-		//picture.set_keep_aspect_ratio(true);
-		//picture.set_hexpand(false);
-		//picture.set_vexpand(false);
-		//picture.set_size_request(48,48);
-		this._bo('link_blackjackshellac').set_child(picture);
-		this.timer_icon.prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
-		this._bo('link_bmac').set_child(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/bmc_logo_wordmark.svg"));
+		    var picture = Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg");
+		    //picture.set_can_shrink(true);
+		    //picture.set_keep_aspect_ratio(true);
+		    //picture.set_hexpand(false);
+		    //picture.set_vexpand(false);
+		    //picture.set_size_request(48,48);
+		    this._bo('link_blackjackshellac').set_child(picture);
+		    this.timer_icon.prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
+		    this._bo('link_bmac').set_child(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/bmc_logo_wordmark.svg"));
 
-		this._bo('img_timer_box').prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
+		    this._bo('img_timer_box').prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
 
         this._bind();
 
@@ -481,6 +417,53 @@ class PreferencesBuilder {
         }
       }
 
+    }
+
+    sound_file_chooser() {
+      // import/export settings
+      var file_dialog = new Gtk.FileChooserDialog( {
+        action: Gtk.FileChooserAction.OPEN,
+        //local_only: false,
+        create_folders: true
+      });
+
+      if (file_dialog.current_folder == undefined) {
+         file_dialog.current_folder = Me.path;
+      }
+
+      let sound_file = this._settings.sound_file;
+      if (GLib.basename(sound_file) == sound_file) {
+        sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
+      }
+      this.logger.debug("sound_file="+sound_file);
+
+      file_dialog.set_filter(this._bo('audio_files_filter'));
+      file_dialog.set_current_folder(Gio.File.new_for_path(Me.path));
+      file_dialog.set_current_name(sound_file);
+      file_dialog.title = _("Sound file");
+      //file_dialog.set_do_overwrite_confirmation(true);
+      file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+      file_dialog.add_button('Open', Gtk.ResponseType.OK);
+      this.logger.debug("action=%s", ""+file_dialog.get_action());
+
+      file_dialog.connect('response', (dialog, response_id) => {
+        if (response_id === Gtk.ResponseType.OK) {
+            // outputs "-5"
+            this.logger.debug("response_id=%d", response_id);
+
+            var sound_file = dialog.get_file().get_path();
+
+            this.logger.debug("Selected sound file %s", sound_file);
+
+            this._settings.sound_file = sound_file;
+            this._bo('label_sound_file').set_label(GLib.basename(sound_file));
+        }
+
+        // destroy the dialog regardless of the response when we're done.
+        dialog.destroy();
+      });
+
+      file_dialog.show();
     }
 
     // https://stackoverflow.com/questions/54487052/how-do-i-add-a-save-button-to-the-gtk-filechooser-dialog

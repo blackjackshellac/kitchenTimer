@@ -1071,6 +1071,17 @@ Author: Steeve McCauley
                   <property name="margin-end">20</property>
                   <property name="row-spacing">5</property>
                   <child>
+                    <object class="GtkButton" id="sound_path">
+                      <property name="label" translatable="yes" context="sound_file">Sound file</property>
+                      <property name="tooltip-text" translatable="yes" context="sound_file_tooltip">Timer notification sound file</property>                      <property name="visible">True</property>
+                      <property name="can-focus">True</property>
+                      <!--<property name="receives-default">False</property>-->
+                      <!--<property name="draw-indicator">True</property>-->
+                      <layout>
+                        <property name="row">1</property>
+                        <property name="column">0</property>
+                      </layout>
+                    </object>
                   <!--<object class="GtkFileChooserButton" id="sound_path">
                       <property name="visible">True</property>
                       <property name="can-focus">True</property>
@@ -1086,6 +1097,20 @@ Author: Steeve McCauley
                     </packing>-->
                   </child>
                   <child>
+                    <object class="GtkLabel" id='label_sound_file'>
+                      <property name="visible">True</property>
+                      <property name="can-focus">False</property>
+                      <property name="halign">start</property>
+                      <property name="label"></property>
+                      <layout>
+                        <property name="row">2</property>
+                        <property name="column">0</property>
+                      </layout>
+                    </object>
+                  </child>
+
+                  <!--
+                  <child>
                     <object class="GtkLabel">
                       <property name="visible">True</property>
                       <property name="can-focus">False</property>
@@ -1097,11 +1122,12 @@ Author: Steeve McCauley
                         <property name="column">0</property>
                       </layout>
                     </object>
-                    <!--<packing>
+                    <packing>
                       <property name="left-attach">0</property>
                       <property name="top-attach">1</property>
-                    </packing>-->
+                    </packing>
                   </child>
+                  -->
                   <child>
                     <!-- n-columns=2 n-rows=2 -->
                     <object class="GtkGrid">
