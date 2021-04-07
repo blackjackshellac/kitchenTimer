@@ -2,6 +2,8 @@
 
 [Gnome shell kitchen timer extension](https://extensions.gnome.org/extension/3955/kitchen-timer/) with the ability to run multiple simultaneous timers.
 
+[Gnome shell 40 branch](https://github.com/blackjackshellac/kitchenTimer/tree/gnome40) that supports gtk4 and gnome shell 40 preview
+
 ## Installation
 
 Clone the repository and then run install_local.sh
