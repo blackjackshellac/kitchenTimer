@@ -986,8 +986,8 @@ Author: Steeve McCauley
                         <object class="GtkLabel" id="import_export_msg">
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
-                          <property name="margin-start">20</property>
-                          <property name="margin-end">20</property>
+                          <property name="margin-start">0</property>
+                          <property name="margin-end">0</property>
                           <property name="justify">center</property>
                           <property name="wrap">True</property>
                           <property name="ellipsize">middle</property>
@@ -995,6 +995,7 @@ Author: Steeve McCauley
                           <layout>
                             <property name="row">2</property>
                             <property name="column">0</property>
+                            <!-- <property name="column-span">2</property> -->
                           </layout>
                         </object>
                         <!--<packing>
@@ -1260,8 +1261,8 @@ Author: Steeve McCauley
                         <object class="GtkLabel">
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
-                          <property name="label" translatable="yes">Kitchen Timer</property>
-                          <property name="justify">center</property>
+                          <property name="label">Kitchen Timer</property>
+                          <property name="halign">center</property>
                           <attributes>
                             <attribute name="font-desc" value="Sans 10"/>
                             <attribute name="style" value="normal"/>
@@ -1280,7 +1281,8 @@ Author: Steeve McCauley
                         <object class="GtkLabel" id="description">
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
-                          <property name="label">description</property>
+                          <property name="label"></property>
+                          <property name="halign">center</property>
                           <attributes>
                             <attribute name="scale" value="1.2"/>
                           </attributes>
@@ -1293,21 +1295,21 @@ Author: Steeve McCauley
                       </child>
                       <child>
                         <!--<object class="GtkEventBox" id="timer_icon">-->
-                        <object class="GtkBox" id="timer_icon">
+                        <object class="GtkButton" id="timer_icon_button">
                           <property name="visible">True</property>
                           <property name="can-focus">True</property>
+                          <property name='has-frame'>False</property>
                           <property name="halign">center</property>
-                          <!--
                           <child>
-                            <object class="GtkImage">
+                            <object class="GtkImage" id='timer_icon'>
                               <property name="visible">True</property>
                               <property name="can-focus">False</property>
-                              <property name="margin-top">5</property>
-                              <property name="margin-bottom">5</property>
-                              <property name="file">icons/kitchen-timer-blackjackshellac-full.svg</property>
+                              <property name="margin-top">0</property>
+                              <property name="margin-bottom">0</property>
+                              <property name="icon-name">kitchen-timer-blackjackshellac-full</property>
+                              <property name="icon-size">2</property>
                             </object>
                           </child>
-                          -->
                         </object>
                         <!--<packing>
                           <property name="expand">False</property>
@@ -1320,7 +1322,7 @@ Author: Steeve McCauley
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
                           <property name="label">Version</property>
-                          <property name="justify">center</property>
+                          <property name="halign">center</property>
                           <attributes>
                             <attribute name="scale" value="1.2"/>
                           </attributes>
@@ -1335,7 +1337,8 @@ Author: Steeve McCauley
                         <object class="GtkLabel" id="copyright">
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
-                          <property name="label" translatable="yes">Copyright © 2021, Steeve McCauley</property>
+                          <property name="label">Copyright © 2021, Steeve McCauley</property>
+                          <property name="halign">center</property>
                           <attributes>
                             <attribute name="weight" value="normal"/>
                             <attribute name="scale" value="0.90000000000000002"/>
@@ -1348,38 +1351,43 @@ Author: Steeve McCauley
                         </packing>-->
                       </child>
                       <child>
-                        <object class="GtkBox">
+                        <object class="GtkLinkButton" id="link_blackjackshellac">
+                          <property name="label" translatable="yes">https://github.com/blackjackshellac/kitchenTimer</property>
                           <property name="visible">True</property>
                           <property name="can-focus">True</property>
+                          <property name="receives-default">False</property>
+                          <!--<property name="icon-name">img_kitchentimer_symbolic</property>-->
+                          <!--<property name="always-show-image">True</property>-->
+                          <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>
+                          <property name="hexpand">0</property>
+                          <property name="vexpand">0</property>
+                          <property name='has-frame'>False</property>
                           <property name="halign">center</property>
                           <child>
-                            <object class="GtkLinkButton" id="link_blackjackshellac">
-                              <property name="label" translatable="yes">https://github.com/blackjackshellac/kitchenTimer</property>
+                            <object class="GtkImage">
                               <property name="visible">True</property>
-                              <property name="can-focus">True</property>
-                              <property name="receives-default">False</property>
-                              <!--<property name="icon-name">img_kitchentimer_symbolic</property>-->
-                              <!--<property name="always-show-image">True</property>-->
-                              <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>
-                              <property name="hexpand">0</property>
-                              <property name="vexpand">0</property>
-                              <!--
-                              <child>
-                                <object class="GtkPicture" id="img_kitchentimer_symbolic">
-                                  <property name="visible">True</property>
-                                  <property name="can-focus">False</property>
-                                  <property name="file">icons/kitchen-timer-blackjackshellac-symbolic.svg</property>
-                                </object>
-                              </child>
-                              -->
+                              <property name="can-focus">False</property>
+                              <property name="margin-top">0</property>
+                              <property name="margin-bottom">0</property>
+                              <property name="icon-name">kitchen-timer-blackjackshellac-full</property>
+                              <property name="icon-size">1</property>
                             </object>
-                            <!--<packing>
-                              <property name="expand">False</property>
-                              <property name="fill">True</property>
-                              <property name="position">5</property>
-                            </packing>-->
                           </child>
+                          <!--
+                          <child>
+                            <object class="GtkPicture" id="img_kitchentimer_symbolic">
+                              <property name="visible">True</property>
+                              <property name="can-focus">False</property>
+                              <property name="file">icons/kitchen-timer-blackjackshellac-symbolic.svg</property>
+                            </object>
+                          </child>
+                          -->
                         </object>
+                        <!--<packing>
+                          <property name="expand">False</property>
+                          <property name="fill">True</property>
+                          <property name="position">5</property>
+                        </packing>-->
                       </child>
                       <child>
                         <object class="GtkLabel">
@@ -1398,20 +1406,38 @@ Author: Steeve McCauley
                           <property name="position">6</property>
                         </packing>-->
                       </child>
+
                       <child>
                         <object class="GtkBox">
                           <property name="visible">True</property>
                           <property name="can-focus">True</property>
-                          <property name="halign">center</property>
+                          <property name="margin-start">5</property>
+                          <property name="margin-end">5</property>
+                          <property name="margin-top">5</property>
+                          <property name="orientation">vertical</property>
+
                           <child>
                             <object class="GtkLinkButton" id="link_bmac">
+                              <property name="label">www.buymeacoffee.com/blckjackshellac</property>
                               <property name="visible">True</property>
                               <property name="can-focus">True</property>
-                              <property name="receives-default">True</property>
-                              <property name="icon-name">img_bmac</property>
+                              <property name="receives-default">False</property>
+                              <property name="hexpand">True</property>
+                              <property name="vexpand">True</property>
+                              <!-- property name="icon-name">bmc_logo_wordmark</property-->
                               <!--<property name="relief">none</property>-->
                               <!--<property name="always-show-image">True</property>-->
                               <property name="uri">https://www.buymeacoffee.com/blckjackshellac</property>
+                              <!-- <child> -->
+                              <!--   <object class="GtkImage"> -->
+                              <!--     <property name="visible">True</property> -->
+                              <!--     <property name="can-focus">False</property> -->
+                              <!--     <property name="margin-top">0</property> -->
+                              <!--     <property name="margin-bottom">0</property> -->
+                              <!--     <property name="icon-name">bmc_logo_wordmark</property> -->
+                              <!--     <property name="icon-size">0</property> -->
+                              <!--   </object> -->
+                              <!-- </child> -->
                               <!--
                               <child>
                                 <object class="GtkImage" id="img_bmac">
@@ -1431,10 +1457,6 @@ Author: Steeve McCauley
                           </child>
                         </object>
                       </child>
-                    <!--<packing>
-                      <property name="left-attach">0</property>
-                      <property name="top-attach">0</property>
-                    </packing>-->
                   </object>
                 </child>
                 </object>

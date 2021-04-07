@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const { Gio, Gtk, GLib } = imports.gi;
+const { Gio, Gtk, Gdk, GLib } = imports.gi;
 const ByteArray = imports.byteArray;
 
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
@@ -50,6 +50,10 @@ class PreferencesBuilder {
         this._settings = new Settings();
         this._builder = new Gtk.Builder();
         this.logger = new Logger('kt prefs', this._settings);
+
+        let iconPath = Me.dir.get_child("icons").get_path();
+        let iconTheme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
+        iconTheme.add_search_path(iconPath);
     }
 
     show() {
@@ -91,7 +95,7 @@ class PreferencesBuilder {
         this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
         this.timer_enabled = this._bo('timer_enabled');
-        this.timer_icon = this._bo('timer_icon');
+        this.timer_icon_button = this._bo('timer_icon_button');
 
         this.tv_timers = this._bo('tv_timers');
         this.tvs_timers = this._bo('tvs_timers');
@@ -305,19 +309,18 @@ class PreferencesBuilder {
           }
         });
 
-/**
-        this._timer_icon_count = 0;
-        this.timer_icon.connect('button-press-event', () => {
-          if (this._timer_icon_count == 5) {
-            var cmd = Me.path+"/bin/dconf-editor.sh";
-            this.logger.debug(`cmd=${cmd}`);
-            Utils.spawn(cmd, undefined);
-            this._timer_icon_count = 0;
-          } else {
-            this._timer_icon_count++;
-          }
-        });
-*/
+
+      this._timer_icon_button_count = 0;
+      this.timer_icon_button.connect('clicked', (btn) => {
+        if (this._timer_icon_button_count == 1) {
+          var cmd = Me.path+"/bin/dconf-editor.sh";
+          this.logger.debug("cmd=%s", cmd);
+          Utils.spawn(cmd, undefined);
+          this._timer_icon_button_count = 0;
+        } else {
+          this._timer_icon_button_count++;
+        }
+      });
 
 			this._bo('export_settings').connect('clicked', (button) => {
 				this.export_settings();
@@ -337,17 +340,18 @@ class PreferencesBuilder {
         });
         this.inhibit.set_active(this._settings.inhibit > 0);
 
-		    var picture = Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg");
+		    //var picture = Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg");
 		    //picture.set_can_shrink(true);
 		    //picture.set_keep_aspect_ratio(true);
 		    //picture.set_hexpand(false);
 		    //picture.set_vexpand(false);
 		    //picture.set_size_request(48,48);
-		    this._bo('link_blackjackshellac').set_child(picture);
-		    this.timer_icon.prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
-		    this._bo('link_bmac').set_child(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/bmc_logo_wordmark.svg"));
+		    //this._bo('link_blackjackshellac').set_child(picture);
+		    //this.timer_icon.prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
+		    //this._bo('link_bmac').set_child(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/bmc_logo_wordmark.svg"));
 
-		    this._bo('img_timer_box').prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
+        let bmac = Gtk.Picture.new_for_filename(Me.dir.get_path()+'/icons/bmc_logo_wordmark.svg');
+        this._bo('link_bmac').set_child(bmac);
 
         this._bind();
 
