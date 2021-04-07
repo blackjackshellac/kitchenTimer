@@ -397,7 +397,7 @@ Author: Steeve McCauley
                               <property name="margin-top">5</property>
                               <property name="margin-start">5</property>
                               <property name="halign">start</property>
-                              <property name="label" translatable="yes" context="label-minutes">Minutes        </property>
+                              <property name="label" translatable="yes" context="label-minutes">Minutes</property>
                               <layout>
                                 <property name="row">1</property>
                                 <property name="column">1</property>
@@ -1393,7 +1393,7 @@ Author: Steeve McCauley
                         <object class="GtkLabel">
                           <property name="visible">True</property>
                           <property name="can-focus">False</property>
-                          <property name="label" translatable="yes">&lt;span size='smaller' style='italic'&gt;This program comes with absolutely no warranty.
+                          <property name="label">&lt;span size='smaller' style='italic'&gt;This program comes with absolutely no warranty.
   See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 License&lt;/a&gt; for details.&lt;/span&gt;</property>
                           <property name="use-markup">True</property>
                           <property name="justify">center</property>
