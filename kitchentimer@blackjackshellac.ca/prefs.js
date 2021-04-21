@@ -1,4 +1,4 @@
-/*
+  /*
  * Kitchen Timer: Gnome Shell Kitchen Timer Extension
  * Copyright (C) 2021 Steeve McCauley
  *
