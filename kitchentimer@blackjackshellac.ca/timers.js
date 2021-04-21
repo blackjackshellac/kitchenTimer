@@ -34,6 +34,7 @@ const Logger = Me.imports.logger.Logger;
 const HMS = Me.imports.hms.HMS;
 const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
 const SessionManagerInhibitor = Me.imports.inhibitor.SessionManagerInhibitor;
+const KeyboardShortcuts = Me.imports.keyboard_shortcuts.KeyboardShortcuts;
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 
@@ -46,7 +47,7 @@ var Timers = class Timers extends Array {
 
     this._settings = new Settings();
     this._attached = false;
-
+    this.accel = new KeyboardShortcuts(this.settings);
     this.logger = new Logger('kt timers', this.settings);
 
     this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
@@ -79,6 +80,15 @@ var Timers = class Timers extends Array {
 
     timersInstance.restoreRunningTimers();
 
+    timersInstance.settings.settings.connect('changed::accel-enable', () => {
+      timersInstance.logger.debug('accel-enable has changed');
+      timersInstance.toggle_keyboard_shortcuts();
+    });
+
+    if (timersInstance.settings.accel_enable) {
+      timersInstance.enable_keyboard_shortcuts();
+    }
+
     timersInstance.attached = true;
 
     return timersInstance;
@@ -88,6 +98,31 @@ var Timers = class Timers extends Array {
     timersInstance.logger.info("Detaching indicator from timers");
     timersInstance.attached = false;
     timersInstance.indicator = undefined;
+  }
+
+  toggle_keyboard_shortcuts() {
+    if (this.settings.accel_enable) {
+      this.enable_keyboard_shortcuts();
+    } else {
+      this.disable_keyboard_shortcuts();
+    }
+  }
+
+  enable_keyboard_shortcuts() {
+    this.accel.listenFor(this.settings.accel_show_endtime, () => {
+      let set=!this.settings.show_endtime;
+      this.logger.debug("Toggling show endtime to %s", set);
+      this.settings.show_endtime = set;
+    });
+
+    this.accel.listenFor(this.settings.accel_stop_next, () => {
+      this.stop_next();
+    });
+  }
+
+  disable_keyboard_shortcuts() {
+    this.accel.remove(this.settings.accel_show_endtime);
+    this.accel.remove(this.settings.accel_stop_next);
   }
 
   get indicator() {
