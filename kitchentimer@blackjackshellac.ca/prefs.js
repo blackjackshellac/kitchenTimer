@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const { Gio, Gtk, GLib } = imports.gi;
+const { Gio, Gtk, Gdk, GLib } = imports.gi;
 const ByteArray = imports.byteArray;
 
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
@@ -46,61 +46,86 @@ class PreferencesBuilder {
         this._settings = new Settings();
         this._builder = new Gtk.Builder();
         this.logger = new Logger('kt prefs', this._settings);
+
+        if (Utils.isGnome40()) {
+          let iconPath = Me.dir.get_child("icons").get_path();
+          let iconTheme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
+          iconTheme.add_search_path(iconPath);
+        }
     }
 
     show() {
-      this._widget.show_all();
+      if (Utils.isGnome3x()) {
+        this._widget.show_all();
+        this._bo('timer_box').hide();
+      }
       this.tv_timers.hide();
-      this._bo('timer_box').hide();
     }
 
     build() {
-        this._builder.add_from_file(Me.path + '/settings.ui');
-        this._settingsBox = this._builder.get_object('kitchenTimer_settings');
-
         this._viewport = new Gtk.Viewport();
-        this._viewport.add(this._settingsBox);
         this._widget = new Gtk.ScrolledWindow();
-        this._widget.add(this._viewport);
+
+        if (Utils.isGnome3x()) {
+          this._builder.add_from_file( GLib.build_filenamev( [Me.path, 'settings.ui']) );
+          this._kitchenTimer_settings = this._builder.get_object('kitchenTimer_settings');
+          this._viewport.add(this._kitchenTimer_settings);
+          this._widget.add(this._viewport);
+        } else {
+          this._builder.add_from_file( GLib.build_filenamev( [Me.path, 'settings40.ui']) );
+          this._kitchenTimer_settings = this._builder.get_object('kitchenTimer_settings');
+          this._viewport.set_child(this._kitchenTimer_settings);
+          this._widget.set_child(this._viewport);
+        }
 
         this._bo('version').set_text("Version "+Me.metadata.version);
         this._bo('description').set_text(Me.metadata.description);
 
-        let file_chooser = this._bo('sound_path');
-
-        if (file_chooser.current_folder == undefined) {
-          file_chooser.current_folder = Me.path;
-        }
-        this.logger.debug("file chooser dir="+file_chooser.current_folder);
-        let sound_file = this._settings.sound_file;
-        if (GLib.basename(sound_file) == sound_file) {
-          sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
-        }
-        this.logger.debug("sound_file="+sound_file);
-        file_chooser.set_filename(sound_file);
-
-        file_chooser.connect('file-set', (user_data) => {
-          this.logger.debug("file-set happened: "+user_data.get_filename());
-          this.logger.debug(Object.getOwnPropertyNames(user_data));
-          this._settings.sound_file = user_data.get_filename();
-        });
-
         this.timers_liststore = this._bo('timers_liststore');
         this.timers_combo = this._bo('timers_combo');
-        this.timers_combo_entry = this._bo('timers_combo_entry');
+        if (Utils.isGnome3x()) {
+          this.timers_combo_entry = this._bo('timers_combo_entry');
+          let file_chooser = this._bo('sound_path');
+
+          if (file_chooser.current_folder == undefined) {
+            file_chooser.current_folder = Me.path;
+          }
+          this.logger.debug("file chooser dir="+file_chooser.current_folder);
+          let sound_file = this._settings.sound_file;
+          if (GLib.basename(sound_file) == sound_file) {
+            sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
+          }
+          this.logger.debug("sound_file="+sound_file);
+          file_chooser.set_filename(sound_file);
+
+          file_chooser.connect('file-set', (user_data) => {
+            this.logger.debug("file-set happened: "+user_data.get_filename());
+            this.logger.debug(Object.getOwnPropertyNames(user_data));
+            this._settings.sound_file = user_data.get_filename();
+          });
+
+          this.timer_icon = this._bo('timer_icon');
+        } else {
+          this.timers_combo_entry = this.timers_combo.get_child(); // this._bo('timers_combo_entry');
+
+          this._bo('sound_path').connect('clicked', (btn) => {
+            this.sound_file_chooser();
+          });
+
+          this._bo('label_sound_file').set_label(GLib.basename(this._settings.sound_file));
+
+          this.timer_icon_button = this._bo('timer_icon_button');
+        }
+
         //let entry_name = this._bo('entry_name');
         this.spin_hours = this._bo('spin_hours');
         this.spin_mins = this._bo('spin_mins');
         this.spin_secs = this._bo('spin_secs');
 
-        //this.timers_apply = this._bo('timers_apply');
-        //this.preset_radio = this._bo('preset_radio');
         this.quick_radio = this._bo('quick_radio');
         this.timers_add = this._bo('timers_add');
         this.timers_remove = this._bo('timers_remove');
         this.timer_enabled = this._bo('timer_enabled');
-        this.timer_icon = this._bo('timer_icon');
-
         this.tv_timers = this._bo('tv_timers');
         this.tvs_timers = this._bo('tvs_timers');
 
@@ -204,18 +229,46 @@ class PreferencesBuilder {
         });
         this._populate_liststore();
 
-        this.timers_combo.connect('changed', (combo) => {
-          var [ ok, iter ] = combo.get_active_iter();
-          if (ok) {
-            var model = combo.get_model();
-            var name = model.get_value(iter, Model.NAME);
-            var entry = this.timers_combo_entry.get_text();
-            this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
-            if (this.allow_updates) {
-              this._update_timers_tab_from_model(combo, entry);
+        if (Utils.isGnome3x()) {
+          this.timers_combo.connect('changed', (combo) => {
+            var [ ok, iter ] = combo.get_active_iter();
+            if (ok) {
+              var model = combo.get_model();
+              var name = model.get_value(iter, Model.NAME);
+              var entry = this.timers_combo_entry.get_text();
+              this.logger.debug(`combo changed: ${name}:${entry} ${ok}`);
+              if (this.allow_updates) {
+                this._update_timers_tab_from_model(combo, entry);
+              }
             }
-          }
-        });
+          });
+        } else {
+          this.timers_combo.connect('changed', (combo) => {
+            let model = combo.get_model();
+            let entry = combo.get_child().get_text();
+
+            var [ ok, iter ] = combo.get_active_iter();
+            if (ok) {
+              this._iter = iter;
+
+              var name = model.get_value(iter, Model.NAME);
+              this.logger.debug('combo changed active: %s %s', name, entry);
+              this._update_timers_tab_from_model(combo, entry);
+            } else if (this._iter) {
+              // editing entry when get_active_iter is not 'ok'?
+              this.logger.debug('combo changed entry: %s %s', name, entry);
+              this._update_combo_model_entry(combo, this._iter, entry);
+            } else {
+              this.logger.debug("combo changed: active iter unknown");
+            }
+          });
+
+          // use to capture Enter
+          this.timers_combo_entry.connect('activate', (combo_entry) => {
+            var [ ok, iter ] = this.timers_combo.get_active_iter();
+            this.logger.debug(`Got activate ${ok}`);
+          });
+        }
 
         this.spin_hours.connect('value-changed', (spin) => {
           if (this._update_active_liststore_from_tab()) {
@@ -241,52 +294,52 @@ class PreferencesBuilder {
           }
         });
 
-        this.timers_combo.connect('set-focus-child', (combo, child) => {
-          var [ ok, iter ] = combo.get_active_iter();
-          this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
-          if (child == null) {
-            iter = ok ? iter : this._iter;
-            this.allow_updates=false;
-            var entry = this.timers_combo_entry.get_text();
-            this.logger.debug(`child lost focus, entry=${entry}`);
-            this._update_combo_model_entry(combo, iter, entry);
-            combo.set_active_iter(iter);
-            //this.timers_liststore.set_value(iter, Model.NAME, this.timers_combo_entry.get_text());
-            this.allow_updates=true;
-            if (this._update_active_liststore_from_tab()) {
-              this._save_liststore();
+        if (Utils.isGnome3x()) {
+          this.timers_combo.connect('set-focus-child', (combo, child) => {
+            var [ ok, iter ] = combo.get_active_iter();
+            this.logger.debug(`current child focus=${child}, ok=${ok} iter=${iter}`);
+            if (child == null) {
+              iter = ok ? iter : this._iter;
+              this.allow_updates=false;
+              var entry = this.timers_combo_entry.get_text();
+              this.logger.debug(`child lost focus, entry=${entry}`);
+              this._update_combo_model_entry(combo, iter, entry);
+              combo.set_active_iter(iter);
+              //this.timers_liststore.set_value(iter, Model.NAME, this.timers_combo_entry.get_text());
+              this.allow_updates=true;
+              if (this._update_active_liststore_from_tab()) {
+                this._save_liststore();
+              }
+            } else if (ok) {
+              this.logger.debug('combox box iter saved');
+              this._iter = iter;
+            } else {
+              this.logger.debug('combo box does not have an active iter: current='+this._iter);
             }
-          } else if (ok) {
-            this.logger.debug('combox box iter saved');
-            this._iter = iter;
-          } else {
-            this.logger.debug('combo box does not have an active iter: current='+this._iter);
-          }
+          });
 
-        });
+          this.timers_combo_entry.connect('activate', (combo_entry) => {
+            var [ ok, iter ] = this.timers_combo.get_active_iter();
+            this.logger.debug(`Got activate ${ok}`);
+          });
 
-        this.timers_combo_entry.connect('activate', (combo_entry) => {
-          var [ ok, iter ] = this.timers_combo.get_active_iter();
-          this.logger.debug(`Got activate ${ok}`);
-        });
+          this.timers_combo_entry.connect('focus-in-event', (combo_entry) => {
+            var [ ok, iter ] = this.timers_combo.get_active_iter();
+            this.logger.debug(`Got focus-in-event ${ok} ${iter}`);
+            if (ok) {
+              this._current_iter = iter;
+            }
+          });
 
-        //this._current_iter = undefined;
-        this.timers_combo_entry.connect('focus-in-event', (combo_entry) => {
-          var [ ok, iter ] = this.timers_combo.get_active_iter();
-          this.logger.debug(`Got focus-in-event ${ok} ${iter}`);
-          if (ok) {
-            this._current_iter = iter;
-          }
-        });
-
-        this.timers_combo_entry.connect('focus-out-event', (combo_entry) => {
-          var [ ok, iter ] = this.timers_combo.get_active_iter();
-          this.logger.debug(`Got focus-out-event ${ok} ${iter} ${this._current_iter}`);
-          if (ok) {
-          } else if (this._current_iter) {
-          }
-          this._current_iter = undefined;
-        });
+          this.timers_combo_entry.connect('focus-out-event', (combo_entry) => {
+            var [ ok, iter ] = this.timers_combo.get_active_iter();
+            this.logger.debug(`Got focus-out-event ${ok} ${iter} ${this._current_iter}`);
+            if (ok) {
+            } else if (this._current_iter) {
+            }
+            this._current_iter = undefined;
+          });
+        }
 
         this.timers_remove.connect('clicked', () => {
           var [ ok, iter ] = this.timers_combo.get_active_iter();
@@ -346,18 +399,41 @@ class PreferencesBuilder {
           }
         });
 
-        this._timer_icon_count = 0;
-        this.timer_icon.connect('button-press-event', () => {
-          if (this._timer_icon_count == 5) {
-            var cmd = Me.path+"/bin/dconf-editor.sh";
-            this.logger.debug(`cmd=${cmd}`);
-            Utils.spawn(cmd, undefined);
-            this._timer_icon_count = 0;
-          } else {
-            this._timer_icon_count++;
-          }
-        });
+        if (Utils.isGnome3x()) {
+          this._timer_icon_count = 0;
+          this.timer_icon.connect('button-press-event', () => {
+            if (this._timer_icon_count == 5) {
+              var cmd = Me.path+"/bin/dconf-editor.sh";
+              this.logger.debug(`cmd=${cmd}`);
+              Utils.spawn(cmd, undefined);
+              this._timer_icon_count = 0;
+            } else {
+              this._timer_icon_count++;
+            }
+          });
+        } else {
+          this._timer_icon_button_count = 0;
+          this.timer_icon_button.connect('clicked', (btn) => {
+            if (this._timer_icon_button_count == 1) {
+              var cmd = Me.path+"/bin/dconf-editor.sh";
+              this.logger.debug("cmd=%s", cmd);
+              Utils.spawn(cmd, undefined);
+              this._timer_icon_button_count = 0;
+            } else {
+              this._timer_icon_button_count++;
+            }
+          });
 
+          this._bo('export_settings').connect('clicked', (button) => {
+            this.export_settings();
+          });
+
+          this._bo('import_settings').connect('clicked', (button) => {
+            this.import_settings();
+          });
+      }
+
+      if (Utils.isGnome3x()) {
         this._json_file_chooser_button = this._bo('json_file_chooser_button');
         this._json_file_chooser_button.connect('clicked', (button) => {
           if (this._bo('export_settings_radio').get_active()) {
@@ -366,20 +442,36 @@ class PreferencesBuilder {
             this.import_settings();
           }
         });
+      }
 
-        this.inhibit = this._bo('inhibit');
-        this.inhibit.connect('toggled', (check) => {
-          let val=0;
-          if (check.get_active()) {
-            val = 12;
-          }
-          this._settings.inhibit = val;
-        });
-        this.inhibit.set_active(this._settings.inhibit > 0);
+      this.inhibit = this._bo('inhibit');
+      this.inhibit.connect('toggled', (check) => {
+        let val=0;
+        if (check.get_active()) {
+          val = 12;
+        }
+        this._settings.inhibit = val;
+      });
+      this.inhibit.set_active(this._settings.inhibit > 0);
 
-        this._bind();
+      if (Utils.isGnome40()) {
+        //var picture = Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg");
+        //picture.set_can_shrink(true);
+        //picture.set_keep_aspect_ratio(true);
+        //picture.set_hexpand(false);
+        //picture.set_vexpand(false);
+        //picture.set_size_request(48,48);
+        //this._bo('link_blackjackshellac').set_child(picture);
+        //this.timer_icon.prepend(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/kitchen-timer-blackjackshellac-full.svg"));
+        //this._bo('link_bmac').set_child(Gtk.Picture.new_for_filename(Me.dir.get_path()+"/icons/bmc_logo_wordmark.svg"));
 
-        return this._widget;
+        let bmac = Gtk.Picture.new_for_filename(Me.dir.get_path()+'/icons/bmc_logo_wordmark.svg');
+        this._bo('link_bmac').set_child(bmac);
+      }
+
+      this._bind();
+
+      return this._widget;
     }
 
     _populate_liststore() {
@@ -390,6 +482,7 @@ class PreferencesBuilder {
         return (a.duration-b.duration);
       });
 
+      this._iter = undefined;
       this.timers_liststore.clear();
       timer_settings.forEach( (timer) => {
         var iter = this.timers_liststore.append();
@@ -403,6 +496,11 @@ class PreferencesBuilder {
       });
 
       this.timers_combo.set_active(0);
+      let [ ok, iter ] = this.timers_combo.get_active_iter();
+      if (ok) {
+        this.logger.debug("Populate active iter %s", iter);
+        this._iter = iter;
+      }
       this._update_timers_tab_from_model(this.timers_combo);
     }
 
@@ -441,13 +539,60 @@ class PreferencesBuilder {
 
     }
 
+    // gnome40
+    sound_file_chooser() {
+      // import/export settings
+      var file_dialog = new Gtk.FileChooserDialog( {
+        action: Gtk.FileChooserAction.OPEN,
+        //local_only: false,
+        create_folders: true
+      });
+
+      if (file_dialog.current_folder == undefined) {
+         file_dialog.current_folder = Me.path;
+      }
+
+      let sound_file = this._settings.sound_file;
+      if (GLib.basename(sound_file) == sound_file) {
+        sound_file = GLib.build_filenamev([ Me.path, sound_file ]);
+      }
+      this.logger.debug("sound_file="+sound_file);
+
+      file_dialog.set_filter(this._bo('audio_files_filter'));
+      file_dialog.set_current_folder(Gio.File.new_for_path(Me.path));
+      file_dialog.set_current_name(sound_file);
+      file_dialog.title = _("Sound file");
+      //file_dialog.set_do_overwrite_confirmation(true);
+      file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
+      file_dialog.add_button('Open', Gtk.ResponseType.OK);
+      this.logger.debug("action=%s", ""+file_dialog.get_action());
+
+      file_dialog.connect('response', (dialog, response_id) => {
+        if (response_id === Gtk.ResponseType.OK) {
+            // outputs "-5"
+            this.logger.debug("response_id=%d", response_id);
+
+            var sound_file = dialog.get_file().get_path();
+
+            this.logger.debug("Selected sound file %s", sound_file);
+
+            this._settings.sound_file = sound_file;
+            this._bo('label_sound_file').set_label(GLib.basename(sound_file));
+        }
+
+        // destroy the dialog regardless of the response when we're done.
+        dialog.destroy();
+      });
+
+      file_dialog.show();
+    }
+
     // https://stackoverflow.com/questions/54487052/how-do-i-add-a-save-button-to-the-gtk-filechooser-dialog
     export_settings() {
       // import/export settings
       var file_dialog = new Gtk.FileChooserDialog( {
         title: _("Export"),
         action: Gtk.FileChooserAction.SAVE,
-        local_only: false,
         create_folders: true
       });
 
@@ -459,27 +604,31 @@ class PreferencesBuilder {
 
       this.logger.debug("json file=%s", settings_json);
       file_dialog.set_filter(this._bo('json_files_filter'));
-      file_dialog.set_current_folder(Me.path);
       file_dialog.set_current_name(settings_json);
       file_dialog.title = _("Export");
-      file_dialog.set_do_overwrite_confirmation(true);
       file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
       file_dialog.add_button('Export', Gtk.ResponseType.OK);
       this.logger.debug("action=%s", ""+file_dialog.get_action());
+
+      if (Utils.isGnome3x()) {
+        file_dialog.set_current_folder(Me.path);
+        file_dialog.set_do_overwrite_confirmation(true);
+        file_dialog.set_local_only(true);
+      } else {
+        file_dialog.set_current_folder(Gio.File.new_for_path(Me.path));
+      }
 
       file_dialog.connect('response', (dialog, response_id) => {
         if (response_id === Gtk.ResponseType.OK) {
            // outputs "-5"
             this.logger.debug("response_id=%d", response_id);
 
-            var filename = dialog.get_filename();
+            var file = dialog.get_file();
 
-            this.logger.debug(filename);
+            this.logger.debug(file.get_path());
 
             var json = this._settings.export_json();
             //this.logger.debug("json=%s", json);
-
-            var file = Gio.File.new_for_path(filename);
 
             file.replace_contents_bytes_async(
                 new GLib.Bytes(json),
@@ -492,13 +641,15 @@ class PreferencesBuilder {
                 (file, res) => {
                     try {
                         file.replace_contents_finish(res);
-                        this._bo('import_export_msg').set_text(_("Exported settings to %s".format(filename)));
+                        this._bo('import_export_msg').set_text(_("Exported settings to %s".format(file.get_path())));
                     } catch (e) {
-                        this.logger.debug("Failed to export settings to %s: %s", filename, e);
+                        this.logger.debug("Failed to export settings to %s: %s", file.get_path(), e);
                     }
                 }
             );
-         }
+        } else {
+          this.logger.debug("response_id not handled: %d", response_id);
+        }
 
         // destroy the dialog regardless of the response when we're done.
         dialog.destroy();
@@ -511,7 +662,6 @@ class PreferencesBuilder {
       // import/export settings
       var file_dialog = new Gtk.FileChooserDialog( {
         action: Gtk.FileChooserAction.OPEN,
-        local_only: false,
         create_folders: true
       });
 
@@ -523,24 +673,27 @@ class PreferencesBuilder {
 
       this.logger.debug("json file=%s", settings_json);
       file_dialog.set_filter(this._bo('json_files_filter'));
-      file_dialog.set_current_folder(Me.path);
       file_dialog.set_current_name(settings_json);
       file_dialog.title = _("Import");
-      file_dialog.set_do_overwrite_confirmation(true);
       file_dialog.add_button('Cancel', Gtk.ResponseType.CANCEL);
       file_dialog.add_button('Import', Gtk.ResponseType.OK);
       this.logger.debug("action=%s", ""+file_dialog.get_action());
+
+      if (Utils.isGnome3x()) {
+        file_dialog.set_current_folder(Me.path);
+        file_dialog.set_local_only(true);
+      } else {
+        file_dialog.set_current_folder(Gio.File.new_for_path(Me.path));
+      }
 
       file_dialog.connect('response', (dialog, response_id) => {
         if (response_id === Gtk.ResponseType.OK) {
             // outputs "-5"
             this.logger.debug("response_id=%d", response_id);
 
-            var filename = dialog.get_filename();
+            var file = dialog.get_file();
 
-            this.logger.debug(filename);
-
-            var file = Gio.File.new_for_path(filename);
+            this.logger.debug(file.get_path());
 
             file.read_async(GLib.PRIORITY_DEFAULT, null, (file, res) => {
               try {
@@ -550,7 +703,7 @@ class PreferencesBuilder {
                 var json = ByteArray.toString(data);
                 //this.logger.debug("json=%s", json);
                 this._settings.import_json(json);
-                this._bo('import_export_msg').set_text(_("Imported settings from %s".format(filename)));
+                this._bo('import_export_msg').set_text(_("Imported settings from %s".format(file.get_path())));
               } catch(e) {
                 logError(e, "Failed to read kitchen timer settings import file");
               }
@@ -581,6 +734,10 @@ class PreferencesBuilder {
         return false;
       }
       var [ ok, iter ] = this.timers_combo.get_active_iter();
+      if (!ok && this._iter) {
+        iter = this._iter;
+        ok = true;
+      }
       if (ok) {
           this.allow_updates = false;
           var model = this.timers_combo.get_model();
@@ -681,7 +838,7 @@ class PreferencesBuilder {
         return true;
       }
       [ ok, iter ] = timers_combo.get_active_iter();
-      if (ok && iter) {
+      if (ok) {
         this.allow_updates = false;
         var name = model.get_value(iter, Model.NAME);
         if (entry !== undefined && entry !== name) {
@@ -786,11 +943,12 @@ function buildPrefsWidget() {
 
   var preferencesBuilder = new PreferencesBuilder();
   var widget = preferencesBuilder.build();
+/*
   var window = widget.get_parent_window();
   if (window) {
     window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
   }
-
+*/
   preferencesBuilder.show();
 
 
