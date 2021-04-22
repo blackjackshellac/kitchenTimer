@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-07 16:09-0400\n"
+"POT-Creation-Date: 2021-04-21 21:25-0400\n"
 "PO-Revision-Date: 2021-04-07 16:13-0400\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -168,9 +168,21 @@ msgstr "minutes"
 msgid "hours"
 msgstr "heures"
 
-#: ../indicator.js:59
-msgid "Kitchen Timer"
-msgstr "Kitchen Timer"
+#: ../menus.js:108
+msgid "Running timers"
+msgstr "Minuteries en cours"
+
+#: ../menus.js:121
+msgid "Quick timers"
+msgstr "Minuteries pratiques"
+
+#: ../menus.js:145
+msgid "Preset timers"
+msgstr "Minuteries préréglées"
+
+#: ../menus.js:167
+msgid "Preferences…"
+msgstr "Préférences…"
 
 #: ../menuitem.js:47
 msgid "Create Preset"
@@ -196,70 +208,10 @@ msgstr "Pratique"
 msgid "Go"
 msgstr "Go"
 
-#: ../menus.js:108
-msgid "Running timers"
-msgstr "Minuteries en cours"
-
-#: ../menus.js:121
-msgid "Quick timers"
-msgstr "Minuteries pratiques"
-
-#: ../menus.js:145
-msgid "Preset timers"
-msgstr "Minuteries préréglées"
-
-#: ../menus.js:167
-msgid "Preferences…"
-msgstr "Préférences…"
-
 #: ../notifier.js:338
 #, javascript-format
 msgid "Restart timer %s"
 msgstr "Redémarrer la minuterie %s"
-
-#: ../timers.js:338
-msgid "Duplicate timer is already running"
-msgstr "Une minuterie en double est déjà en cours d'exécution"
-
-#: ../timers.js:697
-#, javascript-format
-msgid "Timer stopped %s early at"
-msgstr "La minuterie s'est arrêtée %s plus tôt à"
-
-#: ../timers.js:699
-#, javascript-format
-msgid "Timer completed %s late at"
-msgstr "La minuterie a terminé avec %s de retard à"
-
-#: ../timers.js:702
-msgid "Timer completed on time at"
-msgstr "Minuterie terminée à temps à"
-
-#: ../prefs.js:290
-msgid "New timer"
-msgstr "Nouvelle minuterie"
-
-#: ../prefs.js:447
-msgid "Sound file"
-msgstr "Fichier son"
-
-#: ../prefs.js:477 ../prefs.js:493
-msgid "Export"
-msgstr "Exporter"
-
-#: ../prefs.js:522
-#, javascript-format
-msgid "Exported settings to %s"
-msgstr "Les paramètres ont été exportés vers %s"
-
-#: ../prefs.js:558
-msgid "Import"
-msgstr "Importer"
-
-#: ../prefs.js:581
-#, javascript-format
-msgid "Imported settings from %s"
-msgstr "Les paramètres ont été importés du %s"
 
 #: ../settings.ui:159
 msgid "Timers"
@@ -527,6 +479,54 @@ msgstr "À propos"
 #: ../settings.ui:1355
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr "https://github.com/blackjackshellac/kitchenTimer"
+
+#: ../indicator.js:47
+msgid "Kitchen Timer"
+msgstr "Kitchen Timer"
+
+#: ../prefs.js:290
+msgid "New timer"
+msgstr "Nouvelle minuterie"
+
+#: ../prefs.js:447
+msgid "Sound file"
+msgstr "Fichier son"
+
+#: ../prefs.js:477 ../prefs.js:493
+msgid "Export"
+msgstr "Exporter"
+
+#: ../prefs.js:522
+#, javascript-format
+msgid "Exported settings to %s"
+msgstr "Les paramètres ont été exportés vers %s"
+
+#: ../prefs.js:558
+msgid "Import"
+msgstr "Importer"
+
+#: ../prefs.js:581
+#, javascript-format
+msgid "Imported settings from %s"
+msgstr "Les paramètres ont été importés du %s"
+
+#: ../timers.js:373
+msgid "Duplicate timer is already running"
+msgstr "Une minuterie en double est déjà en cours d'exécution"
+
+#: ../timers.js:732
+#, javascript-format
+msgid "Timer stopped %s early at"
+msgstr "La minuterie s'est arrêtée %s plus tôt à"
+
+#: ../timers.js:734
+#, javascript-format
+msgid "Timer completed %s late at"
+msgstr "La minuterie a terminé avec %s de retard à"
+
+#: ../timers.js:737
+msgid "Timer completed on time at"
+msgstr "Minuterie terminée à temps à"
 
 #~ msgid "Timer types"
 #~ msgstr "Types de minuterie"
