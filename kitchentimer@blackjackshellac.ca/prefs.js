@@ -430,32 +430,19 @@ class PreferencesBuilder {
     }
 
     // About box
-    this._timer_icon_count = 0;
+    this._about_clicks = 0;
     if (Utils.isGnome3x()) {
 
       this.timer_icon = this._bo('timer_icon');
+
       this.timer_icon.connect('button-press-event', () => {
-        if (this._timer_icon_count == 5) {
-          var cmd = Me.path+"/bin/dconf-editor.sh";
-          this.logger.debug(`cmd=${cmd}`);
-          Utils.spawn(cmd, undefined);
-          this._timer_icon_count = 0;
-        } else {
-          this._timer_icon_count++;
-        }
+        this._about_clicks = this._spawn_dconf_config(this._about_clicks);
       });
     } else {
       this.timer_icon_button = this._bo('timer_icon_button');
 
       this.timer_icon_button.connect('clicked', (btn) => {
-        if (this._timer_icon_button_count == 1) {
-          var cmd = Me.path+"/bin/dconf-editor.sh";
-          this.logger.debug("cmd=%s", cmd);
-          Utils.spawn(cmd, undefined);
-          this._timer_icon_button_count = 0;
-        } else {
-          this._timer_icon_button_count++;
-        }
+        this._about_clicks = this._spawn_dconf_config(this._about_clicks);
       });
 
       let bmac = Gtk.Picture.new_for_filename(Me.dir.get_path()+'/icons/bmc_logo_wordmark.svg');
@@ -466,6 +453,18 @@ class PreferencesBuilder {
     this._bind();
 
     return this._widget;
+  }
+
+  _spawn_dconf_config(clicks) {
+    if (clicks === 2) {
+      var cmd = Me.path+"/bin/dconf-editor.sh";
+      this.logger.debug("spawn %s", cmd);
+      Utils.spawn(cmd, undefined);
+      clicks = 0;
+    } else {
+      clicks++;
+    }
+    return clicks;
   }
 
   _populate_liststore() {
