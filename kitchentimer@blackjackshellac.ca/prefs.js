@@ -57,8 +57,8 @@ class PreferencesBuilder {
     show() {
       if (Utils.isGnome3x()) {
         this._widget.show_all();
-        this._bo('timer_box').hide();
       }
+      this._bo('timer_box').hide();
       this.tv_timers.hide();
     }
 
