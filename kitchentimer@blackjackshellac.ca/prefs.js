@@ -354,6 +354,7 @@ class PreferencesBuilder {
             if (ok) {
               // iter points to the next entry in the model
               this.timers_combo.set_active_iter(iter);
+              this._iter = iter;
             } else {
               [ok, iter] = model.get_iter_first();
               if (ok) {
@@ -361,7 +362,7 @@ class PreferencesBuilder {
                 this.logger.debug('Set combo to first item '+model.get_value(iter, Model.NAME));
                 //this.timers_combo_entry.set_text(name);
                 this.timers_combo.set_active(0);
-                //this._iter = iter;
+                this._iter = iter;
               }
             }
             this.allow_updates=true;
