@@ -256,7 +256,7 @@ class PreferencesBuilder {
               this._update_timers_tab_from_model(combo, entry);
             } else if (this._iter) {
               // editing entry when get_active_iter is not 'ok'?
-              this.logger.debug('combo changed entry: %s %s', name, entry);
+              this.logger.debug('combo changed entry: %s %s',  entry, this._iter);
               this._update_combo_model_entry(combo, this._iter, entry);
             } else {
               this.logger.debug("combo changed: active iter unknown");
@@ -719,6 +719,10 @@ class PreferencesBuilder {
     }
 
     _update_combo_model_entry(combo, iter, entry) {
+      if (!this.allow_updates) {
+        this.logger.debug('Updates not allowed entry=%s', entry);
+        return;
+      }
       var model = combo.get_model();
       var name = model.get_value(iter, Model.NAME);
       if (name !== entry) {

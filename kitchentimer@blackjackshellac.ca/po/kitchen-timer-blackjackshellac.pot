@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-02 11:10-0400\n"
-"PO-Revision-Date: 2021-04-02 11:10-0400\n"
+"POT-Creation-Date: 2021-04-22 11:26-0400\n"
+"PO-Revision-Date: 2021-04-22 11:26-0400\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -160,38 +160,48 @@ msgstr ""
 
 #: prefs.js:225 prefs.js:230 prefs.js:231 prefs.js:232 prefs.js:234
 #: prefs.js:241 prefs.js:245 prefs.js:246 prefs.js:290 prefs.js:312
-#: prefs.js:315 prefs.js:321 prefs.js:327 prefs.js:328
+#: prefs.js:315 prefs.js:321 prefs.js:327 prefs.js:328 prefs.js:380
+#: prefs.js:381
 msgid "New timer"
 msgstr ""
 
 #: prefs.js:297 prefs.js:312 prefs.js:333 prefs.js:348 prefs.js:349
 #: prefs.js:399 prefs.js:415 prefs.js:424 prefs.js:431 prefs.js:434
 #: prefs.js:438 prefs.js:440 prefs.js:447 prefs.js:448 prefs.js:449
-#: prefs.js:450 prefs.js:454 prefs.js:464 prefs.js:465
+#: prefs.js:450 prefs.js:454 prefs.js:464 prefs.js:465 prefs.js:594
+#: prefs.js:595 prefs.js:608 prefs.js:609
 msgid "Export"
 msgstr ""
 
 #: prefs.js:343 prefs.js:379 prefs.js:380 prefs.js:446 prefs.js:471
 #: prefs.js:478 prefs.js:481 prefs.js:485 prefs.js:495 prefs.js:496
+#: prefs.js:644 prefs.js:645
 #, javascript-format
 msgid "Exported settings to %s"
 msgstr ""
 
 #: prefs.js:375 prefs.js:411 prefs.js:413 prefs.js:479 prefs.js:504
 #: prefs.js:511 prefs.js:514 prefs.js:518 prefs.js:528 prefs.js:529
+#: prefs.js:677 prefs.js:678
 msgid "Import"
 msgstr ""
 
 #: prefs.js:400 prefs.js:436 prefs.js:438 prefs.js:504 prefs.js:529
 #: prefs.js:536 prefs.js:539 prefs.js:543 prefs.js:553 prefs.js:554
+#: prefs.js:706 prefs.js:707
 #, javascript-format
 msgid "Imported settings from %s"
+msgstr ""
+
+#: prefs.js:564 prefs.js:565
+msgid "Sound file"
 msgstr ""
 
 #: prefs.ui:51 settings.ui:55 settings.ui:184 settings.ui:192 settings.ui:194
 #: settings.ui:204 settings.ui:206 settings.ui:253 settings.ui:258
 #: settings.ui:260 settings.ui:266 settings.ui:267 settings.ui:272
-#: settings.ui:279 settings4x.ui:52 settings4x.ui:241
+#: settings.ui:279 settings40.ui:299 settings40.ui:306 settings4x.ui:52
+#: settings4x.ui:241
 msgctxt "add-timer"
 msgid "Add new timer"
 msgstr ""
@@ -199,7 +209,8 @@ msgstr ""
 #: prefs.ui:68 settings.ui:66 settings.ui:72 settings.ui:199 settings.ui:207
 #: settings.ui:209 settings.ui:219 settings.ui:221 settings.ui:268
 #: settings.ui:273 settings.ui:275 settings.ui:281 settings.ui:282
-#: settings.ui:287 settings.ui:294 settings4x.ui:69 settings4x.ui:252
+#: settings.ui:287 settings.ui:294 settings40.ui:324 settings40.ui:330
+#: settings4x.ui:69 settings4x.ui:252
 msgctxt "remove-timer"
 msgid "Remove selected timer"
 msgstr ""
@@ -209,6 +220,7 @@ msgstr ""
 #: settings.ui:716 settings.ui:719 settings.ui:724 settings.ui:796
 #: settings.ui:801 settings.ui:899 settings.ui:971 settings.ui:975
 #: settings.ui:985 settings.ui:986 settings.ui:996 settings.ui:1002
+#: settings40.ui:727
 msgid "Options"
 msgstr ""
 
@@ -216,7 +228,7 @@ msgstr ""
 #: settings.ui:426 settings.ui:433 settings.ui:435 settings.ui:480
 #: settings.ui:485 settings.ui:565 settings.ui:570 settings.ui:646
 #: settings.ui:659 settings.ui:740 settings.ui:743 settings.ui:744
-#: settings.ui:749 settings4x.ui:605
+#: settings.ui:749 settings40.ui:739 settings4x.ui:605
 msgctxt "notification"
 msgid "Notification"
 msgstr ""
@@ -225,7 +237,7 @@ msgstr ""
 #: settings.ui:430 settings.ui:437 settings.ui:439 settings.ui:484
 #: settings.ui:489 settings.ui:569 settings.ui:574 settings.ui:650
 #: settings.ui:663 settings.ui:744 settings.ui:747 settings.ui:748
-#: settings.ui:753 settings4x.ui:609
+#: settings.ui:753 settings40.ui:743 settings4x.ui:609
 msgctxt "notification"
 msgid "Show a notification when the timer is done"
 msgstr ""
@@ -234,7 +246,7 @@ msgstr ""
 #: settings.ui:447 settings.ui:449 settings.ui:470 settings.ui:471
 #: settings.ui:494 settings.ui:499 settings.ui:579 settings.ui:584
 #: settings.ui:660 settings.ui:677 settings.ui:754 settings.ui:757
-#: settings.ui:758 settings.ui:763 settings4x.ui:619
+#: settings.ui:758 settings.ui:763 settings40.ui:757 settings4x.ui:619
 msgctxt "sort_by_duration_text"
 msgid "Sort by duration"
 msgstr ""
@@ -243,7 +255,7 @@ msgstr ""
 #: settings.ui:451 settings.ui:453 settings.ui:474 settings.ui:475
 #: settings.ui:498 settings.ui:503 settings.ui:583 settings.ui:588
 #: settings.ui:664 settings.ui:681 settings.ui:758 settings.ui:761
-#: settings.ui:762 settings.ui:767 settings4x.ui:623
+#: settings.ui:762 settings.ui:767 settings40.ui:761 settings4x.ui:623
 msgctxt "sort-by-duration"
 msgid "Sort timers by duration"
 msgstr ""
@@ -252,7 +264,7 @@ msgstr ""
 #: settings.ui:461 settings.ui:463 settings.ui:485 settings.ui:486
 #: settings.ui:508 settings.ui:513 settings.ui:593 settings.ui:598
 #: settings.ui:674 settings.ui:695 settings.ui:768 settings.ui:771
-#: settings.ui:772 settings.ui:777 settings4x.ui:633
+#: settings.ui:772 settings.ui:777 settings40.ui:775 settings4x.ui:633
 msgctxt "sort_descending_text"
 msgid "Sort descending"
 msgstr ""
@@ -261,7 +273,7 @@ msgstr ""
 #: settings.ui:465 settings.ui:467 settings.ui:489 settings.ui:490
 #: settings.ui:512 settings.ui:517 settings.ui:597 settings.ui:602
 #: settings.ui:678 settings.ui:699 settings.ui:772 settings.ui:775
-#: settings.ui:776 settings.ui:781 settings4x.ui:637
+#: settings.ui:776 settings.ui:781 settings40.ui:779 settings4x.ui:637
 msgctxt "sort-descending"
 msgid "Sort timers by duration from longest to shortest"
 msgstr ""
@@ -270,7 +282,7 @@ msgstr ""
 #: settings.ui:505 settings.ui:527 settings.ui:529 settings.ui:530
 #: settings.ui:550 settings.ui:555 settings.ui:607 settings.ui:612
 #: settings.ui:688 settings.ui:713 settings.ui:782 settings.ui:785
-#: settings.ui:786 settings.ui:791 settings4x.ui:647
+#: settings.ui:786 settings.ui:791 settings40.ui:793 settings4x.ui:647
 msgctxt "save-quick-timers"
 msgid "Save quick timers"
 msgstr ""
@@ -279,7 +291,7 @@ msgstr ""
 #: settings.ui:509 settings.ui:531 settings.ui:533 settings.ui:534
 #: settings.ui:554 settings.ui:559 settings.ui:611 settings.ui:616
 #: settings.ui:692 settings.ui:717 settings.ui:786 settings.ui:789
-#: settings.ui:790 settings.ui:795 settings4x.ui:651
+#: settings.ui:790 settings.ui:795 settings40.ui:797 settings4x.ui:651
 msgctxt "save-quick-timers-tooltip"
 msgid "If selected, quick timers are also saved"
 msgstr ""
@@ -287,7 +299,7 @@ msgstr ""
 #: prefs.ui:203 settings.ui:509 settings.ui:517 settings.ui:519 settings.ui:541
 #: settings.ui:564 settings.ui:569 settings.ui:621 settings.ui:626
 #: settings.ui:702 settings.ui:727 settings.ui:796 settings.ui:799
-#: settings.ui:800 settings.ui:805 settings4x.ui:661
+#: settings.ui:800 settings.ui:805 settings40.ui:811 settings4x.ui:661
 msgctxt "show_label"
 msgid "Show name"
 msgstr ""
@@ -296,7 +308,7 @@ msgstr ""
 #: settings.ui:523 settings.ui:545 settings.ui:547 settings.ui:548
 #: settings.ui:568 settings.ui:573 settings.ui:625 settings.ui:630
 #: settings.ui:706 settings.ui:731 settings.ui:800 settings.ui:803
-#: settings.ui:804 settings.ui:809 settings4x.ui:665
+#: settings.ui:804 settings.ui:809 settings40.ui:815 settings4x.ui:665
 msgctxt "show_timer_name"
 msgid "Show timer name in the panel menu"
 msgstr ""
@@ -304,7 +316,8 @@ msgstr ""
 #: prefs.ui:217 settings.ui:523 settings.ui:531 settings.ui:533 settings.ui:555
 #: settings.ui:557 settings.ui:578 settings.ui:583 settings.ui:635
 #: settings.ui:640 settings.ui:716 settings.ui:745 settings.ui:810
-#: settings.ui:813 settings.ui:814 settings.ui:819 settings4x.ui:675
+#: settings.ui:813 settings.ui:814 settings.ui:819 settings40.ui:829
+#: settings4x.ui:675
 msgctxt "detect-dupes"
 msgid "Detect dupes"
 msgstr ""
@@ -312,7 +325,8 @@ msgstr ""
 #: prefs.ui:221 settings.ui:527 settings.ui:535 settings.ui:537 settings.ui:559
 #: settings.ui:561 settings.ui:582 settings.ui:587 settings.ui:639
 #: settings.ui:644 settings.ui:720 settings.ui:749 settings.ui:814
-#: settings.ui:817 settings.ui:818 settings.ui:823 settings4x.ui:679
+#: settings.ui:817 settings.ui:818 settings.ui:823 settings40.ui:833
+#: settings4x.ui:679
 msgctxt "detect-dupes-tooltip"
 msgid "Prevent timers with the same duration, name and type"
 msgstr ""
@@ -321,7 +335,8 @@ msgstr ""
 #: settings.ui:441 settings.ui:551 settings.ui:559 settings.ui:561
 #: settings.ui:569 settings.ui:606 settings.ui:611 settings.ui:649
 #: settings.ui:654 settings.ui:730 settings.ui:763 settings.ui:824
-#: settings.ui:827 settings.ui:828 settings.ui:833 settings4x.ui:689
+#: settings.ui:827 settings.ui:828 settings.ui:833 settings40.ui:847
+#: settings4x.ui:689
 msgctxt "show_time"
 msgid "Show time"
 msgstr ""
@@ -330,28 +345,29 @@ msgstr ""
 #: settings.ui:445 settings.ui:555 settings.ui:563 settings.ui:565
 #: settings.ui:573 settings.ui:610 settings.ui:615 settings.ui:653
 #: settings.ui:658 settings.ui:734 settings.ui:767 settings.ui:828
-#: settings.ui:831 settings.ui:832 settings.ui:837 settings4x.ui:693
+#: settings.ui:831 settings.ui:832 settings.ui:837 settings40.ui:851
+#: settings4x.ui:693
 msgctxt "show-time"
 msgid "Show remaining time for running timers in the panel"
 msgstr ""
 
 #: prefs.ui:245 settings.ui:583 settings.ui:663 settings.ui:668 settings.ui:744
 #: settings.ui:781 settings.ui:838 settings.ui:841 settings.ui:842
-#: settings.ui:847 settings4x.ui:703
+#: settings.ui:847 settings40.ui:865 settings4x.ui:703
 msgctxt "notification_sticky"
 msgid "Sticky notification"
 msgstr ""
 
 #: prefs.ui:249 settings.ui:587 settings.ui:667 settings.ui:672 settings.ui:748
 #: settings.ui:785 settings.ui:842 settings.ui:845 settings.ui:846
-#: settings.ui:851 settings4x.ui:707
+#: settings.ui:851 settings40.ui:869 settings4x.ui:707
 msgctxt "notification-sticky-tooltip"
 msgid "Notification waits for input"
 msgstr ""
 
 #: prefs.ui:259 settings.ui:597 settings.ui:677 settings.ui:682 settings.ui:758
 #: settings.ui:799 settings.ui:852 settings.ui:855 settings.ui:856
-#: settings.ui:861 settings4x.ui:717
+#: settings.ui:861 settings40.ui:883 settings4x.ui:717
 msgctxt "animate_progress_icon"
 msgid "Animate progress icon"
 msgstr ""
@@ -359,7 +375,7 @@ msgstr ""
 #: prefs.ui:263 settings.ui:541 settings.ui:549 settings.ui:551 settings.ui:596
 #: settings.ui:601 settings.ui:681 settings.ui:686 settings.ui:762
 #: settings.ui:803 settings.ui:856 settings.ui:859 settings.ui:860
-#: settings.ui:865 settings4x.ui:721
+#: settings.ui:865 settings40.ui:887 settings4x.ui:721
 msgctxt "show-progress-tooltip"
 msgid "Animate progress icon in the panel menu"
 msgstr ""
@@ -371,8 +387,8 @@ msgstr ""
 #: settings.ui:817 settings.ui:866 settings.ui:869 settings.ui:870
 #: settings.ui:873 settings.ui:875 settings.ui:878 settings.ui:976
 #: settings.ui:1042 settings.ui:1048 settings.ui:1052 settings.ui:1062
-#: settings.ui:1063 settings.ui:1073 settings.ui:1079 settings4x.ui:731
-#: settings4x.ui:942
+#: settings.ui:1063 settings.ui:1073 settings.ui:1079 settings40.ui:901
+#: settings40.ui:1177 settings4x.ui:731 settings4x.ui:942
 msgctxt "play-sound"
 msgid "Play sound"
 msgstr ""
@@ -381,7 +397,8 @@ msgstr ""
 #: settings.ui:494 settings.ui:495 settings.ui:519 settings.ui:520
 #: settings.ui:540 settings.ui:545 settings.ui:615 settings.ui:695
 #: settings.ui:700 settings.ui:776 settings.ui:821 settings.ui:870
-#: settings.ui:873 settings.ui:874 settings.ui:879 settings4x.ui:735
+#: settings.ui:873 settings.ui:874 settings.ui:879 settings40.ui:905
+#: settings4x.ui:735
 msgctxt "play-sound"
 msgid "Play the sound when the timer is done"
 msgstr ""
@@ -405,7 +422,7 @@ msgstr ""
 #: prefs.ui:310 settings.ui:596 settings.ui:598 settings.ui:643 settings.ui:648
 #: settings.ui:649 settings.ui:729 settings.ui:734 settings.ui:810
 #: settings.ui:859 settings.ui:904 settings.ui:907 settings.ui:908
-#: settings.ui:913 settings4x.ui:769
+#: settings.ui:913 settings40.ui:949 settings4x.ui:769
 msgctxt "export-settings-radio"
 msgid "Export"
 msgstr ""
@@ -413,36 +430,36 @@ msgstr ""
 #: prefs.ui:326 settings.ui:611 settings.ui:613 settings.ui:658 settings.ui:663
 #: settings.ui:664 settings.ui:744 settings.ui:749 settings.ui:825
 #: settings.ui:874 settings.ui:919 settings.ui:922 settings.ui:923
-#: settings.ui:928 settings4x.ui:785
+#: settings.ui:928 settings40.ui:963 settings4x.ui:785
 msgctxt "import-settings-radio"
 msgid "Import"
 msgstr ""
 
 #: prefs.ui:375 settings.ui:870 settings.ui:922 settings.ui:967 settings.ui:968
-#: settings.ui:973 settings4x.ui:834
+#: settings.ui:973 settings40.ui:1019 settings4x.ui:834
 msgctxt "inhibit"
 msgid "Inhibit screen lock"
 msgstr ""
 
 #: prefs.ui:379 settings.ui:874 settings.ui:926 settings.ui:971 settings.ui:972
-#: settings.ui:977 settings4x.ui:838
+#: settings.ui:977 settings40.ui:1023 settings4x.ui:838
 msgctxt "inhibit-tooltip"
 msgid "Inhibit screen lock when timers are running"
 msgstr ""
 
 #: prefs.ui:389 settings.ui:884 settings.ui:940 settings.ui:981 settings.ui:987
-#: settings4x.ui:848
+#: settings40.ui:1037 settings4x.ui:848
 msgctxt "accel-enable"
 msgid "Keyboard shortcuts"
 msgstr ""
 
 #: prefs.ui:393 settings.ui:888 settings.ui:944 settings.ui:985 settings.ui:991
-#: settings4x.ui:852
+#: settings40.ui:1041 settings4x.ui:852
 msgctxt "accel-enable-tooltip"
 msgid "Click to enable global keyboard shortcuts"
 msgstr ""
 
-#: prefs.ui:414 settings.ui:1095
+#: prefs.ui:414 settings.ui:1095 settings40.ui:1242
 msgid "About"
 msgstr ""
 
@@ -460,7 +477,7 @@ msgstr ""
 #: settings.ui:870 settings.ui:916 settings.ui:948 settings.ui:956
 #: settings.ui:1028 settings.ui:1033 settings.ui:1131 settings.ui:1203
 #: settings.ui:1204 settings.ui:1207 settings.ui:1217 settings.ui:1218
-#: settings.ui:1228 settings.ui:1234 settings4x.ui:1102
+#: settings.ui:1228 settings.ui:1234 settings40.ui:1355 settings4x.ui:1102
 msgid "https://github.com/blackjackshellac/kitchenTimer"
 msgstr ""
 
@@ -800,20 +817,21 @@ msgstr ""
 #: settings.ui:411 settings.ui:412 settings.ui:419 settings.ui:421
 #: settings.ui:466 settings.ui:471 settings.ui:551 settings.ui:556
 #: settings.ui:632 settings.ui:726 settings.ui:729 settings.ui:730
-#: settings.ui:735
+#: settings.ui:735 settings40.ui:159
 msgid "Timers"
 msgstr ""
 
 #: settings.ui:155 settings.ui:157 settings.ui:304 settings.ui:311
 #: settings.ui:332 settings.ui:340 settings.ui:342 settings.ui:401
 #: settings.ui:406 settings.ui:414 settings.ui:415 settings.ui:420
-#: settings4x.ui:265
+#: settings40.ui:349 settings4x.ui:265
 msgctxt "timer-enabled"
 msgid "Enable timer if checked"
 msgstr ""
 
 #: settings.ui:155 settings.ui:160 settings.ui:162 settings.ui:168
-#: settings.ui:169 settings.ui:174 settings.ui:178 settings4x.ui:160
+#: settings.ui:169 settings.ui:174 settings.ui:178 settings40.ui:187
+#: settings4x.ui:160
 msgctxt "preset_radio"
 msgid "Preset timers"
 msgstr ""
@@ -821,7 +839,7 @@ msgstr ""
 #: settings.ui:158 settings.ui:166 settings.ui:168 settings.ui:175
 #: settings.ui:177 settings.ui:227 settings.ui:232 settings.ui:234
 #: settings.ui:240 settings.ui:241 settings.ui:246 settings.ui:253
-#: settings4x.ui:219
+#: settings40.ui:268 settings4x.ui:219
 msgctxt "select-timer"
 msgid "Select the timer to be modified"
 msgstr ""
@@ -829,13 +847,14 @@ msgstr ""
 #: settings.ui:168 settings.ui:176 settings.ui:178 settings.ui:185
 #: settings.ui:187 settings.ui:237 settings.ui:242 settings.ui:244
 #: settings.ui:250 settings.ui:251 settings.ui:256 settings.ui:263
-#: settings4x.ui:230
+#: settings40.ui:280 settings4x.ui:230
 msgctxt "timers-combo-entry"
 msgid "Timer name"
 msgstr ""
 
 #: settings.ui:171 settings.ui:176 settings.ui:178 settings.ui:184
-#: settings.ui:185 settings.ui:190 settings.ui:194 settings4x.ui:172
+#: settings.ui:185 settings.ui:190 settings.ui:194 settings40.ui:204
+#: settings4x.ui:172
 msgctxt "quick_radio"
 msgid "Quick timers"
 msgstr ""
@@ -855,7 +874,7 @@ msgstr ""
 #: settings.ui:265 settings.ui:273 settings.ui:275 settings.ui:289
 #: settings.ui:291 settings.ui:334 settings.ui:339 settings.ui:347
 #: settings.ui:348 settings.ui:353 settings.ui:426 settings.ui:433
-#: settings4x.ui:379
+#: settings40.ui:505 settings4x.ui:379
 msgid "1"
 msgstr ""
 
@@ -869,13 +888,13 @@ msgstr ""
 #: settings.ui:293 settings.ui:301 settings.ui:303 settings.ui:334
 #: settings.ui:336 settings.ui:362 settings.ui:367 settings.ui:375
 #: settings.ui:376 settings.ui:381 settings.ui:439 settings.ui:446
-#: settings4x.ui:392
+#: settings40.ui:522 settings4x.ui:392
 msgid "0"
 msgstr ""
 
 #: settings.ui:300 settings.ui:307 settings.ui:328 settings.ui:336
 #: settings.ui:338 settings.ui:397 settings.ui:402 settings.ui:410
-#: settings.ui:411 settings.ui:416 settings4x.ui:261
+#: settings.ui:411 settings.ui:416 settings40.ui:345 settings4x.ui:261
 msgctxt "timer-enabled-text"
 msgid "Enabled"
 msgstr ""
@@ -888,7 +907,7 @@ msgid "Seconds\t"
 msgstr ""
 
 #: settings.ui:335 settings.ui:342 settings.ui:520 settings.ui:521
-#: settings.ui:526 settings.ui:556 settings4x.ui:288
+#: settings.ui:526 settings.ui:556 settings40.ui:382 settings4x.ui:288
 msgctxt "label-hour"
 msgid "Hours"
 msgstr ""
@@ -909,7 +928,7 @@ msgid "Minutes        "
 msgstr ""
 
 #: settings.ui:359 settings.ui:366 settings.ui:542 settings.ui:543
-#: settings.ui:548 settings.ui:578 settings4x.ui:312
+#: settings.ui:548 settings.ui:578 settings40.ui:416 settings4x.ui:312
 msgctxt "label-seconds"
 msgid "Seconds"
 msgstr ""
@@ -945,7 +964,8 @@ msgid "System model notificaiton"
 msgstr ""
 
 #: settings.ui:483 settings.ui:548 settings.ui:555 settings.ui:642
-#: settings.ui:645 settings.ui:646 settings.ui:651 settings4x.ui:507
+#: settings.ui:645 settings.ui:646 settings.ui:651 settings40.ui:635
+#: settings4x.ui:507
 msgctxt "tvcr-name"
 msgid "Name"
 msgstr ""
@@ -959,7 +979,8 @@ msgid "HH:MM:SS"
 msgstr ""
 
 #: settings.ui:498 settings.ui:563 settings.ui:570 settings.ui:657
-#: settings.ui:660 settings.ui:661 settings.ui:666 settings4x.ui:522
+#: settings.ui:660 settings.ui:661 settings.ui:666 settings40.ui:650
+#: settings4x.ui:522
 msgctxt "tvcr-hms"
 msgid "HH:MM:SS"
 msgstr ""
@@ -969,7 +990,8 @@ msgid "Duration"
 msgstr ""
 
 #: settings.ui:513 settings.ui:578 settings.ui:585 settings.ui:672
-#: settings.ui:675 settings.ui:676 settings.ui:681 settings4x.ui:537
+#: settings.ui:675 settings.ui:676 settings.ui:681 settings40.ui:665
+#: settings4x.ui:537
 msgctxt "tvcr-duration"
 msgid "Duration"
 msgstr ""
@@ -985,7 +1007,8 @@ msgid "Enabled"
 msgstr ""
 
 #: settings.ui:528 settings.ui:593 settings.ui:600 settings.ui:687
-#: settings.ui:690 settings.ui:691 settings.ui:696 settings4x.ui:552
+#: settings.ui:690 settings.ui:691 settings.ui:696 settings40.ui:680
+#: settings4x.ui:552
 msgctxt "tvcr-enabled"
 msgid "Enabled"
 msgstr ""
@@ -1043,7 +1066,7 @@ msgstr ""
 #: settings.ui:631 settings.ui:729 settings.ui:732 settings.ui:740
 #: settings.ui:778 settings.ui:812 settings.ui:817 settings.ui:915
 #: settings.ui:987 settings.ui:991 settings.ui:1001 settings.ui:1002
-#: settings.ui:1012 settings.ui:1018
+#: settings.ui:1012 settings.ui:1018 settings40.ui:1077
 msgctxt "sound_file_tooltip"
 msgid "Timer notification sound file"
 msgstr ""
@@ -1052,13 +1075,13 @@ msgstr ""
 #: settings.ui:634 settings.ui:732 settings.ui:735 settings.ui:743
 #: settings.ui:781 settings.ui:815 settings.ui:820 settings.ui:918
 #: settings.ui:990 settings.ui:994 settings.ui:1004 settings.ui:1005
-#: settings.ui:1015 settings.ui:1021
+#: settings.ui:1015 settings.ui:1021 settings40.ui:1076
 msgctxt "sound_file"
 msgid "Sound file"
 msgstr ""
 
 #: settings.ui:604 settings.ui:611 settings.ui:698 settings.ui:701
-#: settings.ui:702 settings.ui:707 settings4x.ui:563
+#: settings.ui:702 settings.ui:707 settings40.ui:691 settings4x.ui:563
 msgid "Delete"
 msgstr ""
 
@@ -1076,6 +1099,7 @@ msgstr ""
 #: settings.ui:837 settings.ui:845 settings.ui:917 settings.ui:922
 #: settings.ui:968 settings.ui:1020 settings.ui:1092 settings.ui:1096
 #: settings.ui:1106 settings.ui:1107 settings.ui:1117 settings.ui:1123
+#: settings40.ui:1065
 msgid "Sound"
 msgstr ""
 
@@ -1092,7 +1116,7 @@ msgstr ""
 #: settings.ui:763 settings.ui:771 settings.ui:843 settings.ui:848
 #: settings.ui:946 settings.ui:1012 settings.ui:1018 settings.ui:1022
 #: settings.ui:1032 settings.ui:1033 settings.ui:1043 settings.ui:1049
-#: settings4x.ui:912
+#: settings40.ui:1139 settings4x.ui:912
 msgctxt "warn-volume-level"
 msgid "Warn low volume"
 msgstr ""
@@ -1100,13 +1124,13 @@ msgstr ""
 #: settings.ui:779 settings.ui:787 settings.ui:859 settings.ui:864
 #: settings.ui:962 settings.ui:1028 settings.ui:1034 settings.ui:1038
 #: settings.ui:1048 settings.ui:1049 settings.ui:1059 settings.ui:1065
-#: settings4x.ui:928
+#: settings40.ui:1159 settings4x.ui:928
 msgctxt "low-volume-threshold-percent"
 msgid "Low volume threshold percent"
 msgstr ""
 
 #: settings.ui:992 settings.ui:1058 settings.ui:1078 settings.ui:1089
-#: settings.ui:1095 settings4x.ui:958
+#: settings.ui:1095 settings40.ui:1197 settings4x.ui:958
 msgctxt "sound_loops_tooltip"
 msgid ""
 "Loops to play timer notification sound, 0 plays for the duration of the "
@@ -1119,6 +1143,11 @@ msgid ""
 "warranty.\n"
 "  See the <a href=\"https://www.gnu.org/licenses/gpl-3.0.html\">GNU GPL 3 "
 "License</a> for details.</span>"
+msgstr ""
+
+#: settings40.ui:400
+msgctxt "label-minutes"
+msgid "Minutes"
 msgstr ""
 
 #: timers.js:196
@@ -1139,6 +1168,7 @@ msgstr ""
 #: timers.js:221 timers.js:222 timers.js:223 timers.js:258 timers.js:262
 #: timers.js:268 timers.js:293 timers.js:310 timers.js:316 timers.js:321
 #: timers.js:322 timers.js:324 timers.js:333 timers.js:334 timers.js:338
+#: timers.js:373
 msgid "Duplicate timer is already running"
 msgstr ""
 
@@ -1165,20 +1195,20 @@ msgstr ""
 
 #: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:639
 #: timers.js:644 timers.js:645 timers.js:648 timers.js:658 timers.js:664
-#: timers.js:673 timers.js:674 timers.js:697
+#: timers.js:673 timers.js:674 timers.js:697 timers.js:732
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
 
 #: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:641
 #: timers.js:646 timers.js:647 timers.js:650 timers.js:660 timers.js:666
-#: timers.js:675 timers.js:676 timers.js:699
+#: timers.js:675 timers.js:676 timers.js:699 timers.js:734
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
 
 #: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:644
 #: timers.js:649 timers.js:650 timers.js:653 timers.js:663 timers.js:669
-#: timers.js:678 timers.js:679 timers.js:702
+#: timers.js:678 timers.js:679 timers.js:702 timers.js:737
 msgid "Timer completed on time at"
 msgstr ""
