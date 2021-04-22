@@ -25,6 +25,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
 const Logger = Me.imports.logger.Logger;
+const Utils = Me.imports.utils;
 
 var KeyboardShortcuts = class KeyboardShortcuts {
   constructor(settings) {
@@ -41,9 +42,13 @@ var KeyboardShortcuts = class KeyboardShortcuts {
   }
 
   listenFor(accelerator, callback) {
-    this.logger.debug('Trying to listen for hot key [accelerator=%s]', accelerator);
-    let action = global.display.grab_accelerator(accelerator, 0);
+    let [ action, grabber ] = this.lookupGrabber(accelerator);
+    if (grabber) {
+      this.remove(grabber.accelerator);
+    }
 
+    this.logger.debug('Trying to listen for hot key [accelerator=%s]', accelerator);
+    action = global.display.grab_accelerator(accelerator, 0);
     if (action == Meta.KeyBindingAction.NONE) {
       this.logger.error('Unable to grab accelerator [%s]', accelerator);
       return;
@@ -64,9 +69,10 @@ var KeyboardShortcuts = class KeyboardShortcuts {
   }
 
   lookupGrabber(accelerator) {
-    for (const [key, value] of Object.entries(this._grabbers)) {
-      if (value.accelerator === accelerator) {
-        return [ key, value ];
+    //Utils.logObjectPretty(this._grabbers);
+    for (const [action, grabber] of Object.entries(this._grabbers)) {
+      if (grabber.accelerator === accelerator) {
+        return [ action, grabber ];
       }
     }
     return [ undefined, undefined ];
