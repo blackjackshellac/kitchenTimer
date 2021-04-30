@@ -141,10 +141,11 @@ run glib-compile-schemas --strict $SCHEMAS
 
 ldir="$(pwd)"
 
+[ ! -d "$EXTENSIONS" ] && run mkdir -p $EXTENSIONS
+
 if [ $DEBUG -ne 0 ]; then
   warn "DEBUG is enabled"
   info "Creating symlink to $ldir"
-  [ ! -d "$EXTENSIONS" ] && run mkdir -p $EXTENSIONS
   run cd $EXTENSIONS
   [ ! -L "$ED" ] && run rm -rfv $ED
   run ln -sf $ldir .
