@@ -79,7 +79,7 @@ class PreferencesBuilder {
     }
 
     this._bo('version').set_text("Version "+Me.metadata.version);
-    this._bo('description').set_text(Me.metadata.description);
+    this._bo('description').set_text(Me.metadata.description.split(/\n/)[0]);
 
     // Timers
 

@@ -119,698 +119,58 @@ Author: Steeve McCauley
     <property name="can-focus">False</property>
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkStackSwitcher" id="stack_switcher">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
+        <property name="homogeneous">True</property>
+        <property name="stack">stack</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="transition-type">crossfade</property>
         <child>
-          <object class="GtkStackSwitcher" id="stack_switcher">
+          <!-- n-columns=1 n-rows=1 -->
+          <object class="GtkGrid" id="stack_timers">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="homogeneous">True</property>
-            <property name="stack">stack</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkStack" id="stack">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-start">10</property>
-            <property name="margin-end">10</property>
-            <property name="margin-top">10</property>
-            <property name="margin-bottom">10</property>
-            <property name="transition-type">crossfade</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
             <child>
-              <!-- n-columns=1 n-rows=1 -->
-              <object class="GtkGrid" id="stack_timers">
+              <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkFrame">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkFrame">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="margin-start">55</property>
-                        <property name="label-xalign">0</property>
-                        <property name="shadow-type">none</property>
-                        <child>
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="orientation">vertical</property>
-                            <child>
-                              <object class="GtkRadioButton" id="preset_radio">
-                                <property name="label" translatable="yes" context="preset_radio">Preset timers</property>
-                                <property name="visible">True</property>
-                                <property name="can-focus">True</property>
-                                <property name="receives-default">False</property>
-                                <property name="margin-start">5</property>
-                                <property name="active">True</property>
-                                <property name="draw-indicator">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkRadioButton" id="quick_radio">
-                                <property name="label" translatable="yes" context="quick_radio">Quick timers</property>
-                                <property name="visible">True</property>
-                                <property name="can-focus">True</property>
-                                <property name="receives-default">False</property>
-                                <property name="margin-start">5</property>
-                                <property name="active">True</property>
-                                <property name="draw-indicator">True</property>
-                                <property name="group">preset_radio</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                        </child>
-                        <child type="label">
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="margin-top">10</property>
-                            <property name="label" translatable="yes">Timer types</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
+                    <property name="margin-start">55</property>
+                    <property name="label-xalign">0</property>
+                    <property name="shadow-type">none</property>
                     <child>
                       <object class="GtkBox">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="margin-start">20</property>
-                        <property name="margin-end">20</property>
-                        <property name="margin-top">5</property>
+                        <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkImage" id="img_timer">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="margin-end">5</property>
-                            <property name="pixbuf">icons/kitchen-timer-blackjackshellac-full.svg</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBox" id="timers_combo">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes" context="select-timer">Select the timer to be modified</property>
-                            <property name="halign">center</property>
-                            <property name="margin-top">5</property>
-                            <property name="margin-bottom">5</property>
-                            <property name="model">timers_liststore</property>
-                            <property name="has-entry">True</property>
-                            <property name="entry-text-column">0</property>
-                            <child internal-child="entry">
-                              <object class="GtkEntry" id="timers_combo_entry">
-                                <property name="can-focus">True</property>
-                                <property name="placeholder-text" translatable="yes" context="timers-combo-entry">Timer name</property>
-                                <property name="show-emoji-icon">True</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="timers_add">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
-                            <property name="image">img_add</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="timers_remove">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
-                            <property name="image">img_remove</property>
-                            <property name="always-show-image">True</property>
-                            <signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkCheckButton" id="timer_enabled">
-                            <property name="label" translatable="yes" context="timer-enabled-text">Enabled</property>
+                          <object class="GtkRadioButton" id="preset_radio">
+                            <property name="label" translatable="yes" context="preset_radio">Preset timers</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
-                            <property name="tooltip-text" translatable="yes" context="timer-enabled">Enable timer if checked</property>
-                            <property name="halign">start</property>
-                            <property name="hexpand">True</property>
-                            <property name="draw-indicator">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <!-- n-columns=3 n-rows=3 -->
-                      <object class="GtkGrid" id="scale_grid">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="label" translatable="yes" context="label-hour">Hours</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="label" translatable="yes" context="label-minutes">Minutes	</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="label" translatable="yes" context="label-seconds">Seconds</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScale" id="scale_hour">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="adjustment">adjust_hours</property>
-                            <property name="round-digits">0</property>
-                            <property name="digits">0</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">2</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScale" id="scale_mins">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="adjustment">adjust_mins</property>
-                            <property name="round-digits">0</property>
-                            <property name="digits">0</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">2</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScale" id="scale_secs">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="hexpand">True</property>
-                            <property name="adjustment">adjust_secs</property>
-                            <property name="round-digits">0</property>
-                            <property name="digits">0</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">2</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin_hours">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="margin-top">5</property>
-                            <property name="adjustment">adjust_hours</property>
-                            <signal name="value-changed" handler="on_spin_hours_value_changed" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin_mins">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="margin-top">5</property>
-                            <property name="text" translatable="yes">1</property>
-                            <property name="adjustment">adjust_mins</property>
-                            <property name="value">1</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin_secs">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="text" translatable="yes">0</property>
-                            <property name="adjustment">adjust_secs</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="timer_box">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <child>
-                          <object class="GtkImage" id="img_timer2">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="pixbuf">icons/kitchen-timer-blackjackshellac-full.svg</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="name_entry">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="show-emoji-icon">True</property>
-                            <property name="enable-emoji-completion">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="timer_add">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <property name="image">img_timer_add</property>
-                            <property name="always-show-image">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="timers_tab_message">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="margin-start">20</property>
-                        <property name="hexpand">True</property>
-                        <property name="justify">center</property>
-                        <attributes>
-                          <attribute name="style" value="italic"/>
-                          <attribute name="weight" value="semilight"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="padding">5</property>
-                        <property name="position">5</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkTreeView" id="tv_timers">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="halign">start</property>
-                        <property name="model">timers_liststore</property>
-                        <property name="enable-grid-lines">horizontal</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="tvs_timers"/>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="tvc_name">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes" context="tvcr-name">Name</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <property name="sort-indicator">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="tvcr_name"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="tvc_hms">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes" context="tvcr-hms">HH:MM:SS</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <property name="sort-indicator">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="tvcr_hms"/>
-                              <attributes>
-                                <attribute name="text">5</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="tvc_duration">
-                            <property name="resizable">True</property>
-                            <property name="title" translatable="yes" context="tvcr-duration">Duration</property>
-                            <property name="clickable">True</property>
-                            <property name="reorderable">True</property>
-                            <property name="sort-indicator">True</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="tvcr_duration"/>
-                              <attributes>
-                                <attribute name="text">2</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="tvch_enabled">
-                            <property name="sizing">fixed</property>
-                            <property name="title" translatable="yes" context="tvcr-enabled">Enabled</property>
-                            <child>
-                              <object class="GtkCellRendererToggle" id="tvcr_enabled"/>
-                              <attributes>
-                                <attribute name="active">3</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="tvch_trash">
-                            <property name="title" translatable="yes">Delete</property>
-                            <child>
-                              <object class="GtkCellRendererToggle" id="tvcr_trash"/>
-                              <attributes>
-                                <attribute name="activatable">6</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">6</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="name">timers</property>
-                <property name="title" translatable="yes">Timers</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=2 n-rows=7 -->
-              <object class="GtkGrid" id="stack_options">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
-                <property name="row-spacing">7</property>
-                <property name="column-spacing">20</property>
-                <child>
-                  <object class="GtkCheckButton" id="notification">
-                    <property name="label" translatable="yes" context="notification">Notification</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="notification">Show a notification when the timer is done</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="sort_by_duration">
-                    <property name="label" translatable="yes" context="sort_by_duration_text">Sort by duration</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="sort-by-duration">Sort timers by duration</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="sort_descending">
-                    <property name="label" translatable="yes" context="sort_descending_text">Sort descending</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="sort-descending">Sort timers by duration from longest to shortest</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="save_quick_timers">
-                    <property name="label" translatable="yes" context="save-quick-timers">Save quick timers</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="save-quick-timers-tooltip">If selected, quick timers are also saved</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="show_label">
-                    <property name="label" translatable="yes" context="show_label">Show name</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show_timer_name">Show timer name in the panel menu</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="detect_dupes">
-                    <property name="label" translatable="yes" context="detect-dupes">Detect dupes</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="detect-dupes-tooltip">Prevent timers with the same duration, name and type</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="show_time">
-                    <property name="label" translatable="yes" context="show_time">Show time</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-time">Show remaining time for running timers in the panel</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="notification_sticky">
-                    <property name="label" translatable="yes" context="notification_sticky">Sticky notification</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="notification-sticky-tooltip">Notification waits for input</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="show_progress">
-                    <property name="label" translatable="yes" context="animate_progress_icon">Animate progress icon</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Animate progress icon in the panel menu</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="play_sound">
-                    <property name="label" translatable="yes" context="play-sound">Play sound</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="play-sound">Play the sound when the timer is done</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <!-- n-columns=1 n-rows=3 -->
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="margin-top">10</property>
-                    <child>
-                      <object class="GtkButton" id="json_file_chooser_button">
-                        <property name="label" translatable="yes" context="json_file_chooser_button">Settings…</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                        <property name="tooltip-text" translatable="yes" context="json_file_chooser_tooltip">Export timer settings, or import them into the program</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <child>
-                          <object class="GtkRadioButton" id="export_settings_radio">
-                            <property name="label" translatable="yes" context="export-settings-radio">Export</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">False</property>
+                            <property name="margin-start">5</property>
                             <property name="active">True</property>
                             <property name="draw-indicator">True</property>
                           </object>
@@ -821,14 +181,15 @@ Author: Steeve McCauley
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkRadioButton" id="import_settings_radio">
-                            <property name="label" translatable="yes" context="import-settings-radio">Import</property>
+                          <object class="GtkRadioButton" id="quick_radio">
+                            <property name="label" translatable="yes" context="quick_radio">Quick timers</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
+                            <property name="margin-start">5</property>
                             <property name="active">True</property>
                             <property name="draw-indicator">True</property>
-                            <property name="group">export_settings_radio</property>
+                            <property name="group">preset_radio</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -837,220 +198,35 @@ Author: Steeve McCauley
                           </packing>
                         </child>
                       </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
                     </child>
-                    <child>
-                      <object class="GtkLabel" id="import_export_msg">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="margin-start">20</property>
-                        <property name="margin-end">20</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <property name="ellipsize">middle</property>
-                        <property name="lines">4</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">2</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">6</property>
-                    <property name="width">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="inhibit">
-                    <property name="label" translatable="yes" context="inhibit">Inhibit screen lock</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="inhibit-tooltip">Inhibit screen lock when timers are running</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="accel_enable">
-                    <property name="label" translatable="yes" context="accel-enable">Keyboard shortcuts</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">False</property>
-                    <property name="tooltip-text" translatable="yes" context="accel-enable-tooltip">Click to enable global keyboard shortcuts</property>
-                    <property name="draw-indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">5</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="name">options</property>
-                <property name="title" translatable="yes">Options</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=1 n-rows=5 -->
-              <object class="GtkGrid" id="stack_sound">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
-                <property name="row-spacing">5</property>
-                <child>
-                  <object class="GtkFileChooserButton" id="sound_path">
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="tooltip-text" translatable="yes" context="sound_file_tooltip">Timer notification sound file</property>
-                    <property name="margin-start">20</property>
-                    <property name="filter">audio_files_filter</property>
-                    <property name="title" translatable="yes" context="sound_file">Sound file</property>
-                    <signal name="file-set" handler="on_sound_path_file_set" swapped="no"/>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin-start">25</property>
-                    <property name="label" translatable="yes" context="path_to_sound_file">Sound file</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <!-- n-columns=2 n-rows=2 -->
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkCheckButton" id="volume_level_warn">
-                        <property name="label" translatable="yes" context="warn-volume-level">Warn low volume</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">False</property>
-                        <property name="draw-indicator">True</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSpinButton" id="volume_threshold">
-                        <property name="width-request">40</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="tooltip-text" translatable="yes" context="low-volume-threshold-percent">Low volume threshold percent</property>
-                        <property name="halign">end</property>
-                        <property name="caps-lock-warning">False</property>
-                        <property name="adjustment">volume_threshold_percent</property>
-                        <property name="numeric">True</property>
-                        <property name="value">25</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="play_sound2">
-                        <property name="label" translatable="yes" context="play-sound">Play sound</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">False</property>
-                        <property name="draw-indicator">True</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSpinButton" id="sound_loops">
-                        <property name="width-request">40</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="tooltip-text" translatable="yes" context="sound_loops_tooltip">Loops to play timer notification sound, 0 plays for the duration of the notification dialog</property>
-                        <property name="halign">end</property>
-                        <property name="caps-lock-warning">False</property>
-                        <property name="adjustment">sound_loops_adjustment</property>
-                        <property name="numeric">True</property>
-                        <property name="value">2</property>
-                        <signal name="value-changed" handler="on_sound_loops_spin_value_changed" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-              </object>
-              <packing>
-                <property name="name">sound</property>
-                <property name="title" translatable="yes">Sound</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=1 n-rows=1 -->
-              <object class="GtkGrid" id="stack_about">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="valign">center</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
-                <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="margin-start">10</property>
-                    <property name="margin-end">10</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="orientation">vertical</property>
-                    <child>
+                    <child type="label">
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Kitchen Timer</property>
-                        <property name="justify">center</property>
-                        <attributes>
-                          <attribute name="font-desc" value="Sans 10"/>
-                          <attribute name="style" value="normal"/>
-                          <attribute name="weight" value="medium"/>
-                          <attribute name="variant" value="small-caps"/>
-                          <attribute name="scale" value="2"/>
-                        </attributes>
+                        <property name="margin-top">10</property>
+                        <property name="label" translatable="yes">Timer types</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-start">20</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <child>
+                      <object class="GtkImage" id="img_timer">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-end">5</property>
+                        <property name="pixbuf">icons/kitchen-timer-blackjackshellac-full.svg</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1059,13 +235,23 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="description">
+                      <object class="GtkComboBox" id="timers_combo">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label">description</property>
-                        <attributes>
-                          <attribute name="scale" value="1.2"/>
-                        </attributes>
+                        <property name="tooltip-text" translatable="yes" context="select-timer">Select the timer to be modified</property>
+                        <property name="halign">center</property>
+                        <property name="margin-top">5</property>
+                        <property name="margin-bottom">5</property>
+                        <property name="model">timers_liststore</property>
+                        <property name="has-entry">True</property>
+                        <property name="entry-text-column">0</property>
+                        <child internal-child="entry">
+                          <object class="GtkEntry" id="timers_combo_entry">
+                            <property name="can-focus">True</property>
+                            <property name="placeholder-text" translatable="yes" context="timers-combo-entry">Timer name</property>
+                            <property name="show-emoji-icon">True</property>
+                          </object>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1074,35 +260,29 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkEventBox" id="timer_icon">
+                      <object class="GtkButton" id="timers_add">
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">center</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="margin-top">5</property>
-                            <property name="margin-bottom">5</property>
-                            <property name="pixbuf">icons/kitchen-timer-blackjackshellac-full.svg</property>
-                          </object>
-                        </child>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes" context="add-timer">Add new timer</property>
+                        <property name="image">img_add</property>
+                        <property name="always-show-image">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="fill">False</property>
+                        <property name="fill">True</property>
                         <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="version">
+                      <object class="GtkButton" id="timers_remove">
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label">Version</property>
-                        <property name="justify">center</property>
-                        <attributes>
-                          <attribute name="scale" value="1.2"/>
-                        </attributes>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes" context="remove-timer">Remove selected timer</property>
+                        <property name="image">img_remove</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="clicked" handler="on_timers_remove_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1111,14 +291,15 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="copyright">
+                      <object class="GtkCheckButton" id="timer_enabled">
+                        <property name="label" translatable="yes" context="timer-enabled-text">Enabled</property>
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Copyright © 2021, Steeve McCauley</property>
-                        <attributes>
-                          <attribute name="weight" value="normal"/>
-                          <attribute name="scale" value="0.90000000000000002"/>
-                        </attributes>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes" context="timer-enabled">Enable timer if checked</property>
+                        <property name="halign">start</property>
+                        <property name="hexpand">True</property>
+                        <property name="draw-indicator">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -1127,52 +308,527 @@ Author: Steeve McCauley
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLinkButton">
-                        <property name="label" translatable="yes">https://github.com/blackjackshellac/kitchenTimer</property>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <!-- n-columns=3 n-rows=3 -->
+                  <object class="GtkGrid" id="scale_grid">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkLabel">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">False</property>
-                        <property name="image">img_kitchentimer_symbolic</property>
-                        <property name="always-show-image">True</property>
-                        <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes" context="label-hour">Hours</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">5</property>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">&lt;span size='smaller' style='italic'&gt;This program comes with absolutely no warranty.
-See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 License&lt;/a&gt; for details.&lt;/span&gt;</property>
-                        <property name="use-markup">True</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <property name="track-visited-links">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes" context="label-minutes">Minutes	</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">6</property>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLinkButton" id="bmc">
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes" context="label-seconds">Seconds</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="scale_hour">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="receives-default">True</property>
-                        <property name="image">img_bmac</property>
-                        <property name="relief">none</property>
-                        <property name="always-show-image">True</property>
-                        <property name="uri">https://www.buymeacoffee.com/blckjackshellac</property>
+                        <property name="hexpand">True</property>
+                        <property name="adjustment">adjust_hours</property>
+                        <property name="round-digits">0</property>
+                        <property name="digits">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="scale_mins">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="adjustment">adjust_mins</property>
+                        <property name="round-digits">0</property>
+                        <property name="digits">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="scale_secs">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="hexpand">True</property>
+                        <property name="adjustment">adjust_secs</property>
+                        <property name="round-digits">0</property>
+                        <property name="digits">0</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spin_hours">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="margin-top">5</property>
+                        <property name="adjustment">adjust_hours</property>
+                        <signal name="value-changed" handler="on_spin_hours_value_changed" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spin_mins">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="margin-top">5</property>
+                        <property name="text" translatable="yes">1</property>
+                        <property name="adjustment">adjust_mins</property>
+                        <property name="value">1</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="spin_secs">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="text" translatable="yes">0</property>
+                        <property name="adjustment">adjust_secs</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkBox" id="timer_box">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImage" id="img_timer2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="pixbuf">icons/kitchen-timer-blackjackshellac-full.svg</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">7</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="name_entry">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="show-emoji-icon">True</property>
+                        <property name="enable-emoji-completion">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="timer_add">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="image">img_timer_add</property>
+                        <property name="always-show-image">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="timers_tab_message">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-start">20</property>
+                    <property name="hexpand">True</property>
+                    <property name="justify">center</property>
+                    <attributes>
+                      <attribute name="style" value="italic"/>
+                      <attribute name="weight" value="semilight"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">5</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkTreeView" id="tv_timers">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="halign">start</property>
+                    <property name="model">timers_liststore</property>
+                    <property name="enable-grid-lines">horizontal</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="tvs_timers"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="tvc_name">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes" context="tvcr-name">Name</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <property name="sort-indicator">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="tvcr_name"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="tvc_hms">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes" context="tvcr-hms">HH:MM:SS</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <property name="sort-indicator">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="tvcr_hms"/>
+                          <attributes>
+                            <attribute name="text">5</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="tvc_duration">
+                        <property name="resizable">True</property>
+                        <property name="title" translatable="yes" context="tvcr-duration">Duration</property>
+                        <property name="clickable">True</property>
+                        <property name="reorderable">True</property>
+                        <property name="sort-indicator">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="tvcr_duration"/>
+                          <attributes>
+                            <attribute name="text">2</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="tvch_enabled">
+                        <property name="sizing">fixed</property>
+                        <property name="title" translatable="yes" context="tvcr-enabled">Enabled</property>
+                        <child>
+                          <object class="GtkCellRendererToggle" id="tvcr_enabled"/>
+                          <attributes>
+                            <attribute name="active">3</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="tvch_trash">
+                        <property name="title" translatable="yes">Delete</property>
+                        <child>
+                          <object class="GtkCellRendererToggle" id="tvcr_trash"/>
+                          <attributes>
+                            <attribute name="activatable">6</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="name">timers</property>
+            <property name="title" translatable="yes">Timers</property>
+          </packing>
+          </child>
+        <child>
+          <!-- n-columns=2 n-rows=7 -->
+          <object class="GtkGrid" id="stack_options">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="row-spacing">7</property>
+            <property name="column-spacing">20</property>
+            <child>
+              <object class="GtkCheckButton" id="notification">
+                <property name="label" translatable="yes" context="notification">Notification</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="notification">Show a notification when the timer is done</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="sort_by_duration">
+                <property name="label" translatable="yes" context="sort_by_duration_text">Sort by duration</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="sort-by-duration">Sort timers by duration</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="sort_descending">
+                <property name="label" translatable="yes" context="sort_descending_text">Sort descending</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="sort-descending">Sort timers by duration from longest to shortest</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="save_quick_timers">
+                <property name="label" translatable="yes" context="save-quick-timers">Save quick timers</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="save-quick-timers-tooltip">If selected, quick timers are also saved</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="show_label">
+                <property name="label" translatable="yes" context="show_label">Show name</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="show_timer_name">Show timer name in the panel menu</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="detect_dupes">
+                <property name="label" translatable="yes" context="detect-dupes">Detect dupes</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="detect-dupes-tooltip">Prevent timers with the same duration, name and type</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="show_time">
+                <property name="label" translatable="yes" context="show_time">Show time</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="show-time">Show remaining time for running timers in the panel</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="notification_sticky">
+                <property name="label" translatable="yes" context="notification_sticky">Sticky notification</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="notification-sticky-tooltip">Notification waits for input</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="show_progress">
+                <property name="label" translatable="yes" context="animate_progress_icon">Animate progress icon</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="show-progress-tooltip">Animate progress icon in the panel menu</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="play_sound">
+                <property name="label" translatable="yes" context="play-sound">Play sound</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="play-sound">Play the sound when the timer is done</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=1 n-rows=3 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">center</property>
+                <property name="margin-top">10</property>
+                <child>
+                  <object class="GtkButton" id="json_file_chooser_button">
+                    <property name="label" translatable="yes" context="json_file_chooser_button">Settings…</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="tooltip-text" translatable="yes" context="json_file_chooser_tooltip">Export timer settings, or import them into the program</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkRadioButton" id="export_settings_radio">
+                        <property name="label" translatable="yes" context="export-settings-radio">Export</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="import_settings_radio">
+                        <property name="label" translatable="yes" context="import-settings-radio">Import</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">export_settings_radio</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
@@ -1181,25 +837,357 @@ See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 Lice
                     <property name="top-attach">0</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkLabel" id="import_export_msg">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="margin-start">20</property>
+                    <property name="margin-end">20</property>
+                    <property name="justify">center</property>
+                    <property name="wrap">True</property>
+                    <property name="ellipsize">middle</property>
+                    <property name="lines">4</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                  </packing>
+                </child>
               </object>
               <packing>
-                <property name="name">about</property>
-                <property name="title" translatable="yes" context="about">About</property>
-                <property name="position">3</property>
+                <property name="left-attach">0</property>
+                <property name="top-attach">6</property>
+                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="inhibit">
+                <property name="label" translatable="yes" context="inhibit">Inhibit screen lock</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="inhibit-tooltip">Inhibit screen lock when timers are running</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkCheckButton" id="accel_enable">
+                <property name="label" translatable="yes" context="accel-enable">Keyboard shortcuts</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes" context="accel-enable-tooltip">Click to enable global keyboard shortcuts</property>
+                <property name="draw-indicator">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">5</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
+            <property name="name">options</property>
+            <property name="title" translatable="yes">Options</property>
             <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=1 n-rows=5 -->
+          <object class="GtkGrid" id="stack_sound">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <property name="row-spacing">5</property>
+            <child>
+              <object class="GtkFileChooserButton" id="sound_path">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="tooltip-text" translatable="yes" context="sound_file_tooltip">Timer notification sound file</property>
+                <property name="margin-start">20</property>
+                <property name="filter">audio_files_filter</property>
+                <property name="title" translatable="yes" context="sound_file">Sound file</property>
+                <signal name="file-set" handler="on_sound_path_file_set" swapped="no"/>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">start</property>
+                <property name="margin-start">25</property>
+                <property name="label" translatable="yes" context="path_to_sound_file">Sound file</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=2 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkCheckButton" id="volume_level_warn">
+                    <property name="label" translatable="yes" context="warn-volume-level">Warn low volume</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="volume_threshold">
+                    <property name="width-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes" context="low-volume-threshold-percent">Low volume threshold percent</property>
+                    <property name="halign">end</property>
+                    <property name="caps-lock-warning">False</property>
+                    <property name="adjustment">volume_threshold_percent</property>
+                    <property name="numeric">True</property>
+                    <property name="value">25</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="play_sound2">
+                    <property name="label" translatable="yes" context="play-sound">Play sound</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="sound_loops">
+                    <property name="width-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="tooltip-text" translatable="yes" context="sound_loops_tooltip">Loops to play timer notification sound, 0 plays for the duration of the notification dialog</property>
+                    <property name="halign">end</property>
+                    <property name="caps-lock-warning">False</property>
+                    <property name="adjustment">sound_loops_adjustment</property>
+                    <property name="numeric">True</property>
+                    <property name="value">2</property>
+                    <signal name="value-changed" handler="on_sound_loops_spin_value_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="name">sound</property>
+            <property name="title" translatable="yes">Sound</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=1 n-rows=1 -->
+          <object class="GtkGrid" id="stack_about">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="valign">center</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-start">10</property>
+                <property name="margin-end">10</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Kitchen Timer</property>
+                    <property name="justify">center</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Sans 10"/>
+                      <attribute name="style" value="normal"/>
+                      <attribute name="weight" value="medium"/>
+                      <attribute name="variant" value="small-caps"/>
+                      <attribute name="scale" value="2"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="description">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label">description</property>
+                    <attributes>
+                      <attribute name="scale" value="1.2"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEventBox" id="timer_icon">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-top">5</property>
+                        <property name="margin-bottom">5</property>
+                        <property name="pixbuf">icons/kitchen-timer-blackjackshellac-full.svg</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="version">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label">Version</property>
+                    <property name="justify">center</property>
+                    <attributes>
+                      <attribute name="scale" value="1.2"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="copyright">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Copyright © 2021, Steeve McCauley</property>
+                    <attributes>
+                      <attribute name="weight" value="normal"/>
+                      <attribute name="scale" value="0.90000000000000002"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLinkButton">
+                    <property name="label" translatable="yes">https://github.com/blackjackshellac/kitchenTimer</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="image">img_kitchentimer_symbolic</property>
+                    <property name="always-show-image">True</property>
+                    <property name="uri">https://github.com/blackjackshellac/kitchenTimer</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">&lt;span size='smaller' style='italic'&gt;This program comes with absolutely no warranty.
+See the &lt;a href="https://www.gnu.org/licenses/gpl-3.0.html"&gt;GNU GPL 3 License&lt;/a&gt; for details.&lt;/span&gt;</property>
+                    <property name="use-markup">True</property>
+                    <property name="justify">center</property>
+                    <property name="wrap">True</property>
+                    <property name="track-visited-links">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLinkButton" id="bmc">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="image">img_bmac</property>
+                    <property name="relief">none</property>
+                    <property name="always-show-image">True</property>
+                    <property name="uri">https://www.buymeacoffee.com/blckjackshellac</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="name">about</property>
+            <property name="title" translatable="yes" context="about">About</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>
       <packing>
-        <property name="expand">False</property>
+        <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">0</property>
+        <property name="position">1</property>
       </packing>
     </child>
   </object>
