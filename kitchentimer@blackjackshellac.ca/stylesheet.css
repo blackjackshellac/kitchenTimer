@@ -46,3 +46,10 @@
   font-family: sans-serif;
   font-size: smaller;
 }
+
+.kitchentimer-prefs-button {
+  border-right: 0px;
+  border-left: 10px;
+  vertical-align: middle;
+}
+

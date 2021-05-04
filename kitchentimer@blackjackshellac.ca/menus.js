@@ -162,12 +162,6 @@ var PanelMenuBuilder = class PanelMenuBuilder {
     this._addSeparator();
 
     new Mitem.KitchenTimerCreatePreset(this._menu, this.timers);
-
-    this._addSeparator();
-    var prefs = this._addItem(_("Preferences…"));
-    prefs.connect('activate', () => {
-      ExtensionUtils.openPrefs();
-    });
   }
 
   _getMenu(menu) {

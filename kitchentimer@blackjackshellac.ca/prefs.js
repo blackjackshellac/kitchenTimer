@@ -57,6 +57,14 @@ class PreferencesBuilder {
   show() {
     if (Utils.isGnome3x()) {
       this._widget.show_all();
+    } else {
+      let window = this._widget.get_root();
+      if (window) {
+        // why is this null?
+        window.default_width = 700;
+        window.default_height = 900;
+      }
+      // window.resize(700, 900);
     }
     this._bo('timer_box').hide();
     this.tv_timers.hide();

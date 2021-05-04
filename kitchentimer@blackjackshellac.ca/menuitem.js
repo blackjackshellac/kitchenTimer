@@ -520,7 +520,7 @@ class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
 var KitchenTimerQuickItem = GObject.registerClass(
 class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
   _init(menu, timers) {
-    super._init(_("Quick"), { reactive: false, can_focus: false });
+    super._init("", { reactive: false, can_focus: false });
 
     this._menu = menu;
     this._timers = timers;
@@ -546,13 +546,93 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
     this._entry.get_clutter_text().set_activatable(true);
     this._entry.get_clutter_text().set_editable(true);
 
-    this._gogo = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
-      hover: false,
-      style_class: null
+    // this._gogo = new PopupMenu.PopupSwitchMenuItem(_("Go"), false, {
+    //   hover: false,
+    //   style_class: null
+    // });
+
+    this._add_icon = new St.Icon( {
+      x_expand: false,
+      y_align: Clutter.ActorAlign.CENTER,
+      icon_name: 'list-add-symbolic',
+      icon_size: 20,
     });
 
+    this._add = new St.Button( {
+      x_expand: false,
+      y_expand: false,
+      can_focus: true,
+      x_align: St.Align.END,
+      y_align: Clutter.ActorAlign.CENTER,
+      style_class: 'kitchentimer-prefs-button',
+      child: this._add_icon
+    });
+
+    this._add.connect('clicked', (btn, clicked_button) => {
+      logger.debug("mouse button pressed %d", clicked_button);
+      var entry = this._entry.get_clutter_text().get_text().trim();
+
+      var result = KitchenTimerMenuItem.parseTimerEntry(entry, true);
+      if (!result) {
+        logger.error("Invalid timer entry='%s'", entry);
+        return;
+      }
+
+      var timer = KitchenTimerMenuItem.addTimerStart(result, this._timers);
+      if (timer) {
+        this._menu.close();
+        global.stage.set_key_focus(null);
+      }
+    });
+
+    this._add.connect('enter_event', (btn, event) => {
+      //btn.get_child().icon_name = 'preferences-system-symbolic';
+      btn.get_child().icon_size = 28;
+    })
+
+    this._add.connect('leave_event', (btn, event) => {
+      //btn.get_child().icon_name = 'open-menu-symbolic';
+      btn.get_child().icon_size = 20;
+    })
+
+    this._prefs_icon = new St.Icon( {
+      x_expand: false,
+      y_align: Clutter.ActorAlign.CENTER,
+      icon_name: 'preferences-system-symbolic',
+      icon_size: 20,
+    });
+
+    this._prefs = new St.Button( {
+      x_expand: false,
+      y_expand: false,
+      can_focus: true,
+      x_align: St.Align.END,
+      y_align: Clutter.ActorAlign.CENTER,
+      style_class: 'kitchentimer-prefs-button',
+      child: this._prefs_icon
+    });
+
+    this._prefs.connect('clicked', (btn, clicked_button) => {
+      logger.debug("mouse button pressed %d", clicked_button);
+      ExtensionUtils.openPrefs();
+      this._menu.close();
+      global.stage.set_key_focus(null);
+    });
+
+    this._prefs.connect('enter_event', (btn, event) => {
+      //btn.get_child().icon_name = 'preferences-system-symbolic';
+      btn.get_child().icon_size = 28;
+    })
+
+    this._prefs.connect('leave_event', (btn, event) => {
+      //btn.get_child().icon_name = 'open-menu-symbolic';
+      btn.get_child().icon_size = 20;
+    })
+
     layout.add_child(this._entry);
-    layout.add_child(this._gogo);
+    layout.add_child(this._add);
+    layout.add_child(this._prefs);
+    //layout.add_child(this._gogo);
 
     this._entry.get_clutter_text().connect('activate', (e) => {
       var entry = e.get_text();
@@ -562,7 +642,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
         this._entry.get_clutter_text().set_text("%s %s".format(result.name, result.hms.toString()));
         var timer = KitchenTimerMenuItem.addTimerStart(result, this._timers);
         if (timer === undefined) {
-          this._gogo.set_active(false);
+          //this._gogo.set_active(false);
         } else {
           this._menu.close();
         }
@@ -580,25 +660,25 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
       }
     });
 
-    this._gogo.connect('toggled', (go) => {
-      if (go.state) {
-        var entry = this._entry.get_clutter_text().get_text().trim();
+    // this._gogo.connect('toggled', (go) => {
+    //   if (go.state) {
+    //     var entry = this._entry.get_clutter_text().get_text().trim();
 
-        var result = KitchenTimerMenuItem.parseTimerEntry(entry, true);
-        if (!result) {
-          logger.error("Invalid timer entry='%s'", entry);
-          go.setToggleState(false);
-          return;
-        }
+    //     var result = KitchenTimerMenuItem.parseTimerEntry(entry, true);
+    //     if (!result) {
+    //       logger.error("Invalid timer entry='%s'", entry);
+    //       go.setToggleState(false);
+    //       return;
+    //     }
 
-        var timer = KitchenTimerMenuItem.addTimerStart(result, this._timers);
-        if (timer === undefined) {
-          go.setToggledState(false);
-        } else {
-          this._menu.close();
-        }
-      }
-    });
+    //     var timer = KitchenTimerMenuItem.addTimerStart(result, this._timers);
+    //     if (timer === undefined) {
+    //       go.setToggledState(false);
+    //     } else {
+    //       this._menu.close();
+    //     }
+    //   }
+    // });
 
   }
 
