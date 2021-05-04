@@ -167,7 +167,6 @@ class PreferencesBuilder {
       this.logger.debug('Add new timer');
       var iter = this.timers_liststore.append();
 
-      //log(`Timer ${Object.keys(timer)}`);
       this.timers_liststore.set_value(iter, Model.NAME, _('New timer')); // name
       this.timers_liststore.set_value(iter, Model.ID, Utils.uuid());   // id
       this.timers_liststore.set_value(iter, Model.DURATION, 0);           // duration
@@ -942,8 +941,6 @@ function init() {
 }
 
 function buildPrefsWidget() {
-  log("Create preferences widget and show it");
-
   ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
 
   var preferencesBuilder = new PreferencesBuilder();

@@ -37,7 +37,6 @@ const Mitem = Me.imports.menuitem;
 
 var PanelMenuBuilder = class PanelMenuBuilder {
   constructor(menu, timers) {
-    log("");
     this._menu = menu;
     this._create_timer_menu = undefined;
     this._timers = timers;

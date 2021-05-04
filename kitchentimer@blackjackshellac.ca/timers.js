@@ -318,7 +318,6 @@ var Timers = class Timers extends Array {
   sort_by_running() {
     var running_timers = [...this].filter(timer => timer.running);
 
-    //log(`running timers length=${running_timers.length}`);
     var now=Date.now();
     return running_timers.sort( (a,b) => {
       return a._end-b._end;
@@ -671,7 +670,6 @@ var Timer = class Timer {
     timersInstance.inhibitor.inhibit_timer(timer);
 
     //var delta = Math.ceil((end-now) / 1000);
-    //log(`Timer [${timer._name}] has not ended: ${delta}`);
     let hms = timer.remaining_hms(now);
 
     timer.label_progress(hms);
