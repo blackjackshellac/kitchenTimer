@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-03 18:20-0400\n"
+"POT-Creation-Date: 2021-05-04 17:41-0400\n"
 "PO-Revision-Date: 2021-04-22 12:37-0400\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
@@ -34,46 +34,6 @@ msgstr "heures"
 #: ../indicator.js:47 ../settings.ui:1040
 msgid "Kitchen Timer"
 msgstr "Kitchen Timer"
-
-#: ../menuitem.js:47
-msgid "Create Preset"
-msgstr "Créer un préréglage"
-
-#: ../menuitem.js:58 ../menuitem.js:545
-msgid "Name 00:00:00"
-msgstr "Nom 00:00:00"
-
-#: ../menuitem.js:74
-msgid "Create"
-msgstr "Créer"
-
-#: ../menuitem.js:478
-msgid "Show end time"
-msgstr "Afficher l'heure de fin"
-
-#: ../menuitem.js:523
-msgid "Quick"
-msgstr "Pratique"
-
-#: ../menuitem.js:549
-msgid "Go"
-msgstr "Go"
-
-#: ../menus.js:108
-msgid "Running timers"
-msgstr "Minuteries en cours"
-
-#: ../menus.js:121
-msgid "Quick timers"
-msgstr "Minuteries pratiques"
-
-#: ../menus.js:145
-msgid "Preset timers"
-msgstr "Minuteries préréglées"
-
-#: ../menus.js:167
-msgid "Preferences…"
-msgstr "Préférences…"
 
 #: ../notifier.js:338
 #, javascript-format
@@ -234,32 +194,6 @@ msgstr "La minuterie a terminé avec %s de retard à"
 #: ../timers.js:737
 msgid "Timer completed on time at"
 msgstr "Minuterie terminée à temps à"
-
-#: ../prefs.js:163
-msgid "New timer"
-msgstr "Nouvelle minuterie"
-
-#: ../prefs.js:557
-msgid "Sound file"
-msgstr "Fichier son"
-
-#: ../prefs.js:587 ../prefs.js:601
-msgid "Export"
-msgstr "Exporter"
-
-#: ../prefs.js:637
-#, javascript-format
-msgid "Exported settings to %s"
-msgstr "Les paramètres ont été exportés vers %s"
-
-#: ../prefs.js:670
-msgid "Import"
-msgstr "Importer"
-
-#: ../prefs.js:699
-#, javascript-format
-msgid "Imported settings from %s"
-msgstr "Les paramètres ont été importés du %s"
 
 #: ../settings.ui:55 ../settings.ui:267 ../settings40.ui:299
 #: ../settings40.ui:306
@@ -575,6 +509,69 @@ msgstr "Minutes"
 #: ../settings40.ui:1242
 msgid "About"
 msgstr "À propos"
+
+#: ../menuitem.js:47
+msgid "Create Preset"
+msgstr "Créer un préréglage"
+
+#: ../menuitem.js:58 ../menuitem.js:545
+msgid "Name 00:00:00"
+msgstr "Nom 00:00:00"
+
+#: ../menuitem.js:74
+msgid "Create"
+msgstr "Créer"
+
+#: ../menuitem.js:478
+msgid "Show end time"
+msgstr "Afficher l'heure de fin"
+
+#: ../menus.js:108
+msgid "Running timers"
+msgstr "Minuteries en cours"
+
+#: ../menus.js:121
+msgid "Quick timers"
+msgstr "Minuteries pratiques"
+
+#: ../menus.js:145
+msgid "Preset timers"
+msgstr "Minuteries préréglées"
+
+#: ../prefs.js:171
+msgid "New timer"
+msgstr "Nouvelle minuterie"
+
+#: ../prefs.js:565
+msgid "Sound file"
+msgstr "Fichier son"
+
+#: ../prefs.js:595 ../prefs.js:609
+msgid "Export"
+msgstr "Exporter"
+
+#: ../prefs.js:645
+#, javascript-format
+msgid "Exported settings to %s"
+msgstr "Les paramètres ont été exportés vers %s"
+
+#: ../prefs.js:678
+msgid "Import"
+msgstr "Importer"
+
+#: ../prefs.js:707
+#, javascript-format
+msgid "Imported settings from %s"
+msgstr "Les paramètres ont été importés du %s"
+
+#~ msgid "Quick"
+#~ msgstr "Pratique"
+
+#~ msgid "Go"
+#~ msgstr "Go"
+
+#~ msgid "Preferences…"
+#~ msgstr "Préférences…"
 
 #~ msgctxt "label-hour"
 #~ msgid " Hours"
