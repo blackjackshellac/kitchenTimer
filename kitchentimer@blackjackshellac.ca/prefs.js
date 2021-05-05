@@ -945,13 +945,17 @@ function buildPrefsWidget() {
 
   var preferencesBuilder = new PreferencesBuilder();
   var widget = preferencesBuilder.build();
-/*
-  var window = widget.get_parent_window();
-  if (window) {
-    window.set_default_icon_from_file(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
-  }
-*/
   preferencesBuilder.show();
+
+  widget.connect('realize', () => {
+    let window = Utils.isGnome3x() ? widget.get_toplevel() : widget.get_root();
+    preferencesBuilder.logger.debug('window=%s', window);
+    //window.default_width = 700;
+    //window.default_height = 900;
+    //window.set_default_icon_name('view-paged-symbolic');
+    window.set_position(Gtk.WindowPosition.CENTER);
+    //window.resize(700, 900);
+  });
 
   return widget;
 }
