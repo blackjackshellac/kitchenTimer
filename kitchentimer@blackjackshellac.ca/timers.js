@@ -570,10 +570,12 @@ var Timer = class Timer {
   }
 
   label_progress(hms=undefined) {
+    if (timersInstance.indicator === undefined || timersInstance.attached === false) {
+      return;
+    }
     if (!this.label) {
       return;
     }
-
     if (hms === undefined) {
       hms=this.remaining_hms();
     }
@@ -615,13 +617,13 @@ var Timer = class Timer {
     var gicon = timersInstance.progress_gicon(key);
     if (gicon !== this._gicon) {
       this._gicon = gicon;
-		  var icon = new St.Icon({
+      var icon = new St.Icon({
         gicon: gicon,
         style_class: 'system-status-icon'
       });
-		  icon.set_icon_size(20);
-		  var panel_box = timersInstance.box;
-		  if (panel_box) {
+      icon.set_icon_size(20);
+      var panel_box = timersInstance.box;
+      if (panel_box) {
         var current = panel_box.get_child_at_index(0);
         panel_box.replace_child(current, icon);
         current.destroy();
