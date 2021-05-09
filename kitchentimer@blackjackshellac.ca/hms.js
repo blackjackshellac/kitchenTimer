@@ -39,7 +39,7 @@ var HMS = class HMS {
       m = array[0];
       s = array[1];
     } else if (array.length == 1) {
-      s = array[1];
+      s = array[0];
     } else {
       return undefined;
     }
