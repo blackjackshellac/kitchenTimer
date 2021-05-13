@@ -856,9 +856,9 @@ var Timer = class Timer {
         if (this.notify_volume === undefined) {
           this.notify_volume = stream.connect('notify::volume', this.check_volume.bind(this));
         }
-        // if (this.notify_muted === undefined) {
-        //   this.notify_muted = stream.connect('notify::is-muted', this.check_volume.bind(this));
-        // }
+        if (this.notify_muted === undefined) {
+          this.notify_muted = stream.connect('notify::is-muted', this.check_volume.bind(this));
+        }
       }
     }
 
