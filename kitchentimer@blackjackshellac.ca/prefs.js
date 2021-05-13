@@ -953,7 +953,6 @@ function buildPrefsWidget() {
     //window.default_width = 700;
     //window.default_height = 900;
     //window.set_default_icon_name('view-paged-symbolic');
-    window.set_position(Gtk.WindowPosition.CENTER);
     //window.resize(700, 900);
   });
 

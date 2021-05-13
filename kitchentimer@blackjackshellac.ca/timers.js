@@ -37,6 +37,7 @@ const SessionManagerInhibitor = Me.imports.inhibitor.SessionManagerInhibitor;
 const KeyboardShortcuts = Me.imports.keyboard_shortcuts.KeyboardShortcuts;
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+const mixerControl = imports.ui.status.volume.getMixerControl();
 
 var Timers = class Timers extends Array {
   constructor(...args) {
@@ -90,6 +91,8 @@ var Timers = class Timers extends Array {
     }
 
     timersInstance.attached = true;
+
+    timersInstance.warn_volume = true;
 
     return timersInstance;
   }
@@ -457,6 +460,41 @@ var Timer = class Timer {
 
   }
 
+  check_volume() {
+    if (!this.timers.settings.play_sound || !this.timers.settings.volume_level_warn) {
+      return;
+    }
+    let stream = mixerControl.get_default_sink();
+    if (stream) {
+      let result = {
+        max: mixerControl.get_vol_max_norm(),
+        vol: 0,
+        level: -1,
+        muted: false
+      }
+      result.vol = stream.volume;
+      result.muted = stream.is_muted;
+
+      result.level = Math.floor(result.vol * 100 / result.max);
+
+      var volume_threshold = this.timers.settings.volume_threshold;
+
+      if (result.muted || result.level < volume_threshold) {
+          if (this.timers.warn_volume) {
+            this.timers.warn_volume = false;
+            Utils.logObjectPretty(result);
+            let msg=this.logger.warn(_('volume level is low for running timer: %d %%'), result.level);
+            this.timers.notifier.warning(this, this.name, msg);
+          }
+      } else {
+        if (!this.timers.warn_volume) {
+          this.logger.debug('volume level %d above threshold %d', result.level, volume_threshold);
+          this.timers.warn_volume = true;
+        }
+      }
+    }
+  }
+
   toString() {
     return "[%s:%s] state=%d start=%d end=%d dur=%d iid=%d".format(
       this._name, this._id,
@@ -749,6 +787,22 @@ var Timer = class Timer {
     timersInstance.set_panel_label("");
     timersInstance.saveRunningTimers();
 
+    if (this.notify_volume || this.notify_muted) {
+      let stream = mixerControl.get_default_sink();
+      if (stream) {
+        if (this.notify_volume) {
+          this.logger.debug('disconnect notify::volume');
+          stream.disconnect(this.notify_volume);
+          this.notify_volume = undefined;
+        }
+        if (this.notify_muted) {
+          this.logger.debug('disconnect notify::is-muted');
+          stream.disconnect(this.notify_muted);
+          this.notify_muted = undefined;
+        }
+      }
+    }
+
     // return with false to stop interval callback loop
     return false;
   }
@@ -796,6 +850,21 @@ var Timer = class Timer {
       action="Restarting";
     }
 
+    if (this.timers.settings.play_sound && this.timers.settings.volume_level_warn) {
+      let stream = mixerControl.get_default_sink();
+      if (stream) {
+        if (this.notify_volume === undefined) {
+          this.notify_volume = stream.connect('notify::volume', this.check_volume.bind(this));
+        }
+        // if (this.notify_muted === undefined) {
+        //   this.notify_muted = stream.connect('notify::is-muted', this.check_volume.bind(this));
+        // }
+      }
+    }
+
+    this.timers.warn_volume = true;
+    this.check_volume();
+
     this._end = end === undefined ? this._start + this.duration_ms() : end;
     this._state = TimerState.RUNNING;
 
@@ -809,18 +878,6 @@ var Timer = class Timer {
 
     this._interval_id = Utils.setInterval(this.timer_callback, this._interval_ms, this);
 
-    if (timersInstance.settings.play_sound || timersInstance.settings.volume_level_warn) {
-      // array of { channel, level, percent, on }
-      var msg="";
-      var volume_threshold = timersInstance.settings.volume_threshold;
-      var channel_volumes = timersInstance.notifier.check_volume(volume_threshold);
-      if (channel_volumes) {
-        channel_volumes.forEach( (channel_volume) => {
-          msg += "<b>%s</b> channel volume low <i>%d%s</i>\r\n".format(channel_volume.channel, channel_volume.percent, "%%");
-        });
-        timersInstance.notifier.warning(this, this.name, msg);
-      }
-    }
     return true;
   }
 

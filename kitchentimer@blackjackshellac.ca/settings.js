@@ -412,7 +412,7 @@ var Settings = class Settings {
   }
 
   get volume_level_warn() {
-    this.settings.get_boolean('volume-level-warn');
+    return this.settings.get_boolean('volume-level-warn');
   }
 
   set volume_level_warn(bool) {
