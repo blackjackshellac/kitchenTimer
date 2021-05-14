@@ -10,5 +10,5 @@
   "gettext-domain": "kitchen-timer-blackjackshellac",
   "settings-schema": "org.gnome.shell.extensions.kitchen-timer-blackjackshellac",
   "url": "https://github.com/blackjackshellac/kitchenTimer",
-  "version": 27
+  "version": 28
 }
