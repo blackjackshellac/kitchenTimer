@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KitchenTimer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-04 17:41-0400\n"
-"PO-Revision-Date: 2021-04-22 12:37-0400\n"
+"POT-Creation-Date: 2021-05-14 06:10-0400\n"
+"PO-Revision-Date: 2021-05-14 06:10-0400\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: French <steeve.mccauley@gmail.com>\n"
 "Language: fr\n"
@@ -17,28 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 3.38.0\n"
-
-#: ../hms.js:141
-msgid "seconds"
-msgstr "secondes"
-
-#: ../hms.js:144
-msgid "minutes"
-msgstr "minutes"
-
-#: ../hms.js:149
-msgid "hours"
-msgstr "heures"
+"X-Generator: Gtranslator 40.0\n"
 
 #: ../indicator.js:47 ../settings.ui:1040
 msgid "Kitchen Timer"
 msgstr "Kitchen Timer"
-
-#: ../notifier.js:338
-#, javascript-format
-msgid "Restart timer %s"
-msgstr "Redémarrer la minuterie %s"
 
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:41
 msgid "Show a notification when a timer ends"
@@ -176,24 +159,6 @@ msgstr "Accélérateur de clavier pour basculer le paramètre show-end-time"
 #: ../schemas/org.gnome.shell.extensions.kitchen-timer-blackjackshellac.gschema.xml:165
 msgid "Keyboard shortcut to stop the next timer to expire"
 msgstr "Accélérateur de clavier pour arrêter la prochaine minuterie à expirer"
-
-#: ../timers.js:373
-msgid "Duplicate timer is already running"
-msgstr "Une minuterie en double est déjà en cours d'exécution"
-
-#: ../timers.js:732
-#, javascript-format
-msgid "Timer stopped %s early at"
-msgstr "La minuterie s'est arrêtée %s plus tôt à"
-
-#: ../timers.js:734
-#, javascript-format
-msgid "Timer completed %s late at"
-msgstr "La minuterie a terminé avec %s de retard à"
-
-#: ../timers.js:737
-msgid "Timer completed on time at"
-msgstr "Minuterie terminée à temps à"
 
 #: ../settings.ui:55 ../settings.ui:267 ../settings40.ui:299
 #: ../settings40.ui:306
@@ -526,43 +491,84 @@ msgstr "Créer"
 msgid "Show end time"
 msgstr "Afficher l'heure de fin"
 
-#: ../menus.js:108
+#: ../menus.js:107
 msgid "Running timers"
 msgstr "Minuteries en cours"
 
-#: ../menus.js:121
+#: ../menus.js:120
 msgid "Quick timers"
 msgstr "Minuteries pratiques"
 
-#: ../menus.js:145
+#: ../menus.js:144
 msgid "Preset timers"
 msgstr "Minuteries préréglées"
 
-#: ../prefs.js:171
+#: ../hms.js:141
+msgid "seconds"
+msgstr "secondes"
+
+#: ../hms.js:144
+msgid "minutes"
+msgstr "minutes"
+
+#: ../hms.js:149
+msgid "hours"
+msgstr "heures"
+
+#: ../prefs.js:170
 msgid "New timer"
 msgstr "Nouvelle minuterie"
 
-#: ../prefs.js:565
+#: ../prefs.js:564
 msgid "Sound file"
 msgstr "Fichier son"
 
-#: ../prefs.js:595 ../prefs.js:609
+#: ../prefs.js:594 ../prefs.js:608
 msgid "Export"
 msgstr "Exporter"
 
-#: ../prefs.js:645
+#: ../prefs.js:644
 #, javascript-format
 msgid "Exported settings to %s"
 msgstr "Les paramètres ont été exportés vers %s"
 
-#: ../prefs.js:678
+#: ../prefs.js:677
 msgid "Import"
 msgstr "Importer"
 
-#: ../prefs.js:707
+#: ../prefs.js:706
 #, javascript-format
 msgid "Imported settings from %s"
 msgstr "Les paramètres ont été importés du %s"
+
+#: ../notifier.js:263
+#, javascript-format
+msgid "Restart timer %s"
+msgstr "Redémarrer la minuterie %s"
+
+#: ../timers.js:375
+msgid "Duplicate timer is already running"
+msgstr "Une minuterie en double est déjà en cours d'exécution"
+
+#: ../timers.js:486
+#, javascript-format
+msgid "volume level is low for running timer: %d %%"
+msgstr ""
+"Le niveau de volume est faible pour la minuterie en cours d'exécution: %d %%"
+
+#: ../timers.js:770
+#, javascript-format
+msgid "Timer stopped %s early at"
+msgstr "La minuterie s'est arrêtée %s plus tôt à"
+
+#: ../timers.js:772
+#, javascript-format
+msgid "Timer completed %s late at"
+msgstr "La minuterie a terminé avec %s de retard à"
+
+#: ../timers.js:775
+msgid "Timer completed on time at"
+msgstr "Minuterie terminée à temps à"
 
 #~ msgid "Quick"
 #~ msgstr "Pratique"
