@@ -482,7 +482,7 @@ var Timer = class Timer {
       if (result.muted || result.level < volume_threshold) {
           if (this.timers.warn_volume) {
             this.timers.warn_volume = false;
-            Utils.logObjectPretty(result);
+            //Utils.logObjectPretty(result);
             let msg=this.logger.warn(_('volume level is low for running timer: %d %%'), result.level);
             this.timers.notifier.warning(this, this.name, msg);
           }
