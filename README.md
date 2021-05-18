@@ -2,8 +2,6 @@
 
 [Gnome shell kitchen timer extension](https://extensions.gnome.org/extension/3955/kitchen-timer/) with the ability to run multiple simultaneous timers.
 
-[Gnome shell 40 branch](https://github.com/blackjackshellac/kitchenTimer/tree/gnome40) that supports gtk4 and gnome shell 40 preview
-
 ## Installation
 
 Clone the repository and then run install_local.sh
@@ -57,6 +55,11 @@ for example, to create an alarm timer that goes off at 5am tomorrow,
 ![taxi @ 5am create](https://github.com/blackjackshellac/kitchenTimer/blob/main/img/taxi_at_5am_quick.png)
 
 ![taxi @ 5am running](https://github.com/blackjackshellac/kitchenTimer/blob/main/img/taxi_at_5am_running.png)
+
+Click the regular timer icon for a running timer to make the alarm persistent, the icon will change to an alarm clock.  Here the pool timer alarm will ring persistently until the notification is closed.  The tea alarm will ring as defined in the play sound setting.
+
+![image](https://user-images.githubusercontent.com/825403/118677121-ff08ac00-b7c9-11eb-9259-b19ed468b44c.png)
+
 
 ## Support
 
