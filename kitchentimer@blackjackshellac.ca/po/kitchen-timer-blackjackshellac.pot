@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kitchen-timer-blackjackshellac\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 06:08-0400\n"
-"PO-Revision-Date: 2021-05-14 06:08-0400\n"
+"POT-Creation-Date: 2021-05-18 11:18-0400\n"
+"PO-Revision-Date: 2021-05-18 11:18-0400\n"
 "Last-Translator: Steeve McCauley <steeve.mccauley@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -39,14 +39,15 @@ msgstr ""
 msgid "Kitchen Timer"
 msgstr ""
 
-#: menuitem.js:42 menuitem.js:43 menuitem.js:45 menuitem.js:47
+#: menuitem.js:42 menuitem.js:43 menuitem.js:45 menuitem.js:47 menuitem.js:49
 msgid "Create Preset"
 msgstr ""
 
 #: menuitem.js:51 menuitem.js:52 menuitem.js:54 menuitem.js:56 menuitem.js:58
-#: menuitem.js:182 menuitem.js:184 menuitem.js:430 menuitem.js:523
-#: menuitem.js:545 menuitem.js:553 menuitem.js:561 menuitem.js:563
-#: menuitem.js:565 menuitem.js:598 menuitem.js:599 menus.js:251
+#: menuitem.js:60 menuitem.js:182 menuitem.js:184 menuitem.js:430
+#: menuitem.js:523 menuitem.js:545 menuitem.js:553 menuitem.js:555
+#: menuitem.js:561 menuitem.js:563 menuitem.js:565 menuitem.js:598
+#: menuitem.js:599 menus.js:251
 msgid "Name 00:00:00"
 msgstr ""
 
@@ -55,8 +56,9 @@ msgid "unnamed"
 msgstr ""
 
 #: menuitem.js:68 menuitem.js:70 menuitem.js:71 menuitem.js:72 menuitem.js:74
-#: menus.js:204 menus.js:208 menus.js:251 menus.js:388 menus.js:402
-#: menus.js:406 menus.js:408 menus.js:409 menus.js:434 menus.js:461
+#: menuitem.js:76 menus.js:204 menus.js:208 menus.js:251 menus.js:388
+#: menus.js:402 menus.js:406 menus.js:408 menus.js:409 menus.js:434
+#: menus.js:461
 msgid "Create"
 msgstr ""
 
@@ -73,7 +75,8 @@ msgstr ""
 msgid "Go"
 msgstr ""
 
-#: menuitem.js:478 menuitem.js:532 menuitem.js:553 menuitem.js:555
+#: menuitem.js:478 menuitem.js:488 menuitem.js:532 menuitem.js:553
+#: menuitem.js:555
 msgid "Show end time"
 msgstr ""
 
@@ -1197,7 +1200,7 @@ msgstr ""
 #: timers.js:221 timers.js:222 timers.js:223 timers.js:258 timers.js:262
 #: timers.js:268 timers.js:293 timers.js:310 timers.js:316 timers.js:321
 #: timers.js:322 timers.js:324 timers.js:333 timers.js:334 timers.js:338
-#: timers.js:373 timers.js:375
+#: timers.js:373 timers.js:375 timers.js:377
 msgid "Duplicate timer is already running"
 msgstr ""
 
@@ -1222,7 +1225,7 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-#: timers.js:486
+#: timers.js:486 timers.js:489
 #, javascript-format
 msgid "volume level is low for running timer: %d %%"
 msgstr ""
@@ -1230,6 +1233,7 @@ msgstr ""
 #: timers.js:566 timers.js:573 timers.js:613 timers.js:633 timers.js:639
 #: timers.js:644 timers.js:645 timers.js:648 timers.js:658 timers.js:664
 #: timers.js:673 timers.js:674 timers.js:697 timers.js:732 timers.js:770
+#: timers.js:786
 #, javascript-format
 msgid "Timer stopped %s early at"
 msgstr ""
@@ -1237,6 +1241,7 @@ msgstr ""
 #: timers.js:568 timers.js:575 timers.js:615 timers.js:635 timers.js:641
 #: timers.js:646 timers.js:647 timers.js:650 timers.js:660 timers.js:666
 #: timers.js:675 timers.js:676 timers.js:699 timers.js:734 timers.js:772
+#: timers.js:788
 #, javascript-format
 msgid "Timer completed %s late at"
 msgstr ""
@@ -1244,5 +1249,6 @@ msgstr ""
 #: timers.js:571 timers.js:578 timers.js:618 timers.js:638 timers.js:644
 #: timers.js:649 timers.js:650 timers.js:653 timers.js:663 timers.js:669
 #: timers.js:678 timers.js:679 timers.js:702 timers.js:737 timers.js:775
+#: timers.js:791
 msgid "Timer completed on time at"
 msgstr ""
