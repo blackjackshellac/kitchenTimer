@@ -36,7 +36,9 @@ var KTTypes = {
   'reduce' : 'list-remove-symbolic',
   'extend' : 'list-add-symbolic',
   'backward' : 'media-seek-backward-symbolic',
-  'forward' : 'media-seek-forward-symbolic'
+  'forward' : 'media-seek-forward-symbolic',
+  'persist' : 'alarm-symbolic',
+  'progress' : null // dynamically assigned
 }
 
 var logger = new Logger('kt menuitem');
@@ -262,7 +264,15 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
       }
 
       box.add_child(timer.label);
-      box.add_child(timer_icon);
+      if (timer.running) {
+        if (timer.persist_alarm) {
+          box.add_child(new KitchenTimerControlButton(timer, 'persist'));
+        } else {
+          box.add_child(new KitchenTimerControlButton(timer, 'progress'));
+        }
+      } else {
+        box.add_child(timer_icon);
+      }
       box.add_child(name);
 
       this.connect('activate', (tmi) => {
@@ -698,10 +708,33 @@ class KitchenTimerControlButton extends St.Button {
 
         // 'media-playback-stop-symbolic'
         // 'edit-delete-symbolic'
-        var icon = new St.Icon({
+
+        let icon=null;
+        let gicon=null;
+        let style='kitchentimer-menu-delete-icon';
+        if (type === 'progress') {
+          if (!timer.persist_alarm) {
+            gicon = timer.timers.progress_gicon(timer.degree_progress(15 /* 15 degree increments */));
+            style='kitchentimer-menu-icon';
+          }
+        } else if (type === 'persist') {
+          style='kitchentimer-menu-icon';
+        }
+        if (gicon) {
+          icon = new St.Icon({
+            x_align: St.Align.END,
+            x_expand: false,
+            gicon: gicon,
+            style_class: style
+          });
+        } else {
+          icon = new St.Icon({
+            x_align: St.Align.END,
+            x_expand: false,
             icon_name: KTTypes[type],
-            style_class: 'kitchentimer-menu-delete-icon'
-        });
+            style_class: style
+          });
+        }
         icon.set_icon_size(20);
 
         this.child = icon;
@@ -744,6 +777,13 @@ class KitchenTimerControlButton extends St.Button {
         case "backward":
           this.connect('clicked', (cb) => {
             this.timer.backward();
+            this.rebuild();
+          });
+          break;
+        case 'persist':
+        case 'progress':
+          this.connect('clicked', (cb) => {
+            this.timer.toggle_persist_alarm();
             this.rebuild();
           });
           break;

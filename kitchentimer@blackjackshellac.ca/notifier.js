@@ -219,7 +219,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     this._settings = timer.timers.settings;
     this._timer = timer;
     this._loops = 0;
-    this._sound_loops = this.settings.sound_loops;
+    this._sound_loops = timer.persist_alarm ? 0 : this.settings.sound_loops;
 
     if (this.settings.notification === false && this._sound_loops == 0) {
       // prevent infinite sound loops if notification dialog is turned off
@@ -360,6 +360,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       this.logger.debug("Stopping player after %d loops: %d", this._loops, this._interval_id);
       Utils.clearInterval(this._interval_id);
       this._interval_id = undefined;
+      this.timer.persist_alarm = false;
     }
     return false;
   }

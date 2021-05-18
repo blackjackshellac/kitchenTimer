@@ -237,7 +237,8 @@ var Timers = class Timers extends Array {
         this.logger.debug("Saving running timer state id=%s start=%d", timer.id, timer._start);
         var run_state = {
           id: timer.id,
-          start: timer._start
+          start: timer._start,
+          persist: timer.persist_alarm
         }
         if (timer.alarm_timer) {
           run_state.alarm_timer = timer.alarm_timer.save();
@@ -253,6 +254,7 @@ var Timers = class Timers extends Array {
     var running = JSON.parse(json);
     running.forEach( (run_state) => {
       var timer = this.lookup(run_state.id);
+      timer.persist_alarm = run_state.persist;
       if (timer && !timer.running) {
         timer.alarm_timer = AlarmTimer.restore(run_state.alarm_timer);
         this.logger.debug("restore %s", timer.toString());
@@ -446,6 +448,7 @@ var Timer = class Timer {
     this._gicon = null;
     this._start = 0;
     this._end = 0;
+    this._persist_alarm = false;
 
     // will be undefined if it's not an alarm timer
     this._alarm_timer = AlarmTimer.matchRegex(name);
@@ -597,6 +600,19 @@ var Timer = class Timer {
 
   set alarm_timer(val) {
     this._alarm_timer = val;
+  }
+
+  get persist_alarm() {
+    return this._persist_alarm;
+  }
+
+  set persist_alarm(b) {
+    this._persist_alarm = b === undefined ? false : b;
+    timersInstance.saveRunningTimers();
+  }
+
+  toggle_persist_alarm() {
+    this.persist_alarm = !this.persist_alarm;
   }
 
   get remaining_secs() {
