@@ -254,8 +254,8 @@ var Timers = class Timers extends Array {
     var running = JSON.parse(json);
     running.forEach( (run_state) => {
       var timer = this.lookup(run_state.id);
-      timer.persist_alarm = run_state.persist;
       if (timer && !timer.running) {
+        timer.persist_alarm = run_state.persist;
         timer.alarm_timer = AlarmTimer.restore(run_state.alarm_timer);
         this.logger.debug("restore %s", timer.toString());
         timer.go(run_state.start);
