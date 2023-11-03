@@ -16,20 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const { Gio, Gtk, Gdk, GLib } = imports.gi;
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+import Gdk from 'gi://Gdk';
+import GLib from 'gi://GLib';
 const ByteArray = imports.byteArray;
 
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
+import {domain as gettextDomain} from 'gettext';
+const Gettext = gettextDomain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Settings = Me.imports.settings.Settings;
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
-const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
+import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+// import {ExtensionUtils} from 'resource:///org/gnome/Shell/Extensions/js/misc/extensionUtils.js';
+// const Me = ExtensionUtils.getCurrentExtension();
+import * as Settings from "./settings.js";
+import * as Utils from "./utils.js";
+import * as Logger from "./logger.js";
+import * as HMS from "./hms.js";
+import * as AlarmTimer from "./alarm_timer.js";
 
 const Model = {
   NAME: 0,
@@ -42,13 +47,13 @@ const Model = {
 }
 
 class PreferencesBuilder {
-  constructor() {
+  constructor(settings) {
     this._settings = new Settings();
     this._builder = new Gtk.Builder();
     this.logger = new Logger('kt prefs', this._settings);
 
     if (Utils.isGnome40()) {
-      let iconPath = Me.dir.get_child("icons").get_path();
+      let iconPath = settings.dir.get_child("icons").get_path();
       let iconTheme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
       iconTheme.add_search_path(iconPath);
     }
@@ -940,21 +945,20 @@ class PreferencesBuilder {
 function init() {
 }
 
-function buildPrefsWidget() {
-  ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
+export default class buildPrefsWidget extends ExtensionPreferences {
+    getPreferencesWidget() {
+        let preferencesBuilder = new PreferencesBuilder(this.getSettings());
+        let widget = preferencesBuilder.build();
+        preferencesBuilder.show();
 
-  var preferencesBuilder = new PreferencesBuilder();
-  var widget = preferencesBuilder.build();
-  preferencesBuilder.show();
-
-  widget.connect('realize', () => {
-    let window = Utils.isGnome3x() ? widget.get_toplevel() : widget.get_root();
-    preferencesBuilder.logger.debug('window=%s', window);
-    //window.default_width = 700;
-    //window.default_height = 900;
-    //window.set_default_icon_name('view-paged-symbolic');
-    //window.resize(700, 900);
-  });
-
-  return widget;
+        widget.connect('realize', () => {
+          let window = Utils.isGnome3x() ? widget.get_toplevel() : widget.get_root();
+          preferencesBuilder.logger.debug('window=%s', window);
+          //window.default_width = 700;
+          //window.default_height = 900;
+          //window.set_default_icon_name('view-paged-symbolic');
+          //window.resize(700, 900);
+        });
+        return widget;
+    }
 }

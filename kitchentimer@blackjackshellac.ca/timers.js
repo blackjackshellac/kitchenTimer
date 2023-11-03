@@ -16,25 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+import { gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import * as Glib from 'gi://GLib';
+import * as St from 'gi://St';
+import * as Clutter from 'gi://Clutter';
+import * as Gio from 'gi://Gio';
 
-const {GLib, St, Clutter, Gio} = imports.gi;
-const Main = imports.ui.main;
-const PopupMenu = imports.ui.popupMenu;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js'
 
-const Utils = Me.imports.utils;
-const Settings = Me.imports.settings.Settings;
-const Notifier = Me.imports.notifier;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
-const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
-const SessionManagerInhibitor = Me.imports.inhibitor.SessionManagerInhibitor;
-const KeyboardShortcuts = Me.imports.keyboard_shortcuts.KeyboardShortcuts;
+import * as Utils from './utils.js'; 
+import * as Settings from './settings.js'; 
+import * as Notifier from './notifier.js'; 
+import * as Logger from './logger.js'; 
+import * as HMS from './hms.js'; 
+import * as AlarmTimer from './alarm_timer.js'; 
+import * as SessionManagerInhibitor from './inhibitor.js'; 
+import * as KeyboardShortcuts from './keyboard_shortcuts.js'; 
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 const mixerControl = imports.ui.status.volume.getMixerControl();
@@ -254,8 +253,8 @@ var Timers = class Timers extends Array {
     var running = JSON.parse(json);
     running.forEach( (run_state) => {
       var timer = this.lookup(run_state.id);
+      timer.persist_alarm = run_state.persist;
       if (timer && !timer.running) {
-        timer.persist_alarm = run_state.persist;
         timer.alarm_timer = AlarmTimer.restore(run_state.alarm_timer);
         this.logger.debug("restore %s", timer.toString());
         timer.go(run_state.start);

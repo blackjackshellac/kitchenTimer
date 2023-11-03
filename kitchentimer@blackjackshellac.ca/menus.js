@@ -16,24 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+// const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+// const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
+// const _ = Gettext.gettext;
+import {gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const { St, Clutter } = imports.gi;
+import St from 'gi://St';
+import Clutter from 'gi://Clutter';
 
-const PopupMenu = imports.ui.popupMenu;
-const Main = imports.ui.main;
-const Slider = imports.ui.slider;
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as Slider from 'resource:///org/gnome/shell/ui/slider.js';
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
-const Timer = Me.imports.timers.Timer;
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
-const Mitem = Me.imports.menuitem;
+import * as {Timer} from "./timers.js";
+import * as Utils from './utils.js';
+import * as Logger from './logger.js'
+import * as HMS from './hms.js'
+import * as Mitem from './menuitem.js'
 
 var PanelMenuBuilder = class PanelMenuBuilder {
   constructor(menu, timers) {

@@ -16,19 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const { Clutter, GObject, St, Gio } = imports.gi;
+import * as Gio from 'gi://Gio';
+import * as GObject from 'gi://GObject';
+import * as St from 'gi://St';
+import * as Clutter from 'gi://Clutter';
 
-const PopupMenu = imports.ui.popupMenu;
-const Slider = imports.ui.slider;
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as Slider from 'resource:///org/gnome/shell/ui/slider.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const Timer = Me.imports.timers.Timer;
-const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
-const Utils = Me.imports.utils;
-const HMS = Me.imports.hms.HMS;
-const Logger = Me.imports.logger.Logger;
+import * as {Timer} from "./timers.js";
+import * as AlarmTimer from './alarm_timer.js';
+import * as Utils from './utils.js';
+import * as HMS from './hms.js';
+import * as Logger from './logger.js';
 
 var KTTypes = {
   'stop': 'media-playback-stop-symbolic',

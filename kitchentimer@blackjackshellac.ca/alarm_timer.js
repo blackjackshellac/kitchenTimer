@@ -16,12 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
+import * as Utils from "./utils.js";
+import * as Logger from "./logger.js";
+import * as HMS from "./hms.js";
 
 var AmPm = {
   H24: 0,

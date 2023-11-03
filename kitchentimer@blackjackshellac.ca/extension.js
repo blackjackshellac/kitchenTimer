@@ -21,21 +21,22 @@
 
 const { GObject, St, Clutter } = imports.gi;
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
+// const ExtensionUtils = imports.misc.extensionUtils;
+// const Me = ExtensionUtils.getCurrentExtension();
 
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
-const Utils = Me.imports.utils;
-const Settings = Me.imports.settings.Settings;
-const Menus = Me.imports.menus;
-const Timers = Me.imports.timers.Timers;
-const Timer = Me.imports.timers.Timer;
-const Indicator = Me.imports.indicator;
+import * as Utils from "./utils.js";
+import * as Settings from "./settings.js";
+import * as Menus from "./menus.js";
+import * as {Timers, Timer} from "./timers.js";
+import * as Indicator from "./indicator.js";
 
-const Main = imports.ui.main;
+// const Main = imports.ui.main;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
@@ -57,6 +58,12 @@ class Extension {
     }
 }
 
-function init(meta) {
-  return new Extension(meta.uuid);
+export default class initExtension extends Extension {
+    enable() {
+        return new Extension(this.uuid);
+    }
+
+    disable() {
+        console.log(_('%s is now disabled.').format(this.uuid));
+    }
 }

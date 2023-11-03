@@ -16,13 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+import { gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 String.prototype.format = imports.format.format;
 
-const GLib = imports.gi.GLib;
+import * as Glib from 'gi://GLib';
 const ByteArray = imports.byteArray;
 
 // https://gjs.guide/extensions/upgrading/gnome-shell-40.html

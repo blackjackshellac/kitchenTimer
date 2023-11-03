@@ -16,27 +16,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+// const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+// const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
+// const _ = Gettext.gettext;
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Gio = imports.gi.Gio;
+// const ExtensionUtils = imports.misc.extensionUtils;
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
+import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 const GioSSS = Gio.SettingsSchemaSource;
-const GLib = imports.gi.GLib;
 
-const Me = ExtensionUtils.getCurrentExtension();
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
+import * as Utils from "./utils.js";
+import * as Logger from "./logger.js";
 
 // adapted from Bluetooth-quick-connect extension by Bartosz Jaroszewski
 var Settings = class Settings {
-  constructor() {
+  constructor(settings) {
+    this.settings = settings;
     // try to recompile the schema
-    let compile_schemas = [ Me.path+"/bin/compile_schemas.sh" ];
+    let compile_schemas = [ settings.path+"/bin/compile_schemas.sh" ];
     let [ exit_status, stdout, stderr ] = Utils.execute(compile_schemas);
 
-    this.settings = ExtensionUtils.getSettings();
+    // this.settings = ExtensionUtils.getSettings();
     this.logger = new Logger('kt settings', this.settings);
 
     if (exit_status !== 0) {
@@ -446,3 +447,14 @@ var Settings = class Settings {
   }
 
 };
+
+
+export default class settingsBuild extends Extension {
+    enable() {
+      let settings = new Settings(this.getSettings());
+    }
+
+    disable() {
+        console.log(_('%s is now disabled.').format(this.uuid));
+    }
+}

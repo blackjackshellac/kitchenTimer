@@ -16,29 +16,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+import {gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const Params = imports.misc.params;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
 
-const { GLib, GObject, Gio, St } = imports.gi;
-const Main = imports.ui.main;
-const MessageTray = imports.ui.messageTray;
-const NotificationDestroyedReason = MessageTray.NotificationDestroyedReason;
-const PopupMenu = imports.ui.popupMenu;
+import * as Glib from 'gi://GLib';
+import * as GObject from 'gi://GObject';
+import * as St from 'gi://St';
+import * as Gio from 'gi://Gio';
+
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as {MessageTray, NotificationDestroyedReason} from 'resource:///org/gnome/shell/ui/messageTray.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js'
 
 // szm - from tea-time
 imports.gi.versions.Gst = '1.0';
-const Gst = imports.gi.Gst;
+import * as Gst from 'gi://Gst';
 //const GstAudio = imports.gi.GstAudio;
 
 // for setInterval()
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
+import * as Utils from './utils.js';
+import * as Logger from './logger.js';
+import * as HMS from './hms.js';
 
 var Annoyer = class Annoyer {
   constructor(timers) {
