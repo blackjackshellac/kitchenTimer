@@ -20,21 +20,20 @@ const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
 const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
 const _ = Gettext.gettext;
 
-const { GObject, St, Clutter, Gio } = imports.gi;
+import * as Gio from 'gi://Gio';
+import * as GObject from 'gi://GObject';
+import * as St from 'gi://St';
+import * as Clutter from 'gi://Clutter';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import * as Utils from './utils.js';
+import * as Settings from './settings.js';
+import * as Menus from './menus.js';
+import * as {Timers, Timer} from "./timers.js";
+import * as Logger from './Logger.js';
 
-const Utils = Me.imports.utils;
-const Settings = Me.imports.settings.Settings;
-const Menus = Me.imports.menus;
-const Timers = Me.imports.timers.Timers;
-const Timer = Me.imports.timers.Timer;
-const Logger = Me.imports.logger.Logger;
-
-const Main = imports.ui.main;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
 var KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
