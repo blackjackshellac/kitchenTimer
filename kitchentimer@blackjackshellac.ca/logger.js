@@ -18,9 +18,11 @@
 
 const LOGID = 'logger';
 
-String.prototype.format = imports.format.format;
+if (!String.prototype.format) {
+  String.prototype.format = imports.format.format;
+}
 
-var Logger = class Logger {
+export class Logger {
     constructor(logid=undefined, settings=undefined) {
         this._logid = logid === undefined ? LOGID : logid;
         this._settings = settings;
@@ -60,5 +62,4 @@ var Logger = class Logger {
     error(format, ...args) {
       return this._log("ERROR", format, ...args);
     }
-};
-
+}

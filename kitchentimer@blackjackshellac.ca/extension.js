@@ -16,47 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/* exported init */
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
+import {setExtension} from './context.js';
+import * as Indicator from './indicator.js';
 
-const { GObject, St, Clutter } = imports.gi;
-
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
-
-const Utils = Me.imports.utils;
-const Settings = Me.imports.settings.Settings;
-const Menus = Me.imports.menus;
-const Timers = Me.imports.timers.Timers;
-const Timer = Me.imports.timers.Timer;
-const Indicator = Me.imports.indicator;
-
-const Main = imports.ui.main;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-
-class Extension {
-    constructor(uuid) {
-      this._uuid = uuid;
-
-      ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
-    }
-
+export default class KitchenTimerExtension extends Extension {
     enable() {
+        setExtension(this);
         this._indicator = new Indicator.KitchenTimerIndicator();
-        Main.panel.addToStatusArea(this._uuid, this._indicator);
+        Main.panel.addToStatusArea(this.uuid, this._indicator);
     }
 
     disable() {
         this._indicator.destroy();
         this._indicator = null;
     }
-}
-
-function init(meta) {
-  return new Extension(meta.uuid);
 }

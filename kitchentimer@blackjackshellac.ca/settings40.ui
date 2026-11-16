@@ -1033,6 +1033,20 @@ Author: Steeve McCauley
                     </packing>-->
                   </child>
                   <child>
+                    <object class="GtkCheckButton" id="lock_screen_countdown">
+                      <property name="label" translatable="yes" context="lock_screen_countdown">Countdown on lock screen</property>
+                      <property name="visible">True</property>
+                      <property name="can-focus">True</property>
+                      <property name="receives-default">False</property>
+                      <property name="valign">start</property>
+                      <property name="tooltip-text" translatable="yes" context="lock-screen-countdown-tooltip">Show remaining time of running timers on the lock screen and in the notification list</property>
+                      <layout>
+                        <property name="row">6</property>
+                        <property name="column">1</property>
+                      </layout>
+                    </object>
+                  </child>
+                  <child>
                     <object class="GtkCheckButton" id="accel_enable">
                       <property name="label" translatable="yes" context="accel-enable">Keyboard shortcuts</property>
                       <property name="visible">True</property>

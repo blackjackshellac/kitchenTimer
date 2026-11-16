@@ -16,10 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const { Gio, Gtk, GLib } = imports.gi;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Logger = Me.imports.logger.Logger;
+import Gio from 'gi://Gio';
+
+import {Logger} from './logger.js';
 
 const DBusSessionManagerIface = `
 <node>
@@ -58,7 +57,7 @@ const DBusSessionManagerProxy = Gio.DBusProxy.makeProxyWrapper(DBusSessionManage
 // </node>
 // `.trim();
 
-var SessionManagerInhibitor = class SessionManagerInhibitor {
+export class SessionManagerInhibitor {
   constructor(settings) {
     this.logger = new Logger('kt-inhibitor', settings);
     this._sessionManager = new DBusSessionManagerProxy(Gio.DBus.session,
@@ -103,7 +102,12 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
     }
     this._sessionManager.InhibitRemote(app_id,
       0, reason, flags,
-      cookie => {
+      (result, error) => {
+        if (error) {
+          this.logger.error("Inhibit id=%s failed: %s", app_id, error.message);
+          return;
+        }
+        let [cookie] = result;
         this.logger.debug("Inhibit id=%s [%s]: cookie=%d", app_id, reason, cookie);
         this._cookies[app_id] = cookie;
       }
@@ -130,5 +134,4 @@ var SessionManagerInhibitor = class SessionManagerInhibitor {
     this._settings = val;
   }
 
-};
-
+}

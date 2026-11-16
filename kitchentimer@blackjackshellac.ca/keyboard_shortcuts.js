@@ -16,18 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const Lang = imports.lang
-const Meta = imports.gi.Meta
-const Shell = imports.gi.Shell
-const Main = imports.ui.main
+import Meta from 'gi://Meta';
+import Shell from 'gi://Shell';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const Logger = Me.imports.logger.Logger;
-const Utils = Me.imports.utils;
+import {Logger} from './logger.js';
 
-var KeyboardShortcuts = class KeyboardShortcuts {
+export class KeyboardShortcuts {
   constructor(settings) {
     this._settings = settings;
     this._grabbers = {};

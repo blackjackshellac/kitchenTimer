@@ -16,21 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import {Logger} from './logger.js';
+import {HMS} from './hms.js';
 
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
-
-var AmPm = {
+export const AmPm = {
   H24: 0,
   AM: 1,
   PM: 2,
   RE: /(p\.?m\.?)|(a\.?m\.?)/i
 }
 
-var logger = new Logger('kt alarm timer');
+const logger = new Logger('kt alarm timer');
 
 // var alarm_time={
 //   hour: Number(g.h),
@@ -40,7 +36,7 @@ var logger = new Logger('kt alarm timer');
 //   ampm: undefined|am|pm
 // }
 
-var AlarmTimer = class AlarmTimer {
+export class AlarmTimer {
   constructor() {
     this._name = "";
     this._hour = 0;
@@ -298,5 +294,4 @@ var AlarmTimer = class AlarmTimer {
   backward(end, delta) {
     return this.forward(end, -delta);
   }
-};
-
+}

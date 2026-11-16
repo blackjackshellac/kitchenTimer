@@ -16,26 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import St from 'gi://St';
+import Gettext from 'gettext';
+
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+
+import {Logger} from './logger.js';
+import * as Mitem from './menuitem.js';
+
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+const _ = Gettext.domain(GETTEXT_DOMAIN).gettext;
 
-const { St, Clutter } = imports.gi;
-
-const PopupMenu = imports.ui.popupMenu;
-const Main = imports.ui.main;
-const Slider = imports.ui.slider;
-
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const Timer = Me.imports.timers.Timer;
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
-const Mitem = Me.imports.menuitem;
-
-var PanelMenuBuilder = class PanelMenuBuilder {
+export class PanelMenuBuilder {
   constructor(menu, timers) {
     this._menu = menu;
     this._create_timer_menu = undefined;

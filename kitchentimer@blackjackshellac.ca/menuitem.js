@@ -16,21 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const { Clutter, GObject, St, Gio } = imports.gi;
+import Clutter from 'gi://Clutter';
+import GObject from 'gi://GObject';
+import St from 'gi://St';
+import Gettext from 'gettext';
 
-const PopupMenu = imports.ui.popupMenu;
-const Slider = imports.ui.slider;
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as Slider from 'resource:///org/gnome/shell/ui/slider.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import {Timer} from './timers.js';
+import {AlarmTimer} from './alarm_timer.js';
+import {HMS} from './hms.js';
+import {Logger} from './logger.js';
+import {getExtension} from './context.js';
 
-const Timer = Me.imports.timers.Timer;
-const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
-const Utils = Me.imports.utils;
-const HMS = Me.imports.hms.HMS;
-const Logger = Me.imports.logger.Logger;
+const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+const _ = Gettext.domain(GETTEXT_DOMAIN).gettext;
 
-var KTTypes = {
+const KTTypes = {
   'stop': 'media-playback-stop-symbolic',
   'delete' : 'edit-delete-symbolic',
   'reduce' : 'list-remove-symbolic',
@@ -41,9 +44,9 @@ var KTTypes = {
   'progress' : null // dynamically assigned
 }
 
-var logger = new Logger('kt menuitem');
+const logger = new Logger('kt menuitem');
 
-var KitchenTimerCreatePreset = GObject.registerClass(
+export const KitchenTimerCreatePreset = GObject.registerClass(
 class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
   _init(menu, timers) {
     super._init(_("Create Preset"));
@@ -54,7 +57,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
 
     this._entry = new St.Entry( {
       x_expand: true,
-      x_align: St.Align.START,
+      x_align: Clutter.ActorAlign.START,
       y_align: Clutter.ActorAlign.CENTER
     });
     this._entry.set_hint_text(_("Name 00:00:00"));
@@ -62,9 +65,9 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
     this._entry.set_primary_icon(KitchenTimerCreatePreset.create_icon(this._timers));
 
     var name_item = new PopupMenu.PopupMenuItem("", { reactive: false } );
-    var bin = new St.Bin({ x_expand: true, x_align: St.Align.START });
+    var bin = new St.Bin({ x_expand: true, x_align: Clutter.ActorAlign.START });
     bin.child = this._entry;
-    name_item.add(bin);
+    name_item.add_child(bin);
     this.menu.addMenuItem(name_item);
 
     this._name = "";
@@ -75,12 +78,12 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
 
     this._go = new PopupMenu.PopupImageMenuItem(_("Create"), this._timers.progress_gicon(0));
     this._go.label.set_y_align( Clutter.ActorAlign.CENTER );
--   this._go.label.set_y_expand(true);
+    this._go.label.set_y_expand(true);
 
-    bin = new St.Bin({ x_expand: true, x_align: St.Align.START });
-    this._time = new St.Label( { text: "00:00:00", style_class: 'popup-menu-item', x_expand: true, x_align: St.Align.START });
+    bin = new St.Bin({ x_expand: true, x_align: Clutter.ActorAlign.START });
+    this._time = new St.Label( { text: "00:00:00", style_class: 'popup-menu-item', x_expand: true, x_align: Clutter.ActorAlign.START });
     bin.child = this._time;
-    this._go.add(bin);
+    this._go.add_child(bin);
 
     this.menu.addMenuItem(this._go);
 
@@ -150,7 +153,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
     // Hours
     // var item = new PopupMenu.PopupMenuItem(_("Hours"), { reactive: false });
 
-    // var bin = new St.Bin({ x_expand: true, x_align: St.Align.END });
+    // var bin = new St.Bin({ x_expand: true, x_align: Clutter.ActorAlign.END });
     // bin.child = this._hoursLabel;
     // item.add(bin);
 
@@ -166,7 +169,7 @@ class KitchenTimerCreatePreset extends PopupMenu.PopupSubMenuMenuItem {
 
     // item.add(this._hoursSlider);
 
-var KitchenTimerTimeSliderItem = GObject.registerClass(
+export const KitchenTimerTimeSliderItem = GObject.registerClass(
 class KitchenTimerTimeSliderItem extends PopupMenu.PopupMenuItem {
   _init(parent, suffix, min, max) {
     super._init("", { reactive: true });
@@ -179,11 +182,13 @@ class KitchenTimerTimeSliderItem extends PopupMenu.PopupMenuItem {
     this._max = max;
     this._label = new St.Label({ text: this.format(min), style_class: 'kitchentimer-panel-label' });
 
-    var bin = new St.Bin({ x_expand: false, x_align: St.Align.START });
+    var bin = new St.Bin({ x_expand: false, x_align: Clutter.ActorAlign.START });
     bin.child = this._label;
-    this.add(bin);
+    this.add_child(bin);
 
-    this._slider = new Slider.Slider(min, {x_expand: true, y_expand:true});
+    this._slider = new Slider.Slider(min);
+    this._slider.x_expand = true;
+    this._slider.y_expand = true;
     this._slider._value = min;
     this._slider.connect('notify::value', (slider) => {
       this._value = Math.ceil(slider._value * this._max);
@@ -194,7 +199,7 @@ class KitchenTimerTimeSliderItem extends PopupMenu.PopupMenuItem {
       this._parent.update_time();
     });
 
-    this.add(this._slider);
+    this.add_child(this._slider);
   }
 
   format(val) {
@@ -210,7 +215,7 @@ class KitchenTimerTimeSliderItem extends PopupMenu.PopupMenuItem {
   }
 });
 
-var KitchenTimerMenuItem = GObject.registerClass(
+export const KitchenTimerMenuItem = GObject.registerClass(
 class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
   _init(timer, menu) {
       super._init("", { reactive: true });
@@ -221,28 +226,30 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
       var box = new St.BoxLayout({
         x_expand: true,
-        x_align: St.Align.START,
-        pack_start: true,
+        x_align: Clutter.ActorAlign.START,
         style_class: 'kitchentimer-menu-box'
       });
-      this.add(box);
+      this.add_child(box);
+
+      // children are listed right to left, the name ends up first
+      var children = [];
 
       var name = new St.Label({
         style_class: 'kitchentimer-menu-name',
         x_expand: true,
-        x_align: St.Align.START
+        x_align: Clutter.ActorAlign.START
       });
       name.set_text(timer.name);
 
       timer.label = new St.Label({
         style_class: 'kitchentimer-menu-label',
         x_expand: false,
-        x_align: St.Align.END
+        x_align: Clutter.ActorAlign.END
       });
 
       var key = timer.degree_progress(15 /* 15 degree increments */);
       var timer_icon = new St.Icon({
-        x_align: St.Align.END,
+        x_align: Clutter.ActorAlign.END,
         x_expand: false,
         gicon: timer.timers.progress_gicon(key),
         style_class: 'kitchentimer-menu-icon'
@@ -251,29 +258,30 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
 
       if (timer.running) {
         if (timer.alarm_timer) {
-          box.add_child(new KitchenTimerControlButton(timer, 'forward'));
-          box.add_child(new KitchenTimerControlButton(timer, 'stop'));
-          box.add_child(new KitchenTimerControlButton(timer, 'backward'));
+          children.push(new KitchenTimerControlButton(timer, 'forward'));
+          children.push(new KitchenTimerControlButton(timer, 'stop'));
+          children.push(new KitchenTimerControlButton(timer, 'backward'));
         } else {
-          box.add_child(new KitchenTimerControlButton(timer, 'extend'));
-          box.add_child(new KitchenTimerControlButton(timer, 'stop'));
-          box.add_child(new KitchenTimerControlButton(timer, 'reduce'));
+          children.push(new KitchenTimerControlButton(timer, 'extend'));
+          children.push(new KitchenTimerControlButton(timer, 'stop'));
+          children.push(new KitchenTimerControlButton(timer, 'reduce'));
         }
       } else {
-        box.add_child(new KitchenTimerControlButton(timer, 'delete'));
+        children.push(new KitchenTimerControlButton(timer, 'delete'));
       }
 
-      box.add_child(timer.label);
+      children.push(timer.label);
       if (timer.running) {
         if (timer.persist_alarm) {
-          box.add_child(new KitchenTimerControlButton(timer, 'persist'));
+          children.push(new KitchenTimerControlButton(timer, 'persist'));
         } else {
-          box.add_child(new KitchenTimerControlButton(timer, 'progress'));
+          children.push(new KitchenTimerControlButton(timer, 'progress'));
         }
       } else {
-        box.add_child(timer_icon);
+        children.push(timer_icon);
       }
-      box.add_child(name);
+      children.push(name);
+      children.reverse().forEach(child => box.add_child(child));
 
       this.connect('activate', (tmi) => {
         if (!tmi._timer.running) {
@@ -482,7 +490,7 @@ class KitchenTimerMenuItem extends PopupMenu.PopupMenuItem {
   }
 });
 
-var KitchenTimerEndTime = GObject.registerClass(
+export const KitchenTimerEndTime = GObject.registerClass(
 class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
   _init(menu, timers) {
     super._init(_("Show end time"), { reactive: false });
@@ -498,12 +506,12 @@ class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
       y_expand: true
     });
 
-    this.add(layout);
+    this.add_child(layout);
 
     var label = new St.Label({
       style_class: 'kitchentimer-menu-name',
       x_expand: true,
-      x_align: St.Align.START,
+      x_align: Clutter.ActorAlign.START,
       y_align: Clutter.ActorAlign.CENTER
     });
     //label.set_text(_("Show end time"));
@@ -527,7 +535,7 @@ class KitchenTimerEndTime extends PopupMenu.PopupMenuItem {
 
 });
 
-var KitchenTimerQuickItem = GObject.registerClass(
+export const KitchenTimerQuickItem = GObject.registerClass(
 class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
   _init(menu, timers) {
     super._init("", { reactive: false, can_focus: false });
@@ -544,12 +552,12 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
       x_expand: true
     });
 
-    this.add(layout);
+    this.add_child(layout);
 
     this._entry = new St.Entry( {
       x_expand: true,
       can_focus: true,
-      x_align: St.Align.START,
+      x_align: Clutter.ActorAlign.START,
       y_align: Clutter.ActorAlign.CENTER
     });
     this._entry.set_hint_text(_("Name 00:00:00"));
@@ -572,7 +580,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
       x_expand: false,
       y_expand: false,
       can_focus: true,
-      x_align: St.Align.END,
+      x_align: Clutter.ActorAlign.END,
       y_align: Clutter.ActorAlign.CENTER,
       style_class: 'kitchentimer-prefs-button',
       child: this._add_icon
@@ -616,7 +624,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
       x_expand: false,
       y_expand: false,
       can_focus: true,
-      x_align: St.Align.END,
+      x_align: Clutter.ActorAlign.END,
       y_align: Clutter.ActorAlign.CENTER,
       style_class: 'kitchentimer-prefs-button',
       child: this._prefs_icon
@@ -624,7 +632,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
 
     this._prefs.connect('clicked', (btn, clicked_button) => {
       logger.debug("mouse button pressed %d", clicked_button);
-      ExtensionUtils.openPrefs();
+      getExtension().openPreferences();
       this._menu.close();
       global.stage.set_key_focus(null);
     });
@@ -698,7 +706,7 @@ class KitchenTimerQuickItem extends PopupMenu.PopupMenuItem {
   }
 });
 
-var KitchenTimerControlButton = GObject.registerClass(
+export const KitchenTimerControlButton = GObject.registerClass(
 class KitchenTimerControlButton extends St.Button {
     _init(timer, type) {
         super._init();
@@ -722,14 +730,14 @@ class KitchenTimerControlButton extends St.Button {
         }
         if (gicon) {
           icon = new St.Icon({
-            x_align: St.Align.END,
+            x_align: Clutter.ActorAlign.END,
             x_expand: false,
             gicon: gicon,
             style_class: style
           });
         } else {
           icon = new St.Icon({
-            x_align: St.Align.END,
+            x_align: Clutter.ActorAlign.END,
             x_expand: false,
             icon_name: KTTypes[type],
             style_class: style

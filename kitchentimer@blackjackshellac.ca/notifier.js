@@ -16,203 +16,179 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
 
-const Params = imports.misc.params;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const { GLib, GObject, Gio, St } = imports.gi;
-const Main = imports.ui.main;
-const MessageTray = imports.ui.messageTray;
-const NotificationDestroyedReason = MessageTray.NotificationDestroyedReason;
-const PopupMenu = imports.ui.popupMenu;
-
+import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
+import Gio from 'gi://Gio';
 // szm - from tea-time
-imports.gi.versions.Gst = '1.0';
-const Gst = imports.gi.Gst;
-//const GstAudio = imports.gi.GstAudio;
+import Gst from 'gi://Gst?version=1.0';
+import Gettext from 'gettext';
+
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as MessageTray from 'resource:///org/gnome/shell/ui/messageTray.js';
 
 // for setInterval()
-const Utils = Me.imports.utils;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
+import * as Utils from './utils.js';
+import {Logger} from './logger.js';
+import {HMS} from './hms.js';
+import {getExtension} from './context.js';
 
-var Annoyer = class Annoyer {
+const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+const _ = Gettext.domain(GETTEXT_DOMAIN).gettext;
+
+// gnome-shell shows at most this many buttons on a notification
+const MAX_NOTIFICATION_BUTTONS = 3;
+
+export class Annoyer {
   constructor(timers) {
+    this._timers = timers;
     this._settings = timers.settings;
-    this._source = this._createSource();
-
-    //var policy = new MessageTray.NotificationPolicy({'show-in-lock-screen': true, 'details-in-lock-screen': true});
-    //this._source.policy = policy;
+    this._source = null;
 
     this.logger = new Logger('kt notifier', this._settings);
 
     this._gicon = Gio.icon_new_for_string('dialog-warning');
-
-    this._source = this._createSource();
-
   }
 
-  _createSource() {
-    var source = new MessageTray.Source("Kitchen Timer", null /* icon name */);
-    Main.messageTray.add(source);
-    Main.messageTray._useLongerNotificationLeftTimeout = true;
-
-    source.connect('destroy', (source) => {
-      this.logger.debug("Kitchen Timer messageTray source destroyed, recreating");
-      this._source = this._createSource();
-    });
-
-    return source;
+  // MessageTray notification source, the shell destroys it once its last
+  // notification is gone so it is recreated on demand
+  get source() {
+    if (!this._source) {
+      this._source = new MessageTray.Source({
+        title: "Kitchen Timer",
+        icon: this._timers.fullIcon
+      });
+      this._source.connect('destroy', () => {
+        this.logger.debug("Kitchen Timer messageTray source destroyed");
+        this._source = null;
+      });
+      Main.messageTray.add(this._source);
+    }
+    return this._source;
   }
 
   warning(timer, text, fmt=undefined, ...args) {
-    var source = this._createSource();
-
     let details = fmt === undefined ? "" : fmt.format(...args);
 
-    var notifier = new KitchenTimerNotifier(timer,
-                                              source,
-                                              "Timer Warning: "+text,
-                                              details,
-                                              false,    // no sound
-                                              { gicon: timer.timers.fullIcon, bannerMarkup: true,
-                                              secondaryGIcon: this._gicon });
+    var notifier = new KitchenTimerNotifier(timer, {
+      source: this.source,
+      title: "Timer Warning: "+text,
+      body: details,
+      gicon: this._gicon,
+      useBodyMarkup: true
+    }, false);    // no sound
 
-    source.showNotification(notifier);
+    this.source.addNotification(notifier);
   }
 
   notify(timer, text, fmt=undefined, ...args) {
 
     let details = fmt===undefined ? "" : fmt.format(...args);
 
-    var notifier = new KitchenTimerNotifier(timer,
-                                              this.source,
-                                              text,
-                                              details,
-                                              true,   // sound
-                                              { gicon: timer.timers.fullIcon, bannerMarkup: false });
-
-    //notifier.setPrivacyScope(MessageTray.PrivacyScope.SYSTEM);
+    var notifier = new KitchenTimerNotifier(timer, {
+      source: this.notification ? this.source : null,
+      title: text,
+      body: details,
+      gicon: timer.timers.fullIcon
+    }, true);   // sound
 
     if (this.notification) {
-      this.source.showNotification(notifier);
+      this.source.addNotification(notifier);
     }
-
-    notifier.connect('destroy', (notifier) => {
-      notifier.stop_player();
-    });
-  }
-
-  // MessageTray notification source
-  get source() {
-    return this._source;
   }
 
   get notification() {
     return this._settings.notification;
   }
+
+  // Ongoing low urgency notification with the countdown of running timers.
+  // The lock screen lists unseen notifications and keeps the source title
+  // up to date, so the countdown lives in the source title. Called on every
+  // timer tick, also while the screen is locked and the indicator detached.
+  update_countdown() {
+    var running = this._timers.sort_by_running();
+    if (running.length === 0) {
+      this._countdown_dismissed = false;
+      this._clear_countdown();
+      return;
+    }
+    if (!this._settings.lock_screen_countdown || this._countdown_dismissed) {
+      this._clear_countdown();
+      return;
+    }
+
+    var title = running.map(t => "%s %s".format(t.name.trim(), t.remaining_hms().toString(true))).join(" · ");
+    var body = running.map(t => _("due at %s").format(t.end_time())).join(" · ");
+
+    if (!this._countdown) {
+      this._create_countdown(title, body);
+      return;
+    }
+    if (this._countdown_source.title !== title) {
+      this._countdown_source.title = title;
+      this._countdown.title = title;
+    }
+    if (this._countdown.body !== body) {
+      this._countdown.body = body;
+    }
+  }
+
+  _create_countdown(title, body) {
+    var source = new MessageTray.Source({
+      title: title,
+      icon: this._timers.fullIcon
+    });
+    source.connect('destroy', () => {
+      this._countdown_source = null;
+    });
+    Main.messageTray.add(source);
+
+    // low urgency notifications never show a banner
+    var notification = new MessageTray.Notification({
+      source: source,
+      title: title,
+      body: body,
+      gicon: this._timers.fullIcon,
+      urgency: MessageTray.Urgency.LOW,
+      resident: true
+    });
+    // opening the notification list acknowledges all notifications, but the
+    // lock screen only shows unseen ones
+    notification.connect('notify::acknowledged', () => {
+      if (notification.acknowledged && this._countdown === notification) {
+        notification.acknowledged = false;
+      }
+    });
+    notification.connect('destroy', () => {
+      if (this._countdown !== notification) {
+        return;
+      }
+      this._countdown = null;
+      if (!this._clearing_countdown) {
+        // dismissed by the user, don't bring it back for these timers
+        this.logger.debug("Countdown notification dismissed");
+        this._countdown_dismissed = true;
+      }
+    });
+    source.addNotification(notification);
+
+    this._countdown_source = source;
+    this._countdown = notification;
+  }
+
+  _clear_countdown() {
+    if (this._countdown) {
+      this._clearing_countdown = true;
+      this._countdown.destroy();
+      this._clearing_countdown = false;
+    }
+  }
 }
 
-// https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/master/js/ui/messageTray.js
-// Notification:
-// @source: the notification's Source
-// @title: the title
-// @banner: the banner text
-// @params: optional additional params
-//
-// Creates a notification. In the banner mode, the notification
-// will show an icon, @title (in bold) and @banner, all on a single
-// line (with @banner ellipsized if necessary).
-//
-// The notification will be expandable if either it has additional
-// elements that were added to it or if the @banner text did not
-// fit fully in the banner mode. When the notification is expanded,
-// the @banner text from the top line is always removed. The complete
-// @banner text is added as the first element in the content section,
-// unless 'customContent' parameter with the value 'true' is specified
-// in @params.
-//
-// Additional notification content can be added with addActor() and
-// addBody() methods. The notification content is put inside a
-// scrollview, so if it gets too tall, the notification will scroll
-// rather than continue to grow. In addition to this main content
-// area, there is also a single-row action area, which is not
-// scrolled and can contain a single actor. The action area can
-// be set by calling setActionArea() method. There is also a
-// convenience method addButton() for adding a button to the action
-// area.
-//
-// If @params contains a 'customContent' parameter with the value %true,
-// then @banner will not be shown in the body of the notification when the
-// notification is expanded and calls to update() will not clear the content
-// unless 'clear' parameter with value %true is explicitly specified.
-//
-// By default, the icon shown is the same as the source's.
-// However, if @params contains a 'gicon' parameter, the passed in gicon
-// will be used.
-//
-// You can add a secondary icon to the banner with 'secondaryGIcon'. There
-// is no fallback for this icon.
-//
-// If @params contains 'bannerMarkup', with the value %true, a subset (<b>,
-// <i> and <u>) of the markup in [1] will be interpreted within @banner. If
-// the parameter is not present, then anything that looks like markup
-// in @banner will appear literally in the output.
-//
-// If @params contains a 'clear' parameter with the value %true, then
-// the content and the action area of the notification will be cleared.
-// The content area is also always cleared if 'customContent' is false
-// because it might contain the @banner that didn't fit in the banner mode.
-//
-// If @params contains 'soundName' or 'soundFile', the corresponding
-// event sound is played when the notification is shown (if the policy for
-// @source allows playing sounds).
-//
-// [1] https://developer.gnome.org/notification-spec/#markup
-// var Notification = GObject.registerClass({
-//     Properties: {
-//         'acknowledged': GObject.ParamSpec.boolean(
-//             'acknowledged', 'acknowledged', 'acknowledged',
-//             GObject.ParamFlags.READWRITE,
-//             false),
-//     },
-//     Signals: {
-//         'activated': {},
-//         'destroy': { param_types: [GObject.TYPE_UINT] },
-//         'updated': { param_types: [GObject.TYPE_BOOLEAN] },
-//     },
-// }, class Notification extends GObject.Object {
-//     _init(source, title, banner, params) {
-//         super._init();
-
-    // update:
-    // @title: the new title
-    // @banner: the new banner
-    // @params: as in the Notification constructor
-    //
-    // Updates the notification by regenerating its icon and updating
-    // the title/banner. If @params.clear is %true, it will also
-    // remove any additional actors/action buttons previously added.
-    // update(title, banner, params) {
-    //     params = Params.parse(params, { gicon: null,
-    //                                     secondaryGIcon: null,
-    //                                     bannerMarkup: false,
-    //                                     clear: false,
-    //                                     datetime: null,
-    //                                     soundName: null,
-    //                                     soundFile: null });
-
-
-
-
-var KitchenTimerNotifier = GObject.registerClass(
+const KitchenTimerNotifier = GObject.registerClass(
 class KitchenTimerNotifier extends MessageTray.Notification {
-  _init(timer, source, title, banner, play_sound, params) {
-    super._init(source, title, banner, params);
+  constructor(timer, params, play_sound) {
+    super(params);
 
     this.logger = new Logger('kt notifier', timer.timers.settings);
 
@@ -226,12 +202,10 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       this._sound_loops = 2;
     }
 
-    this._banner = new KitchenTimerNotifierBanner(this);
-
     this.logger.debug('timer is %s', timer.expired ? "expired" : "not expired");
     if (timer.expired) {
       if (this.settings.notification_sticky) {
-        this.setResident(true);
+        this.resident = true;
         this.urgency = MessageTray.Urgency.CRITICAL;
       }
       if (play_sound && this.sound_enabled) {
@@ -246,23 +220,25 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       timer.uninhibit();
     }
 
-    this._banner.connect('clicked', (banner) => {
+    // resident notifications are not closed by the shell when clicked
+    this.connect('activated', () => {
       this.logger.debug("Clicked!");
-      banner.close();
+      this.destroy();
     });
   }
 
   _addActions() {
     this.logger.debug("Adding notification actions");
-    this.setForFeedback(true);
-    this.setTransient(false);
-    this.acknowledged = false;
+    this.forFeedback = true;
+    this.isTransient = false;
 
-    this._long_timeout = Utils.setTimeout(this.longTimeout_callback, this.settings.notification_longtimeout, this);
+    // sticky notifications wait for input, others are closed after a while
+    if (!this.resident) {
+      this._long_timeout = Utils.setTimeout(this.longTimeout_callback, this.settings.notification_longtimeout, this);
+    }
 
-    this._banner.addAction(_("Restart timer %s").format(this.timer.name), () => {
+    this.addAction(_("Restart timer %s").format(this.timer.name), () => {
       this.logger.debug("Restart timer");
-      this.acknowledged = true;
       this.timer.start();
       this.destroy();
     });
@@ -276,8 +252,8 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     };
 
     if (this.timer.alarm_timer) {
-      this._banner.addSnoozeSecs(snoozeLimits[25], this.snoozeCallback);
-      this._banner.addSnoozeSecs(snoozeLimits[10], this.snoozeCallback);
+      this.addSnoozeSecs(snoozeLimits[25]);
+      this.addSnoozeSecs(snoozeLimits[10]);
       return;
     } else if (this.timer.duration < round*2) {
       return;
@@ -286,15 +262,14 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     if (!this.addSnoozeButtons(round, snoozeLimits)) {
       // add a 30 second snooze
       this.logger.debug("Add default snooze of %d seconds", round);
-      this._banner.addSnoozeSecs(round, this.snoozeCallback);
+      this.addSnoozeSecs(round);
     }
   }
 
-  snoozeCallback(notifier, secs) {
-    notifier.logger.debug("💤 %d seconds", secs);
-    notifier.acknowledged = true;
-    notifier.timer.snooze(secs);
-    notifier.destroy();
+  snooze(secs) {
+    this.logger.debug("💤 %d seconds", secs);
+    this.timer.snooze(secs);
+    this.destroy();
   }
 
   addSnoozeButtons(round, snoozeLimits) {
@@ -310,7 +285,7 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     for (let i=0; i < percentages.length; i++) {
       let percentage = percentages[i];
       let limit = snoozeLimits[percentage];
-      ssecs = this._banner.addSnoozePercent(percentage, limit, round, this.snoozeCallback);
+      ssecs = this.addSnoozePercent(percentage, limit, round);
       if (ssecs <= round) {
         this.logger.debug("Won't create snooze for ssecs=%d", ssecs);
         break;
@@ -319,14 +294,36 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     return ssecs == 0 ? false : true;
   }
 
-  createBanner() {
-    return this._banner;
+  addSnoozeSecs(snooze) {
+    if (this.actions.length >= MAX_NOTIFICATION_BUTTONS) {
+      return 0;
+    }
+    let hms = new HMS(snooze);
+    let label = "💤 %s".format(hms.toString(true));
+    this.logger.debug("Create snooze button %s", label);
+    this.addAction(label, () => {
+      this.snooze(snooze);
+    });
+    return snooze;
+  }
+
+  addSnoozePercent(percent, limit, round) {
+    let snooze = Math.ceil(this.timer.duration * percent / 100);
+
+    if (this.timer.alarm_timer || snooze > limit) {
+      snooze = limit;
+    } else if (snooze < 30) {
+      return 0;
+    }
+
+    // snooze to the next nearest 30 seconds
+    snooze = Math.ceil(snooze/round)*round;
+    return this.addSnoozeSecs(snooze);
   }
 
   longTimeout_callback(ktNotifier) {
-    ktNotifier.acknowledged = true;
+    ktNotifier._long_timeout = undefined;
     ktNotifier.destroy();
-    Utils.clearTimeout(ktNotifier._long_timeout);
     return false;
   }
 
@@ -377,16 +374,14 @@ class KitchenTimerNotifier extends MessageTray.Notification {
       var base = GLib.path_get_basename(this.sound_file);
       if (base !== this.sound_file) {
         this.logger.error("Sound file not found, use default");
-        base = this.settings.get_default('sound-file');
+        base = this.settings.get_default('sound-file').unpack();
       }
-      this._uri += GLib.build_filenamev([ Me.path, base ]);
+      this._uri += GLib.build_filenamev([ getExtension().path, base ]);
     }
 
     this.logger.debug("initPlayer with uri=%s", this._uri);
     Gst.init(null);
     this._player  = Gst.ElementFactory.make("playbin","player");
-    //let vol = this._player.get_volume(GstAudio.StreamVolumeFormat.LINEAR) *100;
-    //this.logger.debug("linear volume is %f", vol);
 
     this.playBus = this._player.get_bus();
     this.playBus.add_signal_watch();
@@ -399,6 +394,15 @@ class KitchenTimerNotifier extends MessageTray.Notification {
 		    }
 	    } // message handler
     });
+  }
+
+  _releasePlayer() {
+    if (this._player) {
+      this.playBus.remove_signal_watch();
+      this._player.set_state(Gst.State.NULL);
+      this._player = undefined;
+      this.playBus = undefined;
+    }
   }
 
   get settings() {
@@ -421,125 +425,20 @@ class KitchenTimerNotifier extends MessageTray.Notification {
     return this.settings.sound_file
   }
 
-  destroy(reason = NotificationDestroyedReason.DISMISSED) {
-    if (!this.acknowledged) {
-      this.logger.debug("Not acknowledged yet");
+  destroy(reason = MessageTray.NotificationDestroyedReason.DISMISSED) {
+    // actions and activation may try to destroy an already destroyed notification
+    if (this._kt_destroyed) {
       return;
     }
-    if (!this._destroyed) {
-      this.logger.debug("Acknowledged notification will be destroyed");
-      this._destroyed = true;
-      this.stop_player();
-      super.destroy(reason);
-
-      this.timer.uninhibit();
-
+    this.logger.debug("Notification will be destroyed");
+    this._kt_destroyed = true;
+    this.stop_player();
+    this._releasePlayer();
+    if (this._long_timeout) {
+      Utils.clearTimeout(this._long_timeout);
+      this._long_timeout = undefined;
     }
+    this.timer.uninhibit();
+    super.destroy(reason);
   }
 });
-
-var KitchenTimerNotifierBanner = GObject.registerClass(
-class KitchenTimerNotifierBanner extends MessageTray.NotificationBanner {
-  _init(notifier) {
-    this.logger = new Logger('kt notifierbanner', notifier.timer.timers.settings);
-    this.logger.debug("constructor");
-
-    super._init(notifier);
-
-    super.notification = this.notifier = notifier;
-  }
-
-  get notifier() {
-    return this._notifier;
-  }
-
-  set notifier(n) {
-    this._notifier = n;
-  }
-
-  // copied from MessageTray.NotificationBanner
-  addButton(button) {
-    // should call the layoutbox _buttonBox
-    if (!this._buttonBox) {
-        this._buttonBox = new St.BoxLayout({ style_class: 'notification-actions',
-                                             x_expand: true });
-        this.setActionArea(this._buttonBox);
-        global.focus_manager.add_group(this._buttonBox);
-    }
-
-    if (this._buttonBox.get_n_children() > 3 /* MAX_NOTIFICATION_BUTTONS */)
-        return null;
-
-    this._buttonBox.add(button);
-
-    return button;
-  }
-
-  // copied from MessageTray.NotificationBanner
-  addAction(label, callback) {
-    this.logger.debug("Create button %s", label);
-    let button = new St.Button({ style_class: 'notification-button',
-                                 label,
-                                 x_expand: true,
-                                 can_focus: true });
-
-    if (this.addButton(button)) {
-      button.connect('clicked', () => {
-        callback();
-
-        // if (!this.notification.resident) {
-          // We don't hide a resident notification when the user invokes one of its actions,
-          // because it is common for such notifications to update themselves with new
-          // information based on the action. We'd like to display the updated information
-          // in place, rather than pop-up a new notification.
-        //   this.emit('done-displaying');
-        //   this.notification.destroy();
-        // }
-      });
-    }
-  }
-
-  addSnoozeSecs(snooze, callback) {
-    let hms = new HMS(snooze);
-    let label = "💤 %s".format(hms.toString(true));
-    this.logger.debug("Create snooze button menu %s", label);
-    let button = new St.Button({ style_class: 'notification-button',
-                                 label,
-                                 x_expand: true,
-                                 can_focus: true });
-
-    if (this.addButton(button)) {
-      button.snooze = snooze;
-      button.connect('clicked', (button) => {
-
-        callback(this.notifier, button.snooze);
-
-        // if (!this.notification.resident) {
-          // We don't hide a resident notification when the user invokes one of its actions,
-          // because it is common for such notifications to update themselves with new
-          // information based on the action. We'd like to display the updated information
-          // in place, rather than pop-up a new notification.
-        //   this.emit('done-displaying');
-        //   this.notification.destroy();
-        // }
-      });
-      return snooze;
-    }
-    return 0;
-  }
-
-  addSnoozePercent(percent, limit, round, callback) {
-    let snooze = Math.ceil(this.notifier.timer.duration * percent / 100);
-
-    if (this.notifier.timer.alarm_timer || snooze > limit) {
-      snooze = limit;
-    } else if (snooze < 30) {
-      return 0;
-    }
-
-    // snooze to the next nearest 30 seconds
-    snooze = Math.ceil(snooze/round)*round;
-    return this.addSnoozeSecs(snooze, callback);
-  }
-});
-

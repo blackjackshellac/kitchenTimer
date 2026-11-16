@@ -16,36 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+import GLib from 'gi://GLib';
 
-String.prototype.format = imports.format.format;
-
-const GLib = imports.gi.GLib;
-const ByteArray = imports.byteArray;
-
-// https://gjs.guide/extensions/upgrading/gnome-shell-40.html
-const Config = imports.misc.config;
-const [major] = Config.PACKAGE_VERSION.split('.');
-const shellVersion = Number.parseInt(major);
-
-function isGnome3x() {
-  return (shellVersion < 40);
+if (!String.prototype.format) {
+  String.prototype.format = imports.format.format;
 }
 
-function isGnome40() {
-  return (shellVersion >= 40);
-}
-
-function logObjectPretty(obj) {
+export function logObjectPretty(obj) {
   log(JSON.stringify(obj, null, 2));
 }
 
-var clearTimeout, clearInterval;
-clearTimeout = clearInterval = GLib.Source.remove;
+export const clearTimeout = GLib.Source.remove;
+export const clearInterval = GLib.Source.remove;
 
-function setTimeout(func, delay, ...args) {
+export function setTimeout(func, delay, ...args) {
   const wrappedFunc = () => {
     func.apply(this, args);
     // never continue timeout
@@ -54,7 +38,7 @@ function setTimeout(func, delay, ...args) {
   return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
 }
 
-function setInterval(func, delay, ...args) {
+export function setInterval(func, delay, ...args) {
   const wrappedFunc = () => {
     // continue timeout until func returns false
     return func.apply(this, args);
@@ -62,7 +46,7 @@ function setInterval(func, delay, ...args) {
   return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, wrappedFunc);
 }
 
-function spawn(command, callback) {
+export function spawn(command, callback) {
   var [status, pid] = GLib.spawn_async(
       null,
       ['/usr/bin/env', 'bash', '-c', command],
@@ -87,7 +71,7 @@ function spawn(command, callback) {
  * Normally if exit_status is 0 stderr will be empty
  *
  */
-function execute(cmdargs, params={ wdir: null, envp: null, flags: GLib.SpawnFlags.SEARCH_PATH }) {
+export function execute(cmdargs, params={ wdir: null, envp: null, flags: GLib.SpawnFlags.SEARCH_PATH }) {
   var [ok, stdout, stderr, exit_status] = GLib.spawn_sync(
     params.wdir, // working directory
     cmdargs,  // string array
@@ -97,8 +81,9 @@ function execute(cmdargs, params={ wdir: null, envp: null, flags: GLib.SpawnFlag
   );
 
   if (ok) {
-    stdout = ByteArray.toString(stdout);
-    stderr = ByteArray.toString(stderr);
+    const decoder = new TextDecoder();
+    stdout = decoder.decode(stdout);
+    stderr = decoder.decode(stderr);
     //log(`ok=${ok} exit_status=${exit_status} stdout=${stdout} stderr=${stderr}`);
     return [ exit_status, stdout, stderr ];
   }
@@ -106,15 +91,11 @@ function execute(cmdargs, params={ wdir: null, envp: null, flags: GLib.SpawnFlag
   return [ -1, undefined, "execute failed: %s".format(cmdargs.join(" ")) ];
 }
 
-function uuid(id=undefined) {
+export function uuid(id=undefined) {
   return id === undefined || id.length === 0 ? GLib.uuid_string_random() : id;
 }
 
-function isDebugModeEnabled() {
-    return new Settings().debug();
-}
-
-function addSignalsHelperMethods(prototype) {
+export function addSignalsHelperMethods(prototype) {
     prototype._connectSignal = function (subject, signal_name, method) {
         if (!this._signals) this._signals = [];
 

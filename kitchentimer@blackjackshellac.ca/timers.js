@@ -16,32 +16,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import St from 'gi://St';
+import Gio from 'gi://Gio';
+import Gettext from 'gettext';
+
+import * as Volume from 'resource:///org/gnome/shell/ui/status/volume.js';
+
+import * as Utils from './utils.js';
+import {Settings} from './settings.js';
+import * as Notifier from './notifier.js';
+import {Logger} from './logger.js';
+import {HMS} from './hms.js';
+import {AlarmTimer} from './alarm_timer.js';
+import {SessionManagerInhibitor} from './inhibitor.js';
+import {KeyboardShortcuts} from './keyboard_shortcuts.js';
+import {getExtension} from './context.js';
+
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
-
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const {GLib, St, Clutter, Gio} = imports.gi;
-const Main = imports.ui.main;
-const PopupMenu = imports.ui.popupMenu;
-
-const Utils = Me.imports.utils;
-const Settings = Me.imports.settings.Settings;
-const Notifier = Me.imports.notifier;
-const Logger = Me.imports.logger.Logger;
-const HMS = Me.imports.hms.HMS;
-const AlarmTimer = Me.imports.alarm_timer.AlarmTimer;
-const SessionManagerInhibitor = Me.imports.inhibitor.SessionManagerInhibitor;
-const KeyboardShortcuts = Me.imports.keyboard_shortcuts.KeyboardShortcuts;
+const _ = Gettext.domain(GETTEXT_DOMAIN).gettext;
 
 const date_options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-const mixerControl = imports.ui.status.volume.getMixerControl();
+const mixerControl = Volume.getMixerControl();
 
-var Timers = class Timers extends Array {
+// timers is a singleton class, created on first attach and kept alive across
+// disable/enable (e.g. screen lock) so running timers are not lost
+let timersInstance = null;
+
+export class Timers extends Array {
+  // Array methods like filter() must not construct another Timers singleton
+  static get [Symbol.species]() {
+    return Array;
+  }
+
   constructor(...args) {
     super(...args);
+    const path = getExtension().path;
 
     // id => timer
     this._lookup = {};
@@ -51,12 +60,12 @@ var Timers = class Timers extends Array {
     this.accel = new KeyboardShortcuts(this.settings);
     this.logger = new Logger('kt timers', this.settings);
 
-    this._fullIcon = Gio.icon_new_for_string(Me.path+'/icons/kitchen-timer-blackjackshellac-full.svg');
+    this._fullIcon = Gio.icon_new_for_string(path+'/icons/kitchen-timer-blackjackshellac-full.svg');
     this._progressIconsDegrees = {};
     for (let deg = 0; deg <= 345; deg += 15) {
       // load icon as a gicon and store in the hash
       var icon_name="/icons/kitchen-timer-"+deg+".svg";
-      var gicon = Gio.icon_new_for_string(Me.path+icon_name);
+      var gicon = Gio.icon_new_for_string(path+icon_name);
       this._progressIconsDegrees[deg] = gicon;
       this.logger.debug(`Loaded progress icon ${icon_name} for ${deg} degrees`);
     }
@@ -67,6 +76,10 @@ var Timers = class Timers extends Array {
   }
 
   static attach(indicator) {
+    if (!timersInstance) {
+      timersInstance = new Timers();
+    }
+
     // reload settings
     timersInstance._settings = new Settings();
     timersInstance._inhibitor.settings = timersInstance._settings;
@@ -81,7 +94,7 @@ var Timers = class Timers extends Array {
 
     timersInstance.restoreRunningTimers();
 
-    timersInstance.settings.settings.connect('changed::accel-enable', () => {
+    timersInstance._accelChangedId = timersInstance.settings.settings.connect('changed::accel-enable', () => {
       timersInstance.logger.debug('accel-enable has changed');
       timersInstance.toggle_keyboard_shortcuts();
     });
@@ -99,6 +112,13 @@ var Timers = class Timers extends Array {
 
   static detach() {
     timersInstance.logger.info("Detaching indicator from timers");
+    if (timersInstance._accelChangedId) {
+      timersInstance.settings.settings.disconnect(timersInstance._accelChangedId);
+      timersInstance._accelChangedId = undefined;
+    }
+    if (timersInstance.settings.accel_enable) {
+      timersInstance.disable_keyboard_shortcuts();
+    }
     timersInstance.attached = false;
     timersInstance.indicator = undefined;
   }
@@ -254,8 +274,8 @@ var Timers = class Timers extends Array {
     var running = JSON.parse(json);
     running.forEach( (run_state) => {
       var timer = this.lookup(run_state.id);
-      timer.persist_alarm = run_state.persist;
       if (timer && !timer.running) {
+        timer.persist_alarm = run_state.persist;
         timer.alarm_timer = AlarmTimer.restore(run_state.alarm_timer);
         this.logger.debug("restore %s", timer.toString());
         timer.go(run_state.start);
@@ -280,7 +300,7 @@ var Timers = class Timers extends Array {
     for (let i=0; i < this.length; i++) {
       var t=this[i];
       if (t.id == id) {
-        this.logger.warning("adding timer to lookup hash %s:%s", t.name, t.id);
+        this.logger.warn("adding timer to lookup hash %s:%s", t.name, t.id);
         this._lookup[id] = t;
         return t;
       }
@@ -423,18 +443,14 @@ var Timers = class Timers extends Array {
   }
 }
 
-// timers is a singleton class
-var timersInstance = new Timers();
-//Object.freeze(timersInstance);
-
-var TimerState = {
+export const TimerState = {
   INIT: 0,
   RESET: 1,
   RUNNING: 2,
   EXPIRED: 3
 }
 
-var Timer = class Timer {
+export class Timer {
 
   constructor(name, duration_secs, id=undefined) {
     var debug = timersInstance.settings.debug;
@@ -724,6 +740,7 @@ var Timer = class Timer {
     }
 
     timersInstance.inhibitor.inhibit_timer(timer);
+    timersInstance.notifier.update_countdown();
 
     //var delta = Math.ceil((end-now) / 1000);
     let hms = timer.remaining_hms(now);
@@ -802,6 +819,7 @@ var Timer = class Timer {
     timersInstance.set_panel_name("");
     timersInstance.set_panel_label("");
     timersInstance.saveRunningTimers();
+    timersInstance.notifier.update_countdown();
 
     if (this.notify_volume || this.notify_muted) {
       let stream = mixerControl.get_default_sink();

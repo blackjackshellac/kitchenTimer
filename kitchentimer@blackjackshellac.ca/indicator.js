@@ -16,35 +16,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import GObject from 'gi://GObject';
+import St from 'gi://St';
+import Clutter from 'gi://Clutter';
+import Gettext from 'gettext';
+
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+
+import * as Menus from './menus.js';
+import {Timers} from './timers.js';
+import {Logger} from './logger.js';
+
 const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
-const Gettext = imports.gettext.domain(GETTEXT_DOMAIN);
-const _ = Gettext.gettext;
+const _ = Gettext.domain(GETTEXT_DOMAIN).gettext;
 
-const { GObject, St, Clutter, Gio } = imports.gi;
-
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-
-const Utils = Me.imports.utils;
-const Settings = Me.imports.settings.Settings;
-const Menus = Me.imports.menus;
-const Timers = Me.imports.timers.Timers;
-const Timer = Me.imports.timers.Timer;
-const Logger = Me.imports.logger.Logger;
-
-const Main = imports.ui.main;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-
-var KitchenTimerIndicator = GObject.registerClass(
+export const KitchenTimerIndicator = GObject.registerClass(
 class KitchenTimerIndicator extends PanelMenu.Button {
     _init() {
+      super._init(0.0, _('Kitchen Timer'));
+
       // settings now lives in Timers singleton
       this._timers = Timers.attach(this);
       this.logger = new Logger('kt indicator', this.settings);
       this.logger.info('Initializing extension');
-
-      super._init(0.0, _('Kitchen Timer'));
 
       var icon = new St.Icon({
         gicon: this.timers.progress_gicon(0),
@@ -72,8 +66,8 @@ class KitchenTimerIndicator extends PanelMenu.Button {
         style_class: 'kitchentimer-panel-name'
       });
 
-      this._box.add(this._panel_name);
-      this._box.add(this._panel_label);
+      this._box.add_child(this._panel_name);
+      this._box.add_child(this._panel_label);
 
       this.add_child(this._box);
 

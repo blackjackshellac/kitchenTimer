@@ -16,7 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-var HMS = class HMS {
+import Gettext from 'gettext';
+
+const GETTEXT_DOMAIN = 'kitchen-timer-blackjackshellac';
+const _ = Gettext.domain(GETTEXT_DOMAIN).gettext;
+
+export class HMS {
   constructor(secs=0) {
     if (isNaN(secs)) {
     }
